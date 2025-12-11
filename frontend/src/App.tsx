@@ -22,14 +22,15 @@ import {
 import { AppConfig, UserSession, showConnect } from '@stacks/connect'
 import { 
   fetchCallReadOnlyFunction, 
-  cvToJSON
+  cvToJSON,
+  uintCV
 } from '@stacks/transactions'
-import { STACKS_TESTNET } from '@stacks/network'
+import { STACKS_MAINNET } from '@stacks/network'
 
 // Contract configuration - UPDATE THIS after deployment
 const CONTRACT_ADDRESS = 'SP000000000000000000002Q6VF78' // Replace with your deployed contract address
 const CONTRACT_NAME = 'timefi-vault'
-const NETWORK = STACKS_TESTNET // Change to STACKS_MAINNET for production
+const NETWORK = STACKS_MAINNET
 
 // App configuration
 const appConfig = new AppConfig(['store_write', 'publish_data'])
@@ -85,12 +86,12 @@ export default function App() {
   useEffect(() => {
     if (userSession.isUserSignedIn()) {
       const userData = userSession.loadUserData()
-      setUserAddress(userData.profile.stxAddress.testnet) // Change to mainnet for production
+      setUserAddress(userData.profile.stxAddress.mainnet)
       setIsConnected(true)
     }
   }, [])
 
-  // Fetch stats
+  // Fetch stats from contract
   const fetchStats = useCallback(async () => {
     try {
       const result = await fetchCallReadOnlyFunction({
@@ -112,40 +113,53 @@ export default function App() {
       }
     } catch (error) {
       console.log('Stats fetch error:', error)
-      // Set mock data for demo
+      // Initialize with zeros when contract not yet deployed
       setStats({
-        vaults: 42,
-        tvl: 125000000000,
-        fees: 625000000,
+        vaults: 0,
+        tvl: 0,
+        fees: 0,
         time: Math.floor(Date.now() / 1000)
       })
     }
   }, [])
 
-  // Fetch user vaults
+  // Fetch user vaults from contract
   const fetchUserVaults = useCallback(async () => {
     if (!userAddress) return
     
-    // For demo, show mock vaults
-    setUserVaults([
-      {
-        id: 1,
-        owner: userAddress,
-        amount: 50000000,
-        lockTime: Math.floor(Date.now() / 1000) - 604800,
-        unlockTime: Math.floor(Date.now() / 1000) + 1209600,
-        active: true
-      },
-      {
-        id: 2,
-        owner: userAddress,
-        amount: 100000000,
-        lockTime: Math.floor(Date.now() / 1000) - 1209600,
-        unlockTime: Math.floor(Date.now() / 1000) - 86400,
-        active: true
+    // Query vaults from contract - iterate through vault IDs
+    const vaults: Vault[] = []
+    const maxVaultsToCheck = stats?.vaults || 100
+    
+    for (let i = 1; i <= maxVaultsToCheck; i++) {
+      try {
+        const result = await fetchCallReadOnlyFunction({
+          contractAddress: CONTRACT_ADDRESS,
+          contractName: CONTRACT_NAME,
+          functionName: 'get-vault',
+          functionArgs: [uintCV(i)],
+          network: NETWORK,
+          senderAddress: userAddress,
+        })
+        const json = cvToJSON(result)
+        if (json.value && json.value.owner?.value === userAddress && json.value.active?.value === true) {
+          vaults.push({
+            id: i,
+            owner: json.value.owner.value,
+            amount: parseInt(json.value.amount.value),
+            lockTime: parseInt(json.value['lock-time'].value),
+            unlockTime: parseInt(json.value['unlock-time'].value),
+            active: json.value.active.value
+          })
+        }
+      } catch (error) {
+        // Vault doesn't exist or error fetching
+        break
       }
-    ])
-  }, [userAddress])
+    }
+    
+    setUserVaults(vaults)
+  }, [userAddress, stats?.vaults])
 
   useEffect(() => {
     fetchStats()
@@ -169,7 +183,7 @@ export default function App() {
       redirectTo: '/',
       onFinish: () => {
         const userData = userSession.loadUserData()
-        setUserAddress(userData.profile.stxAddress.testnet)
+        setUserAddress(userData.profile.stxAddress.mainnet)
         setIsConnected(true)
         toast.success('Wallet connected successfully!')
       },
@@ -318,7 +332,7 @@ export default function App() {
               transition={{ delay: 0.2 }}
             >
               <Zap className="w-4 h-4 text-yellow-500" />
-              <span className="text-sm text-gray-300">Built with Clarity 4 on Stacks</span>
+              <span className="text-sm text-gray-300">Secure DeFi on Stacks Blockchain</span>
             </motion.div>
             
             <h1 className="text-5xl sm:text-7xl font-bold mb-6 font-display">
@@ -412,17 +426,17 @@ export default function App() {
             <FeatureCard
               icon={<Clock className="w-8 h-8" />}
               title="Time-Based Locks"
-              description="Lock your STX for 7-90 days. Uses Clarity 4's stacks-block-time for precise timing."
+              description="Lock your STX for 7-90 days with blockchain-verified timestamps for precise timing."
             />
             <FeatureCard
               icon={<Shield className="w-8 h-8" />}
               title="Passkey Security"
-              description="Optional WebAuthn passkey authentication using secp256r1-verify for hardware security."
+              description="Optional WebAuthn passkey authentication for hardware-level security on withdrawals."
             />
             <FeatureCard
               icon={<Zap className="w-8 h-8" />}
-              title="Verified Bots"
-              description="Integrate trusted trading bots with contract-hash? verification for automated strategies."
+              title="Verified Integrations"
+              description="Integrate trusted trading bots with cryptographic verification for automated strategies."
             />
           </motion.div>
 
@@ -483,9 +497,9 @@ export default function App() {
             <span className="text-gray-400">TimeFi Protocol</span>
           </div>
           <div className="flex items-center gap-6 text-sm text-gray-500">
-            <span>Built for Stacks Builder Challenges</span>
+            <span>Powered by Stacks</span>
             <span>•</span>
-            <span>Clarity 4</span>
+            <span>Mainnet</span>
           </div>
         </div>
       </footer>

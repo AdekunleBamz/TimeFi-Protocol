@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="vaultGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="45" fill="none" stroke="url(#vaultGrad)" stroke-width="4"/>
+  <circle cx="50" cy="50" r="35" fill="none" stroke="url(#vaultGrad)" stroke-width="2"/>
+  <path d="M50 20 L50 50 L70 50" fill="none" stroke="url(#vaultGrad)" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="50" cy="50" r="4" fill="url(#vaultGrad)"/>
+</svg>
+

@@ -24,8 +24,7 @@ import {
   fetchCallReadOnlyFunction, 
   cvToJSON, 
   uintCV,
-  PostConditionMode,
-  Pc
+  PostConditionMode
 } from '@stacks/transactions'
 import { STACKS_MAINNET } from '@stacks/network'
 
@@ -236,18 +235,19 @@ export default function App() {
 
   // Create vault - triggers wallet for approval
   const createVault = async (amount: number, lockDays: number) => {
-    if (!userAddress) return
+    if (!userAddress) {
+      toast.error('Please connect wallet first')
+      return
+    }
     
     setIsLoading(true)
+    
+    const amountInMicroSTX = Math.floor(amount * 1_000_000)
+    const lockSeconds = lockDays * 86400
+
+    console.log('Creating vault with:', { amountInMicroSTX, lockSeconds, userAddress })
+
     try {
-      const amountInMicroSTX = Math.floor(amount * 1_000_000)
-      const lockSeconds = lockDays * 86400
-
-      // Create post condition using Pc builder (Stacks SDK v7)
-      const postConditions = [
-        Pc.principal(userAddress).willSendLte(amountInMicroSTX).ustx()
-      ]
-
       openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
@@ -256,9 +256,9 @@ export default function App() {
           uintCV(amountInMicroSTX),
           uintCV(lockSeconds)
         ],
-        postConditionMode: PostConditionMode.Deny,
-        postConditions,
+        postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
+        userSession,
         onFinish: (data) => {
           console.log('Transaction submitted:', data)
           toast.success(
@@ -288,16 +288,19 @@ export default function App() {
           setIsLoading(false)
         }
       })
-    } catch (error) {
-      toast.error('Failed to create vault')
-      console.error(error)
+    } catch (error: any) {
+      console.error('Create vault error:', error)
+      toast.error(`Failed: ${error?.message || 'Unknown error'}`)
       setIsLoading(false)
     }
   }
 
   // Request withdrawal - triggers wallet
   const requestWithdraw = async (vaultId: number) => {
-    if (!userAddress) return
+    if (!userAddress) {
+      toast.error('Please connect wallet first')
+      return
+    }
     
     setIsLoading(true)
     try {
@@ -308,6 +311,7 @@ export default function App() {
         functionArgs: [uintCV(vaultId)],
         postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
+        userSession,
         onFinish: (data) => {
           console.log('Withdrawal request submitted:', data)
           toast.success(
@@ -334,8 +338,8 @@ export default function App() {
           setIsLoading(false)
         }
       })
-    } catch (error) {
-      toast.error('Failed to request withdrawal')
+    } catch (error: any) {
+      toast.error(`Failed: ${error?.message || 'Unknown error'}`)
       console.error(error)
       setIsLoading(false)
     }
@@ -343,7 +347,10 @@ export default function App() {
 
   // Request early withdrawal - triggers wallet
   const requestEarlyWithdraw = async (vaultId: number) => {
-    if (!userAddress) return
+    if (!userAddress) {
+      toast.error('Please connect wallet first')
+      return
+    }
     
     setIsLoading(true)
     try {
@@ -354,6 +361,7 @@ export default function App() {
         functionArgs: [uintCV(vaultId)],
         postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
+        userSession,
         onFinish: (data) => {
           console.log('Early withdrawal request submitted:', data)
           toast.success(
@@ -381,8 +389,8 @@ export default function App() {
           setIsLoading(false)
         }
       })
-    } catch (error) {
-      toast.error('Failed to request early withdrawal')
+    } catch (error: any) {
+      toast.error(`Failed: ${error?.message || 'Unknown error'}`)
       console.error(error)
       setIsLoading(false)
     }

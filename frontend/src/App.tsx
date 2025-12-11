@@ -153,48 +153,68 @@ export default function App() {
     }
   }, [])
 
-  // Fetch user vaults from contract (simplified to avoid rate limiting)
+  // Fetch user vaults from contract
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  
   const fetchUserVaults = useCallback(async () => {
-    if (!userAddress || !stats?.vaults || stats.vaults === 0) {
+    if (!userAddress) {
       setUserVaults([])
       return
     }
     
-    // Only check up to 10 vaults to avoid rate limiting
-    const vaults: Vault[] = []
-    const maxVaultsToCheck = Math.min(stats.vaults, 10)
+    setIsRefreshing(true)
+    console.log('Fetching vaults for:', userAddress)
     
-    for (let i = 1; i <= maxVaultsToCheck; i++) {
-      try {
-        // Add delay between requests to avoid rate limiting
-        if (i > 1) await new Promise(r => setTimeout(r, 500))
-        
-        const result = await fetchCallReadOnlyFunction({
-          contractAddress: CONTRACT_ADDRESS,
-          contractName: CONTRACT_NAME,
-          functionName: 'get-vault',
-          functionArgs: [uintCV(i)],
-          network: NETWORK,
-          senderAddress: userAddress,
-        })
-        const json = cvToJSON(result)
-        if (json.value && json.value.owner?.value === userAddress && json.value.active?.value === true) {
-          vaults.push({
-            id: i,
-            owner: json.value.owner.value,
-            amount: parseInt(json.value.amount.value),
-            lockTime: parseInt(json.value['lock-time'].value),
-            unlockTime: parseInt(json.value['unlock-time'].value),
-            active: json.value.active.value
+    try {
+      // First get total vaults count
+      const totalVaults = stats?.vaults || 10
+      const vaults: Vault[] = []
+      const maxVaultsToCheck = Math.min(totalVaults, 20)
+      
+      for (let i = 1; i <= maxVaultsToCheck; i++) {
+        try {
+          // Add delay between requests to avoid rate limiting
+          if (i > 1) await new Promise(r => setTimeout(r, 300))
+          
+          const result = await fetchCallReadOnlyFunction({
+            contractAddress: CONTRACT_ADDRESS,
+            contractName: CONTRACT_NAME,
+            functionName: 'get-vault',
+            functionArgs: [uintCV(i)],
+            network: NETWORK,
+            senderAddress: userAddress,
           })
+          const json = cvToJSON(result)
+          console.log(`Vault ${i}:`, json)
+          
+          if (json.value && json.value.owner?.value === userAddress && json.value.active?.value === true) {
+            vaults.push({
+              id: i,
+              owner: json.value.owner.value,
+              amount: parseInt(json.value.amount.value),
+              lockTime: parseInt(json.value['lock-time'].value),
+              unlockTime: parseInt(json.value['unlock-time'].value),
+              active: json.value.active.value
+            })
+          }
+        } catch (error) {
+          console.log('Vault fetch stopped at id', i)
+          break
         }
-      } catch (error) {
-        console.log('Vault fetch error for id', i, error)
-        break
       }
+      
+      console.log('Found vaults:', vaults.length)
+      setUserVaults(vaults)
+      
+      if (vaults.length > 0) {
+        toast.success(`Found ${vaults.length} vault(s)`)
+      }
+    } catch (error) {
+      console.error('Vault fetch error:', error)
+      toast.error('Failed to fetch vaults')
+    } finally {
+      setIsRefreshing(false)
     }
-    
-    setUserVaults(vaults)
   }, [userAddress, stats?.vaults])
 
   useEffect(() => {
@@ -606,10 +626,11 @@ export default function App() {
                 <h2 className="text-2xl font-bold font-display">Your Vaults</h2>
                 <button 
                   onClick={fetchUserVaults}
-                  className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                  disabled={isRefreshing}
+                  className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors disabled:opacity-50"
                 >
-                  <RefreshCw className="w-4 h-4" />
-                  Refresh
+                  <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                  {isRefreshing ? 'Loading...' : 'Refresh'}
                 </button>
               </div>
 

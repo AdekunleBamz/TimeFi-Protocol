@@ -115,8 +115,8 @@ export default function App() {
   useEffect(() => {
     if (isConnected && userAddress) {
       fetchBalance()
-      // Refresh balance every 30 seconds
-      const interval = setInterval(fetchBalance, 30000)
+      // Refresh balance every 60 seconds to avoid rate limiting
+      const interval = setInterval(fetchBalance, 60000)
       return () => clearInterval(interval)
     }
   }, [isConnected, userAddress, fetchBalance])
@@ -153,16 +153,22 @@ export default function App() {
     }
   }, [])
 
-  // Fetch user vaults from contract
+  // Fetch user vaults from contract (simplified to avoid rate limiting)
   const fetchUserVaults = useCallback(async () => {
-    if (!userAddress) return
+    if (!userAddress || !stats?.vaults || stats.vaults === 0) {
+      setUserVaults([])
+      return
+    }
     
-    // Query vaults from contract - iterate through vault IDs
+    // Only check up to 10 vaults to avoid rate limiting
     const vaults: Vault[] = []
-    const maxVaultsToCheck = stats?.vaults || 100
+    const maxVaultsToCheck = Math.min(stats.vaults, 10)
     
     for (let i = 1; i <= maxVaultsToCheck; i++) {
       try {
+        // Add delay between requests to avoid rate limiting
+        if (i > 1) await new Promise(r => setTimeout(r, 500))
+        
         const result = await fetchCallReadOnlyFunction({
           contractAddress: CONTRACT_ADDRESS,
           contractName: CONTRACT_NAME,
@@ -183,7 +189,7 @@ export default function App() {
           })
         }
       } catch (error) {
-        // Vault doesn't exist or error fetching
+        console.log('Vault fetch error for id', i, error)
         break
       }
     }
@@ -193,7 +199,8 @@ export default function App() {
 
   useEffect(() => {
     fetchStats()
-    const interval = setInterval(fetchStats, 30000)
+    // Reduce frequency to avoid rate limiting (every 60 seconds)
+    const interval = setInterval(fetchStats, 60000)
     return () => clearInterval(interval)
   }, [fetchStats])
 
@@ -243,7 +250,7 @@ export default function App() {
     setIsLoading(true)
     
     const amountInMicroSTX = Math.floor(amount * 1_000_000)
-    const lockSeconds = lockDays * 86400
+      const lockSeconds = lockDays * 86400
 
     console.log('Creating vault with:', { amountInMicroSTX, lockSeconds, userAddress })
 
@@ -274,12 +281,12 @@ export default function App() {
               </a>
             </div>
           )
-          setShowCreateModal(false)
+      setShowCreateModal(false)
           setIsLoading(false)
           // Refresh data after a delay to allow tx to process
           setTimeout(() => {
             fetchBalance()
-            fetchUserVaults()
+      fetchUserVaults()
             fetchStats()
           }, 10000)
         },
@@ -330,7 +337,7 @@ export default function App() {
           setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
-            fetchUserVaults()
+      fetchUserVaults()
           }, 10000)
         },
         onCancel: () => {
@@ -381,7 +388,7 @@ export default function App() {
           setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
-            fetchUserVaults()
+      fetchUserVaults()
           }, 10000)
         },
         onCancel: () => {

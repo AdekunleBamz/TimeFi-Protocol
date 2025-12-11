@@ -19,23 +19,17 @@ import {
   Copy,
   RefreshCw
 } from 'lucide-react'
-import { Connect, AppConfig, UserSession, showConnect } from '@stacks/connect'
+import { AppConfig, UserSession, showConnect } from '@stacks/connect'
 import { 
-  callReadOnlyFunction, 
-  cvToJSON, 
-  uintCV,
-  standardPrincipalCV,
-  makeContractCall,
-  broadcastTransaction,
-  AnchorMode,
-  PostConditionMode
+  fetchCallReadOnlyFunction, 
+  cvToJSON
 } from '@stacks/transactions'
-import { StacksMainnet, StacksTestnet } from '@stacks/network'
+import { STACKS_TESTNET } from '@stacks/network'
 
 // Contract configuration - UPDATE THIS after deployment
 const CONTRACT_ADDRESS = 'SP000000000000000000002Q6VF78' // Replace with your deployed contract address
 const CONTRACT_NAME = 'timefi-vault'
-const NETWORK = new StacksTestnet() // Change to StacksMainnet() for production
+const NETWORK = STACKS_TESTNET // Change to STACKS_MAINNET for production
 
 // App configuration
 const appConfig = new AppConfig(['store_write', 'publish_data'])
@@ -86,7 +80,6 @@ export default function App() {
   const [userVaults, setUserVaults] = useState<Vault[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
-  const [selectedVault, setSelectedVault] = useState<Vault | null>(null)
 
   // Check if user is already logged in
   useEffect(() => {
@@ -100,7 +93,7 @@ export default function App() {
   // Fetch stats
   const fetchStats = useCallback(async () => {
     try {
-      const result = await callReadOnlyFunction({
+      const result = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: 'get-stats',
@@ -202,21 +195,8 @@ export default function App() {
     
     setIsLoading(true)
     try {
-      const lockSeconds = lockDays * 86400
-      const amountMicro = amount * 1_000_000
-
-      const txOptions = {
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAME,
-        functionName: 'create-vault',
-        functionArgs: [uintCV(amountMicro), uintCV(lockSeconds)],
-        senderKey: '', // Will be signed by wallet
-        network: NETWORK,
-        anchorMode: AnchorMode.Any,
-        postConditionMode: PostConditionMode.Allow,
-      }
-
       // For demo purposes, show success
+      console.log(`Creating vault: ${amount} STX for ${lockDays} days`)
       toast.success(`Vault created! ${amount} STX locked for ${lockDays} days`)
       setShowCreateModal(false)
       fetchUserVaults()

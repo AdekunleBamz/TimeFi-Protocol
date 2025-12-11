@@ -30,8 +30,8 @@ import {
 } from '@stacks/transactions'
 import { STACKS_MAINNET } from '@stacks/network'
 
-// Contract configuration - UPDATE THIS after deployment
-const CONTRACT_ADDRESS = 'SP000000000000000000002Q6VF78' // Replace with your deployed contract address
+// Contract configuration - Deployed on mainnet
+const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N'
 const CONTRACT_NAME = 'timefi-vault'
 const NETWORK = STACKS_MAINNET
 

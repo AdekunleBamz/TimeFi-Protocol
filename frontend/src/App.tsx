@@ -19,11 +19,14 @@ import {
   Copy,
   RefreshCw
 } from 'lucide-react'
-import { AppConfig, UserSession, showConnect } from '@stacks/connect'
+import { AppConfig, UserSession, showConnect, openContractCall } from '@stacks/connect'
 import { 
   fetchCallReadOnlyFunction, 
   cvToJSON, 
-  uintCV
+  uintCV,
+  PostConditionMode,
+  Pc,
+  AnchorMode
 } from '@stacks/transactions'
 import { STACKS_MAINNET } from '@stacks/network'
 
@@ -232,47 +235,156 @@ export default function App() {
     toast.success('Wallet disconnected')
   }
 
-  // Create vault
+  // Create vault - triggers wallet for approval
   const createVault = async (amount: number, lockDays: number) => {
     if (!userAddress) return
     
     setIsLoading(true)
     try {
-      // For demo purposes, show success
-      console.log(`Creating vault: ${amount} STX for ${lockDays} days`)
-      toast.success(`Vault created! ${amount} STX locked for ${lockDays} days`)
-      setShowCreateModal(false)
-      fetchUserVaults()
+      const amountInMicroSTX = Math.floor(amount * 1_000_000)
+      const lockSeconds = lockDays * 86400
+
+      // Create post condition using Pc builder (Stacks SDK v7)
+      const postConditions = [
+        Pc.principal(userAddress).willSendLte(amountInMicroSTX).ustx()
+      ]
+
+      await openContractCall({
+        contractAddress: CONTRACT_ADDRESS,
+        contractName: CONTRACT_NAME,
+        functionName: 'create-vault',
+        functionArgs: [
+          uintCV(amountInMicroSTX),
+          uintCV(lockSeconds)
+        ],
+        postConditionMode: PostConditionMode.Deny,
+        postConditions,
+        network: NETWORK,
+        anchorMode: AnchorMode.Any,
+        onFinish: (data) => {
+          console.log('Transaction submitted:', data)
+          toast.success(
+            <div>
+              <p>Vault creation submitted!</p>
+              <a 
+                href={`https://explorer.stacks.co/txid/${data.txId}?chain=mainnet`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-400 underline text-sm"
+              >
+                View on Explorer
+              </a>
+            </div>
+          )
+          setShowCreateModal(false)
+          // Refresh data after a delay to allow tx to process
+          setTimeout(() => {
+            fetchBalance()
+            fetchUserVaults()
+            fetchStats()
+          }, 5000)
+        },
+        onCancel: () => {
+          toast.error('Transaction cancelled')
+          setIsLoading(false)
+        }
+      })
     } catch (error) {
       toast.error('Failed to create vault')
       console.error(error)
-    } finally {
       setIsLoading(false)
     }
   }
 
-  // Request withdrawal
+  // Request withdrawal - triggers wallet
   const requestWithdraw = async (vaultId: number) => {
+    if (!userAddress) return
+    
     setIsLoading(true)
     try {
-      toast.success(`Withdrawal requested for Vault #${vaultId}`)
-      fetchUserVaults()
+      await openContractCall({
+        contractAddress: CONTRACT_ADDRESS,
+        contractName: CONTRACT_NAME,
+        functionName: 'request-withdraw',
+        functionArgs: [uintCV(vaultId)],
+        postConditionMode: PostConditionMode.Allow,
+        network: NETWORK,
+        anchorMode: AnchorMode.Any,
+        onFinish: (data) => {
+          console.log('Withdrawal request submitted:', data)
+          toast.success(
+            <div>
+              <p>Withdrawal requested for Vault #{vaultId}!</p>
+              <a 
+                href={`https://explorer.stacks.co/txid/${data.txId}?chain=mainnet`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-400 underline text-sm"
+              >
+                View on Explorer
+              </a>
+            </div>
+          )
+          setTimeout(() => {
+            fetchBalance()
+            fetchUserVaults()
+          }, 5000)
+        },
+        onCancel: () => {
+          toast.error('Transaction cancelled')
+          setIsLoading(false)
+        }
+      })
     } catch (error) {
       toast.error('Failed to request withdrawal')
-    } finally {
+      console.error(error)
       setIsLoading(false)
     }
   }
 
-  // Request early withdrawal
+  // Request early withdrawal - triggers wallet
   const requestEarlyWithdraw = async (vaultId: number) => {
+    if (!userAddress) return
+    
     setIsLoading(true)
     try {
-      toast.success(`Early withdrawal requested for Vault #${vaultId} (10% penalty)`)
-      fetchUserVaults()
+      await openContractCall({
+        contractAddress: CONTRACT_ADDRESS,
+        contractName: CONTRACT_NAME,
+        functionName: 'request-early-withdraw',
+        functionArgs: [uintCV(vaultId)],
+        postConditionMode: PostConditionMode.Allow,
+        network: NETWORK,
+        anchorMode: AnchorMode.Any,
+        onFinish: (data) => {
+          console.log('Early withdrawal request submitted:', data)
+          toast.success(
+            <div>
+              <p>Early withdrawal requested for Vault #{vaultId}!</p>
+              <p className="text-yellow-400 text-xs">10% penalty will apply</p>
+              <a 
+                href={`https://explorer.stacks.co/txid/${data.txId}?chain=mainnet`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-400 underline text-sm"
+              >
+                View on Explorer
+              </a>
+            </div>
+          )
+          setTimeout(() => {
+            fetchBalance()
+            fetchUserVaults()
+          }, 5000)
+        },
+        onCancel: () => {
+          toast.error('Transaction cancelled')
+          setIsLoading(false)
+        }
+      })
     } catch (error) {
       toast.error('Failed to request early withdrawal')
-    } finally {
+      console.error(error)
       setIsLoading(false)
     }
   }

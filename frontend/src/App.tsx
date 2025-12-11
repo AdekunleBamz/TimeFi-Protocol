@@ -22,7 +22,7 @@ import {
 import { AppConfig, UserSession, showConnect } from '@stacks/connect'
 import { 
   fetchCallReadOnlyFunction, 
-  cvToJSON,
+  cvToJSON, 
   uintCV
 } from '@stacks/transactions'
 import { STACKS_MAINNET } from '@stacks/network'
@@ -77,6 +77,7 @@ const shortenAddress = (address: string): string => {
 export default function App() {
   const [isConnected, setIsConnected] = useState(false)
   const [userAddress, setUserAddress] = useState<string | null>(null)
+  const [userBalance, setUserBalance] = useState<number>(0)
   const [stats, setStats] = useState<Stats | null>(null)
   const [userVaults, setUserVaults] = useState<Vault[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -90,6 +91,34 @@ export default function App() {
       setIsConnected(true)
     }
   }, [])
+
+  // Fetch user STX balance
+  const fetchBalance = useCallback(async () => {
+    if (!userAddress) return
+    
+    try {
+      const response = await fetch(
+        `https://api.mainnet.hiro.so/extended/v1/address/${userAddress}/stx`
+      )
+      const data = await response.json()
+      if (data.balance) {
+        setUserBalance(parseInt(data.balance))
+      }
+    } catch (error) {
+      console.log('Balance fetch error:', error)
+      setUserBalance(0)
+    }
+  }, [userAddress])
+
+  // Fetch balance when connected
+  useEffect(() => {
+    if (isConnected && userAddress) {
+      fetchBalance()
+      // Refresh balance every 30 seconds
+      const interval = setInterval(fetchBalance, 30000)
+      return () => clearInterval(interval)
+    }
+  }, [isConnected, userAddress, fetchBalance])
 
   // Fetch stats from contract
   const fetchStats = useCallback(async () => {
@@ -511,6 +540,7 @@ export default function App() {
             onClose={() => setShowCreateModal(false)}
             onSubmit={createVault}
             isLoading={isLoading}
+            userBalance={userBalance}
           />
         )}
       </AnimatePresence>
@@ -691,13 +721,16 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
 }
 
 // Create Vault Modal
-function CreateVaultModal({ onClose, onSubmit, isLoading }: {
+function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance }: {
   onClose: () => void
   onSubmit: (amount: number, lockDays: number) => void
   isLoading: boolean
+  userBalance: number
 }) {
   const [amount, setAmount] = useState('')
   const [lockDays, setLockDays] = useState(30)
+
+  const balanceInSTX = userBalance / 1_000_000
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -706,11 +739,21 @@ function CreateVaultModal({ onClose, onSubmit, isLoading }: {
       toast.error('Minimum deposit is 1 STX')
       return
     }
+    if (amountNum > balanceInSTX) {
+      toast.error('Insufficient balance')
+      return
+    }
     if (lockDays < 7 || lockDays > 90) {
       toast.error('Lock period must be between 7-90 days')
       return
     }
     onSubmit(amountNum, lockDays)
+  }
+
+  const handleMaxClick = () => {
+    // Leave some STX for transaction fees (0.01 STX)
+    const maxAmount = Math.max(0, balanceInSTX - 0.01)
+    setAmount(maxAmount.toFixed(6))
   }
 
   const fee = parseFloat(amount || '0') * 0.005
@@ -750,12 +793,34 @@ function CreateVaultModal({ onClose, onSubmit, isLoading }: {
           </div>
         </div>
 
+        {/* Balance Display */}
+        <div className="glass-light rounded-xl p-4 mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Wallet className="w-5 h-5 text-green-500" />
+              <span className="text-sm text-gray-400">Available Balance</span>
+            </div>
+            <span className="text-lg font-bold font-mono text-white">
+              {formatSTX(userBalance)} STX
+            </span>
+          </div>
+        </div>
+
         <form onSubmit={handleSubmit}>
           {/* Amount Input */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-400 mb-2">
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-sm font-medium text-gray-400">
               Amount (STX)
             </label>
+              <button
+                type="button"
+                onClick={handleMaxClick}
+                className="text-xs font-semibold text-green-500 hover:text-green-400 transition-colors px-2 py-1 rounded-md hover:bg-green-500/10"
+              >
+                MAX
+              </button>
+            </div>
             <div className="relative">
               <input
                 type="number"
@@ -763,6 +828,7 @@ function CreateVaultModal({ onClose, onSubmit, isLoading }: {
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="Enter amount"
                 min="1"
+                max={balanceInSTX}
                 step="0.000001"
                 className="input-field pr-16"
                 required
@@ -771,7 +837,12 @@ function CreateVaultModal({ onClose, onSubmit, isLoading }: {
                 STX
               </span>
             </div>
-            <p className="text-xs text-gray-500 mt-1">Minimum: 1 STX</p>
+            <div className="flex justify-between mt-1">
+              <p className="text-xs text-gray-500">Minimum: 1 STX</p>
+              {parseFloat(amount) > balanceInSTX && (
+                <p className="text-xs text-red-500">Exceeds balance</p>
+              )}
+            </div>
           </div>
 
           {/* Lock Period Slider */}

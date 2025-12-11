@@ -25,8 +25,7 @@ import {
   cvToJSON, 
   uintCV,
   PostConditionMode,
-  Pc,
-  AnchorMode
+  Pc
 } from '@stacks/transactions'
 import { STACKS_MAINNET } from '@stacks/network'
 
@@ -249,7 +248,7 @@ export default function App() {
         Pc.principal(userAddress).willSendLte(amountInMicroSTX).ustx()
       ]
 
-      await openContractCall({
+      openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: 'create-vault',
@@ -260,7 +259,6 @@ export default function App() {
         postConditionMode: PostConditionMode.Deny,
         postConditions,
         network: NETWORK,
-        anchorMode: AnchorMode.Any,
         onFinish: (data) => {
           console.log('Transaction submitted:', data)
           toast.success(
@@ -277,12 +275,13 @@ export default function App() {
             </div>
           )
           setShowCreateModal(false)
+          setIsLoading(false)
           // Refresh data after a delay to allow tx to process
           setTimeout(() => {
             fetchBalance()
             fetchUserVaults()
             fetchStats()
-          }, 5000)
+          }, 10000)
         },
         onCancel: () => {
           toast.error('Transaction cancelled')
@@ -302,14 +301,13 @@ export default function App() {
     
     setIsLoading(true)
     try {
-      await openContractCall({
+      openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: 'request-withdraw',
         functionArgs: [uintCV(vaultId)],
         postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
-        anchorMode: AnchorMode.Any,
         onFinish: (data) => {
           console.log('Withdrawal request submitted:', data)
           toast.success(
@@ -325,10 +323,11 @@ export default function App() {
               </a>
             </div>
           )
+          setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
             fetchUserVaults()
-          }, 5000)
+          }, 10000)
         },
         onCancel: () => {
           toast.error('Transaction cancelled')
@@ -348,14 +347,13 @@ export default function App() {
     
     setIsLoading(true)
     try {
-      await openContractCall({
+      openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: 'request-early-withdraw',
         functionArgs: [uintCV(vaultId)],
         postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
-        anchorMode: AnchorMode.Any,
         onFinish: (data) => {
           console.log('Early withdrawal request submitted:', data)
           toast.success(
@@ -372,10 +370,11 @@ export default function App() {
               </a>
             </div>
           )
+          setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
             fetchUserVaults()
-          }, 5000)
+          }, 10000)
         },
         onCancel: () => {
           toast.error('Transaction cancelled')

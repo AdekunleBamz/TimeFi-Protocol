@@ -155,26 +155,20 @@ export default function App() {
 
   // Fetch user vaults from contract
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [allVaults, setAllVaults] = useState<Vault[]>([])
   
-  const fetchUserVaults = useCallback(async () => {
-    if (!userAddress) {
-      setUserVaults([])
-      return
-    }
-    
+  // Fetch ALL vaults from contract (not filtered by user)
+  const fetchAllVaults = useCallback(async () => {
     setIsRefreshing(true)
-    console.log('Fetching vaults for:', userAddress)
+    console.log('Fetching all vaults...')
     
     try {
-      // First get total vaults count
-      const totalVaults = stats?.vaults || 10
       const vaults: Vault[] = []
-      const maxVaultsToCheck = Math.min(totalVaults, 20)
+      const totalVaultCount = stats?.vaults || 10
       
-      for (let i = 1; i <= maxVaultsToCheck; i++) {
+      for (let i = 1; i <= Math.min(totalVaultCount + 5, 30); i++) {
         try {
-          // Add delay between requests to avoid rate limiting
-          if (i > 1) await new Promise(r => setTimeout(r, 300))
+          if (i > 1) await new Promise(r => setTimeout(r, 250))
           
           const result = await fetchCallReadOnlyFunction({
             contractAddress: CONTRACT_ADDRESS,
@@ -182,40 +176,62 @@ export default function App() {
             functionName: 'get-vault',
             functionArgs: [uintCV(i)],
             network: NETWORK,
-            senderAddress: userAddress,
+            senderAddress: CONTRACT_ADDRESS,
           })
           const json = cvToJSON(result)
-          console.log(`Vault ${i}:`, json)
           
-          if (json.value && json.value.owner?.value === userAddress && json.value.active?.value === true) {
-            vaults.push({
+          if (json.value && json.value.owner) {
+            const vault: Vault = {
               id: i,
               owner: json.value.owner.value,
-              amount: parseInt(json.value.amount.value),
-              lockTime: parseInt(json.value['lock-time'].value),
-              unlockTime: parseInt(json.value['unlock-time'].value),
-              active: json.value.active.value
-            })
+              amount: parseInt(json.value.amount.value || '0'),
+              lockTime: parseInt(json.value['lock-time']?.value || '0'),
+              unlockTime: parseInt(json.value['unlock-time']?.value || '0'),
+              active: json.value.active?.value === true
+            }
+            vaults.push(vault)
+            console.log(`Vault ${i}:`, vault.owner, 'active:', vault.active, 'amount:', vault.amount)
           }
         } catch (error) {
-          console.log('Vault fetch stopped at id', i)
-          break
+          console.log(`No vault at ID ${i}`)
+          continue
         }
       }
       
-      console.log('Found vaults:', vaults.length)
-      setUserVaults(vaults)
+      setAllVaults(vaults)
+      console.log('All vaults loaded:', vaults.length)
       
-      if (vaults.length > 0) {
-        toast.success(`Found ${vaults.length} vault(s)`)
+      // Filter for current user
+      if (userAddress) {
+        const myVaults = vaults.filter(v => 
+          v.owner.toLowerCase() === userAddress.toLowerCase() && v.active
+        )
+        console.log('User vaults:', myVaults.length, 'for address:', userAddress)
+        setUserVaults(myVaults)
+        
+        if (myVaults.length > 0) {
+          toast.success(`Found ${myVaults.length} vault(s)`)
+        }
       }
     } catch (error) {
       console.error('Vault fetch error:', error)
-      toast.error('Failed to fetch vaults')
     } finally {
       setIsRefreshing(false)
     }
-  }, [userAddress, stats?.vaults])
+  }, [stats?.vaults, userAddress])
+
+  // Filter vaults when user address changes
+  useEffect(() => {
+    if (userAddress && allVaults.length > 0) {
+      const myVaults = allVaults.filter(v => 
+        v.owner.toLowerCase() === userAddress.toLowerCase() && v.active
+      )
+      setUserVaults(myVaults)
+    }
+  }, [userAddress, allVaults])
+  
+  // Alias for refresh button
+  const fetchUserVaults = fetchAllVaults
 
   useEffect(() => {
     fetchStats()
@@ -523,6 +539,16 @@ export default function App() {
 
             <div className="flex flex-wrap justify-center gap-4">
               {isConnected ? (
+                userVaults.length > 0 ? (
+                  <motion.div
+                    className="glass-light px-8 py-4 rounded-xl flex items-center gap-3"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                  >
+                    <CheckCircle className="w-6 h-6 text-green-500" />
+                    <span className="text-gray-300">You have an active vault - scroll down to manage it</span>
+                  </motion.div>
+                ) : (
                 <motion.button
                   onClick={() => setShowCreateModal(true)}
                   className="btn-primary text-lg px-8 py-4 flex items-center gap-2"
@@ -532,6 +558,7 @@ export default function App() {
                   <Plus className="w-5 h-5" />
                   Create Vault
                 </motion.button>
+                )
               ) : (
                 <motion.button
                   onClick={connectWallet}
@@ -634,7 +661,13 @@ export default function App() {
                 </button>
               </div>
 
-              {userVaults.length > 0 ? (
+              {isRefreshing ? (
+                <div className="text-center py-16 glass rounded-2xl">
+                  <RefreshCw className="w-16 h-16 text-green-500 mx-auto mb-4 animate-spin" />
+                  <h3 className="text-xl font-semibold text-gray-400 mb-2">Loading Vaults...</h3>
+                  <p className="text-gray-500">Fetching your vaults from the blockchain</p>
+                </div>
+              ) : userVaults.length > 0 ? (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {userVaults.map((vault) => (
                     <VaultCard
@@ -649,8 +682,14 @@ export default function App() {
               ) : (
                 <div className="text-center py-16 glass rounded-2xl">
                   <Lock className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-400 mb-2">No Vaults Yet</h3>
-                  <p className="text-gray-500 mb-6">Create your first time-locked vault to get started</p>
+                  <h3 className="text-xl font-semibold text-gray-400 mb-2">No Vaults Found</h3>
+                  <p className="text-gray-500 mb-4">
+                    {allVaults.length > 0 
+                      ? `${allVaults.length} vault(s) exist on the protocol, but none belong to your connected wallet.`
+                      : 'Create your first time-locked vault to get started'
+                    }
+                  </p>
+                  <p className="text-xs text-gray-600 mb-6">Connected: {userAddress}</p>
                   <button
                     onClick={() => setShowCreateModal(true)}
                     className="btn-primary"

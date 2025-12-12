@@ -179,18 +179,21 @@ export default function App() {
             senderAddress: CONTRACT_ADDRESS,
           })
           const json = cvToJSON(result)
+          console.log(`Raw vault ${i} response:`, JSON.stringify(json))
           
-          if (json.value && json.value.owner) {
+          // Data is nested: json.value.value contains the tuple data
+          const vaultData = json.value?.value
+          if (vaultData && vaultData.owner) {
             const vault: Vault = {
               id: i,
-              owner: json.value.owner.value,
-              amount: parseInt(json.value.amount.value || '0'),
-              lockTime: parseInt(json.value['lock-time']?.value || '0'),
-              unlockTime: parseInt(json.value['unlock-time']?.value || '0'),
-              active: json.value.active?.value === true
+              owner: vaultData.owner.value,
+              amount: parseInt(vaultData.amount?.value || '0'),
+              lockTime: parseInt(vaultData['lock-time']?.value || '0'),
+              unlockTime: parseInt(vaultData['unlock-time']?.value || '0'),
+              active: vaultData.active?.value === true
             }
             vaults.push(vault)
-            console.log(`Vault ${i}:`, vault.owner, 'active:', vault.active, 'amount:', vault.amount)
+            console.log(`✓ Vault ${i}: owner=${vault.owner}, active=${vault.active}, amount=${vault.amount}`)
           }
         } catch (error) {
           console.log(`No vault at ID ${i}`)
@@ -199,22 +202,23 @@ export default function App() {
       }
       
       setAllVaults(vaults)
-      console.log('All vaults loaded:', vaults.length)
+      console.log('Total vaults loaded:', vaults.length)
       
       // Filter for current user
       if (userAddress) {
         const myVaults = vaults.filter(v => 
           v.owner.toLowerCase() === userAddress.toLowerCase() && v.active
         )
-        console.log('User vaults:', myVaults.length, 'for address:', userAddress)
+        console.log('User vaults found:', myVaults.length, 'for address:', userAddress)
         setUserVaults(myVaults)
         
         if (myVaults.length > 0) {
-          toast.success(`Found ${myVaults.length} vault(s)`)
+          toast.success(`Found ${myVaults.length} vault(s)!`)
         }
       }
     } catch (error) {
       console.error('Vault fetch error:', error)
+      toast.error('Failed to load vaults')
     } finally {
       setIsRefreshing(false)
     }

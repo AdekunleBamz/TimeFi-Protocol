@@ -543,16 +543,6 @@ export default function App() {
 
             <div className="flex flex-wrap justify-center gap-4">
               {isConnected ? (
-                userVaults.length > 0 ? (
-                  <motion.div
-                    className="glass-light px-8 py-4 rounded-xl flex items-center gap-3"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                  >
-                    <CheckCircle className="w-6 h-6 text-green-500" />
-                    <span className="text-gray-300">You have an active vault - scroll down to manage it</span>
-                  </motion.div>
-                ) : (
                 <motion.button
                   onClick={() => setShowCreateModal(true)}
                   className="btn-primary text-lg px-8 py-4 flex items-center gap-2"
@@ -560,9 +550,8 @@ export default function App() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Plus className="w-5 h-5" />
-                  Create Vault
+                  {userVaults.length > 0 ? 'Create Another Vault' : 'Create Vault'}
                 </motion.button>
-                )
               ) : (
                 <motion.button
                   onClick={connectWallet}

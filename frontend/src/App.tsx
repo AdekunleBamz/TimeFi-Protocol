@@ -28,9 +28,9 @@ import {
 } from '@stacks/transactions'
 import { STACKS_MAINNET } from '@stacks/network'
 
-// Contract configuration - Deployed on mainnet
+// Contract configuration - V2 Non-Custodial on mainnet
 const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N'
-const CONTRACT_NAME = 'timefi-vault'
+const CONTRACT_NAME = 'timefi-vault-v2'
 const NETWORK = STACKS_MAINNET
 
 // App configuration
@@ -121,13 +121,13 @@ export default function App() {
     }
   }, [isConnected, userAddress, fetchBalance])
 
-  // Fetch stats from contract
+  // Fetch stats from contract (V2 uses get-protocol-stats)
   const fetchStats = useCallback(async () => {
     try {
       const result = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: 'get-stats',
+        functionName: 'get-protocol-stats',
         functionArgs: [],
         network: NETWORK,
         senderAddress: CONTRACT_ADDRESS,
@@ -135,10 +135,10 @@ export default function App() {
       const json = cvToJSON(result)
       if (json.value) {
         setStats({
-          vaults: parseInt(json.value.vaults.value),
-          tvl: parseInt(json.value.tvl.value),
-          fees: parseInt(json.value.fees.value),
-          time: parseInt(json.value.time.value),
+          vaults: parseInt(json.value['total-vaults']?.value || '0'),
+          tvl: parseInt(json.value['total-tvl']?.value || '0'),
+          fees: parseInt(json.value['total-fees']?.value || '0'),
+          time: parseInt(json.value['current-time']?.value || '0'),
         })
       }
     } catch (error) {
@@ -342,8 +342,8 @@ export default function App() {
     }
   }
 
-  // Request withdrawal - triggers wallet
-  const requestWithdraw = async (vaultId: number) => {
+  // Direct withdrawal - V2 non-custodial (user withdraws directly!)
+  const withdraw = async (vaultId: number) => {
     if (!userAddress) {
       toast.error('Please connect wallet first')
       return
@@ -354,16 +354,17 @@ export default function App() {
       openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: 'request-withdraw',
+        functionName: 'withdraw',
         functionArgs: [uintCV(vaultId)],
         postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
         userSession,
         onFinish: (data) => {
-          console.log('Withdrawal request submitted:', data)
+          console.log('Withdrawal successful:', data)
           toast.success(
             <div>
-              <p>Withdrawal requested for Vault #{vaultId}!</p>
+              <p>🎉 Vault #{vaultId} withdrawn successfully!</p>
+              <p className="text-green-400 text-xs">STX sent directly to your wallet!</p>
               <a 
                 href={`https://explorer.stacks.co/txid/${data.txId}?chain=mainnet`}
                 target="_blank"
@@ -377,7 +378,7 @@ export default function App() {
           setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
-      fetchUserVaults()
+            fetchUserVaults()
           }, 10000)
         },
         onCancel: () => {
@@ -392,8 +393,10 @@ export default function App() {
     }
   }
 
-  // Request early withdrawal - triggers wallet
-  const requestEarlyWithdraw = async (vaultId: number) => {
+  // V2 is non-custodial - deployer check not needed
+
+  // Direct early withdrawal - V2 non-custodial (user withdraws directly with 10% penalty!)
+  const earlyWithdraw = async (vaultId: number) => {
     if (!userAddress) {
       toast.error('Please connect wallet first')
       return
@@ -404,17 +407,17 @@ export default function App() {
       openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: 'request-early-withdraw',
+        functionName: 'early-withdraw',
         functionArgs: [uintCV(vaultId)],
         postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
         userSession,
         onFinish: (data) => {
-          console.log('Early withdrawal request submitted:', data)
+          console.log('Early withdrawal successful:', data)
           toast.success(
             <div>
-              <p>Early withdrawal requested for Vault #{vaultId}!</p>
-              <p className="text-yellow-400 text-xs">10% penalty will apply</p>
+              <p>⚡ Vault #{vaultId} withdrawn early!</p>
+              <p className="text-yellow-400 text-xs">10% penalty applied - STX sent to your wallet!</p>
               <a 
                 href={`https://explorer.stacks.co/txid/${data.txId}?chain=mainnet`}
                 target="_blank"
@@ -428,7 +431,7 @@ export default function App() {
           setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
-      fetchUserVaults()
+            fetchUserVaults()
           }, 10000)
         },
         onCancel: () => {
@@ -442,6 +445,8 @@ export default function App() {
       setIsLoading(false)
     }
   }
+
+  // V2 is non-custodial - no admin process functions needed!
 
   return (
     <div className="min-h-screen animated-bg bg-grid">
@@ -666,8 +671,8 @@ export default function App() {
                     <VaultCard
                       key={vault.id}
                       vault={vault}
-                      onRequestWithdraw={requestWithdraw}
-                      onRequestEarlyWithdraw={requestEarlyWithdraw}
+                      onWithdraw={withdraw}
+                      onEarlyWithdraw={earlyWithdraw}
                       currentTime={stats?.time || Math.floor(Date.now() / 1000)}
                     />
                   ))}
@@ -694,6 +699,8 @@ export default function App() {
               )}
             </motion.div>
           )}
+
+          {/* V2 is non-custodial - no admin panel needed! Users withdraw directly */}
         </div>
       </section>
 
@@ -775,11 +782,11 @@ function FeatureCard({ icon, title, description }: {
   )
 }
 
-// Vault Card Component
-function VaultCard({ vault, onRequestWithdraw, onRequestEarlyWithdraw, currentTime }: {
+// Vault Card Component - V2 Non-Custodial (Direct Withdrawals!)
+function VaultCard({ vault, onWithdraw, onEarlyWithdraw, currentTime }: {
   vault: Vault
-  onRequestWithdraw: (id: number) => void
-  onRequestEarlyWithdraw: (id: number) => void
+  onWithdraw: (id: number) => void
+  onEarlyWithdraw: (id: number) => void
   currentTime: number
 }) {
   const [timeLeft, setTimeLeft] = useState(0)
@@ -826,6 +833,11 @@ function VaultCard({ vault, onRequestWithdraw, onRequestEarlyWithdraw, currentTi
         )}
       </div>
 
+      {/* V2 Badge */}
+      <div className="mb-4 p-2 rounded-lg bg-green-500/10 border border-green-500/20">
+        <p className="text-xs text-green-400 text-center">✨ Non-Custodial V2 - Direct Withdrawals</p>
+      </div>
+
       {/* Amount */}
       <div className="mb-6">
         <p className="text-sm text-gray-500 mb-1">Locked Amount</p>
@@ -863,25 +875,28 @@ function VaultCard({ vault, onRequestWithdraw, onRequestEarlyWithdraw, currentTi
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-2">
+      {/* Actions - V2 Direct Withdrawals (No Admin Needed!) */}
+      <div className="flex flex-col gap-2">
         {isUnlocked ? (
           <button
-            onClick={() => onRequestWithdraw(vault.id)}
+            onClick={() => onWithdraw(vault.id)}
             className="btn-primary flex-1 flex items-center justify-center gap-2"
           >
             <CheckCircle className="w-4 h-4" />
-            Withdraw
+            Withdraw Now
           </button>
         ) : (
           <button
-            onClick={() => onRequestEarlyWithdraw(vault.id)}
+            onClick={() => onEarlyWithdraw(vault.id)}
             className="btn-secondary flex-1 flex items-center justify-center gap-2 text-sm"
           >
             <AlertTriangle className="w-4 h-4" />
-            Early Withdraw (10% Fee)
+            Early Withdraw (10% Penalty)
           </button>
         )}
+        <p className="text-xs text-green-500 text-center">
+          🚀 Instant - STX goes directly to your wallet!
+        </p>
       </div>
     </motion.div>
   )

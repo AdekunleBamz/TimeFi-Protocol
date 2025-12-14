@@ -13,3 +13,14 @@ epoch = "3.3"
 path = "contracts/timefi-vault-v2.clar"
 clarity_version = 4
 epoch = "3.3"
+
+[contracts.sbtc-token]
+path = "contracts/sbtc-token.clar"
+clarity_version = 3
+epoch = "3.0"
+
+[contracts.diamond-hands-v3]
+path = "contracts/diamond-hands-v3.clar"
+clarity_version = 4
+epoch = "3.3"
+depends_on = ["sbtc-token"]

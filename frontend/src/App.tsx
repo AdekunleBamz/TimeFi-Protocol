@@ -228,10 +228,25 @@ export default function App() {
       })
       const json = cvToJSON(result)
       if (json.value) {
+        const rawSbtc = json.value['total-tvl-sbtc']
+        const rawStx = json.value['total-tvl-stx']
+        // Handle both object format {value: "123"} and direct value
+        const tvlSbtc = rawSbtc ? parseInt(typeof rawSbtc === 'object' && rawSbtc !== null ? (rawSbtc.value || '0') : String(rawSbtc || '0')) : 0
+        const tvlStx = rawStx ? parseInt(typeof rawStx === 'object' && rawStx !== null ? (rawStx.value || '0') : String(rawStx || '0')) : 0
+        console.log('Protocol Stats:', {
+          tvlStx,
+          tvlSbtc,
+          rawSbtc,
+          rawStx,
+          sbtcType: typeof rawSbtc,
+          stxType: typeof rawStx,
+          sbtcStringified: JSON.stringify(rawSbtc),
+          stxStringified: JSON.stringify(rawStx)
+        })
         setStats({
           vaults: parseInt(json.value['total-vaults']?.value || '0'),
-          tvlStx: parseInt(json.value['total-tvl-stx']?.value || '0'),
-          tvlSbtc: parseInt(json.value['total-tvl-sbtc']?.value || '0'),
+          tvlStx,
+          tvlSbtc,
           totalPoints: parseInt(json.value['total-points']?.value || '0'),
           feesStx: parseInt(json.value['total-fees-stx']?.value || '0'),
           time: parseInt(json.value['current-time']?.value || '0'),
@@ -693,8 +708,8 @@ export default function App() {
             </h1>
             
             <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10">
-              Lock your STX, earn points, prove you're a true HODLer.
-              The longer you lock, the more points you earn.
+              Lock your STX or sBTC, earn points, prove you're a true HODLer.
+              The longer you lock, the more points you earn. sBTC earns 10x bonus points!
             </p>
 
             {/* Tier Preview */}
@@ -753,7 +768,7 @@ export default function App() {
             <StatCard
               icon={<TrendingUp className="w-6 h-6" />}
               label="Total Value Locked"
-              value={`${formatSTX(stats?.tvlStx || 0)} STX${stats?.tvlSbtc && stats.tvlSbtc > 0 ? ` + ${formatSBTC(stats.tvlSbtc)} sBTC` : ''}`}
+              value={`${formatSTX(stats?.tvlStx || 0)} STX ${formatSBTC(stats?.tvlSbtc || 0)} sBTC`}
               color="purple"
             />
             <StatCard
@@ -790,7 +805,7 @@ export default function App() {
             <FeatureCard
               icon={<Shield className="w-8 h-8" />}
               title="Non-Custodial"
-              description="Your STX stays in the smart contract. Withdraw directly, no admin needed."
+              description="Your STX and sBTC stay in the smart contract. Withdraw directly, no admin needed."
             />
           </motion.div>
 

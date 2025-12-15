@@ -29,7 +29,7 @@ import {
 } from '@stacks/transactions'
 import { STACKS_MAINNET } from '@stacks/network'
 
-// Contract configuration - Diamond Hands V3 on mainnet
+// Contract configuration - Diamond Hands Protocol on mainnet
 const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N'
 const CONTRACT_NAME = 'diamond-hands-v3'
 const NETWORK = STACKS_MAINNET
@@ -631,7 +631,6 @@ export default function App() {
               </div>
               <div>
                 <span className="text-xl font-bold gradient-text font-display">Diamond Hands</span>
-                <span className="text-xs text-gray-500 block">V3</span>
               </div>
             </motion.div>
 
@@ -1018,7 +1017,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Gem className="w-5 h-5 text-cyan-400" />
-            <span className="text-gray-400">Diamond Hands Protocol V3</span>
+            <span className="text-gray-400">Diamond Hands Protocol</span>
           </div>
           <div className="flex items-center gap-6 text-sm text-gray-500">
             <span>Powered by Stacks</span>

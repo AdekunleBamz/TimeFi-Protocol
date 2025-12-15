@@ -810,7 +810,7 @@ export default function App() {
             <FeatureCard
               icon={<Shield className="w-8 h-8" />}
               title="Non-Custodial"
-              description="Your STX and sBTC stay in the smart contract. Withdraw directly, no admin needed."
+              description="Non-custodial smart contract vaults. Your assets are secured on-chain with permissionless withdrawals—no third-party control."
             />
           </motion.div>
 

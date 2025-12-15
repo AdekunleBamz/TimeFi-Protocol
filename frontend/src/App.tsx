@@ -768,7 +768,12 @@ export default function App() {
             <StatCard
               icon={<TrendingUp className="w-6 h-6" />}
               label="Total Value Locked"
-              value={`${formatSTX(stats?.tvlStx || 0)} STX ${formatSBTC(stats?.tvlSbtc || 0)} sBTC`}
+              value={
+                <div className="flex flex-col gap-1">
+                  <div>{formatSTX(stats?.tvlStx || 0)} STX</div>
+                  <div>{formatSBTC(stats?.tvlSbtc || 0)} sBTC</div>
+                </div>
+              }
               color="purple"
             />
             <StatCard
@@ -1043,7 +1048,7 @@ export default function App() {
 function StatCard({ icon, label, value, color }: { 
   icon: React.ReactNode
   label: string
-  value: string
+  value: string | React.ReactNode
   color: 'green' | 'purple' | 'yellow' | 'blue'
 }) {
   const colorClasses = {
@@ -1062,7 +1067,7 @@ function StatCard({ icon, label, value, color }: {
         {icon}
       </div>
       <p className="text-sm text-gray-400 mb-1">{label}</p>
-      <p className="text-2xl font-bold font-mono">{value}</p>
+      <div className="text-2xl font-bold font-mono">{value}</div>
     </motion.div>
   )
 }

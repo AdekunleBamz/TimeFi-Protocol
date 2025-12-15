@@ -2,20 +2,16 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Toaster, toast } from 'react-hot-toast'
 import { 
-  Clock, 
   Wallet, 
   Lock, 
   Unlock, 
   TrendingUp, 
   Shield, 
-  Zap, 
   ArrowRight, 
   Plus, 
-  Timer,
   CheckCircle,
   AlertTriangle,
   X,
-  ExternalLink,
   Copy,
   RefreshCw,
   Award,
@@ -37,6 +33,10 @@ import { STACKS_MAINNET } from '@stacks/network'
 const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N'
 const CONTRACT_NAME = 'diamond-hands-v3'
 const NETWORK = STACKS_MAINNET
+
+// sBTC Token Contract (Mainnet)
+const SBTC_CONTRACT_ADDRESS = 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4'
+const SBTC_CONTRACT_NAME = 'sbtc-token'
 
 // App configuration
 const appConfig = new AppConfig(['store_write', 'publish_data'])
@@ -95,6 +95,21 @@ const formatSTX = (microSTX: number): string => {
   })
 }
 
+const formatSBTC = (microSBTC: number): string => {
+  return (microSBTC / 100_000_000).toLocaleString('en-US', {
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 8
+  })
+}
+
+const formatAmount = (amount: number, assetType: number): string => {
+  return assetType === 2 ? formatSBTC(amount) : formatSTX(amount)
+}
+
+const getAssetName = (assetType: number): string => {
+  return assetType === 2 ? 'sBTC' : 'STX'
+}
+
 const formatPoints = (points: number): string => {
   if (points >= 1000000) return `${(points / 1000000).toFixed(1)}M`
   if (points >= 1000) return `${(points / 1000).toFixed(1)}K`
@@ -114,9 +129,11 @@ const shortenAddress = (address: string): string => {
 }
 
 // Calculate estimated points
-const calculateEstimatedPoints = (amount: number, lockDays: number): number => {
+const calculateEstimatedPoints = (amount: number, lockDays: number, assetType: number = 1): number => {
   const multiplier = lockDays >= 90 ? 3 : lockDays >= 60 ? 2 : lockDays >= 30 ? 1.5 : 1
-  return Math.floor(amount * lockDays * multiplier)
+  const basePoints = Math.floor(amount * lockDays * multiplier)
+  // sBTC gets 10x multiplier
+  return assetType === 2 ? basePoints * 10 : basePoints
 }
 
 // Main App Component
@@ -124,11 +141,14 @@ export default function App() {
   const [isConnected, setIsConnected] = useState(false)
   const [userAddress, setUserAddress] = useState<string | null>(null)
   const [userBalance, setUserBalance] = useState<number>(0)
+  const [userSbtcBalance, setUserSbtcBalance] = useState<number>(0)
   const [stats, setStats] = useState<Stats | null>(null)
   const [userStats, setUserStats] = useState<UserStats | null>(null)
   const [userVaults, setUserVaults] = useState<Vault[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
+  const [showLeaderboard, setShowLeaderboard] = useState(false)
+  const [leaderboard, setLeaderboard] = useState<Array<{ address: string; points: number }>>([])
 
   // Check if user is already logged in
   useEffect(() => {
@@ -157,14 +177,43 @@ export default function App() {
     }
   }, [userAddress])
 
-  // Fetch balance when connected
+  // Fetch user sBTC balance
+  const fetchSbtcBalance = useCallback(async () => {
+    if (!userAddress) return
+    
+    try {
+      const balanceResponse = await fetch(
+        `https://api.mainnet.hiro.so/extended/v1/tokens/ft/balances?principal=${userAddress}`
+      )
+      const balances = await balanceResponse.json()
+      
+      const sbtcBalance = balances.ft_balances?.find(
+        (b: any) => b.contract_address === `${SBTC_CONTRACT_ADDRESS}.${SBTC_CONTRACT_NAME}`
+      )
+      
+      if (sbtcBalance?.balance) {
+        setUserSbtcBalance(parseInt(sbtcBalance.balance))
+      } else {
+        setUserSbtcBalance(0)
+      }
+    } catch (error) {
+      console.log('sBTC balance fetch error:', error)
+      setUserSbtcBalance(0)
+    }
+  }, [userAddress])
+
+  // Fetch balances when connected
   useEffect(() => {
     if (isConnected && userAddress) {
       fetchBalance()
-      const interval = setInterval(fetchBalance, 60000)
+      fetchSbtcBalance()
+      const interval = setInterval(() => {
+        fetchBalance()
+        fetchSbtcBalance()
+      }, 60000)
       return () => clearInterval(interval)
     }
-  }, [isConnected, userAddress, fetchBalance])
+  }, [isConnected, userAddress, fetchBalance, fetchSbtcBalance])
 
   // Fetch stats from contract
   const fetchStats = useCallback(async () => {
@@ -277,6 +326,22 @@ export default function App() {
       
       setAllVaults(vaults)
       
+      // Calculate leaderboard from vaults
+      const pointsMap = new Map<string, number>()
+      vaults.forEach(vault => {
+        if (vault.active) {
+          const current = pointsMap.get(vault.owner) || 0
+          pointsMap.set(vault.owner, current + vault.pointsEarned)
+        }
+      })
+      
+      const leaderboardData = Array.from(pointsMap.entries())
+        .map(([address, points]) => ({ address, points }))
+        .sort((a, b) => b.points - a.points)
+        .slice(0, 10)
+      
+      setLeaderboard(leaderboardData)
+      
       if (userAddress) {
         const myVaults = vaults.filter(v => 
           v.owner.toLowerCase() === userAddress.toLowerCase() && v.active
@@ -351,7 +416,7 @@ export default function App() {
   }
 
   // Create vault
-  const createVault = async (amount: number, lockDays: number, vaultName: string) => {
+  const createVault = async (amount: number, lockDays: number, vaultName: string, assetType: number = 1) => {
     if (!userAddress) {
       toast.error('Please connect wallet first')
       return
@@ -359,16 +424,20 @@ export default function App() {
     
     setIsLoading(true)
     
-    const amountInMicroSTX = Math.floor(amount * 1_000_000)
-      const lockSeconds = lockDays * 86400
+    const lockSeconds = lockDays * 86400
+    const isSbtc = assetType === 2
+    // STX: 6 decimals, sBTC: 8 decimals
+    const amountInMicro = isSbtc 
+      ? Math.floor(amount * 100_000_000)
+      : Math.floor(amount * 1_000_000)
 
     try {
       openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: 'create-stx-vault',
+        functionName: isSbtc ? 'create-sbtc-vault' : 'create-stx-vault',
         functionArgs: [
-          uintCV(amountInMicroSTX),
+          uintCV(amountInMicro),
           uintCV(lockSeconds),
           stringAsciiCV(vaultName.substring(0, 50))
         ],
@@ -379,8 +448,8 @@ export default function App() {
           const tier = getTier(lockDays)
           toast.success(
             <div>
-              <p>💎 {tier.name} Vault Created!</p>
-              <p className="text-xs text-gray-400">Earning {tier.multiplier} points</p>
+              <p>💎 {tier.name} {getAssetName(assetType)} Vault Created!</p>
+              <p className="text-xs text-gray-400">Earning {tier.multiplier} points {isSbtc ? '(10x sBTC bonus!)' : ''}</p>
               <a 
                 href={`https://explorer.stacks.co/txid/${data.txId}?chain=mainnet`}
                 target="_blank"
@@ -391,11 +460,12 @@ export default function App() {
               </a>
             </div>
           )
-      setShowCreateModal(false)
+          setShowCreateModal(false)
           setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
-      fetchUserVaults()
+            fetchSbtcBalance()
+            fetchUserVaults()
             fetchStats()
             fetchUserStats()
           }, 10000)
@@ -413,18 +483,20 @@ export default function App() {
   }
 
   // Withdraw
-  const withdraw = async (vaultId: number) => {
+  const withdraw = async (vaultId: number, assetType: number) => {
     if (!userAddress) {
       toast.error('Please connect wallet first')
       return
     }
     
     setIsLoading(true)
+    const isSbtc = assetType === 2
+    
     try {
       openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: 'withdraw-stx',
+        functionName: isSbtc ? 'withdraw-sbtc' : 'withdraw-stx',
         functionArgs: [uintCV(vaultId)],
         postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
@@ -432,7 +504,7 @@ export default function App() {
         onFinish: (data) => {
           toast.success(
             <div>
-              <p>💎 Diamond Hands! Vault #{vaultId} withdrawn!</p>
+              <p>💎 Diamond Hands! {getAssetName(assetType)} Vault #{vaultId} withdrawn!</p>
               <p className="text-green-400 text-xs">Points retained forever!</p>
               <a 
                 href={`https://explorer.stacks.co/txid/${data.txId}?chain=mainnet`}
@@ -447,6 +519,7 @@ export default function App() {
           setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
+            fetchSbtcBalance()
             fetchUserVaults()
             fetchUserStats()
           }, 10000)
@@ -463,18 +536,20 @@ export default function App() {
   }
 
   // Early withdraw
-  const earlyWithdraw = async (vaultId: number) => {
+  const earlyWithdraw = async (vaultId: number, assetType: number) => {
     if (!userAddress) {
       toast.error('Please connect wallet first')
       return
     }
     
     setIsLoading(true)
+    const isSbtc = assetType === 2
+    
     try {
       openContractCall({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: 'early-withdraw-stx',
+        functionName: isSbtc ? 'early-withdraw-sbtc' : 'early-withdraw-stx',
         functionArgs: [uintCV(vaultId)],
         postConditionMode: PostConditionMode.Allow,
         network: NETWORK,
@@ -482,7 +557,7 @@ export default function App() {
         onFinish: (data) => {
           toast.success(
             <div>
-              <p>Paper Hands! Vault #{vaultId} withdrawn early</p>
+              <p>Paper Hands! {getAssetName(assetType)} Vault #{vaultId} withdrawn early</p>
               <p className="text-yellow-400 text-xs">10% penalty + 50% points lost</p>
               <a 
                 href={`https://explorer.stacks.co/txid/${data.txId}?chain=mainnet`}
@@ -497,6 +572,7 @@ export default function App() {
           setIsLoading(false)
           setTimeout(() => {
             fetchBalance()
+            fetchSbtcBalance()
             fetchUserVaults()
             fetchUserStats()
           }, 10000)
@@ -677,7 +753,7 @@ export default function App() {
             <StatCard
               icon={<TrendingUp className="w-6 h-6" />}
               label="Total Value Locked"
-              value={`${formatSTX(stats?.tvlStx || 0)} STX`}
+              value={`${formatSTX(stats?.tvlStx || 0)} STX${stats?.tvlSbtc && stats.tvlSbtc > 0 ? ` + ${formatSBTC(stats.tvlSbtc)} sBTC` : ''}`}
               color="purple"
             />
             <StatCard
@@ -718,6 +794,113 @@ export default function App() {
             />
           </motion.div>
 
+          {/* Leaderboard */}
+          {leaderboard.length > 0 && (
+            <motion.div
+              className="mb-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold font-display flex items-center gap-3">
+                  <Trophy className="w-8 h-8 text-yellow-400" />
+                  Leaderboard
+                </h2>
+                <button
+                  onClick={() => setShowLeaderboard(!showLeaderboard)}
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  {showLeaderboard ? 'Hide' : 'View All'}
+                </button>
+              </div>
+              
+              {showLeaderboard ? (
+                <div className="glass rounded-2xl p-6">
+                  <div className="space-y-3">
+                    {leaderboard.map((entry, index) => {
+                      const isCurrentUser = userAddress && entry.address.toLowerCase() === userAddress.toLowerCase()
+                      const rank = index + 1
+                      const medalColors = [
+                        'text-yellow-400', // Gold
+                        'text-gray-300',  // Silver
+                        'text-amber-600'  // Bronze
+                      ]
+                      
+                      return (
+                        <motion.div
+                          key={entry.address}
+                          className={`flex items-center justify-between p-4 rounded-xl ${
+                            isCurrentUser 
+                              ? 'bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border-2 border-purple-500/50' 
+                              : 'glass-light'
+                          }`}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg">
+                              {rank <= 3 ? (
+                                <Trophy className={`w-6 h-6 ${medalColors[rank - 1]}`} />
+                              ) : (
+                                <span className="text-gray-400">#{rank}</span>
+                              )}
+                            </div>
+                            <div>
+                              <p className="font-mono text-sm">
+                                {isCurrentUser ? (
+                                  <span className="text-purple-400 font-bold">You</span>
+                                ) : (
+                                  shortenAddress(entry.address)
+                                )}
+                              </p>
+                              {isCurrentUser && (
+                                <p className="text-xs text-gray-500">{shortenAddress(entry.address)}</p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Star className="w-4 h-4 text-purple-400" />
+                            <span className="font-bold text-lg text-purple-300">
+                              {formatPoints(entry.points)}
+                            </span>
+                          </div>
+                        </motion.div>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="glass rounded-2xl p-6">
+                  <div className="grid grid-cols-3 gap-4">
+                    {leaderboard.slice(0, 3).map((entry, index) => {
+                      const medalColors = ['text-yellow-400', 'text-gray-300', 'text-amber-600']
+                      const isCurrentUser = userAddress && entry.address.toLowerCase() === userAddress.toLowerCase()
+                      
+                      return (
+                        <div
+                          key={entry.address}
+                          className={`text-center p-4 rounded-xl ${
+                            isCurrentUser ? 'bg-purple-500/20 border-2 border-purple-500/50' : 'glass-light'
+                          }`}
+                        >
+                          <Trophy className={`w-8 h-8 mx-auto mb-2 ${medalColors[index]}`} />
+                          <p className="text-sm font-mono mb-1">
+                            {isCurrentUser ? 'You' : shortenAddress(entry.address)}
+                          </p>
+                          <p className="text-lg font-bold text-purple-400">
+                            {formatPoints(entry.points)}
+                          </p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          )}
+
           {/* User Stats & Vaults */}
           {isConnected && (
             <motion.div
@@ -745,7 +928,14 @@ export default function App() {
                       </div>
                       <div className="text-center">
                         <p className="text-sm text-gray-500">Total Locked</p>
-                        <p className="text-xl font-bold text-purple-400">{formatSTX(userStats.totalStxLocked)} STX</p>
+                        <p className="text-xl font-bold text-purple-400">
+                          {formatSTX(userStats.totalStxLocked)} STX
+                          {userStats.totalSbtcLocked > 0 && (
+                            <span className="block text-sm text-cyan-400">
+                              + {formatSBTC(userStats.totalSbtcLocked)} sBTC
+                            </span>
+                          )}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -776,8 +966,8 @@ export default function App() {
                     <VaultCard
                       key={vault.id}
                       vault={vault}
-                      onWithdraw={withdraw}
-                      onEarlyWithdraw={earlyWithdraw}
+                      onWithdraw={(id) => withdraw(id, vault.assetType)}
+                      onEarlyWithdraw={(id) => earlyWithdraw(id, vault.assetType)}
                       currentTime={stats?.time || Math.floor(Date.now() / 1000)}
                     />
                   ))}
@@ -826,6 +1016,7 @@ export default function App() {
             onSubmit={createVault}
             isLoading={isLoading}
             userBalance={userBalance}
+            userSbtcBalance={userSbtcBalance}
           />
         )}
       </AnimatePresence>
@@ -948,9 +1139,14 @@ function VaultCard({ vault, onWithdraw, onEarlyWithdraw, currentTime }: {
 
       {/* Amount */}
       <div className="mb-4">
-        <p className="text-sm text-gray-500 mb-1">Locked Amount</p>
+        <div className="flex items-center justify-between mb-1">
+          <p className="text-sm text-gray-500">Locked Amount</p>
+          <span className="text-xs px-2 py-1 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+            {getAssetName(vault.assetType)}
+          </span>
+        </div>
         <p className="text-2xl font-bold font-mono gradient-text">
-          {formatSTX(vault.amount)} STX
+          {formatAmount(vault.amount, vault.assetType)} {getAssetName(vault.assetType)}
         </p>
       </div>
 
@@ -1020,28 +1216,35 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
 }
 
 // Create Vault Modal
-function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance }: {
+function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance, userSbtcBalance }: {
   onClose: () => void
-  onSubmit: (amount: number, lockDays: number, vaultName: string) => void
+  onSubmit: (amount: number, lockDays: number, vaultName: string, assetType: number) => void
   isLoading: boolean
   userBalance: number
+  userSbtcBalance: number
 }) {
   const [amount, setAmount] = useState('')
   const [lockDays, setLockDays] = useState(30)
   const [vaultName, setVaultName] = useState('')
+  const [assetType, setAssetType] = useState<number>(1) // 1 = STX, 2 = sBTC
 
+  const isSbtc = assetType === 2
   const balanceInSTX = userBalance / 1_000_000
+  const balanceInSBTC = userSbtcBalance / 100_000_000
+  const currentBalance = isSbtc ? balanceInSBTC : balanceInSTX
+  const minDeposit = isSbtc ? 0.0001 : 1
+  
   const tier = getTier(lockDays)
   const TierIcon = tier.icon
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const amountNum = parseFloat(amount)
-    if (amountNum < 1) {
-      toast.error('Minimum deposit is 1 STX')
+    if (amountNum < minDeposit) {
+      toast.error(`Minimum deposit is ${minDeposit} ${getAssetName(assetType)}`)
       return
     }
-    if (amountNum > balanceInSTX) {
+    if (amountNum > currentBalance) {
       toast.error('Insufficient balance')
       return
     }
@@ -1053,17 +1256,17 @@ function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance }: {
       toast.error('Please name your vault')
       return
     }
-    onSubmit(amountNum, lockDays, vaultName.trim())
+    onSubmit(amountNum, lockDays, vaultName.trim(), assetType)
   }
 
   const handleMaxClick = () => {
-    const maxAmount = Math.max(0, balanceInSTX - 0.01)
-    setAmount(maxAmount.toFixed(6))
+    const maxAmount = Math.max(0, currentBalance - (isSbtc ? 0.00001 : 0.01))
+    setAmount(maxAmount.toFixed(isSbtc ? 8 : 6))
   }
 
   const fee = parseFloat(amount || '0') * 0.0025
   const deposit = parseFloat(amount || '0') - fee
-  const estimatedPoints = calculateEstimatedPoints(deposit, lockDays)
+  const estimatedPoints = calculateEstimatedPoints(deposit, lockDays, assetType)
 
   return (
     <motion.div
@@ -1095,7 +1298,55 @@ function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance }: {
           </div>
           <div>
             <h2 className="text-xl font-bold">Create Diamond Vault</h2>
-            <p className="text-sm text-gray-400">Lock STX & earn points</p>
+            <p className="text-sm text-gray-400">Lock assets & earn points</p>
+          </div>
+        </div>
+
+        {/* Asset Selector */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-400 mb-2">
+            Select Asset
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setAssetType(1)
+                setAmount('')
+              }}
+              className={`p-4 rounded-xl border-2 transition-all ${
+                assetType === 1
+                  ? 'border-cyan-400 bg-cyan-500/10'
+                  : 'border-white/10 bg-white/5 hover:border-white/20'
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-3 h-3 rounded-full bg-orange-500" />
+                <span className="font-semibold">STX</span>
+              </div>
+              <p className="text-xs text-gray-500">Stacks Token</p>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAssetType(2)
+                setAmount('')
+              }}
+              className={`p-4 rounded-xl border-2 transition-all ${
+                assetType === 2
+                  ? 'border-cyan-400 bg-cyan-500/10'
+                  : 'border-white/10 bg-white/5 hover:border-white/20'
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-3 h-3 rounded-full bg-orange-600" />
+                <span className="font-semibold">sBTC</span>
+                <span className="text-xs px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400">
+                  10x
+                </span>
+              </div>
+              <p className="text-xs text-gray-500">Bitcoin on Stacks</p>
+            </button>
           </div>
         </div>
 
@@ -1118,14 +1369,32 @@ function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance }: {
 
         {/* Balance Display */}
         <div className="glass-light rounded-xl p-4 mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Wallet className="w-5 h-5 text-green-500" />
-              <span className="text-sm text-gray-400">Available Balance</span>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Wallet className="w-5 h-5 text-green-500" />
+                <span className="text-sm text-gray-400">Available Balance</span>
+              </div>
+              <span className="text-lg font-bold font-mono text-white">
+                {isSbtc ? formatSBTC(userSbtcBalance) : formatSTX(userBalance)} {getAssetName(assetType)}
+              </span>
             </div>
-            <span className="text-lg font-bold font-mono text-white">
-              {formatSTX(userBalance)} STX
-            </span>
+            {!isSbtc && userSbtcBalance > 0 && (
+              <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                <span className="text-xs text-gray-500">sBTC Balance</span>
+                <span className="text-sm font-mono text-gray-400">
+                  {formatSBTC(userSbtcBalance)} sBTC
+                </span>
+              </div>
+            )}
+            {isSbtc && userBalance > 0 && (
+              <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                <span className="text-xs text-gray-500">STX Balance</span>
+                <span className="text-sm font-mono text-gray-400">
+                  {formatSTX(userBalance)} STX
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -1150,7 +1419,9 @@ function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance }: {
           {/* Amount Input */}
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium text-gray-400">Amount (STX)</label>
+              <label className="text-sm font-medium text-gray-400">
+                Amount ({getAssetName(assetType)})
+              </label>
               <button
                 type="button"
                 onClick={handleMaxClick}
@@ -1163,9 +1434,9 @@ function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance }: {
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                placeholder="Enter amount"
-                min="1"
-                step="0.000001"
+                placeholder={`Enter amount (min ${minDeposit} ${getAssetName(assetType)})`}
+                min={minDeposit}
+                step={isSbtc ? "0.00000001" : "0.000001"}
               className="input-field"
                 required
               />
@@ -1206,16 +1477,28 @@ function CreateVaultModal({ onClose, onSubmit, isLoading, userBalance }: {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-500">Deposit Amount</span>
-                  <span className="font-mono">{parseFloat(amount).toFixed(6)} STX</span>
+                  <span className="font-mono">
+                    {parseFloat(amount).toFixed(isSbtc ? 8 : 6)} {getAssetName(assetType)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">Fee (0.25%)</span>
-                  <span className="font-mono text-yellow-500">-{fee.toFixed(6)} STX</span>
+                  <span className="font-mono text-yellow-500">
+                    -{fee.toFixed(isSbtc ? 8 : 6)} {getAssetName(assetType)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">Locked Amount</span>
-                  <span className="font-mono text-green-500">{deposit.toFixed(6)} STX</span>
+                  <span className="font-mono text-green-500">
+                    {deposit.toFixed(isSbtc ? 8 : 6)} {getAssetName(assetType)}
+                  </span>
                 </div>
+                {isSbtc && (
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-500">sBTC Bonus</span>
+                    <span className="font-mono text-purple-400">10x points multiplier!</span>
+                  </div>
+                )}
                 <div className="border-t border-white/10 pt-2 flex justify-between">
                   <span className="text-gray-400 flex items-center gap-1">
                     <Star className="w-4 h-4 text-purple-400" />

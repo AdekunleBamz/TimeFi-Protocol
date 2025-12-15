@@ -4,6 +4,24 @@
 
 Non-custodial time-locked DeFi vaults built on Stacks blockchain with a gamified points system. Lock your STX or sBTC, earn points based on commitment level, and prove you're a true HODLer.
 
+## 📜 Protocol Evolution
+
+**Diamond Hands Protocol V3** is the evolution of **TimeFi Protocol**, upgraded with enhanced features and a complete rebranding. The protocol has been redesigned to focus on rewarding long-term commitment through a gamified points system.
+
+### What's New in V3:
+- ✨ **Points System**: Earn points based on lock duration and tier multipliers
+- 🏆 **Tier System**: Bronze, Silver, Gold, and Diamond tiers with increasing rewards
+- 🎯 **Vault Naming**: Personalize your vaults with custom names
+- 💎 **sBTC Support**: Lock sBTC with 10x bonus points
+- 📊 **Leaderboard**: Compete for top rankings
+- 🔄 **Reduced Fees**: Creation fee reduced from 0.5% to 0.25%
+- 🎨 **Enhanced UI**: Modern, responsive frontend with real-time stats
+
+### Previous Versions:
+- **TimeFi V1**: Initial time-locked vault implementation
+- **TimeFi V2**: Non-custodial improvements with direct withdrawals
+- **Diamond Hands V3**: Current version with points system and multi-asset support
+
 ## 🌟 Overview
 
 Diamond Hands Protocol V3 is a decentralized vault system that rewards users for locking their assets for extended periods. The longer you lock, the more points you earn. Features include vault naming, tier-based multipliers, and a leaderboard system to track top point holders.

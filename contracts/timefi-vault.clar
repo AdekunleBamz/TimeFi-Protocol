@@ -137,3 +137,10 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: GET TOTAL FEES COLLECTED
+;; -------------------------------------------------------
+
+(define-read-only (get-total-fees)
+  (ok (var-get fees)))

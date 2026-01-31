@@ -12,12 +12,12 @@ describe("TimeFi Vault - Create Vault", () => {
   describe("successful vault creation", () => {
     it("should create a vault with valid parameters", () => {
       const amount = 1_000_000; // 1 STX
-      const lockBlocks = 144; // ~1 day
+      const lockSecs = 3600; // 1 hour minimum
 
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
@@ -26,7 +26,7 @@ describe("TimeFi Vault - Create Vault", () => {
 
     it("should correctly calculate and deduct fees", () => {
       const amount = 1_000_000; // 1 STX
-      const lockBlocks = 144;
+      const lockSecs = 3600;
       const expectedFee = (amount * 50) / 10000; // 0.5% fee
       const expectedDeposit = amount - expectedFee;
 
@@ -35,7 +35,7 @@ describe("TimeFi Vault - Create Vault", () => {
       simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
@@ -47,14 +47,14 @@ describe("TimeFi Vault - Create Vault", () => {
 
     it("should store correct vault data", () => {
       const amount = 1_000_000;
-      const lockBlocks = 288; // ~2 days
+      const lockSecs = 7200; // 2 hours
       const expectedFee = (amount * 50) / 10000;
       const expectedDeposit = amount - expectedFee;
 
       simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
@@ -66,47 +66,28 @@ describe("TimeFi Vault - Create Vault", () => {
       );
 
       expect(vaultResult.result.type).toBe(ClarityType.ResponseOk);
-
-      const ownerResult = simnet.callReadOnlyFn(
-        CONTRACT_NAME,
-        "is-vault-owner",
-        [Cl.uint(1), Cl.principal(wallet1)],
-        wallet1
-      );
-      expect(ownerResult.result).toBeOk(Cl.bool(true));
-
-      const activeResult = simnet.callReadOnlyFn(
-        CONTRACT_NAME,
-        "is-active",
-        [Cl.uint(1)],
-        wallet1
-      );
-      expect(activeResult.result).toBeOk(Cl.bool(true));
-
-      const tvlResult = simnet.callReadOnlyFn(
-        CONTRACT_NAME,
-        "get-tvl",
-        [],
-        wallet1
-      );
-      expect(tvlResult.result).toBeOk(Cl.uint(expectedDeposit));
+      
+      const vault = vaultResult.result.value;
+      expect(vault.data.owner).toStrictEqual(Cl.principal(wallet1));
+      expect(vault.data.amount).toStrictEqual(Cl.uint(expectedDeposit));
+      expect(vault.data.active).toStrictEqual(Cl.bool(true));
     });
 
     it("should increment vault nonce for each new vault", () => {
       const amount = 100_000;
-      const lockBlocks = 144;
+      const lockSecs = 3600;
 
       const result1 = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
       const result2 = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet2
       );
 
@@ -116,12 +97,12 @@ describe("TimeFi Vault - Create Vault", () => {
 
     it("should accept minimum deposit amount exactly", () => {
       const amount = 10_000; // MIN_DEPOSIT
-      const lockBlocks = 144;
+      const lockSecs = 3600;
 
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
@@ -130,12 +111,12 @@ describe("TimeFi Vault - Create Vault", () => {
 
     it("should accept minimum lock period exactly", () => {
       const amount = 100_000;
-      const lockBlocks = 6; // MIN_LOCK
+      const lockSecs = 3600; // MIN_LOCK
 
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
@@ -144,12 +125,12 @@ describe("TimeFi Vault - Create Vault", () => {
 
     it("should accept maximum lock period exactly", () => {
       const amount = 100_000;
-      const lockBlocks = 52_560; // MAX_LOCK (~1 year)
+      const lockSecs = 31_536_000; // MAX_LOCK (1 year)
 
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
@@ -158,12 +139,12 @@ describe("TimeFi Vault - Create Vault", () => {
 
     it("should emit create event with correct data", () => {
       const amount = 500_000;
-      const lockBlocks = 144; // ~1 day
+      const lockSecs = 86400; // 1 day
 
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
@@ -175,19 +156,19 @@ describe("TimeFi Vault - Create Vault", () => {
 
     it("should allow same user to create multiple vaults", () => {
       const amount = 100_000;
-      const lockBlocks = 144;
+      const lockSecs = 3600;
 
       const result1 = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockBlocks)],
+        [Cl.uint(amount), Cl.uint(lockSecs)],
         wallet1
       );
 
       const result2 = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount * 2), Cl.uint(lockBlocks * 2)],
+        [Cl.uint(amount * 2), Cl.uint(lockSecs * 2)],
         wallet1
       );
 

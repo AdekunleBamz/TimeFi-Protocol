@@ -137,3 +137,10 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: GET TREASURY ADDRESS
+;; -------------------------------------------------------
+
+(define-read-only (get-treasury)
+  (ok (var-get treasury)))

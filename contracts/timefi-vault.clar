@@ -137,3 +137,10 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: GET TVL (Total Value Locked)
+;; -------------------------------------------------------
+
+(define-read-only (get-tvl)
+  (ok (var-get tvl)))

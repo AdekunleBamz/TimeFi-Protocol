@@ -34,11 +34,11 @@ describe("TimeFi Vault - Error Handling", () => {
   });
 
   describe("ERR_LOCK_PERIOD (u104) - Invalid lock period", () => {
-    it("should reject lock period below minimum (6 blocks)", () => {
+    it("should reject lock period below minimum (3600 seconds)", () => {
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(100000), Cl.uint(5)],
+        [Cl.uint(100000), Cl.uint(3599)],
         wallet1
       );
 
@@ -56,11 +56,11 @@ describe("TimeFi Vault - Error Handling", () => {
       expect(result.result).toBeErr(Cl.uint(104));
     });
 
-    it("should reject lock period above maximum (52,560 blocks)", () => {
+    it("should reject lock period above maximum (31,536,000 seconds)", () => {
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(100000), Cl.uint(52561)],
+        [Cl.uint(100000), Cl.uint(31536001)],
         wallet1
       );
 
@@ -69,7 +69,7 @@ describe("TimeFi Vault - Error Handling", () => {
   });
 
   describe("ERR_UNAUTHORIZED (u100) - Authorization failures", () => {
-    it("should reject non-owner withdrawal requests", () => {
+    it("should reject non-owner withdrawal", () => {
       simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
@@ -81,7 +81,7 @@ describe("TimeFi Vault - Error Handling", () => {
 
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
-        "request-withdraw",
+        "withdraw",
         [Cl.uint(1)],
         wallet2
       );
@@ -113,10 +113,10 @@ describe("TimeFi Vault - Error Handling", () => {
       expect(result.result).toBeErr(Cl.uint(101));
     });
 
-    it("should return error for requesting withdrawal on a non-existent vault", () => {
+    it("should return error for withdrawing non-existent vault", () => {
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
-        "request-withdraw",
+        "withdraw",
         [Cl.uint(999)],
         wallet1
       );
@@ -137,7 +137,7 @@ describe("TimeFi Vault - Error Handling", () => {
   });
 
   describe("ERR_INACTIVE (u102) - Vault inactive", () => {
-    it("should reject processing the same withdrawal twice", () => {
+    it("should reject double withdrawal", () => {
       simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
@@ -149,23 +149,16 @@ describe("TimeFi Vault - Error Handling", () => {
 
       simnet.callPublicFn(
         CONTRACT_NAME,
-        "request-withdraw",
+        "withdraw",
         [Cl.uint(1)],
         wallet1
       );
 
-      simnet.callPublicFn(
-        CONTRACT_NAME,
-        "process-withdraw",
-        [Cl.uint(1)],
-        deployer
-      );
-
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
-        "process-withdraw",
+        "withdraw",
         [Cl.uint(1)],
-        deployer
+        wallet1
       );
 
       expect(result.result).toBeErr(Cl.uint(102));

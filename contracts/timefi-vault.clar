@@ -137,3 +137,10 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: GET VAULT COUNT
+;; -------------------------------------------------------
+
+(define-read-only (get-vault-count)
+  (ok (var-get vault-nonce)))

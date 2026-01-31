@@ -137,3 +137,18 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; PUBLIC: REVOKE BOT APPROVAL
+;; -------------------------------------------------------
+
+(define-public (revoke-bot (bot principal))
+  (match (contract-hash? bot)
+    h
+      (begin
+        (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
+        (map-set approved-bots {hash: h} {approved: false})
+        (print {event: "bot-revoked", bot: bot})
+        (ok true)
+      )
+    err ERR_BOT))

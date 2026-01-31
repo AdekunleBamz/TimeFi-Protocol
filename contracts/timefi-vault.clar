@@ -137,3 +137,12 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: CHECK IF VAULT BELONGS TO OWNER
+;; -------------------------------------------------------
+
+(define-read-only (is-vault-owner (id uint) (owner principal))
+  (match (map-get? vaults {id: id})
+    vault (ok (is-eq (get owner vault) owner))
+    ERR_NOT_FOUND))

@@ -137,3 +137,17 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: GET TIME REMAINING UNTIL UNLOCK
+;; -------------------------------------------------------
+
+(define-read-only (get-time-remaining (id uint))
+  (match (map-get? vaults {id: id})
+    vault
+      (let ((now (stacks-block-time))
+            (unlock (get unlock-time vault)))
+        (if (>= now unlock)
+          (ok u0)
+          (ok (- unlock now))))
+    ERR_NOT_FOUND))

@@ -137,3 +137,14 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; PUBLIC: SET TREASURY (admin only)
+;; -------------------------------------------------------
+
+(define-public (set-treasury (new-treasury principal))
+  (begin
+    (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
+    (var-set treasury new-treasury)
+    (print {event: "treasury-updated", old: (var-get treasury), new: new-treasury})
+    (ok true)))

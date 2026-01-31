@@ -1,0 +1,10 @@
+[project]
+name = "timefi-protocol"
+description = "TimeFi - Time-locked DeFi vaults powered by Clarity 4"
+authors = ["Bamzz"]
+telemetry = false
+
+[contracts.timefi-vault]
+path = "contracts/timefi-vault.clar"
+clarity_version = 4
+epoch = "3.3"

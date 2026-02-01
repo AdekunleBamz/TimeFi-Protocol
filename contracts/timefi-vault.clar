@@ -137,3 +137,19 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: GET PROTOCOL CONSTANTS
+;; -------------------------------------------------------
+
+(define-read-only (get-min-deposit)
+  MIN_DEPOSIT)
+
+(define-read-only (get-min-lock)
+  MIN_LOCK)
+
+(define-read-only (get-max-lock)
+  MAX_LOCK)
+
+(define-read-only (get-fee-bps)
+  FEE_BPS)

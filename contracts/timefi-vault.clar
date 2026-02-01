@@ -36,9 +36,7 @@
 (define-constant DEPLOYER tx-sender)
 
 ;; -------------------------------------------------------
-;; HELPER: Check if sender is an approved bot
-;; Uses contract-hash? to verify if principal is a contract
-;; and checks against approved-bots mapping
+;; HELPER: check if sender is an approved bot
 ;; -------------------------------------------------------
 
 (define-read-only (is-bot (sender principal))
@@ -49,9 +47,6 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: APPROVE BOT
-;; Admin-only function to approve a contract as automated trading bot
-;; Only deployer can approve bots for security
-;; Use revoke-bot to remove an approved bot
 ;; -------------------------------------------------------
 
 (define-public (approve-bot (bot principal))
@@ -66,9 +61,6 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: CREATE VAULT
-;; Creates time-locked vault with STX deposit
-;; Charges 0.5% fee (FEE_BPS) on deposit amount
-;; Fee is transferred to the treasury address
 ;; -------------------------------------------------------
 
 (define-public (create-vault (amount uint) (lock-secs uint))
@@ -108,7 +100,6 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET VAULT
-;; Returns vault details for any caller; no ownership check
 ;; -------------------------------------------------------
 
 (define-read-only (get-vault (id uint))
@@ -118,8 +109,6 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: WITHDRAW
-;; Owner-only; vault must be active and unlock-time must be reached
-;; Marks vault inactive and transfers full deposit back to owner
 ;; -------------------------------------------------------
 
 (define-public (withdraw (id uint))
@@ -153,7 +142,6 @@
 
 ;; -------------------------------------------------------
 ;; READ: IS-ACTIVE
-;; Returns true if vault exists and funds have not been withdrawn
 ;; -------------------------------------------------------
 
 (define-read-only (is-active (id uint))
@@ -171,7 +159,6 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TOTAL FEES COLLECTED
-;; Cumulative protocol fees since deployment in microSTX
 ;; -------------------------------------------------------
 
 (define-read-only (get-total-fees)
@@ -179,7 +166,6 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET VAULT COUNT
-;; Returns the total number of vaults ever created (monotonically increasing)
 ;; -------------------------------------------------------
 
 (define-read-only (get-vault-count)
@@ -187,13 +173,12 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TIME REMAINING UNTIL UNLOCK
-;; Returns u0 when already unlocked (not an error)
 ;; -------------------------------------------------------
 
 (define-read-only (get-time-remaining (id uint))
-  (match (map-get? vaults id)
+  (match (map-get? vaults {id: id})
     vault
-      (let ((now (current-time-secs))
+      (let ((now (stacks-block-time))
             (unlock (get unlock-time vault)))
         (if (>= now unlock)
           (ok u0)
@@ -202,7 +187,6 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TREASURY ADDRESS
-;; Returns the current treasury principal (default: deployer)
 ;; -------------------------------------------------------
 
 (define-read-only (get-treasury)
@@ -210,28 +194,25 @@
 
 ;; -------------------------------------------------------
 ;; READ: CHECK IF VAULT CAN BE WITHDRAWN
-;; True when vault is active AND current time >= unlock-time
 ;; -------------------------------------------------------
 
 (define-read-only (can-withdraw (id uint))
-  (match (map-get? vaults id)
+  (match (map-get? vaults {id: id})
     vault
-      (ok (and (get active vault) (>= (current-time-secs) (get unlock-time vault))))
+      (ok (and (get active vault) (>= (stacks-block-time) (get unlock-time vault))))
     ERR_NOT_FOUND))
 
 ;; -------------------------------------------------------
 ;; READ: CHECK IF VAULT BELONGS TO OWNER
-;; Returns true if the given principal is recorded as vault owner
 ;; -------------------------------------------------------
 
 (define-read-only (is-vault-owner (id uint) (owner principal))
-  (match (map-get? vaults id)
+  (match (map-get? vaults {id: id})
     vault (ok (is-eq (get owner vault) owner))
     ERR_NOT_FOUND))
 
 ;; -------------------------------------------------------
 ;; READ: GET PROTOCOL CONSTANTS
-;; Expose immutable config values for off-chain clients
 ;; -------------------------------------------------------
 
 (define-read-only (get-min-deposit)
@@ -277,8 +258,8 @@
     h
       (begin
         (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
-        (map-set approved-bots h false)
+        (map-set approved-bots {hash: h} {approved: false})
         (print {event: "bot-revoked", bot: bot})
         (ok true)
       )
-    hash-err ERR_BOT))
+    err ERR_BOT))

@@ -6,10 +6,8 @@ If you discover a security vulnerability, please:
 
 1. **DO NOT** open a public issue
 2. Email security concerns privately to the maintainers
-3. Include a detailed description of the vulnerability and its potential impact
+3. Include a detailed description of the vulnerability
 4. Allow reasonable time for a fix before public disclosure
-5. Include affected network, contract name, and any relevant txid when available
-6. Share clear reproduction steps and impact assessment details
 
 ## Supported Versions
 
@@ -21,32 +19,24 @@ If you discover a security vulnerability, please:
 
 The TimeFi Protocol implements the following security measures:
 
-- **Access Controls**: All admin functions require deployer authorization via the `DEPLOYER` constant
+- **Access Controls**: All admin functions require deployer authorization
 - **Input Validation**: All parameters are validated against defined limits
 - **Time-Lock Protection**: Vaults cannot be withdrawn before unlock time
-- **Fee Limits**: Fees are capped at the FEE_BPS protocol constant (50 basis points)
+- **Fee Limits**: Fees are capped at protocol constants
 
 ## Known Limitations
 
-- This contract has **not been externally audited** as of April 2026. Use at your own risk.
-- The protocol relies on chain height (`tenure-height`) for lock timing calculations
+- This contract has **not been audited**. Use at your own risk.
+- The protocol relies on `stacks-block-time` for time calculations
 - Bot approval uses `contract-hash?` which requires contract principals
 
 ## Best Practices for Users
 
 1. Only deposit amounts you can afford to lock
-2. Verify the unlock time and estimated duration before creating a vault
+2. Verify the unlock time before creating a vault
 3. Test with small amounts first
 4. Keep your wallet keys secure
-5. Confirm wallet network and API endpoint alignment before write actions
-6. Revoke bot approvals quickly if any integration key is compromised
 
 ## Contact
 
 For security concerns, please contact the maintainers privately.
-
-**Primary Contact**: adekunlebamz (GitHub)
-
-**Security Email**: bams.kunle@gmail.com
-
-Use encrypted email when sharing exploit proofs or private key material.

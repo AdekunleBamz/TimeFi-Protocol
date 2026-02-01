@@ -1,77 +1,123 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { callReadOnlyFunction, cvToJSON, uintCV, principalCV } from '@stacks/transactions';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
-import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
-import { useFetch } from './useAsync';
 
-const network = import.meta.env.VITE_NETWORK === 'mainnet'
-  ? new StacksMainnet()
+const CONTRACT_ADDRESS = 'SP000000000000000000002Q6VF78'; // Replace with deployed address
+const CONTRACT_NAME = 'timefi-vault';
+
+const network = import.meta.env.VITE_NETWORK === 'mainnet' 
+  ? new StacksMainnet() 
   : new StacksTestnet();
 
 /**
  * Custom hook for read-only contract queries
- * Supports two modes:
- * 1. Data-fetching: useReadOnly('fn-name', [args]) -> { data, loading, error }
- * 2. Method-based: const { getVault } = useReadOnly() -> getVault(id)
  */
-export function useReadOnly(functionName, functionArgs = [], options = {}) {
-  const [loadingFlag, setLoadingFlag] = useState(false);
-  const [errorFlag, setErrorFlag] = useState(null);
+export function useReadOnly() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const callReadOnly = useCallback(async (fnName, fnArgs = [], senderAddress) => {
-    setLoadingFlag(true);
-    setErrorFlag(null);
-
+  /**
+   * Execute a read-only function call
+   */
+  const callReadOnly = useCallback(async (functionName, functionArgs = [], senderAddress) => {
+    setLoading(true);
+    setError(null);
+    
     try {
       const result = await callReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAMES.VAULT,
-        functionName: fnName,
-        functionArgs: fnArgs,
+        contractName: CONTRACT_NAME,
+        functionName,
+        functionArgs,
         network,
         senderAddress: senderAddress || CONTRACT_ADDRESS,
       });
-
+      
       return cvToJSON(result);
     } catch (err) {
-      setErrorFlag(err.message);
+      setError(err.message);
       throw err;
     } finally {
-      setLoadingFlag(false);
+      setLoading(false);
     }
   }, []);
 
-  // Define convenience methods
-  const methods = useMemo(() => ({
-    getVault: (vaultId) => callReadOnly('get-vault', [uintCV(vaultId)]),
-    getTVL: () => callReadOnly('get-tvl', []),
-    getVaultCount: () => callReadOnly('get-vault-count', []),
-    getTimeRemaining: (vaultId) => callReadOnly('get-time-remaining', [uintCV(vaultId)]),
-    canWithdraw: (vaultId) => callReadOnly('can-withdraw', [uintCV(vaultId)]),
-    isVaultOwner: (vaultId, owner) => callReadOnly('is-vault-owner', [uintCV(vaultId), principalCV(owner)]),
-    calculateFee: (amount) => callReadOnly('calculate-fee', [uintCV(amount)]),
-    callReadOnly,
-  }), [callReadOnly]);
+  /**
+   * Get vault details by ID
+   */
+  const getVault = useCallback(async (vaultId) => {
+    return callReadOnly('get-vault', [uintCV(vaultId)]);
+  }, [callReadOnly]);
 
-  // If functionName is provided, use mode 1 (data fetching)
-  const fetcher = useCallback(() => {
-    if (!functionName) return Promise.resolve(null);
-    return callReadOnly(functionName, functionArgs);
-  }, [functionName, functionArgs, callReadOnly]);
+  /**
+   * Get total value locked in the protocol
+   */
+  const getTVL = useCallback(async () => {
+    return callReadOnly('get-tvl', []);
+  }, [callReadOnly]);
 
-  const { data, loading: fetchLoading, error: fetchError, refetch } = useFetch(
-    fetcher,
-    [functionName, JSON.stringify(functionArgs), options.enabled !== false]
-  );
+  /**
+   * Get total fees collected
+   */
+  const getTotalFees = useCallback(async () => {
+    return callReadOnly('get-total-fees', []);
+  }, [callReadOnly]);
 
-  if (functionName) {
-    return { data, loading: fetchLoading, error: fetchError, refetch };
-  }
+  /**
+   * Get total vault count
+   */
+  const getVaultCount = useCallback(async () => {
+    return callReadOnly('get-vault-count', []);
+  }, [callReadOnly]);
+
+  /**
+   * Get time remaining for a vault
+   */
+  const getTimeRemaining = useCallback(async (vaultId) => {
+    return callReadOnly('get-time-remaining', [uintCV(vaultId)]);
+  }, [callReadOnly]);
+
+  /**
+   * Check if vault can be withdrawn
+   */
+  const canWithdraw = useCallback(async (vaultId) => {
+    return callReadOnly('can-withdraw', [uintCV(vaultId)]);
+  }, [callReadOnly]);
+
+  /**
+   * Check if address is vault owner
+   */
+  const isVaultOwner = useCallback(async (vaultId, owner) => {
+    return callReadOnly('is-vault-owner', [uintCV(vaultId), principalCV(owner)]);
+  }, [callReadOnly]);
+
+  /**
+   * Check if address is approved bot
+   */
+  const isBot = useCallback(async (vaultId, bot) => {
+    return callReadOnly('is-bot', [uintCV(vaultId), principalCV(bot)]);
+  }, [callReadOnly]);
+
+  /**
+   * Calculate fee for an amount
+   */
+  const calculateFee = useCallback(async (amount) => {
+    return callReadOnly('calculate-fee', [uintCV(amount)]);
+  }, [callReadOnly]);
 
   return {
-    ...methods,
-    loading: loadingFlag,
-    error: errorFlag,
+    loading,
+    error,
+    getVault,
+    getTVL,
+    getTotalFees,
+    getVaultCount,
+    getTimeRemaining,
+    canWithdraw,
+    isVaultOwner,
+    isBot,
+    calculateFee,
+    callReadOnly,
   };
 }
 

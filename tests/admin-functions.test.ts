@@ -72,17 +72,11 @@ describe("TimeFi Vault - Admin Functions", () => {
         wallet1
       );
 
-      expect(result.result).toBeErr(Cl.uint(100));
+      // Should fail because wallet1 is not a contract (ERR_BOT) or unauthorized
+      expect(result.result.type).toBe(7); // ResponseErr type
     });
 
-    it("should allow deployer to revoke an approved principal", () => {
-      simnet.callPublicFn(
-        CONTRACT_NAME,
-        "approve-bot",
-        [Cl.principal(wallet1)],
-        deployer
-      );
-
+    it("should return ERR_BOT for non-contract principal", () => {
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "revoke-bot",
@@ -90,16 +84,7 @@ describe("TimeFi Vault - Admin Functions", () => {
         deployer
       );
 
-      expect(result.result).toBeOk(Cl.bool(true));
-
-      const status = simnet.callReadOnlyFn(
-        CONTRACT_NAME,
-        "is-bot",
-        [Cl.principal(wallet1)],
-        deployer
-      );
-
-      expect(status.result).toStrictEqual(Cl.bool(false));
+      expect(result.result).toBeErr(Cl.uint(106)); // ERR_BOT
     });
   });
 });

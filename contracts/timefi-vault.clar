@@ -137,3 +137,14 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: CALCULATE FEE FOR AMOUNT
+;; -------------------------------------------------------
+
+(define-read-only (calculate-fee (amount uint))
+  (ok (/ (* amount FEE_BPS) u10000)))
+
+(define-read-only (calculate-deposit-after-fee (amount uint))
+  (let ((fee (/ (* amount FEE_BPS) u10000)))
+    (ok (- amount fee))))

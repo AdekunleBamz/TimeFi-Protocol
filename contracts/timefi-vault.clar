@@ -137,3 +137,13 @@
   (match (map-get? vaults {id: id})
     v (ok (get active v))
     err ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: CHECK IF VAULT CAN BE WITHDRAWN
+;; -------------------------------------------------------
+
+(define-read-only (can-withdraw (id uint))
+  (match (map-get? vaults {id: id})
+    vault
+      (ok (and (get active vault) (>= (stacks-block-time) (get unlock-time vault))))
+    ERR_NOT_FOUND))

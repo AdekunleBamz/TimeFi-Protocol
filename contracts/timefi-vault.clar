@@ -26,9 +26,9 @@
 
 (define-constant DEPLOYER tx-sender)
 
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 ;; HELPER: check if sender is an approved bot
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 
 (define-read-only (is-bot (sender principal))
   (match (contract-hash? sender)
@@ -36,9 +36,9 @@
       (default-to false (get approved (map-get? approved-bots {hash: h})))
     err false))
 
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 ;; PUBLIC: APPROVE BOT
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 
 (define-public (approve-bot (bot principal))
   (match (contract-hash? bot)
@@ -50,9 +50,9 @@
       )
     err ERR_BOT))
 
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 ;; PUBLIC: CREATE VAULT
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 
 (define-public (create-vault (amount uint) (lock-secs uint))
   (let (
@@ -87,18 +87,18 @@
     (print {event: "create", id: id, owner: tx-sender, amount: deposit, unlock: unlock})
     (ok id)))
 
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 ;; READ: GET VAULT
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 
 (define-read-only (get-vault (id uint))
   (match (map-get? vaults {id: id})
     v (ok v)
     err ERR_NOT_FOUND))
 
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 ;; PUBLIC: WITHDRAW
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 
 (define-public (withdraw (id uint))
   (match (map-get? vaults {id: id})
@@ -112,7 +112,7 @@
         (map-set vaults {id: id}
           {
             owner: (get owner vault),
-            amount: 0,
+            amount: u0,
             lock-time: (get lock-time vault),
             unlock-time: (get unlock-time vault),
             active: false
@@ -129,9 +129,9 @@
       )
     err ERR_NOT_FOUND))
 
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 ;; READ: IS-ACTIVE
-;; ---------------------------------------------------
+;; -------------------------------------------------------
 
 (define-read-only (is-active (id uint))
   (match (map-get? vaults {id: id})
@@ -144,3 +144,110 @@
 
 (define-read-only (get-tvl)
   (ok (var-get tvl)))
+
+;; -------------------------------------------------------
+;; READ: GET TOTAL FEES COLLECTED
+;; -------------------------------------------------------
+
+(define-read-only (get-total-fees)
+  (ok (var-get fees)))
+
+;; -------------------------------------------------------
+;; READ: GET VAULT COUNT
+;; -------------------------------------------------------
+
+(define-read-only (get-vault-count)
+  (ok (var-get vault-nonce)))
+
+;; -------------------------------------------------------
+;; READ: GET TIME REMAINING UNTIL UNLOCK
+;; -------------------------------------------------------
+
+(define-read-only (get-time-remaining (id uint))
+  (match (map-get? vaults {id: id})
+    vault
+      (let ((now (stacks-block-time))
+            (unlock (get unlock-time vault)))
+        (if (>= now unlock)
+          (ok u0)
+          (ok (- unlock now))))
+    ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: GET TREASURY ADDRESS
+;; -------------------------------------------------------
+
+(define-read-only (get-treasury)
+  (ok (var-get treasury)))
+
+;; -------------------------------------------------------
+;; READ: CHECK IF VAULT CAN BE WITHDRAWN
+;; -------------------------------------------------------
+
+(define-read-only (can-withdraw (id uint))
+  (match (map-get? vaults {id: id})
+    vault
+      (ok (and (get active vault) (>= (stacks-block-time) (get unlock-time vault))))
+    ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: CHECK IF VAULT BELONGS TO OWNER
+;; -------------------------------------------------------
+
+(define-read-only (is-vault-owner (id uint) (owner principal))
+  (match (map-get? vaults {id: id})
+    vault (ok (is-eq (get owner vault) owner))
+    ERR_NOT_FOUND))
+
+;; -------------------------------------------------------
+;; READ: GET PROTOCOL CONSTANTS
+;; -------------------------------------------------------
+
+(define-read-only (get-min-deposit)
+  MIN_DEPOSIT)
+
+(define-read-only (get-min-lock)
+  MIN_LOCK)
+
+(define-read-only (get-max-lock)
+  MAX_LOCK)
+
+(define-read-only (get-fee-bps)
+  FEE_BPS)
+
+;; -------------------------------------------------------
+;; READ: CALCULATE FEE FOR AMOUNT
+;; -------------------------------------------------------
+
+(define-read-only (calculate-fee (amount uint))
+  (ok (/ (* amount FEE_BPS) u10000)))
+
+(define-read-only (calculate-deposit-after-fee (amount uint))
+  (let ((fee (/ (* amount FEE_BPS) u10000)))
+    (ok (- amount fee))))
+
+;; -------------------------------------------------------
+;; PUBLIC: SET TREASURY (admin only)
+;; -------------------------------------------------------
+
+(define-public (set-treasury (new-treasury principal))
+  (begin
+    (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
+    (var-set treasury new-treasury)
+    (print {event: "treasury-updated", new: new-treasury})
+    (ok true)))
+
+;; -------------------------------------------------------
+;; PUBLIC: REVOKE BOT APPROVAL
+;; -------------------------------------------------------
+
+(define-public (revoke-bot (bot principal))
+  (match (contract-hash? bot)
+    h
+      (begin
+        (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
+        (map-set approved-bots {hash: h} {approved: false})
+        (print {event: "bot-revoked", bot: bot})
+        (ok true)
+      )
+    err ERR_BOT))

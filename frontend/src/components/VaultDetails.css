@@ -1,0 +1,229 @@
+.vault-details {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header */
+.vault-details-header {
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: var(--text-secondary, #6b7280);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.15s;
+}
+
+.back-button:hover {
+  color: var(--primary, #4f46e5);
+}
+
+.vault-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.vault-title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary, #1f2937);
+}
+
+/* Grid Layout */
+.vault-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Sections */
+.vault-section {
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.vault-section h2 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 1rem;
+}
+
+/* Balance Section */
+.vault-balance {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.balance-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary, #1f2937);
+}
+
+.balance-currency {
+  font-size: 1.25rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.vault-rewards {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.rewards-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.rewards-amount {
+  font-weight: 600;
+  color: #10b981;
+}
+
+/* Progress Section */
+.vault-progress {
+  grid-column: span 2;
+}
+
+.progress-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.progress-label {
+  color: var(--text-secondary, #6b7280);
+}
+
+.progress-complete {
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* Info Section */
+.info-list {
+  margin: 0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item dt {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.info-item dd {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary, #1f2937);
+  margin: 0;
+}
+
+.info-item a {
+  color: var(--primary, #4f46e5);
+  text-decoration: none;
+}
+
+.info-item a:hover {
+  text-decoration: underline;
+}
+
+/* Actions Section */
+.vault-actions {
+  grid-column: 1 / -1;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-buttons > * {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Error State */
+.vault-details-error {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.vault-details-error h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary, #1f2937);
+  margin-bottom: 0.5rem;
+}
+
+.vault-details-error p {
+  color: var(--text-secondary, #6b7280);
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vault-details {
+    padding: 1rem;
+  }
+  
+  .vault-title h1 {
+    font-size: 1.5rem;
+  }
+  
+  .balance-amount {
+    font-size: 2rem;
+  }
+  
+  .vault-details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .vault-progress {
+    grid-column: span 1;
+  }
+  
+  .vault-actions {
+    grid-column: span 1;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons > * {
+    min-width: 100%;
+  }
+}

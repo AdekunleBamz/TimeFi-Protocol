@@ -1,36 +1,34 @@
 import { useState, useCallback } from 'react';
 import { callReadOnlyFunction, cvToJSON, uintCV, principalCV } from '@stacks/transactions';
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
+import { StacksMainnet } from '@stacks/network';
 
-const CONTRACT_ADDRESS = 'SP000000000000000000002Q6VF78'; // Replace with deployed address
-const CONTRACT_NAME = 'timefi-vault';
+const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N';
+const VAULT_CONTRACT = 'timefi-vault-v-A2';
+const REWARDS_CONTRACT = 'timefi-rewards-v-A2';
+const GOVERNANCE_CONTRACT = 'timefi-governance-v-A2';
+const EMERGENCY_CONTRACT = 'timefi-emergency-v-A2';
 
-const network = import.meta.env.VITE_NETWORK === 'mainnet' 
-  ? new StacksMainnet() 
-  : new StacksTestnet();
+const network = new StacksMainnet();
 
 /**
- * Custom hook for read-only contract queries
+ * Custom hook for read-only contract queries - v-A2
  */
 export function useReadOnly() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  /**
-   * Execute a read-only function call
-   */
-  const callReadOnly = useCallback(async (functionName, functionArgs = [], senderAddress) => {
+  const callReadOnly = useCallback(async (contractName, functionName, functionArgs = []) => {
     setLoading(true);
     setError(null);
     
     try {
       const result = await callReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAME,
+        contractName,
         functionName,
         functionArgs,
         network,
-        senderAddress: senderAddress || CONTRACT_ADDRESS,
+        senderAddress: CONTRACT_ADDRESS,
       });
       
       return cvToJSON(result);
@@ -42,82 +40,101 @@ export function useReadOnly() {
     }
   }, []);
 
-  /**
-   * Get vault details by ID
-   */
+  // ==================== VAULT READ FUNCTIONS ====================
+
   const getVault = useCallback(async (vaultId) => {
-    return callReadOnly('get-vault', [uintCV(vaultId)]);
+    return callReadOnly(VAULT_CONTRACT, 'get-vault', [uintCV(vaultId)]);
   }, [callReadOnly]);
 
-  /**
-   * Get total value locked in the protocol
-   */
   const getTVL = useCallback(async () => {
-    return callReadOnly('get-tvl', []);
+    return callReadOnly(VAULT_CONTRACT, 'get-tvl', []);
   }, [callReadOnly]);
 
-  /**
-   * Get total fees collected
-   */
   const getTotalFees = useCallback(async () => {
-    return callReadOnly('get-total-fees', []);
+    return callReadOnly(VAULT_CONTRACT, 'get-total-fees', []);
   }, [callReadOnly]);
 
-  /**
-   * Get total vault count
-   */
   const getVaultCount = useCallback(async () => {
-    return callReadOnly('get-vault-count', []);
+    return callReadOnly(VAULT_CONTRACT, 'get-vault-count', []);
   }, [callReadOnly]);
 
-  /**
-   * Get time remaining for a vault
-   */
   const getTimeRemaining = useCallback(async (vaultId) => {
-    return callReadOnly('get-time-remaining', [uintCV(vaultId)]);
+    return callReadOnly(VAULT_CONTRACT, 'get-time-remaining', [uintCV(vaultId)]);
   }, [callReadOnly]);
 
-  /**
-   * Check if vault can be withdrawn
-   */
   const canWithdraw = useCallback(async (vaultId) => {
-    return callReadOnly('can-withdraw', [uintCV(vaultId)]);
+    return callReadOnly(VAULT_CONTRACT, 'can-withdraw', [uintCV(vaultId)]);
   }, [callReadOnly]);
 
-  /**
-   * Check if address is vault owner
-   */
-  const isVaultOwner = useCallback(async (vaultId, owner) => {
-    return callReadOnly('is-vault-owner', [uintCV(vaultId), principalCV(owner)]);
+  const isPaused = useCallback(async () => {
+    return callReadOnly(VAULT_CONTRACT, 'is-paused', []);
   }, [callReadOnly]);
 
-  /**
-   * Check if address is approved bot
-   */
-  const isBot = useCallback(async (vaultId, bot) => {
-    return callReadOnly('is-bot', [uintCV(vaultId), principalCV(bot)]);
+  // ==================== REWARDS READ FUNCTIONS ====================
+
+  const calculateRewards = useCallback(async (vaultId) => {
+    return callReadOnly(REWARDS_CONTRACT, 'calculate-rewards', [uintCV(vaultId)]);
   }, [callReadOnly]);
 
-  /**
-   * Calculate fee for an amount
-   */
-  const calculateFee = useCallback(async (amount) => {
-    return callReadOnly('calculate-fee', [uintCV(amount)]);
+  const getRewardsPool = useCallback(async () => {
+    return callReadOnly(REWARDS_CONTRACT, 'get-rewards-pool', []);
+  }, [callReadOnly]);
+
+  const hasClaimed = useCallback(async (vaultId) => {
+    return callReadOnly(REWARDS_CONTRACT, 'has-claimed', [uintCV(vaultId)]);
+  }, [callReadOnly]);
+
+  // ==================== GOVERNANCE READ FUNCTIONS ====================
+
+  const getProposal = useCallback(async (proposalId) => {
+    return callReadOnly(GOVERNANCE_CONTRACT, 'get-proposal', [uintCV(proposalId)]);
+  }, [callReadOnly]);
+
+  const getProposalCount = useCallback(async () => {
+    return callReadOnly(GOVERNANCE_CONTRACT, 'get-proposal-count', []);
+  }, [callReadOnly]);
+
+  const calculateVotingPower = useCallback(async (vaultId) => {
+    return callReadOnly(GOVERNANCE_CONTRACT, 'calculate-voting-power', [uintCV(vaultId)]);
+  }, [callReadOnly]);
+
+  const hasVoted = useCallback(async (proposalId, voter) => {
+    return callReadOnly(GOVERNANCE_CONTRACT, 'has-voted', [uintCV(proposalId), principalCV(voter)]);
+  }, [callReadOnly]);
+
+  // ==================== EMERGENCY READ FUNCTIONS ====================
+
+  const isEmergencyMode = useCallback(async () => {
+    return callReadOnly(EMERGENCY_CONTRACT, 'is-emergency-mode', []);
+  }, [callReadOnly]);
+
+  const calculateEmergencyPayout = useCallback(async (vaultId) => {
+    return callReadOnly(EMERGENCY_CONTRACT, 'calculate-emergency-payout', [uintCV(vaultId)]);
   }, [callReadOnly]);
 
   return {
     loading,
     error,
+    // Vault
     getVault,
     getTVL,
     getTotalFees,
     getVaultCount,
     getTimeRemaining,
     canWithdraw,
-    isVaultOwner,
-    isBot,
-    calculateFee,
-    callReadOnly,
+    isPaused,
+    // Rewards
+    calculateRewards,
+    getRewardsPool,
+    hasClaimed,
+    // Governance
+    getProposal,
+    getProposalCount,
+    calculateVotingPower,
+    hasVoted,
+    // Emergency
+    isEmergencyMode,
+    calculateEmergencyPayout,
   };
 }
 

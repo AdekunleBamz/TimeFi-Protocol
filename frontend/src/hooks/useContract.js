@@ -1,109 +1,220 @@
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import { openContractCall } from '@stacks/connect';
 import {
-  makeContractCall,
-  makeContractDeploy,
-  broadcastTransaction,
   AnchorMode,
   PostConditionMode,
   uintCV,
   principalCV,
+  stringAsciiCV,
   bufferCV,
+  boolCV,
+  makeStandardSTXPostCondition,
+  FungibleConditionCode,
 } from '@stacks/transactions';
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
+import { StacksMainnet } from '@stacks/network';
 
-const CONTRACT_ADDRESS = 'SP000000000000000000002Q6VF78'; // Replace with deployed address
-const CONTRACT_NAME = 'timefi-vault';
+const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N';
+const VAULT_CONTRACT = 'timefi-vault-v-A2';
+const REWARDS_CONTRACT = 'timefi-rewards-v-A2';
+const GOVERNANCE_CONTRACT = 'timefi-governance-v-A2';
+const EMERGENCY_CONTRACT = 'timefi-emergency-v-A2';
 
-const network = import.meta.env.VITE_NETWORK === 'mainnet' 
-  ? new StacksMainnet() 
-  : new StacksTestnet();
+const network = new StacksMainnet();
 
 /**
- * Custom hook for interacting with TimeFi vault contract
+ * Custom hook for interacting with TimeFi v-A2 contracts
  */
 export function useContract() {
-  /**
-   * Create a new time-locked vault
-   * @param {number} amount - Amount in microSTX
-   * @param {number} lockDuration - Lock duration in seconds
-   */
-  const createVault = useCallback(async (amount, lockDuration) => {
-    const txOptions = {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [txId, setTxId] = useState(null);
+
+  const executeContractCall = useCallback(async (options, stxAddress, stxAmount) => {
+    setLoading(true);
+    setError(null);
+    
+    const postConditions = stxAmount && stxAddress ? [
+      makeStandardSTXPostCondition(
+        stxAddress,
+        FungibleConditionCode.LessEqual,
+        stxAmount
+      ),
+    ] : [];
+
+    try {
+      await openContractCall({
+        ...options,
+        network,
+        postConditions,
+        onFinish: (data) => {
+          setTxId(data.txId);
+          setLoading(false);
+        },
+        onCancel: () => {
+          setLoading(false);
+        },
+      });
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+      throw err;
+    }
+  }, []);
+
+  // ==================== VAULT FUNCTIONS ====================
+
+  const createVault = useCallback((amount, lockBlocks, stxAddress) => {
+    return executeContractCall({
       contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAME,
+      contractName: VAULT_CONTRACT,
       functionName: 'create-vault',
-      functionArgs: [uintCV(amount), uintCV(lockDuration)],
-      network,
-      anchorMode: AnchorMode.Any,
+      functionArgs: [uintCV(amount), uintCV(lockBlocks)],
       postConditionMode: PostConditionMode.Deny,
-    };
-    
-    return txOptions;
-  }, []);
+      anchorMode: AnchorMode.Any,
+    }, stxAddress, amount);
+  }, [executeContractCall]);
 
-  /**
-   * Withdraw from a vault after lock period
-   * @param {number} vaultId - The vault ID to withdraw from
-   */
-  const withdraw = useCallback(async (vaultId) => {
-    const txOptions = {
+  const requestWithdraw = useCallback((vaultId) => {
+    return executeContractCall({
       contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAME,
-      functionName: 'withdraw',
+      contractName: VAULT_CONTRACT,
+      functionName: 'request-withdraw',
       functionArgs: [uintCV(vaultId)],
-      network,
+      postConditionMode: PostConditionMode.Allow,
       anchorMode: AnchorMode.Any,
-      postConditionMode: PostConditionMode.Deny,
-    };
-    
-    return txOptions;
-  }, []);
+    });
+  }, [executeContractCall]);
 
-  /**
-   * Approve a bot to manage vault
-   * @param {number} vaultId - The vault ID
-   * @param {string} botAddress - Bot principal address
-   */
-  const approveBot = useCallback(async (vaultId, botAddress) => {
-    const txOptions = {
+  const topUpVault = useCallback((vaultId, amount, stxAddress) => {
+    return executeContractCall({
       contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAME,
-      functionName: 'approve-bot',
-      functionArgs: [uintCV(vaultId), principalCV(botAddress)],
-      network,
+      contractName: VAULT_CONTRACT,
+      functionName: 'top-up-vault',
+      functionArgs: [uintCV(vaultId), uintCV(amount)],
+      postConditionMode: PostConditionMode.Deny,
       anchorMode: AnchorMode.Any,
-      postConditionMode: PostConditionMode.Deny,
-    };
-    
-    return txOptions;
-  }, []);
+    }, stxAddress, amount);
+  }, [executeContractCall]);
 
-  /**
-   * Revoke bot approval
-   * @param {number} vaultId - The vault ID
-   */
-  const revokeBot = useCallback(async (vaultId) => {
-    const txOptions = {
+  const extendLock = useCallback((vaultId, additionalBlocks) => {
+    return executeContractCall({
       contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAME,
-      functionName: 'revoke-bot',
+      contractName: VAULT_CONTRACT,
+      functionName: 'extend-lock',
+      functionArgs: [uintCV(vaultId), uintCV(additionalBlocks)],
+      postConditionMode: PostConditionMode.Deny,
+      anchorMode: AnchorMode.Any,
+    });
+  }, [executeContractCall]);
+
+  const setBeneficiary = useCallback((vaultId, beneficiary) => {
+    return executeContractCall({
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: VAULT_CONTRACT,
+      functionName: 'set-beneficiary',
+      functionArgs: [uintCV(vaultId), principalCV(beneficiary)],
+      postConditionMode: PostConditionMode.Deny,
+      anchorMode: AnchorMode.Any,
+    });
+  }, [executeContractCall]);
+
+  const initiateTransfer = useCallback((vaultId, newOwner) => {
+    return executeContractCall({
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: VAULT_CONTRACT,
+      functionName: 'initiate-transfer',
+      functionArgs: [uintCV(vaultId), principalCV(newOwner)],
+      postConditionMode: PostConditionMode.Deny,
+      anchorMode: AnchorMode.Any,
+    });
+  }, [executeContractCall]);
+
+  const acceptTransfer = useCallback((vaultId) => {
+    return executeContractCall({
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: VAULT_CONTRACT,
+      functionName: 'accept-transfer',
       functionArgs: [uintCV(vaultId)],
-      network,
-      anchorMode: AnchorMode.Any,
       postConditionMode: PostConditionMode.Deny,
-    };
-    
-    return txOptions;
-  }, []);
+      anchorMode: AnchorMode.Any,
+    });
+  }, [executeContractCall]);
+
+  // ==================== REWARDS FUNCTIONS ====================
+
+  const requestClaimRewards = useCallback((vaultId) => {
+    return executeContractCall({
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: REWARDS_CONTRACT,
+      functionName: 'request-claim-rewards',
+      functionArgs: [uintCV(vaultId)],
+      postConditionMode: PostConditionMode.Allow,
+      anchorMode: AnchorMode.Any,
+    });
+  }, [executeContractCall]);
+
+  // ==================== GOVERNANCE FUNCTIONS ====================
+
+  const createProposal = useCallback((vaultId, title, description, proposalType, actionData) => {
+    return executeContractCall({
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: GOVERNANCE_CONTRACT,
+      functionName: 'create-proposal',
+      functionArgs: [
+        uintCV(vaultId),
+        stringAsciiCV(title),
+        stringAsciiCV(description),
+        uintCV(proposalType),
+        bufferCV(actionData || new Uint8Array()),
+      ],
+      postConditionMode: PostConditionMode.Deny,
+      anchorMode: AnchorMode.Any,
+    });
+  }, [executeContractCall]);
+
+  const castVote = useCallback((proposalId, vaultId, support) => {
+    return executeContractCall({
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: GOVERNANCE_CONTRACT,
+      functionName: 'cast-vote',
+      functionArgs: [uintCV(proposalId), uintCV(vaultId), boolCV(support)],
+      postConditionMode: PostConditionMode.Deny,
+      anchorMode: AnchorMode.Any,
+    });
+  }, [executeContractCall]);
+
+  // ==================== EMERGENCY FUNCTIONS ====================
+
+  const requestEmergencyWithdraw = useCallback((vaultId) => {
+    return executeContractCall({
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: EMERGENCY_CONTRACT,
+      functionName: 'request-emergency-withdraw',
+      functionArgs: [uintCV(vaultId)],
+      postConditionMode: PostConditionMode.Allow,
+      anchorMode: AnchorMode.Any,
+    });
+  }, [executeContractCall]);
 
   return {
+    loading,
+    error,
+    txId,
+    // Vault
     createVault,
-    withdraw,
-    approveBot,
-    revokeBot,
-    contractAddress: CONTRACT_ADDRESS,
-    contractName: CONTRACT_NAME,
-    network,
+    requestWithdraw,
+    topUpVault,
+    extendLock,
+    setBeneficiary,
+    initiateTransfer,
+    acceptTransfer,
+    // Rewards
+    requestClaimRewards,
+    // Governance
+    createProposal,
+    castVote,
+    // Emergency
+    requestEmergencyWithdraw,
   };
 }
 

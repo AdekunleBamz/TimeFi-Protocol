@@ -1,0 +1,101 @@
+/* Linear Progress */
+.progress {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-sm {
+  height: 4px;
+}
+
+.progress-md {
+  height: 8px;
+}
+
+.progress-lg {
+  height: 12px;
+}
+
+/* Progress Bar */
+.progress-bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+}
+
+/* Variants */
+.progress-default {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+}
+
+.progress-success {
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+}
+
+.progress-warning {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.progress-danger {
+  background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+/* Animation */
+.progress-animated {
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Label */
+.progress-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Circular Progress */
+.circular-progress {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-progress svg {
+  transform: rotate(-90deg);
+}
+
+.circular-progress-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.circular-progress-bar {
+  fill: none;
+  stroke: url(#gradient);
+  stroke: #6366f1;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.circular-progress-label {
+  position: absolute;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #f8f9fa;
+}

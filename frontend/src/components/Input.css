@@ -1,0 +1,125 @@
+/* Input Container */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.input-full {
+  width: 100%;
+}
+
+/* Label */
+.input-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #e9ecef;
+}
+
+/* Input Wrapper */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Input Base */
+.input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #f8f9fa;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.input::placeholder {
+  color: #6c757d;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #6366f1;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.input-sm {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.input-md {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+}
+
+.input-lg {
+  padding: 1rem 1.25rem;
+  font-size: 1.125rem;
+}
+
+/* Error State */
+.input-error {
+  border-color: #ef4444;
+}
+
+.input-error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* Icons */
+.input-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  color: #6c757d;
+  pointer-events: none;
+}
+
+.input-icon-left {
+  left: 0.75rem;
+}
+
+.input-icon-right {
+  right: 0.75rem;
+}
+
+.input-with-left-icon {
+  padding-left: 2.5rem;
+}
+
+.input-with-right-icon {
+  padding-right: 2.5rem;
+}
+
+/* Helper Text */
+.input-hint {
+  font-size: 0.75rem;
+  color: #adb5bd;
+}
+
+.input-error-text {
+  font-size: 0.75rem;
+  color: #ef4444;
+}
+
+/* Number Input - Hide Spinners */
+.input[type="number"]::-webkit-outer-spin-button,
+.input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

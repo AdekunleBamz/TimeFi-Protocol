@@ -19,11 +19,12 @@
 
 /* Value */
 .countdown-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #f8f9fa;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
   font-variant-numeric: tabular-nums;
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 /* Label */

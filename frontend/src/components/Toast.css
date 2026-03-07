@@ -25,14 +25,18 @@
   animation: toast-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes toast-enter {
+@keyframes toast-slide-in {
   0% {
-    transform: translateY(1.5rem) scale(0.92);
+    transform: translateX(100%) scale(0.9);
     opacity: 0;
   }
 
+  70% {
+    transform: translateX(-10px) scale(1.02);
+  }
+
   100% {
-    transform: translateY(0) scale(1);
+    transform: translateX(0) scale(1);
     opacity: 1;
   }
 }
@@ -182,17 +186,5 @@
 
   .toast {
     width: 100%;
-  }
-
-  .toast-topline {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .toast {
-    animation: none;
   }
 }

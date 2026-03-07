@@ -27,14 +27,13 @@
 }
 
 .dashboard-hero h1 {
-  font-size: 3.5rem;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: #ffffff;
-  margin: 0 0 1rem;
-  background: linear-gradient(135deg, #00d4aa, #5546ff, #8b5cf6);
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--text-primary, #f8f9fa);
+  margin: 0 0 0.75rem;
+  background: linear-gradient(to bottom right, #ffffff 30%, #a5b4fc);
   -webkit-background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

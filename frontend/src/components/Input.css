@@ -47,10 +47,7 @@
   outline: none;
   border-color: #00d4aa;
   background: rgba(255, 255, 255, 0.04);
-  box-shadow:
-    0 0 0 4px rgba(0, 212, 170, 0.15),
-    0 14px 30px rgba(0, 0, 0, 0.18),
-    inset 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.15), inset 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .input:disabled {

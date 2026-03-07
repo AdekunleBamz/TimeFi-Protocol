@@ -5,11 +5,17 @@
 
 export const formatSTX = (microStx) => {
     if (microStx === undefined || microStx === null) return '0.000000';
-    const stx = Number(microStx) / 1_000_000;
-    return stx.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 6
-    });
+    try {
+        const value = typeof microStx === 'bigint' ? Number(microStx) : Number(microStx);
+        const stx = value / 1_000_000;
+        return stx.toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 6
+        });
+    } catch (e) {
+        console.error('Error formatting STX:', e);
+        return '0.000000';
+    }
 };
 
 export const formatAddress = (address, prefix = 4, suffix = 4) => {

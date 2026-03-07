@@ -21,9 +21,8 @@
 }
 
 .copy-button-copied {
-  color: #00d4aa;
-  text-shadow: 0 0 12px rgba(0, 212, 170, 0.4);
-  animation: heartbeat 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #34d399;
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
 }
 
 @keyframes heartbeat {

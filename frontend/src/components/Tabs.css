@@ -52,8 +52,9 @@
 
 .tab-active {
   color: #ffffff;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, rgba(0, 212, 170, 0.2), rgba(85, 70, 255, 0.2));
+  box-shadow: 0 4px 15px rgba(0, 212, 170, 0.2);
+  border: 1px solid rgba(0, 212, 170, 0.3);
 }
 
 .tab-active:hover:not(:disabled) {

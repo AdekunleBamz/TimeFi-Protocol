@@ -10,12 +10,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 60px;
-  min-height: 4.5rem;
-  background: linear-gradient(180deg, rgba(8, 18, 31, 0.92), rgba(14, 29, 46, 0.75));
-  padding: 0.625rem;
-  border-radius: 14px;
-  border: 1px solid rgba(148, 163, 184, 0.14);
+  min-width: 56px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Value */
@@ -103,11 +102,5 @@
 
   50% {
     opacity: 0.7;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .countdown-ready {
-    animation: none;
   }
 }

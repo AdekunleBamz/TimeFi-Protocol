@@ -102,11 +102,9 @@
 }
 
 .btn-danger {
-  background: linear-gradient(135deg, #f87171, #b91c1c);
+  background: linear-gradient(135deg, #f87171, #ef4444);
   color: white;
-  box-shadow:
-    0 14px 28px rgba(185, 28, 28, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
 }
 
 .btn-danger:hover:not(:disabled) {

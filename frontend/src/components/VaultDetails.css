@@ -70,9 +70,13 @@
 }
 
 .balance-amount {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--text-primary, #1f2937);
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(to bottom right, #ffffff 40%, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
 }
 
 .balance-currency {

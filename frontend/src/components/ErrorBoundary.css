@@ -31,11 +31,13 @@
 
 .error-boundary-details {
   text-align: left;
-  background: var(--surface, #ffffff);
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .error-boundary-details summary {

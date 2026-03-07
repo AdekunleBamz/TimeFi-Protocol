@@ -36,9 +36,9 @@
 
 /* Variants */
 .btn-primary {
-  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  background: linear-gradient(135deg, #00d4aa, #5546ff, #8b5cf6);
   color: white;
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
   overflow: hidden;
 }
 

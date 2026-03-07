@@ -1,9 +1,7 @@
 /* Base Skeleton */
 .skeleton {
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
 }
 
 /* Variants */

@@ -13,9 +13,10 @@
 .input-label {
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #cbd5e1;
+  color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
 }
 
 /* Input Wrapper */

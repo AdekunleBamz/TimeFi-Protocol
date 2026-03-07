@@ -140,6 +140,7 @@ input:focus,
 select:focus {
   outline: none;
   border-color: #00d4aa;
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.15);
 }
 
 svg {

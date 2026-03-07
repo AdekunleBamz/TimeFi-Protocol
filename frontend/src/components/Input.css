@@ -40,8 +40,13 @@
 }
 
 .input::placeholder {
-  color: #adb5bd;
-  opacity: 0.5;
+  color: #94a3b8;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.input:focus::placeholder {
+  opacity: 0.2;
 }
 
 .input:focus {

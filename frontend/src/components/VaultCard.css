@@ -35,9 +35,10 @@
 
 .vault-header h3 {
     font-size: 1.125rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #f8f9fa;
     margin: 0;
+    letter-spacing: -0.01em;
 }
 
 .status {

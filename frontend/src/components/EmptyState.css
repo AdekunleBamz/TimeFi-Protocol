@@ -13,10 +13,11 @@
 }
 
 .empty-state-icon {
-    color: #6366f1;
-    margin-bottom: 1.5rem;
-    opacity: 0.8;
-    animation: float 3s ease-in-out infinite;
+    color: #8b5cf6;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.3));
+    animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {

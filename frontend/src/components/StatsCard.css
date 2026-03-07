@@ -106,12 +106,11 @@
 }
 
 .stats-value {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 800;
   color: #ffffff;
   line-height: 1.1;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .stats-change {

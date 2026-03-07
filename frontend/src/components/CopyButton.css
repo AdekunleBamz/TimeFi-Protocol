@@ -9,7 +9,7 @@
   color: #6b7280;
   transition: all 0.2s ease;
   padding: 0.25rem;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .copy-button:hover {

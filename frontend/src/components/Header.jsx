@@ -49,7 +49,12 @@ export function Header() {
   };
 
   return (
-    <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
+    <header className="header">
+      <div className="header-container">
+        <div className="header-logo">
+          <img src="/logo.svg" alt="TimeFi" className="header-logo-img" />
+          <span className="header-logo-text">TimeFi</span>
+        </div>
 
       <div className="header-container">
         <Link to="/" className="header-logo" aria-label="TimeFi Home">
@@ -126,30 +131,13 @@ export function Header() {
                 <span className="header-balance-label">STX</span>
               </div>
 
-              <div className="header-wallet-actions">
-                <a
-                  href={env.getExplorerAddressUrl(address)}
-                  className="header-wallet-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="View connected wallet on Hiro explorer (opens in new tab)"
-                >
-                  {truncateAddress(address)}
-                </a>
-                <CopyButton text={address} className="header-copy-address" successMessage="Address copied" />
-                <button
-                  className="header-disconnect"
-                  onClick={disconnect}
-                  aria-label="Disconnect wallet"
-                  title="Disconnect wallet"
-                >
-                  Disconnect
-                </button>
-              </div>
-              <div className="header-wallet-compact">
-                <span>{truncateAddress(address)}</span>
-                <strong>{formatBalance(balance)} STX</strong>
-              </div>
+              <button
+                className="header-address"
+                onClick={disconnect}
+                title="Click to disconnect"
+              >
+                {truncateAddress(address)}
+              </button>
             </div>
           ) : (
             <button

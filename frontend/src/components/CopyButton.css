@@ -19,7 +19,8 @@
 }
 
 .copy-button-copied {
-  color: #4ade80;
+  color: #34d399;
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
 }
 
 .copy-button-copied:hover {

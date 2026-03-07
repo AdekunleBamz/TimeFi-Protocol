@@ -89,7 +89,7 @@
 }
 
 .btn-primary:active:not(:disabled) {
-  transform: translateY(0) scale(0.985);
+  transform: translateY(0) scale(0.97);
 }
 
 .btn-secondary {

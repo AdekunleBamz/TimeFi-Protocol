@@ -149,6 +149,9 @@ svg {
 
 footer {
   text-align: center;
-  margin-top: 3rem;
-  color: #666;
+  margin-top: 5rem;
+  padding: 2.5rem 0;
+  color: #64748b;
+  font-size: 0.875rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
 }

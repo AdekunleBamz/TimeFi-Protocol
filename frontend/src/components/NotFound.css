@@ -28,14 +28,14 @@
 }
 
 .not-found h1 {
-    font-size: 3.5rem;
+    font-size: 4rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #f87171, #ef4444);
+    background: linear-gradient(135deg, #f87171, #ef4444, #dc2626);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.05em;
 }
 
 .not-found p {

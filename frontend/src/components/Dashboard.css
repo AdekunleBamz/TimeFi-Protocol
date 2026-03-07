@@ -46,8 +46,10 @@
 
 .dashboard-hero p {
   font-size: 1.125rem;
-  color: var(--text-secondary, #6b7280);
-  margin: 0;
+  color: #94a3b8;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* Stats Section */

@@ -31,10 +31,11 @@
 }
 
 .vault-title h1 {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 2.25rem;
+  font-weight: 800;
   margin: 0;
-  color: var(--text-primary, #1f2937);
+  color: #f8f9fa;
+  letter-spacing: -0.02em;
 }
 
 /* Grid Layout */
@@ -171,7 +172,7 @@
   flex-wrap: wrap;
 }
 
-.action-buttons > * {
+.action-buttons>* {
   flex: 1;
   min-width: 200px;
 }
@@ -198,32 +199,32 @@
   .vault-details {
     padding: 1rem;
   }
-  
+
   .vault-title h1 {
     font-size: 1.5rem;
   }
-  
+
   .balance-amount {
     font-size: 2rem;
   }
-  
+
   .vault-details-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .vault-progress {
     grid-column: span 1;
   }
-  
+
   .vault-actions {
     grid-column: span 1;
   }
-  
+
   .action-buttons {
     flex-direction: column;
   }
-  
-  .action-buttons > * {
+
+  .action-buttons>* {
     min-width: 100%;
   }
 }

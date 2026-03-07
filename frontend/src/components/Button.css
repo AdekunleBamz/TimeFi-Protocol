@@ -68,9 +68,9 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #00d4aa, #4f46e5);
+  box-shadow: 0 8px 25px rgba(0, 212, 170, 0.5);
+  transform: translateY(-2px);
 }
 
 .btn-primary:active:not(:disabled) {

@@ -148,11 +148,9 @@
 .transaction-meta {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 0.875rem;
   font-size: 0.8125rem;
   color: #94a3b8;
-  margin-bottom: 0.625rem;
 }
 
 .transaction-status {

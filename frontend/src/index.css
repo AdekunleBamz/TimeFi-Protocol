@@ -79,16 +79,23 @@ button {
   background: linear-gradient(90deg, #00d4aa, #5546ff);
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 212, 170, 0.2);
 }
 
 button:hover {
   transform: translateY(-2px);
-  opacity: 0.9;
+  box-shadow: 0 6px 20px rgba(0, 212, 170, 0.3);
+  opacity: 1;
+}
+
+button:active {
+  transform: translateY(0) scale(0.96);
 }
 
 form {

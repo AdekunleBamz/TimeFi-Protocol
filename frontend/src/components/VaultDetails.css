@@ -10,18 +10,26 @@
 }
 
 .back-button {
-  background: none;
-  border: none;
-  color: var(--text-secondary, #6b7280);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
   cursor: pointer;
-  padding: 0.5rem 0;
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-  transition: color 0.15s;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .back-button:hover {
-  color: var(--primary, #4f46e5);
+  color: #f8f9fa;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(-4px);
 }
 
 .vault-title {

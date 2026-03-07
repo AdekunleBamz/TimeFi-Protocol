@@ -15,7 +15,6 @@
   border-radius: 14px;
   overflow-x: auto;
   backdrop-filter: blur(4px);
-  scroll-snap-type: x proximity;
 }
 
 /* Individual Tab */

@@ -103,8 +103,10 @@
 }
 
 .detail-row .value.bot {
-    color: #a5b4fc;
-    font-family: monospace;
+    color: #00d4aa;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.875rem;
 }
 
 /* Actions */

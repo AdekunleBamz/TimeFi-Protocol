@@ -75,39 +75,14 @@ header p {
   margin: 0 auto;
 }
 
-.app-main {
-  background: var(--panel-bg);
+main {
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--panel-border);
-  border-radius: 28px;
-  padding: 2.5rem;
-  box-shadow: var(--shadow-soft);
-  margin: 1rem auto 1.6rem;
-  max-width: 1380px;
-  width: min(calc(100% - 2rem), 1380px);
-  min-height: calc(100vh - 7rem);
-}
-
-.page-loader {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.page-loader-hero,
-.page-loader-detail {
-  display: grid;
-  gap: 0.75rem;
-  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.page-loader-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
 
 .connect-section,

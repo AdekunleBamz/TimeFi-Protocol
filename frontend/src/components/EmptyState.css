@@ -41,11 +41,11 @@
 }
 
 .empty-state-description {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     color: #9ca3af;
-    max-width: 320px;
-    margin: 0 0 2rem;
-    line-height: 1.5;
+    max-width: 400px;
+    margin: 0 0 2.5rem;
+    line-height: 1.6;
 }
 
 .empty-state-button {

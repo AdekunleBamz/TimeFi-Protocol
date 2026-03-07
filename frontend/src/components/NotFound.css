@@ -8,10 +8,11 @@
     min-height: 60vh;
 }
 
-font-size: 7rem;
-margin-bottom: 1.5rem;
-filter: drop-shadow(0 0 40px rgba(239, 68, 68, 0.25));
-animation: float 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+.not-found-icon {
+    font-size: 7rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 40px rgba(239, 68, 68, 0.25));
+    animation: float 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 @keyframes float {

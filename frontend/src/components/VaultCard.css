@@ -1,40 +1,22 @@
 /* Vault Card */
 .vault-card {
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 1.75rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-        0 8px 32px -8px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .vault-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(0, 212, 170, 0.35);
-    box-shadow: 
-        0 26px 50px -12px rgba(0, 0, 0, 0.6),
-        0 0 24px rgba(0, 212, 170, 0.15);
-}
-
-
-.vault-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right, rgba(0, 212, 170, 0.1), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-
-.vault-card:hover::before {
-    opacity: 1;
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .vault-card.withdrawable {
@@ -50,34 +32,20 @@
     margin-bottom: 1.25rem;
 }
 
-.vault-title-group {
-    display: grid;
-    gap: 0.25rem;
-}
-
 .vault-header h3 {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin: 0;
-    letter-spacing: -0.02em;
-}
-
-.vault-subtitle {
-    color: #94a3b8;
-    font-size: 0.78rem;
+    font-size: 1.125rem;
     font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    color: #f8f9fa;
+    margin: 0;
 }
 
 .status {
-    font-size: 0.6875rem;
-    font-weight: 900;
-    padding: 0.3125rem 0.75rem;
-    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.025em;
 }
 
 .status.ready {
@@ -88,30 +56,6 @@
 .status.locked {
     background: rgba(255, 255, 255, 0.05);
     color: #9ca3af;
-}
-
-.vault-time-spotlight {
-    display: grid;
-    gap: 0.3rem;
-    padding: 0.95rem 1rem;
-    margin-bottom: 1.1rem;
-    border-radius: 1rem;
-    border: 1px solid rgba(129, 140, 248, 0.18);
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.16), rgba(8, 18, 31, 0.55));
-}
-
-.vault-time-label {
-    color: #c7d2fe;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.vault-time-spotlight strong {
-    color: #ffffff;
-    font-size: 1.35rem;
-    letter-spacing: -0.03em;
 }
 
 /* Details */
@@ -129,97 +73,30 @@
 }
 
 .detail-row .label {
-    font-size: 0.8125rem;
-    color: #94a3b8;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    font-weight: 500;
 }
 
 .detail-row .value {
     font-size: 0.9375rem;
-    font-weight: 800;
-    color: #ffffff;
+    font-weight: 600;
+    color: #f8f9fa;
 }
 
 .detail-row .value.bot {
-    color: #00d4aa;
-    font-family: inherit;
-    font-weight: 800;
-    font-size: 0.875rem;
-}
-
-.vault-card-footer-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    padding-top: 0.8rem;
-    border-top: 1px solid rgba(148, 163, 184, 0.1);
-}
-
-.vault-urgency,
-.vault-refresh-note {
-    font-size: 0.74rem;
-    font-weight: 700;
-}
-
-.vault-urgency {
-    color: #fdba74;
-}
-
-.vault-urgency-ready {
-    color: #86efac;
-}
-
-.vault-refresh-note {
-    color: #64748b;
-    border: none;
-    padding: 0;
-    background: transparent;
-    box-shadow: none;
-}
-
-.vault-refresh-note:hover {
-    transform: none;
-    box-shadow: none;
-    color: #94a3b8;
-}
-
-.vault-refresh-note:focus-visible {
-    outline: 2px solid #22d3ee;
-    outline-offset: 2px;
-    border-radius: 6px;
+    color: #a5b4fc;
+    font-family: monospace;
 }
 
 /* Actions */
 .vault-actions {
     display: flex;
-    gap: 0.6rem;
-    align-items: center;
-    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
-.vault-actions button,
-.vault-actions .vault-open-link {
+.vault-actions button {
     flex: 1;
-}
-
-.vault-open-link {
-    text-decoration: none;
-}
-
-.vault-ready-pill {
-    font-size: 0.72rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: #86efac;
-    background: rgba(34, 197, 94, 0.15);
-    border: 1px solid rgba(34, 197, 94, 0.35);
-    padding: 0.45rem 0.6rem;
-    border-radius: 8px;
 }
 
 /* Loading/Error */
@@ -230,21 +107,4 @@
 .vault-card.error {
     border-color: rgba(239, 68, 68, 0.3);
     text-align: center;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .vault-card {
-        transition: none;
-    }
-
-    .vault-card:hover {
-        transform: none;
-    }
-}
-
-@media (max-width: 640px) {
-    .vault-card-footer-meta {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 }

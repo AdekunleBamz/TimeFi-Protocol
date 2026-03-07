@@ -108,11 +108,6 @@ export function VaultCard({ vaultId }) {
         </span>
       </div>
 
-      <div className="vault-time-spotlight">
-        <span className="vault-time-label">Time remaining</span>
-        <strong>{formatTime(timeRemaining)}</strong>
-      </div>
-
       <div className="vault-details">
         <div className="detail-row">
           <span className="label">Amount:</span>
@@ -120,11 +115,16 @@ export function VaultCard({ vaultId }) {
         </div>
 
         <div className="detail-row">
+          <span className="label">Time Remaining:</span>
+          <span className="value">{formatTime(timeRemaining)}</span>
+        </div>
+
+        <div className="detail-row">
           <span className="label">Unlock Block:</span>
           <span className="value">{unlockBlock}</span>
         </div>
 
-        {bot && (
+        {vault.bot && (
           <div className="detail-row">
             <span className="label">Bot:</span>
             <span className="value bot">{String(bot).slice(0, 10)}...</span>
@@ -132,27 +132,22 @@ export function VaultCard({ vaultId }) {
         )}
       </div>
 
-      <div className="vault-card-footer-meta">
-        <span className={`vault-urgency ${canWithdrawNow ? 'vault-urgency-ready' : ''}`}>{urgencyLabel}</span>
-        <button
-          type="button"
-          className="vault-refresh-note"
-          onClick={fetchVaultData}
-          aria-label={`Refresh vault data. Last updated ${lastUpdatedLabel}`}
-        >
-          Updated {lastUpdatedLabel}
-        </button>
-      </div>
-
       <div className="vault-actions">
-        <Link
-          className="btn btn-secondary vault-open-link"
-          to={`/vault/${vaultId}`}
-          aria-label={`View details for vault ${vaultId}`}
-        >
-          View Details
-        </Link>
-        {canWithdrawNow && <span className="vault-ready-pill">Ready to Withdraw</span>}
+        {canWithdrawNow ? (
+          <button
+            className="btn btn-primary"
+            onClick={() => onWithdraw(vaultId)}
+          >
+            Withdraw
+          </button>
+        ) : (
+          <button
+            className="btn btn-secondary"
+            onClick={() => onApproveBot(vaultId)}
+          >
+            Manage Bot
+          </button>
+        )}
       </div>
     </div>
   );

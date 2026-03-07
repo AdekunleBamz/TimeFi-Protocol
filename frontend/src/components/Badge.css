@@ -3,11 +3,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 800;
   border-radius: 999px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 0.25rem 0.625rem;
+  letter-spacing: 0.1em;
+  padding: 0.3125rem 0.75rem;
+  font-size: 0.6875rem;
 }
 
 /* Sizes */

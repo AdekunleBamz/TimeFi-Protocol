@@ -155,12 +155,15 @@
 
 .form-button-primary {
   color: white;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(135deg, #6366f1, #a855f7);
   border: none;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 .form-button-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
 }
 
 .form-button-primary:disabled {

@@ -121,8 +121,9 @@
 }
 
 .header-balance-value {
-    font-weight: 700;
-    color: #f8f9fa;
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 0.9375rem;
 }
 
 .header-balance-label {

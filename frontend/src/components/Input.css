@@ -75,8 +75,8 @@
 
 /* Error State */
 .input-error {
-  border-color: rgba(239, 68, 68, 0.5);
-  background: rgba(239, 68, 68, 0.05);
+  border-color: #ef4444;
+  animation: input-pulse-error 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes input-pulse-error {

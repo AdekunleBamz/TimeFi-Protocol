@@ -55,7 +55,11 @@ header h1 {
 }
 
 header p {
-  color: #888;
+  color: #94a3b8;
+  font-size: 1.125rem;
+  font-weight: 500;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 main {

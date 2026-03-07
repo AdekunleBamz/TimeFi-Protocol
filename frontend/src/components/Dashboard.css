@@ -76,7 +76,7 @@
 .dashboard-content {
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 3rem;
 }
 
 /* Sections */

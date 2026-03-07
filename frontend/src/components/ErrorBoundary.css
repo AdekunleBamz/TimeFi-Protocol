@@ -50,14 +50,17 @@
 }
 
 .error-boundary-details pre {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
   overflow-x: auto;
-  padding: 0.5rem;
-  background: var(--background, #f3f4f6);
-  border-radius: 0.25rem;
-  margin: 0.5rem 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: #f87171;
+  border-radius: 8px;
+  margin: 0.75rem 0;
   white-space: pre-wrap;
   word-break: break-word;
+  border: 1px solid rgba(239, 68, 68, 0.1);
 }
 
 .error-boundary-actions {

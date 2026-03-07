@@ -3,21 +3,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
-  min-height: 1.5rem;
-  font-weight: 800;
+  font-weight: 700;
   border-radius: 999px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 0.3125rem 0.75rem;
-  font-size: 0.6875rem;
-  border: 1px solid transparent;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: default;
-}
-
-.badge:hover {
-  transform: scale(1.05);
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.625rem;
 }
 
 /* Sizes */
@@ -177,20 +167,5 @@
   100% {
     opacity: 0;
     transform: scale(2.5);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .badge {
-    transition: none;
-  }
-
-  .badge:hover {
-    transform: none;
-  }
-
-  .badge-pulse::before,
-  .badge-dot.badge-pulse::before {
-    animation: none;
   }
 }

@@ -11,25 +11,25 @@
 .alert-info {
   background: rgba(59, 130, 246, 0.1);
   border-color: rgba(59, 130, 246, 0.3);
-  color: #1d4ed8;
+  color: #60a5fa;
 }
 
 .alert-success {
   background: rgba(16, 185, 129, 0.1);
   border-color: rgba(16, 185, 129, 0.3);
-  color: #047857;
+  color: #34d399;
 }
 
 .alert-warning {
   background: rgba(245, 158, 11, 0.1);
   border-color: rgba(245, 158, 11, 0.3);
-  color: #b45309;
+  color: #fbbf24;
 }
 
 .alert-error {
   background: rgba(239, 68, 68, 0.1);
   border-color: rgba(239, 68, 68, 0.3);
-  color: #b91c1c;
+  color: #f87171;
 }
 
 /* Icon */

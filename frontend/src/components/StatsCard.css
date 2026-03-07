@@ -11,8 +11,17 @@
 }
 
 .stats-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
+  border-color: rgba(0, 212, 170, 0.3);
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.stats-card:hover .stats-icon {
+  color: #ffffff;
+  background: #00d4aa;
+  border-color: #00d4aa;
+  box-shadow: 0 0 20px rgba(0, 212, 170, 0.4);
 }
 
 /* Icon */

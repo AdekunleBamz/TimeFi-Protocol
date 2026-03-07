@@ -52,33 +52,6 @@
   gap: 1rem;
 }
 
-.vault-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.vault-header-link {
-  min-height: 2.5rem;
-  padding: 0.58rem 0.82rem;
-  border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.16);
-  background: rgba(15, 23, 42, 0.48);
-  color: #f8fafc;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-
-.vault-header-link:hover {
-  border-color: rgba(86, 204, 242, 0.35);
-}
-
-.vault-header-link:focus-visible {
-  outline: 2px solid #22d3ee;
-  outline-offset: 2px;
-}
-
 .vault-title h1 {
   font-size: 2.25rem;
   font-weight: 800;
@@ -495,40 +468,16 @@
     grid-template-columns: 1fr;
   }
 
-  .vault-summary-strip {
-    grid-template-columns: 1fr;
-  }
-
   .vault-progress {
     grid-column: span 1;
-  }
-
-  .vault-timing-grid {
-    grid-template-columns: 1fr;
   }
 
   .vault-actions {
     grid-column: span 1;
   }
 
-  .info-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.55rem;
-  }
-
-  .info-item dd {
-    justify-content: flex-start;
-    text-align: left;
-    flex-wrap: wrap;
-  }
-
   .action-buttons {
     flex-direction: column;
-  }
-
-  .vault-action-guidance {
-    grid-template-columns: 1fr;
   }
 
   .action-buttons>* {

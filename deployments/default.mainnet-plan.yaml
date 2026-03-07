@@ -1,0 +1,32 @@
+---
+id: 0
+name: Mainnet deployment
+network: mainnet
+stacks-node: "https://api.mainnet.hiro.so"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoin.blockstack.com:8332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: timefi-emergency-v-A2
+            expected-sender: SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N
+            cost: 107980
+            path: contracts/timefi-emergency-v-A2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: timefi-governance-v-A2
+            expected-sender: SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N
+            cost: 106010
+            path: contracts/timefi-governance-v-A2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: timefi-rewards-v-A2
+            expected-sender: SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N
+            cost: 72380
+            path: contracts/timefi-rewards-v-A2.clar
+            anchor-block-only: true
+            clarity-version: 4
+      epoch: "3.3"

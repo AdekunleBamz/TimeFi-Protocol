@@ -130,8 +130,9 @@
 }
 
 .transaction-type {
-  font-weight: 600;
-  color: var(--text-primary, #1f2937);
+  font-weight: 700;
+  color: #f8f9fa;
+  letter-spacing: -0.01em;
 }
 
 .transaction-vault {

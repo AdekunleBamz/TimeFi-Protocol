@@ -203,14 +203,16 @@
 }
 
 .vault-details-error h2 {
-  font-size: 1.5rem;
-  color: var(--text-primary, #1f2937);
-  margin-bottom: 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #f8f9fa;
+  margin-bottom: 0.75rem;
 }
 
 .vault-details-error p {
-  color: var(--text-secondary, #6b7280);
-  margin-bottom: 1.5rem;
+  color: #94a3b8;
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
 }
 
 /* Responsive */

@@ -44,5 +44,8 @@ yarn-error.log*
 *.tmp
 *.temp
 
+# Personal use
+scripts/
+
 # Test
 test/

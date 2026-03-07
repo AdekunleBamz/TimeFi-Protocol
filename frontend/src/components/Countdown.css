@@ -10,11 +10,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 56px;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  min-width: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.625rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Value */

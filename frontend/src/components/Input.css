@@ -101,8 +101,10 @@
   position: absolute;
   display: flex;
   align-items: center;
-  color: #6c757d;
+  color: #94a3b8;
+  opacity: 0.8;
   pointer-events: none;
+  transition: all 0.3s ease;
 }
 
 .input-icon-left {

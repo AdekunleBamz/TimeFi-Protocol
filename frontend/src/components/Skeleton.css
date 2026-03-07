@@ -27,14 +27,12 @@
 
 /* Animation */
 .skeleton-animated {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.03) 25%,
-    rgba(255, 255, 255, 0.09) 37%,
-    rgba(255, 255, 255, 0.03) 63%
-  );
-  background-size: 400% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.12) 50%,
+      rgba(255, 255, 255, 0.06) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
 }
 
 @keyframes shimmer {
@@ -103,22 +101,5 @@
 .skeleton-vault-stats {
   display: flex;
   justify-content: space-between;
-  gap: 0.75rem;
-}
-
-@media (max-width: 640px) {
-  .skeleton-card-content,
-  .skeleton-vault-card {
-    padding: 1rem;
-  }
-
-  .skeleton-vault-stats {
-    flex-direction: column;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skeleton-animated {
-    animation: none;
-  }
+  margin-top: 0.75rem;
 }

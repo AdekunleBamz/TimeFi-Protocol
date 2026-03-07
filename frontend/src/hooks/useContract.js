@@ -1,11 +1,8 @@
 import { useCallback } from 'react';
-import { AnchorMode, PostConditionMode, uintCV, principalCV } from '@stacks/transactions';
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
-import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
+import { TimeFiClient, principalCV } from '@timefi/sdk';
 
-const network = import.meta.env.VITE_NETWORK === 'mainnet'
-  ? new StacksMainnet()
-  : new StacksTestnet();
+// Shared client instance
+const client = new TimeFiClient(import.meta.env.VITE_NETWORK || 'mainnet');
 
 /**
  * Custom hook for interacting with TimeFi vault contract (Transactions)
@@ -13,35 +10,16 @@ const network = import.meta.env.VITE_NETWORK === 'mainnet'
 export function useContract() {
   /**
    * Create a new time-locked vault
-   * @param {number} amount - Amount in STX (will be converted to microSTX)
-   * @param {number} lockDuration - Lock duration in blocks
    */
-  const createVault = useCallback(async (amount, lockDuration) => {
-    return {
-      contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAMES.VAULT,
-      functionName: 'create-vault',
-      functionArgs: [uintCV(amount * 1_000_000), uintCV(lockDuration)],
-      network,
-      anchorMode: AnchorMode.Any,
-      postConditionMode: PostConditionMode.Deny,
-    };
+  const createVault = useCallback(async (amountSTX, lockDurationBlocks) => {
+    return client.getCreateVaultOptions(amountSTX, lockDurationBlocks);
   }, []);
 
   /**
    * Withdraw from a vault after lock period
-   * @param {number} vaultId - The vault ID to withdraw from
    */
   const withdraw = useCallback(async (vaultId) => {
-    return {
-      contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAMES.VAULT,
-      functionName: 'request-withdraw', // Matching contract v-A2
-      functionArgs: [uintCV(vaultId)],
-      network,
-      anchorMode: AnchorMode.Any,
-      postConditionMode: PostConditionMode.Deny,
-    };
+    return client.getWithdrawOptions(vaultId);
   }, []);
 
   /**
@@ -49,13 +27,9 @@ export function useContract() {
    */
   const approveBot = useCallback(async (botAddress) => {
     return {
-      contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAMES.VAULT,
+      ...client.getWithdrawOptions(0), // Dummy to get base options
       functionName: 'approve-bot',
       functionArgs: [principalCV(botAddress)],
-      network,
-      anchorMode: AnchorMode.Any,
-      postConditionMode: PostConditionMode.Deny,
     };
   }, []);
 
@@ -63,9 +37,8 @@ export function useContract() {
     createVault,
     withdraw,
     approveBot,
-    contractAddress: CONTRACT_ADDRESS,
-    contractName: CONTRACT_NAMES.VAULT,
-    network,
+    contractAddress: client.contractAddress,
+    network: client.network,
   };
 }
 

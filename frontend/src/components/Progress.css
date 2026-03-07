@@ -11,11 +11,11 @@
 }
 
 .progress-md {
-  height: 8px;
+  height: 10px;
 }
 
 .progress-lg {
-  height: 12px;
+  height: 14px;
 }
 
 /* Progress Bar */
@@ -56,6 +56,7 @@
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }

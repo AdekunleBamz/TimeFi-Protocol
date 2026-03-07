@@ -1,25 +1,14 @@
-import { useCallback, useState } from 'react';
-import { principalCV } from '@stacks/transactions';
-import { useWallet } from '../context/WalletContext';
-import { createVault as createVaultTx, withdraw as withdrawTx, emergencyWithdraw as emergencyWithdrawTx, claimRewards as claimRewardsTx } from '../services/transactions';
+import { useCallback } from 'react';
+import { AnchorMode, PostConditionMode, uintCV, principalCV } from '@stacks/transactions';
+import { StacksMainnet, StacksTestnet } from '@stacks/network';
+import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
+
+const network = import.meta.env.VITE_NETWORK === 'mainnet'
+  ? new StacksMainnet()
+  : new StacksTestnet();
 
 /**
- * useContract - Hook for interacting with TimeFi vault smart contracts.
- *
- * Provides methods for creating vaults, withdrawing funds, and managing
- * bot approvals. Handles wallet connection checks and transaction state.
- *
- * @returns {{ createVault: Function, withdraw: Function, emergencyWithdraw: Function, claimRewards: Function, approveBot: Function, loading: boolean, error: string|null }} Contract interaction methods and state
- * @returns {Function} returns.createVault - Create a new time-locked vault
- * @returns {Function} returns.withdraw - Withdraw from an unlocked vault
- * @returns {Function} returns.emergencyWithdraw - Emergency withdrawal
- * @returns {Function} returns.claimRewards - Claim pending rewards
- * @returns {Function} returns.approveBot - Generate bot approval transaction
- * @returns {boolean} returns.loading - Whether a transaction is in progress
- * @returns {string|null} returns.error - Last error message if any
- * @example
- * const { createVault, withdraw, loading, error } = useContract();
- * await createVault(100, 3600, { onFinish: (txId) => console.log(txId) });
+ * Custom hook for interacting with TimeFi vault contract (Transactions)
  */
 export function useContract() {
   const { address } = useWallet();
@@ -65,104 +54,48 @@ export function useContract() {
 
   /**
    * Create a new time-locked vault
+   * @param {number} amount - Amount in STX (will be converted to microSTX)
+   * @param {number} lockDuration - Lock duration in blocks
    */
-  const createVault = useCallback(async (amountSTX, lockDurationBlocks, callbacks = {}) => {
-    ensureConnected();
-
-    const numericAmount = Number(amountSTX);
-    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
-      throw new Error('amountSTX must be a positive number');
-    }
-    if (!Number.isInteger(lockDurationBlocks) || lockDurationBlocks <= 0) {
-      throw new Error('lockDurationBlocks must be a positive integer');
-    }
-
-    setLoading(true);
-    setLastError(null);
-
-    try {
-      const amount = Math.floor(numericAmount * 1_000_000);
-      await createVaultTx({
-        amount,
-        lockDuration: lockDurationBlocks,
-        senderAddress: address,
-        ...wrapTxCallbacks(callbacks),
-      });
-    } catch (error) {
-      setLoading(false);
-      setLastError(getErrorMessage(error));
-      throw error;
-    }
-  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
+  const createVault = useCallback(async (amount, lockDuration) => {
+    return {
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: CONTRACT_NAMES.VAULT,
+      functionName: 'create-vault',
+      functionArgs: [uintCV(amount * 1_000_000), uintCV(lockDuration)],
+      network,
+      anchorMode: AnchorMode.Any,
+      postConditionMode: PostConditionMode.Deny,
+    };
+  }, []);
 
   /**
    * Withdraw from a vault after lock period
    */
-  const withdraw = useCallback(async (vaultId, callbacks = {}) => {
-    ensureConnected();
-    setLoading(true);
-    setLastError(null);
-
-    try {
-      await withdrawTx({
-        vaultId,
-        ...wrapTxCallbacks(callbacks),
-      });
-    } catch (error) {
-      setLoading(false);
-      setLastError(getErrorMessage(error));
-      throw error;
-    }
-  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
-
-  const emergencyWithdraw = useCallback(async (vaultId, callbacks = {}) => {
-    ensureConnected();
-    setLoading(true);
-    setLastError(null);
-
-    try {
-      await emergencyWithdrawTx({
-        vaultId,
-        ...wrapTxCallbacks(callbacks),
-      });
-    } catch (error) {
-      setLoading(false);
-      setLastError(getErrorMessage(error));
-      throw error;
-    }
-  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
-
-  const claimRewards = useCallback(async (vaultId, callbacks = {}) => {
-    ensureConnected();
-    setLoading(true);
-    setLastError(null);
-
-    try {
-      await claimRewardsTx({
-        vaultId,
-        ...wrapTxCallbacks(callbacks),
-      });
-    } catch (error) {
-      setLoading(false);
-      setLastError(getErrorMessage(error));
-      throw error;
-    }
-  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
+  const withdraw = useCallback(async (vaultId) => {
+    return {
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: CONTRACT_NAMES.VAULT,
+      functionName: 'request-withdraw', // Matching contract v-A2
+      functionArgs: [uintCV(vaultId)],
+      network,
+      anchorMode: AnchorMode.Any,
+      postConditionMode: PostConditionMode.Deny,
+    };
+  }, []);
 
   /**
    * Approve a bot to manage vault
    */
-  const approveBot = useCallback((botAddress) => {
+  const approveBot = useCallback(async (botAddress) => {
     return {
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: CONTRACT_NAMES.VAULT,
       functionName: 'approve-bot',
       functionArgs: [principalCV(botAddress)],
-    };
-  }, []);
-
-  const revokeBot = useCallback((botAddress) => {
-    return {
-      functionName: 'revoke-bot',
-      functionArgs: [principalCV(botAddress)],
+      network,
+      anchorMode: AnchorMode.Any,
+      postConditionMode: PostConditionMode.Deny,
     };
   }, []);
 
@@ -172,9 +105,9 @@ export function useContract() {
     emergencyWithdraw,
     claimRewards,
     approveBot,
-    revokeBot,
-    loading,
-    error: lastError,
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: CONTRACT_NAMES.VAULT,
+    network,
   };
 }
 

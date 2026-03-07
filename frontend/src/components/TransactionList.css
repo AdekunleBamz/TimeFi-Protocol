@@ -12,6 +12,22 @@
 
 /* Transaction Item */
 .transaction-item {
+  animation: transaction-fade-in 0.4s ease-out backwards;
+}
+
+@keyframes transaction-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.transaction-item {
   display: flex;
   align-items: center;
   gap: 1rem;

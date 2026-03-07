@@ -47,11 +47,9 @@
 
 /* Variants */
 .btn-primary {
-  background: linear-gradient(135deg, #00d4aa, #2c8575 45%, #18323f);
+  background: linear-gradient(135deg, #00d4aa, #5546ff, #8b5cf6);
   color: white;
-  box-shadow:
-    0 14px 28px rgba(0, 212, 170, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
   overflow: hidden;
 }
 

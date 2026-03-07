@@ -164,8 +164,9 @@
 
 .transaction-value {
   display: block;
-  font-weight: 700;
-  font-size: 1.125rem;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
 }
 
 .transaction-value-positive {

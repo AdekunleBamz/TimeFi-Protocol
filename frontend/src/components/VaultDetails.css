@@ -65,12 +65,12 @@
 }
 
 .vault-section h2 {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-secondary, #6b7280);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0 0 1rem;
+  letter-spacing: 0.1em;
+  margin: 0 0 1.5rem;
 }
 
 /* Balance Section */

@@ -29,9 +29,12 @@ const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N';
 // Randomness generators
 const getRandomGas = () => Math.floor(Math.random() * (1500 - 1000 + 1)) + 1000;
 const getRandomDelay = () => Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000;
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 
 // Test parameters
-const DEPOSIT_AMOUNT = 100000; // 0.1 STX
+const DEPOSIT_AMOUNT = 10000; // 0.01 STX
+
 const LOCK_DURATION = 100; // ~16 hours
 
 // Load wallets
@@ -122,9 +125,8 @@ async function runTests() {
 
   const actions = [
     { name: 'create-vault', contract: 'timefi-vault-v-A2', fn: 'create-vault', args: () => [uintCV(DEPOSIT_AMOUNT), uintCV(LOCK_DURATION)], emoji: '🏦' },
-    { name: 'register-rewards', contract: 'timefi-rewards-v-A2', fn: 'register-for-rewards', args: () => [], emoji: '🎁' },
-    { name: 'register-voter', contract: 'timefi-governance-v-A2', fn: 'register-voter', args: () => [], emoji: '🗳️' },
   ];
+
 
   for (let i = 0; i < testWallets.length; i++) {
     const wallet = testWallets[i];

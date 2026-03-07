@@ -13,8 +13,9 @@
 }
 
 .error-boundary-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.2));
 }
 
 .error-boundary h1 {

@@ -72,7 +72,8 @@
 
 .alert-message {
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Action */

@@ -54,11 +54,8 @@
 
 .tab-active {
   color: #ffffff;
-  background: linear-gradient(135deg, rgba(0, 212, 170, 0.18), rgba(22, 31, 42, 0.9));
-  box-shadow:
-    0 10px 24px rgba(0, 212, 170, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(0, 212, 170, 0.24);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 .tab-active:hover:not(:disabled) {
@@ -118,14 +115,5 @@
   .tab {
     padding: 0.625rem 0.75rem;
     font-size: 0.8125rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tab,
-  .tab-panel,
-  .tab-active::after {
-    animation: none;
-    transition: none;
   }
 }

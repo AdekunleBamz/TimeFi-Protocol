@@ -244,9 +244,10 @@
 }
 
 .transaction-link:hover {
-  color: #a5b4fc;
-  text-decoration: none;
-  transform: translateX(2px);
+  color: #ffffff;
+  background: #00d4aa;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
 }
 
 /* Skeleton Loading */

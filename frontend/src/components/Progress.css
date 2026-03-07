@@ -17,7 +17,7 @@
 }
 
 .progress-lg {
-  height: 16px;
+  height: 14px;
 }
 
 /* Progress Bar */
@@ -103,13 +103,4 @@
   font-size: 0.875rem;
   font-weight: 600;
   color: #f8f9fa;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .progress-bar,
-  .progress-animated,
-  .circular-progress-bar {
-    transition: none;
-    animation: none;
-  }
 }

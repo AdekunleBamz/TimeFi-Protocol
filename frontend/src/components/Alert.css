@@ -36,6 +36,19 @@
 .alert-icon {
   font-size: 1.25rem;
   flex-shrink: 0;
+  animation: alert-icon-bounce 2s infinite ease-in-out;
+}
+
+@keyframes alert-icon-bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 /* Content */

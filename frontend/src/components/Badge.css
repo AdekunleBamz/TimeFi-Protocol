@@ -38,7 +38,8 @@
 .badge-warning {
   background: rgba(245, 158, 11, 0.15);
   color: #fbbf24;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.1);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 .badge-danger {

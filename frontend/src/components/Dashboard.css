@@ -97,9 +97,11 @@
 /* Connect Prompt */
 .connect-prompt {
   text-align: center;
-  padding: 2rem;
-  background: var(--background, #f9fafb);
-  border-radius: 0.5rem;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 1.25rem;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
 }
 
 .connect-prompt p {

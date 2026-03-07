@@ -177,7 +177,6 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1;
-  font-variant-numeric: tabular-nums;
 }
 
 .balance-currency {

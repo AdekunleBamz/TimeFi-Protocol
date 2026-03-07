@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useReadOnly } from '../hooks/useReadOnly';
+import './VaultCard.css';
 
 /**
  * VaultCard component displays vault information
@@ -37,11 +38,11 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
 
   const formatTime = (seconds) => {
     if (seconds <= 0) return 'Ready to withdraw';
-    
+
     const days = Math.floor(seconds / 86400);
     const hours = Math.floor((seconds % 86400) / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
-    
+
     if (days > 0) return `${days}d ${hours}h ${mins}m`;
     if (hours > 0) return `${hours}h ${mins}m`;
     return `${mins}m`;
@@ -71,23 +72,23 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
           {canWithdrawNow ? '🟢 Ready' : '🔒 Locked'}
         </span>
       </div>
-      
+
       <div className="vault-details">
         <div className="detail-row">
           <span className="label">Amount:</span>
           <span className="value">{formatSTX(vault.amount)} STX</span>
         </div>
-        
+
         <div className="detail-row">
           <span className="label">Time Remaining:</span>
           <span className="value">{formatTime(timeRemaining)}</span>
         </div>
-        
+
         <div className="detail-row">
           <span className="label">Unlock Block:</span>
           <span className="value">{vault['unlock-block']}</span>
         </div>
-        
+
         {vault.bot && (
           <div className="detail-row">
             <span className="label">Bot:</span>
@@ -95,17 +96,17 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
           </div>
         )}
       </div>
-      
+
       <div className="vault-actions">
         {canWithdrawNow ? (
-          <button 
+          <button
             className="btn btn-primary"
             onClick={() => onWithdraw(vaultId)}
           >
             Withdraw
           </button>
         ) : (
-          <button 
+          <button
             className="btn btn-secondary"
             onClick={() => onApproveBot(vaultId)}
           >

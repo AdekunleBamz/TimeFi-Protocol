@@ -115,6 +115,12 @@
   right: 0.75rem;
 }
 
+.input:focus+.input-icon,
+.input-wrapper:focus-within .input-icon {
+  color: #00d4aa;
+  opacity: 1;
+}
+
 .input-with-left-icon {
   padding-left: 2.5rem;
 }

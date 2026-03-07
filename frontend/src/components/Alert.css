@@ -41,7 +41,8 @@
 .alert-icon {
   font-size: 1.5rem;
   flex-shrink: 0;
-  animation: alert-icon-bounce 2s infinite ease-in-out;
+  opacity: 0.9;
+  animation: alert-icon-bounce 2.5s infinite ease-in-out;
 }
 
 @keyframes alert-icon-bounce {

@@ -24,12 +24,17 @@
 }
 
 @keyframes toast-slide-in {
-  from {
-    transform: translateX(100%);
+  0% {
+    transform: translateX(100%) scale(0.9);
     opacity: 0;
   }
-  to {
-    transform: translateX(0);
+
+  70% {
+    transform: translateX(-10px) scale(1.02);
+  }
+
+  100% {
+    transform: translateX(0) scale(1);
     opacity: 1;
   }
 }
@@ -147,7 +152,7 @@
     right: 1rem;
     max-width: none;
   }
-  
+
   .toast {
     width: 100%;
   }

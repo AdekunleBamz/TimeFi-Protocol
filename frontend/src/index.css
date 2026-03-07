@@ -17,6 +17,11 @@
   padding: 0;
 }
 
+::selection {
+  background: rgba(0, 212, 170, 0.25);
+  color: #ffffff;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 100%);

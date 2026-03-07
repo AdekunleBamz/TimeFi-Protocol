@@ -315,53 +315,12 @@ svg {
   transition: all 0.3s ease;
 }
 
+svg {
+  transition: all 0.3s ease;
+}
+
 footer {
   text-align: center;
-  margin-top: 5rem;
-  padding: 2.5rem 0;
-  color: #64748b;
-  font-size: 0.875rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-/* ========================================
-   RESPONSIVE DESIGN
-   Mobile-first breakpoints and accessibility
-   ======================================== */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .app-main {
-    width: min(calc(100% - 1rem), 1380px);
-    min-height: calc(100vh - 5.8rem);
-    margin: 0.5rem auto 0.9rem;
-    padding: 1rem;
-    border-radius: 22px;
-  }
-
-  .page-loader-hero,
-  .page-loader-detail {
-    padding: 1rem;
-  }
-
-  .page-loader-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-main {
-    width: calc(100% - 0.5rem);
-    padding: 0.9rem;
-    min-height: calc(100vh - 5.2rem);
-  }
+  margin-top: 3rem;
+  color: #666;
 }

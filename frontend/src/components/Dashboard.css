@@ -71,10 +71,12 @@
 
 /* Sections */
 .dashboard-section {
-  background: var(--surface, #ffffff);
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 1rem;
-  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .dashboard-section h2 {

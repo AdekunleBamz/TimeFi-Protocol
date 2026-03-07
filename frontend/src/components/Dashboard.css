@@ -17,32 +17,13 @@
 
 .dashboard-hero {
   text-align: center;
-  padding: 4.5rem 1.5rem;
-  margin-bottom: 3rem;
-  background:
-    radial-gradient(circle at 18% 12%, rgba(86, 204, 242, 0.15), transparent 24%),
-    radial-gradient(circle at 82% 18%, rgba(255, 159, 67, 0.15), transparent 22%),
-    linear-gradient(145deg, rgba(6, 19, 31, 0.9), rgba(14, 29, 46, 0.72));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.dashboard-hero-eyebrow {
-  display: inline-flex;
-  margin-bottom: 1rem;
-  padding: 0.45rem 0.75rem;
-  border-radius: 999px;
-  border: 1px solid rgba(86, 204, 242, 0.25);
-  background: rgba(86, 204, 242, 0.08);
-  color: #8adcf3;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  padding: 4rem 1rem;
+  margin-bottom: 2rem;
+  background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+    linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .dashboard-hero h1 {
@@ -552,22 +533,8 @@
     font-size: 1rem;
   }
 
-  .dashboard-hero-metrics {
-    grid-template-columns: 1fr;
-  }
-
   .dashboard-stats {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .dashboard-wallet-panel {
-    grid-template-columns: 1fr;
-    margin-top: -1rem;
-  }
-
-  .dashboard-wallet-actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .vaults-grid {

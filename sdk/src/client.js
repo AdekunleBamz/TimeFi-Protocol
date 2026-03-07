@@ -1,6 +1,6 @@
 import {
     callReadOnlyFunction,
-    cvToJSON,
+    cvToValue,
     uintCV,
     principalCV,
     AnchorMode,
@@ -28,7 +28,7 @@ export class TimeFiClient {
             network: this.network,
             senderAddress: senderAddress || this.contractAddress,
         });
-        return cvToJSON(result);
+        return cvToValue(result);
     }
 
     async getVault(vaultId) {

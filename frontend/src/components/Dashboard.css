@@ -23,13 +23,15 @@
 
 .dashboard-hero {
   text-align: center;
-  padding: 4rem 1rem;
-  margin-bottom: 2rem;
-  background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
-    linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
-  border-radius: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 6rem 2rem;
+  margin-bottom: 4rem;
+  background: radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.2) 0%, transparent 60%),
+    rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .dashboard-hero h1 {

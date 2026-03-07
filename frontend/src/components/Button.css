@@ -187,17 +187,5 @@
 .btn:focus-visible {
   outline: 2px solid #00d4aa;
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.16);
-}
-
-@media (max-width: 640px) {
-  .btn {
-    width: 100%;
-  }
-
-  .btn-sm,
-  .btn-md,
-  .btn-lg {
-    min-height: 46px;
-  }
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
 }

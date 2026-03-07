@@ -25,7 +25,7 @@ export function Header() {
     <header className="header">
       <div className="header-container">
         <div className="header-logo">
-          <span className="header-logo-icon">⏰</span>
+          <img src="/logo.svg" alt="TimeFi" className="header-logo-img" />
           <span className="header-logo-text">TimeFi</span>
         </div>
 
@@ -48,8 +48,8 @@ export function Header() {
                 <span className="header-balance-value">{formatBalance(balance)}</span>
                 <span className="header-balance-label">STX</span>
               </div>
-              
-              <button 
+
+              <button
                 className="header-address"
                 onClick={disconnect}
                 title="Click to disconnect"

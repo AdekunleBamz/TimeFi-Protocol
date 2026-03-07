@@ -42,7 +42,8 @@ export function WalletProvider({ children }) {
     connect,
     disconnect: disconnectWallet,
     network,
-    stxAddress: userData?.profile?.stxAddress?.mainnet || null,
+    address: userData?.profile?.stxAddress?.mainnet || null,
+    balance: 0, // Placeholder for STX balance
   };
 
   return (

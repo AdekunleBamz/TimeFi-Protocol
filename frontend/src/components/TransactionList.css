@@ -231,28 +231,18 @@
 
 .transaction-link {
   font-size: 0.75rem;
-  font-weight: 700;
-  color: #00d4aa;
+  color: #8b5cf6;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.5rem;
-  background: rgba(0, 212, 170, 0.05);
-  border-radius: 4px;
+  gap: 0.25rem;
 }
 
 .transaction-link:hover {
-  color: #ffffff;
-  background: #00d4aa;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
-}
-
-.transaction-direction {
-  font-size: 0.75rem;
-  color: #94a3b8;
+  color: #a5b4fc;
+  text-decoration: none;
+  transform: translateX(2px);
 }
 
 /* Skeleton Loading */

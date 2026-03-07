@@ -58,7 +58,8 @@
 }
 
 .copyable-address-text {
-  font-family: 'SF Mono', Monaco, 'Andale Mono', monospace;
-  font-size: 0.875rem;
-  color: #e9ecef;
+  font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #adb5bd;
 }

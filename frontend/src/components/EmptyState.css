@@ -6,22 +6,17 @@
     justify-content: center;
     text-align: center;
     padding: 4rem 2rem;
-    background:
-        radial-gradient(circle at top, rgba(0, 212, 170, 0.12), transparent 45%),
-        rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.02);
     border: 1px dashed rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     margin: 1rem 0;
-    position: relative;
-    overflow: hidden;
 }
 
 .empty-state-icon {
-    color: #00d4aa;
+    color: #6366f1;
     margin-bottom: 1.5rem;
-    opacity: 0.9;
-    filter: drop-shadow(0 0 14px rgba(0, 212, 170, 0.2));
-    animation: float 4s ease-in-out infinite;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -38,70 +33,36 @@
     }
 }
 
-.empty-state-eyebrow {
-    margin: 0 0 0.625rem;
-    font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: #7dd3c7;
-}
-
 .empty-state-title {
-    font-size: 1.4rem;
-    font-weight: 800;
+    font-size: 1.25rem;
+    font-weight: 700;
     color: #f8f9fa;
     margin: 0 0 0.5rem;
-    letter-spacing: -0.02em;
 }
 
 .empty-state-description {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     color: #9ca3af;
-    max-width: 400px;
-    margin: 0 0 0.75rem;
-    line-height: 1.6;
-}
-
-.empty-state-note {
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: #cbd5e1;
-    max-width: 440px;
+    max-width: 320px;
     margin: 0 0 2rem;
-}
-
-.empty-state-action {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    line-height: 1.5;
 }
 
 .empty-state-button {
     padding: 0.75rem 1.5rem;
     font-size: 0.875rem;
-    font-weight: 700;
+    font-weight: 600;
     color: white;
-    background: linear-gradient(135deg, #00d4aa, #18566a);
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
     border: none;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 12px 28px rgba(0, 212, 170, 0.18);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 .empty-state-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 16px 32px rgba(0, 212, 170, 0.22);
-    background: linear-gradient(135deg, #10e7b8, #1c6479);
-}
-
-@media (max-width: 640px) {
-    .empty-state {
-        padding: 3rem 1.25rem;
-    }
-
-    .empty-state-button {
-        width: 100%;
-    }
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
 }

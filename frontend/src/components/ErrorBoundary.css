@@ -44,9 +44,12 @@
 
 .error-boundary-details summary {
   cursor: pointer;
-  font-weight: 500;
-  color: var(--text-primary, #1f2937);
-  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
 }
 
 .error-boundary-details pre {

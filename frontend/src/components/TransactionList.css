@@ -135,10 +135,11 @@
 
 .transaction-vault {
   font-size: 0.75rem;
-  color: var(--text-secondary, #6b7280);
-  background: var(--background, #f3f4f6);
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.1);
   padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
+  border-radius: 6px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
 }
 
 .transaction-meta {

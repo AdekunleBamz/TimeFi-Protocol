@@ -112,8 +112,9 @@
 }
 
 .rewards-amount {
-  font-weight: 600;
-  color: #10b981;
+  font-weight: 700;
+  color: #34d399;
+  text-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
 }
 
 /* Progress Section */

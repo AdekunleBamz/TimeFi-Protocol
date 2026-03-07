@@ -1,12 +1,9 @@
 import { useState, useCallback, useMemo } from 'react';
-import { callReadOnlyFunction, cvToJSON, uintCV, principalCV } from '@stacks/transactions';
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
-import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
+import { TimeFiClient, uintCV, principalCV } from '@timefi/sdk';
 import { useFetch } from './useAsync';
 
-const network = import.meta.env.VITE_NETWORK === 'mainnet'
-  ? new StacksMainnet()
-  : new StacksTestnet();
+// Shared client instance
+const client = new TimeFiClient(import.meta.env.VITE_NETWORK || 'mainnet');
 
 /**
  * Custom hook for read-only contract queries
@@ -21,18 +18,8 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
   const callReadOnly = useCallback(async (fnName, fnArgs = [], senderAddress) => {
     setLoadingFlag(true);
     setErrorFlag(null);
-
     try {
-      const result = await callReadOnlyFunction({
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAMES.VAULT,
-        functionName: fnName,
-        functionArgs: fnArgs,
-        network,
-        senderAddress: senderAddress || CONTRACT_ADDRESS,
-      });
-
-      return cvToJSON(result);
+      return await client.callReadOnly(fnName, fnArgs, senderAddress);
     } catch (err) {
       setErrorFlag(err.message);
       throw err;
@@ -41,19 +28,20 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
     }
   }, []);
 
-  // Define convenience methods
+  // Convenience methods using SDK client
   const methods = useMemo(() => ({
-    getVault: (vaultId) => callReadOnly('get-vault', [uintCV(vaultId)]),
-    getTVL: () => callReadOnly('get-tvl', []),
+    getVault: (vaultId) => client.getVault(vaultId),
+    getTVL: () => client.getTVL(),
+    getTimeRemaining: (vaultId) => client.getTimeRemaining(vaultId),
+    canWithdraw: (vaultId) => client.canWithdraw(vaultId),
+    // Additional methods can be proxied to callReadOnly
     getVaultCount: () => callReadOnly('get-vault-count', []),
-    getTimeRemaining: (vaultId) => callReadOnly('get-time-remaining', [uintCV(vaultId)]),
-    canWithdraw: (vaultId) => callReadOnly('can-withdraw', [uintCV(vaultId)]),
     isVaultOwner: (vaultId, owner) => callReadOnly('is-vault-owner', [uintCV(vaultId), principalCV(owner)]),
     calculateFee: (amount) => callReadOnly('calculate-fee', [uintCV(amount)]),
     callReadOnly,
   }), [callReadOnly]);
 
-  // If functionName is provided, use mode 1 (data fetching)
+  // Data fetching mode
   const fetcher = useCallback(() => {
     if (!functionName) return Promise.resolve(null);
     return callReadOnly(functionName, functionArgs);

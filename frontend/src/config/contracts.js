@@ -1,6 +1,6 @@
 /**
  * Contract Configuration
- * Re-exporting from @timefi/sdk
+ * Re-exporting from timefi-sdk
  */
 
 export {
@@ -9,7 +9,7 @@ export {
     LOCK_PERIODS,
     MIN_DEPOSIT,
     MAX_DEPOSIT
-} from '@timefi/sdk';
+} from 'timefi-sdk';
 
 // Frontend specific config
 export const FEE_BPS = 50;

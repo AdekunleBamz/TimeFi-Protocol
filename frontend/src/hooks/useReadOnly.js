@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { TimeFiClient, uintCV, principalCV } from '@timefi/sdk';
+import { TimeFiClient, uintCV, principalCV } from 'timefi-sdk';
 import { useFetch } from './useAsync';
 
 // Shared client instance

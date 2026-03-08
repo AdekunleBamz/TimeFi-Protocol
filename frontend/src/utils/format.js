@@ -1,6 +1,6 @@
 /**
  * Formatting Utilities
- * Re-exporting from @timefi/sdk
+ * Re-exporting from timefi-sdk
  */
 
 export {
@@ -10,7 +10,7 @@ export {
     formatPercent,
     formatDate,
     formatRelativeTime
-} from '@timefi/sdk';
+} from 'timefi-sdk';
 
 // App-specific formatting can be added here
 export const formatBlockHeight = (height) => {

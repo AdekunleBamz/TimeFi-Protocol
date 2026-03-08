@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { TimeFiClient, principalCV } from '@timefi/sdk';
+import { TimeFiClient, principalCV } from 'timefi-sdk';
 
 // Shared client instance
 const client = new TimeFiClient(import.meta.env.VITE_NETWORK || 'mainnet');

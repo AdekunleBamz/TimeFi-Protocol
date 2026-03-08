@@ -6,7 +6,12 @@
 export const formatSTX = (microStx) => {
     if (microStx === undefined || microStx === null) return '0.000000';
     try {
-        const value = typeof microStx === 'bigint' ? Number(microStx) : Number(microStx);
+        // Extract inner value if wrapped in an object
+        const rawValue = (typeof microStx === 'object' && microStx !== null && 'value' in microStx)
+            ? microStx.value
+            : microStx;
+
+        const value = typeof rawValue === 'bigint' ? Number(rawValue) : Number(rawValue);
         const stx = value / 1_000_000;
         return stx.toLocaleString(undefined, {
             minimumFractionDigits: 0,

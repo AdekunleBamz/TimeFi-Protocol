@@ -1,12 +1,25 @@
 {
-    "name": "@timefi/sdk",
+    "name": "timefi-sdk",
     "version": "0.1.0",
     "description": "Core SDK for interacting with TimeFi Protocol on Stacks",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
     "files": [
-        "dist"
+        "dist",
+        "README.md",
+        "LICENSE"
     ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AdekunleBamz/TimeFi-Protocol.git"
+    },
+    "bugs": {
+        "url": "https://github.com/AdekunleBamz/TimeFi-Protocol/issues"
+    },
+    "homepage": "https://github.com/AdekunleBamz/TimeFi-Protocol#readme",
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "build": "vite build",
         "test": "echo \"Error: no test specified\" && exit 1"

@@ -7,7 +7,7 @@ import {
     PostConditionMode
 } from '@stacks/transactions';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
-import { CONTRACT_ADDRESS, CONTRACT_NAMES } from './constants';
+import { CONTRACT_ADDRESS, CONTRACT_NAMES } from './constants.js';
 
 export class TimeFiClient {
     constructor(networkType = 'mainnet') {
@@ -28,6 +28,12 @@ export class TimeFiClient {
             network: this.network,
             senderAddress: senderAddress || this.contractAddress,
         });
+
+        // Handle ResponseCV (ok/err) explicitly
+        if (result.type === 7 || result.type === 8) { // ok or err
+            return cvToValue(result.value);
+        }
+
         return cvToValue(result);
     }
 

@@ -3,9 +3,9 @@
  * Core library for interacting with TimeFi Protocol
  */
 
-export * from './constants';
-export * from './format';
-export * from './client';
+export * from './constants.js';
+export * from './format.js';
+export * from './client.js';
 
 // Re-export Stacks utilities for convenience
 export {

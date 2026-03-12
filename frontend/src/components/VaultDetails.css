@@ -198,6 +198,34 @@
   font-weight: 600;
 }
 
+.vault-timing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.vault-timing-card {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem;
+  border-radius: 0.95rem;
+  background: rgba(8, 18, 31, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.vault-timing-card span {
+  color: #94a3b8;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.vault-timing-card strong {
+  color: #f8fafc;
+  font-size: 1rem;
+}
+
 /* Info Section */
 .info-list {
   margin: 0;
@@ -352,6 +380,10 @@
 
   .vault-progress {
     grid-column: span 1;
+  }
+
+  .vault-timing-grid {
+    grid-template-columns: 1fr;
   }
 
   .vault-actions {

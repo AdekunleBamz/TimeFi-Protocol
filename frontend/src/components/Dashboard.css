@@ -54,6 +54,24 @@
   line-height: 1.6;
 }
 
+.dashboard-hero-cta {
+  margin-top: 1.5rem;
+  border: none;
+  padding: 0.85rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00d4aa, #4f46e5);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 212, 170, 0.25);
+}
+
+.dashboard-hero-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 212, 170, 0.35);
+}
+
 /* Stats Section */
 .dashboard-stats {
   display: grid;

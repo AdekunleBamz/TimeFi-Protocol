@@ -1,13 +1,3 @@
-/**
- * App Router - Main application routing configuration.
- *
- * Defines all application routes with lazy-loaded components
- * for optimal performance and code splitting.
- *
- * @module Router
- * @author adekunlebamz
- */
-
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
@@ -26,23 +16,24 @@ const NotFound = lazy(() => import('./components/NotFound'));
  */
 function PageLoader() {
   return (
-    <div className="page-loader" role="status" aria-live="polite">
-      <div className="page-loader-hero">
-        <Skeleton height={20} width={140} />
-        <Skeleton height={56} width="58%" />
-        <Skeleton height={18} width="42%" />
-      </div>
-      <div className="page-loader-grid">
-        <Skeleton height={180} />
-        <Skeleton height={180} />
-        <Skeleton height={180} />
-      </div>
-      <div className="page-loader-detail">
-        <Skeleton height={18} width={160} />
-        <Skeleton height={320} style={{ marginTop: '1rem' }} />
+    <div style={{ padding: '2rem' }} role="status" aria-live="polite">
+      <Skeleton height={200} borderRadius={12} />
+      <div style={{ marginTop: '1rem' }}>
+        <Skeleton height={400} borderRadius={12} />
       </div>
     </div>
   );
+}
+
+function ScrollManager() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) return;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname, location.hash]);
+
+  return null;
 }
 
 /**
@@ -76,13 +67,9 @@ function ScrollManager() {
 export function AppRouter() {
   return (
     <BrowserRouter>
-      <a href="#app-main-content" className="skip-link" aria-label="Skip to main content">
-        Skip to content
-      </a>
       <ScrollManager />
       <Header />
-      <main className="app-main" id="app-main-content" tabIndex={-1} aria-label="Main content">
-        <ScrollToTop />
+      <main className="app-main">
         <Suspense fallback={<PageLoader />}>
 
           <Routes>

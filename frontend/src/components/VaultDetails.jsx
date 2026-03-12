@@ -152,7 +152,12 @@ export function VaultDetails() {
     return (
       <div className="vault-details-error">
         <h2>Vault Not Found</h2>
-        <p>The vault you're looking for doesn't exist or has been removed.</p>
+        <p>Vault #{id} could not be loaded. It may not exist on this network, or the route may be stale.</p>
+        <div className="vault-error-tips">
+          <span>Check the vault id in the URL.</span>
+          <span>Return to the dashboard to browse available vaults.</span>
+          <span>Retry if the network is still loading.</span>
+        </div>
         <div className="vault-error-actions">
           <Button onClick={() => navigate('/')}>Back to Dashboard</Button>
           <Button variant="secondary" onClick={refetch}>Retry</Button>

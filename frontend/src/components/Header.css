@@ -116,11 +116,6 @@
     background: rgba(255, 255, 255, 0.08);
 }
 
-.header-menu-toggle:focus-visible {
-    outline: 2px solid #22d3ee;
-    outline-offset: 2px;
-}
-
 .header-menu-toggle-label {
     font-size: 0.72rem;
     font-weight: 800;
@@ -399,7 +394,6 @@
 
     .header-nav-open {
         display: flex;
-        gap: 0.55rem;
     }
 
     .header-actions {
@@ -416,11 +410,6 @@
     .header-wallet,
     .header-connect {
         width: 100%;
-        min-height: 46px;
-    }
-
-    .header-nav-link {
-        min-height: 44px;
     }
 }
 
@@ -498,25 +487,5 @@
 
     .header-connect {
         width: 100%;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .header,
-    .header-logo,
-    .header-logo-img,
-    .header-nav-link,
-    .header-wallet-link,
-    .header-disconnect {
-        transition: none;
-    }
-
-    .header-wallet-dot {
-        animation: none;
-    }
-
-    .header-logo:hover,
-    .header-wallet-link:hover {
-        transform: none;
     }
 }

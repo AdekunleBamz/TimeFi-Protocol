@@ -1,13 +1,3 @@
-/**
- * Header - Application header with navigation and wallet controls.
- *
- * Provides consistent navigation, wallet connection status,
- * and branding across all pages.
- *
- * @module components/Header
- * @author adekunlebamz
- */
-
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
@@ -34,17 +24,7 @@ export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const networkLabel = env.getNetworkLabel().toUpperCase();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
     : location.pathname === '/404'
@@ -54,28 +34,6 @@ export function Header() {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname, location.hash]);
-
-  useEffect(() => {
-    if (!isMenuOpen) return;
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        setIsMenuOpen(false);
-      }
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isMenuOpen]);
-
-  useEffect(() => {
-    if (!isMenuOpen) return undefined;
-    const mediaQuery = window.matchMedia('(max-width: 920px)');
-    if (!mediaQuery.matches) return undefined;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isMenuOpen]);
 
   const formatBalance = (bal) => {
     if (bal === null || bal === undefined) return '--';
@@ -109,7 +67,6 @@ export function Header() {
           className="header-menu-toggle"
           aria-expanded={isMenuOpen}
           aria-controls="header-navigation"
-          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           onClick={() => setIsMenuOpen((open) => !open)}
         >
           <span className="header-menu-toggle-label">Menu</span>
@@ -123,7 +80,6 @@ export function Header() {
         <nav
           id="header-navigation"
           className={`header-nav ${isMenuOpen ? 'header-nav-open' : ''}`}
-          aria-label="Main navigation"
         >
           <NavLink
             to="/"
@@ -157,7 +113,6 @@ export function Header() {
             Your Vaults
           </Link>
         </nav>
-
 
         <div className={`header-actions ${isMenuOpen ? 'header-actions-open' : ''}`}>
           {isConnected ? (

@@ -21,19 +21,50 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --app-bg: #07111f;
+  --panel-bg: rgba(8, 18, 31, 0.78);
+  --panel-bg-strong: rgba(11, 24, 39, 0.92);
+  --panel-border: rgba(148, 163, 184, 0.18);
+  --panel-border-strong: rgba(148, 163, 184, 0.26);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --accent-primary: #00c2a8;
+  --accent-secondary: #ff9f43;
+  --accent-tertiary: #56ccf2;
+  --shadow-soft: 0 24px 60px rgba(3, 8, 20, 0.42);
+}
+
 ::selection {
   background: rgba(0, 212, 170, 0.25);
   color: #ffffff;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 100%);
-  color: #f8f9fa;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(86, 204, 242, 0.18), transparent 24%),
+    radial-gradient(circle at 82% 10%, rgba(255, 159, 67, 0.14), transparent 22%),
+    radial-gradient(circle at 50% 0%, #12243a 0%, var(--app-bg) 58%);
+  color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: radial-gradient(circle at center, black 36%, transparent 86%);
+  opacity: 0.7;
 }
 
 a,
@@ -103,14 +134,15 @@ header p {
 }
 
 .app-main {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--panel-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px;
+  border: 1px solid var(--panel-border);
+  border-radius: 28px;
   padding: 2.5rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  margin: 1.2rem;
+  box-shadow: var(--shadow-soft);
+  margin: 1rem auto 1.6rem;
+  max-width: 1380px;
 }
 
 .connect-section,

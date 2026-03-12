@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
 import { useReadOnly } from '../hooks/useReadOnly';
@@ -26,12 +26,10 @@ import './Dashboard.css';
  * <Route path="/" element={<Dashboard />} />
  */
 export function Dashboard() {
-  const { address, balance, isConnected, connect } = useWallet();
+  const { address, isConnected, connect } = useWallet();
   const { blockHeight } = useBlockHeight();
   const location = useLocation();
-  const [vaultSearch, setVaultSearch] = useState('');
-  const [vaultSort, setVaultSort] = useState('newest');
-
+  
   // Fetch user vaults
   const { data: vaultIds, loading: vaultsLoading } = useReadOnly(
     'get-user-vaults',
@@ -53,40 +51,6 @@ export function Dashboard() {
     };
   }, [vaultIds]);
 
-  const protocolSnapshot = useMemo(() => ([
-    {
-      label: 'Protocol TVL',
-      value: totalLocked === null || totalLocked === undefined ? '--' : `${formatSTX(totalLocked)} STX`,
-      tone: 'teal',
-    },
-    {
-      label: 'Vault count',
-      value: vaultCount === null || vaultCount === undefined ? '--' : vaultCount.toLocaleString(),
-      tone: 'amber',
-    },
-    {
-      label: 'Current block',
-      value: blockHeight === null || blockHeight === undefined ? '--' : `#${blockHeight.toLocaleString()}`,
-      tone: 'slate',
-    },
-  ]), [totalLocked, vaultCount, blockHeight]);
-
-  const filteredVaultIds = useMemo(() => {
-    if (!Array.isArray(vaultIds)) return [];
-
-    const query = vaultSearch.trim().toLowerCase();
-    const searched = query
-      ? vaultIds.filter((vaultId) => String(vaultId).toLowerCase().includes(query))
-      : vaultIds;
-
-    const sorted = [...searched].sort((a, b) => {
-      if (vaultSort === 'oldest') return a - b;
-      return b - a;
-    });
-
-    return sorted;
-  }, [vaultIds, vaultSearch, vaultSort]);
-
   useEffect(() => {
     if (!location.hash) return;
     const targetId = location.hash.replace('#', '');
@@ -99,40 +63,10 @@ export function Dashboard() {
     <div className="dashboard">
       {/* Hero Section */}
       <section className="dashboard-hero" id="dashboard">
-        <div className="dashboard-hero-eyebrow">Time-locked savings protocol on Stacks</div>
         <h1>Welcome to TimeFi</h1>
         <p>Time-locked vaults for disciplined savings on Stacks</p>
-        <div className="dashboard-hero-links">
-          <a href="#create-vault" className="dashboard-hero-link">Start a vault</a>
-          <a href="#your-vaults" className="dashboard-hero-link">Browse your vaults</a>
-        </div>
-        <div className="dashboard-hero-metrics" role="list" aria-label="Protocol snapshot">
-          {protocolSnapshot.map((metric) => (
-            <Tooltip key={metric.label} content={`Live ${metric.label.toLowerCase()} tracking`}>
-              <div
-                className={`dashboard-hero-metric dashboard-hero-metric-${metric.tone}`}
-                role="listitem"
-              >
-                <span>{metric.label}</span>
-                <strong>{metric.value}</strong>
-              </div>
-            </Tooltip>
-          ))}
-
-        </div>
-        <div className="dashboard-hero-highlights">
-          <span>Fixed lock windows</span>
-          <span>On-chain reward requests</span>
-          <span>Emergency flow support</span>
-        </div>
         {!isConnected && (
-          <button
-            type="button"
-            className="dashboard-hero-cta"
-            onClick={connect}
-            aria-label="Connect wallet to start creating a vault"
-            title="Connect wallet to start creating a vault"
-          >
+          <button type="button" className="dashboard-hero-cta" onClick={connect}>
             Connect Wallet to Start
           </button>
         )}
@@ -206,12 +140,7 @@ export function Dashboard() {
       <div className="dashboard-content">
         {/* Create Vault */}
         <section className="dashboard-section" id="create-vault">
-          <div className="dashboard-section-header dashboard-section-header-create">
-            <div>
-              <h2>Create New Vault</h2>
-              <p className="dashboard-section-copy">Choose an amount, lock window, and expected yield before you sign.</p>
-            </div>
-          </div>
+          <h2>Create New Vault</h2>
           {isConnected ? (
             <div className="create-vault-layout">
               <CreateVaultForm />
@@ -248,76 +177,7 @@ export function Dashboard() {
         {/* User Vaults */}
         {isConnected && (
           <section className="dashboard-section" id="your-vaults">
-            <div className="dashboard-section-header">
-              <h2>Your Vaults</h2>
-              {Array.isArray(vaultIds) && vaultIds.length > 0 && (
-                <span className="vault-count-chip">
-                  {filteredVaultIds.length} / {vaultIds.length}
-                </span>
-              )}
-            </div>
-            {!vaultsLoading && Array.isArray(vaultIds) && vaultIds.length > 0 && (
-              <>
-                <div className="vault-controls">
-                  <label className="vault-control-field">
-                    <span>Search</span>
-                    <input
-                      type="text"
-                      className="vault-control-input"
-                      placeholder="Find by vault id"
-                      value={vaultSearch}
-                      onChange={(e) => setVaultSearch(e.target.value)}
-                      aria-label="Search vaults by ID"
-                      onKeyDown={(event) => {
-                        if (event.key === 'Escape') {
-                          setVaultSearch('');
-                        }
-                      }}
-                    />
-                  </label>
-                  <label className="vault-control-field">
-                    <span>Sort</span>
-                    <select
-                      className="vault-control-select"
-                      value={vaultSort}
-                      onChange={(e) => setVaultSort(e.target.value)}
-                      aria-label="Sort vaults"
-                    >
-                      <option value="newest">Newest first</option>
-                      <option value="oldest">Oldest first</option>
-                    </select>
-                  </label>
-                </div>
-                <div className="vault-browser-summary">
-                  <span role="status" aria-live="polite">
-                    Showing {filteredVaultIds.length} vault{filteredVaultIds.length === 1 ? '' : 's'}
-                    {vaultSearch.trim() ? ` matching "${vaultSearch.trim()}"` : ''}
-                  </span>
-                  <div className="vault-browser-state">
-                    <span className="vault-browser-chip">
-                      {vaultSort === 'newest' ? 'Newest first' : 'Oldest first'}
-                    </span>
-                    {vaultSearch.trim() && (
-                      <span className="vault-browser-chip vault-browser-chip-accent">
-                        Filter active
-                      </span>
-                    )}
-                  </div>
-                  {(vaultSearch.trim() || vaultSort !== 'newest') && (
-                    <button
-                      type="button"
-                      className="vault-browser-reset"
-                      onClick={() => {
-                        setVaultSearch('');
-                        setVaultSort('newest');
-                      }}
-                    >
-                      Reset search and sort
-                    </button>
-                  )}
-                </div>
-              </>
-            )}
+            <h2>Your Vaults</h2>
             {vaultsLoading ? (
               <div className="vaults-grid">
                 {[1, 2, 3].map((i) => (

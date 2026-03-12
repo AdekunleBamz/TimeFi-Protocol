@@ -329,6 +329,31 @@
   line-height: 1.5;
 }
 
+.vault-preview {
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.08);
+  border-radius: 10px;
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.vault-preview-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: #a7f3d0;
+}
+
+.vault-preview-row strong {
+  color: #ecfdf5;
+  font-size: 0.86rem;
+  text-align: right;
+}
+
 /* Actions */
 .form-actions {
   display: flex;

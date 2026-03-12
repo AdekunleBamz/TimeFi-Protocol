@@ -33,14 +33,13 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   const { createVault, loading } = useContract();
   const { blockHeight } = useBlockHeight();
   const { toast } = useToast();
-
+  
   const [amount, setAmount] = useState('');
   const [lockPeriod, setLockPeriod] = useState(null);
   const [errors, setErrors] = useState({});
 
   const balanceInSTX = balance ? balance / 1_000_000 : 0;
   const feeReserveSTX = estimateFee('create-vault') / 1_000_000;
-  const spendableBalance = Math.max(balanceInSTX - feeReserveSTX, 0);
   const selectedPeriod = useMemo(
     () => Object.values(LOCK_PERIODS).find((period) => period.blocks === lockPeriod),
     [lockPeriod]
@@ -51,19 +50,6 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     : 0;
   const unlockDays = selectedPeriod ? Math.ceil(selectedPeriod.blocks / 144) : null;
   const unlockBlock = selectedPeriod && blockHeight ? blockHeight + selectedPeriod.blocks : null;
-  const allocationPercent = spendableBalance > 0
-    ? Math.min((parsedAmount / spendableBalance) * 100, 100)
-    : 0;
-  const walletLeftAfterLock = Math.max(balanceInSTX - parsedAmount - feeReserveSTX, 0);
-  const submitHint = !isConnected
-    ? 'Connect a wallet to start'
-    : loading
-      ? 'Confirm the transaction in your wallet extension'
-      : !amount
-        ? 'Enter an amount to continue'
-        : !lockPeriod
-          ? 'Choose a lock period'
-          : 'Transaction opens in your wallet';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -99,7 +85,8 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   };
 
   const handleMaxClick = () => {
-    setAmount(spendableBalance.toFixed(6));
+    const maxSpendable = Math.max(balanceInSTX - feeReserveSTX, 0);
+    setAmount(maxSpendable.toFixed(6));
     setErrors(prev => ({ ...prev, amount: null }));
   };
 
@@ -146,7 +133,6 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               setErrors(prev => ({ ...prev, amount: null }));
             }}
             aria-invalid={Boolean(errors.amount)}
-            aria-describedby={errors.amount ? 'amount-error' : undefined}
             disabled={loading}
           />
           <button
@@ -232,14 +218,6 @@ export function CreateVaultForm({ onSuccess, onClose }) {
 
       {selectedPeriod && parsedAmount > 0 && (
         <div className="vault-preview">
-          <div className="vault-preview-header">
-            <strong>Vault preview</strong>
-            <span>Estimates update before you sign</span>
-          </div>
-          <div className="vault-preview-row">
-            <span>Total you are locking</span>
-            <strong>{parsedAmount.toFixed(6)} STX</strong>
-          </div>
           <div className="vault-preview-row">
             <span>Estimated rewards</span>
             <strong>~{expectedRewards.toFixed(6)} STX</strong>
@@ -251,13 +229,6 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               {unlockBlock ? ` (block #${unlockBlock.toLocaleString()})` : ''}
             </strong>
           </div>
-          <div className="vault-preview-row">
-            <span>Wallet left after lock + fee</span>
-            <strong>{walletLeftAfterLock.toFixed(6)} STX</strong>
-          </div>
-          <p className="vault-preview-note">
-            Unlock timing is based on block production, so actual calendar time can drift slightly.
-          </p>
         </div>
       )}
 

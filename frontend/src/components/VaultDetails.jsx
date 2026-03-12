@@ -159,6 +159,21 @@ export function VaultDetails() {
         </div>
       </header>
 
+      <div className="vault-summary-strip">
+        <div className="vault-summary-chip">
+          <span>Blocks remaining</span>
+          <strong>{blocksRemaining === null ? '--' : blocksRemaining.toLocaleString()}</strong>
+        </div>
+        <div className="vault-summary-chip">
+          <span>Rewards queued</span>
+          <strong>{formatSTX(normalizedVault.rewards)} STX</strong>
+        </div>
+        <div className="vault-summary-chip">
+          <span>Owner status</span>
+          <strong>{isOwner ? 'Your vault' : 'Read-only view'}</strong>
+        </div>
+      </div>
+
       <div className="vault-details-grid">
         {/* Main Stats */}
         <section className="vault-section vault-stats">

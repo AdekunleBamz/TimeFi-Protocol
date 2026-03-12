@@ -238,62 +238,6 @@
   gap: 0.55rem;
 }
 
-.vault-preview-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
-  align-items: baseline;
-  padding-bottom: 0.35rem;
-}
-
-.vault-preview-header strong {
-  color: #ecfdf5;
-  font-size: 0.96rem;
-}
-
-.vault-preview-header span {
-  color: #a7f3d0;
-  font-size: 0.76rem;
-}
-
-.vault-preview-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.88rem;
-  color: #a7f3d0;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(167, 243, 208, 0.12);
-}
-
-.vault-preview-row:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
-}
-
-.vault-preview-row strong {
-  color: #ecfdf5;
-  font-size: 0.86rem;
-  text-align: right;
-}
-
-.vault-preview-note {
-  color: #c6f6df;
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
-.vault-preview {
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  background: rgba(16, 185, 129, 0.08);
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
 .vault-preview-row {
   display: flex;
   justify-content: space-between;
@@ -365,4 +309,11 @@
 
 .form-button-secondary:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.05);
+}
+
+.form-submit-hint {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: -0.4rem;
 }

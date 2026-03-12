@@ -51,6 +51,13 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     : 0;
   const unlockDays = selectedPeriod ? Math.ceil(selectedPeriod.blocks / 144) : null;
   const unlockBlock = selectedPeriod && blockHeight ? blockHeight + selectedPeriod.blocks : null;
+  const submitHint = !isConnected
+    ? 'Connect a wallet to start'
+    : !amount
+      ? 'Enter an amount to continue'
+      : !lockPeriod
+        ? 'Choose a lock period'
+        : 'Transaction opens in your wallet';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -225,7 +232,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
       )}
 
       {errors.submit && (
-        <div className="form-error form-error-submit" role="alert" aria-live="assertive">
+        <div className="form-error form-error-submit">
           <strong>Submission failed</strong>
           <span>{errors.submit}</span>
         </div>
@@ -251,7 +258,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
           {loading ? 'Awaiting wallet...' : 'Create Vault'}
         </button>
       </div>
-      <p className="form-submit-hint" role="status" aria-live="polite">{submitHint}</p>
+      <p className="form-submit-hint">{submitHint}</p>
     </form>
   );
 }

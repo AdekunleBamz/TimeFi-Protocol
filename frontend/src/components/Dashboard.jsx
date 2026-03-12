@@ -168,7 +168,15 @@ export function Dashboard() {
             </div>
           ) : (
             <div className="connect-prompt">
-              <p>Connect your wallet to create a time-locked vault</p>
+              <p>Connect your wallet to start creating time-locked vaults with live reward previews.</p>
+              <div className="connect-prompt-highlights">
+                <span>Preview unlock block before signing</span>
+                <span>Track every vault from one dashboard</span>
+                <span>Claim rewards when they mature</span>
+              </div>
+              <button type="button" className="dashboard-hero-cta" onClick={connect}>
+                Connect Wallet to Continue
+              </button>
             </div>
           )}
         </section>

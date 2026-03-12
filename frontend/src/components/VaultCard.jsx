@@ -11,27 +11,29 @@ export function VaultCard({ vaultId }) {
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [canWithdrawNow, setCanWithdrawNow] = useState(false);
   const [error, setError] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
   const { getVault, getTimeRemaining, canWithdraw, loading } = useReadOnly();
 
+  const fetchVaultData = async () => {
+    try {
+      const vaultData = await getVault(vaultId);
+      const value = vaultData?.value ?? vaultData;
+      setVault(value);
+
+      const remaining = await getTimeRemaining(vaultId);
+      setTimeRemaining(Number(remaining?.value ?? remaining ?? 0));
+
+      const withdrawable = await canWithdraw(vaultId);
+      setCanWithdrawNow(Boolean(withdrawable?.value ?? withdrawable));
+      setLastUpdated(new Date());
+      setError(null);
+    } catch (err) {
+      console.error('Failed to fetch vault data:', err);
+      setError('Unable to load vault');
+    }
+  };
+
   useEffect(() => {
-    const fetchVaultData = async () => {
-      try {
-        const vaultData = await getVault(vaultId);
-        const value = vaultData?.value ?? vaultData;
-        setVault(value);
-
-        const remaining = await getTimeRemaining(vaultId);
-        setTimeRemaining(Number(remaining?.value ?? remaining ?? 0));
-
-        const withdrawable = await canWithdraw(vaultId);
-        setCanWithdrawNow(Boolean(withdrawable?.value ?? withdrawable));
-        setError(null);
-      } catch (err) {
-        console.error('Failed to fetch vault data:', err);
-        setError('Unable to load vault');
-      }
-    };
-
     fetchVaultData();
     const interval = setInterval(fetchVaultData, 30000); // Refresh every 30s
     return () => clearInterval(interval);
@@ -76,25 +78,36 @@ export function VaultCard({ vaultId }) {
     : timeRemaining > 86400
       ? 'Long lock remaining'
       : 'Near unlock';
+  const timeStateLabel = canWithdrawNow
+    ? 'Ready now'
+    : timeRemaining > 86400
+      ? 'Still locked'
+      : 'Unlocking soon';
+  const lastUpdatedLabel = lastUpdated
+    ? lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    : '--';
 
   return (
     <div className={`vault-card ${canWithdrawNow ? 'withdrawable' : ''}`}>
       <div className="vault-header">
-        <h3>Vault #{vaultId}</h3>
+        <div className="vault-title-group">
+          <h3>Vault #{vaultId}</h3>
+          <span className="vault-subtitle">{timeStateLabel}</span>
+        </div>
         <span className={`status ${canWithdrawNow ? 'ready' : 'locked'}`}>
           {canWithdrawNow ? '🟢 Ready' : '🔒 Locked'}
         </span>
+      </div>
+
+      <div className="vault-time-spotlight">
+        <span className="vault-time-label">Time remaining</span>
+        <strong>{formatTime(timeRemaining)}</strong>
       </div>
 
       <div className="vault-details">
         <div className="detail-row">
           <span className="label">Amount:</span>
           <span className="value">{formatSTX(vault.amount)} STX</span>
-        </div>
-
-        <div className="detail-row">
-          <span className="label">Time Remaining:</span>
-          <span className="value">{formatTime(timeRemaining)}</span>
         </div>
 
         <div className="detail-row">
@@ -112,7 +125,13 @@ export function VaultCard({ vaultId }) {
 
       <div className="vault-card-footer-meta">
         <span className={`vault-urgency ${canWithdrawNow ? 'vault-urgency-ready' : ''}`}>{urgencyLabel}</span>
-        <span className="vault-refresh-note">Refreshes every 30s</span>
+        <button
+          type="button"
+          className="vault-refresh-note"
+          onClick={fetchVaultData}
+        >
+          Updated {lastUpdatedLabel}
+        </button>
       </div>
 
       <div className="vault-actions">

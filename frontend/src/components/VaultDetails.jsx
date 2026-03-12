@@ -189,14 +189,6 @@ export function VaultDetails() {
         </div>
       </div>
 
-      <section className={`vault-status-banner vault-status-banner-${statusBanner.tone}`}>
-        <div>
-          <span className="vault-status-banner-label">Current state</span>
-          <strong>{statusBanner.title}</strong>
-        </div>
-        <p>{statusBanner.message}</p>
-      </section>
-
       <div className="vault-details-grid">
         {/* Main Stats */}
         <section className="vault-section vault-stats">

@@ -82,6 +82,36 @@
   gap: 2rem;
 }
 
+.vault-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.vault-summary-chip {
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(8, 18, 31, 0.68);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.vault-summary-chip span {
+  color: #64748b;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.vault-summary-chip strong {
+  color: #f8fafc;
+  font-size: 1.02rem;
+}
+
 /* Sections */
 .vault-section {
   background: rgba(255, 255, 255, 0.03);
@@ -384,6 +414,10 @@
   }
 
   .vault-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vault-summary-strip {
     grid-template-columns: 1fr;
   }
 

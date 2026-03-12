@@ -10,6 +10,10 @@ import { openContractCall } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
 
+const STACKS_NETWORK = import.meta.env.VITE_NETWORK === 'mainnet'
+  ? new StacksMainnet()
+  : new StacksTestnet();
+
 /**
  * Transaction Service - Build and submit Stacks blockchain transactions.
  *

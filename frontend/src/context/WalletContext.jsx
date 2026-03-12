@@ -1,19 +1,8 @@
-/**
- * Wallet Context - Stacks wallet connection state management.
- *
- * Provides wallet connection, disconnection, and balance tracking
- * throughout the application using Stacks Connect.
- *
- * @module context/WalletContext
- * @author adekunlebamz
- */
-
 import { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
 import { showConnect, disconnect } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../utils/constants';
-import { Tooltip } from '../components/Tooltip';
 
 /**
  * WalletContext - React Context for wallet connection state management.
@@ -49,18 +38,16 @@ export function WalletProvider({ children }) {
   const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.WALLET_SESSION, null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [balance, setBalance] = useState(0);
-  const networkType = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
-  const BALANCE_POLL_INTERVAL_MS = 60_000;
 
   const network = useMemo(() => (
-    networkType === 'mainnet' ? new StacksMainnet() : new StacksTestnet()
-  ), [networkType]);
+    import.meta.env.VITE_NETWORK === 'mainnet' ? new StacksMainnet() : new StacksTestnet()
+  ), []);
   const address = useMemo(() => {
     if (!userData?.profile?.stxAddress) return null;
-    return networkType === 'mainnet'
+    return import.meta.env.VITE_NETWORK === 'mainnet'
       ? userData.profile.stxAddress.mainnet
       : userData.profile.stxAddress.testnet;
-  }, [networkType, userData]);
+  }, [userData]);
 
   const connect = useCallback(() => {
     setIsConnecting(true);
@@ -81,7 +68,7 @@ export function WalletProvider({ children }) {
     disconnect();
     setUserData(null);
     setBalance(0);
-  }, [setUserData]);
+  }, []);
 
   useEffect(() => {
     if (!address) return;
@@ -101,7 +88,7 @@ export function WalletProvider({ children }) {
     };
 
     fetchBalance();
-    const interval = setInterval(fetchBalance, BALANCE_POLL_INTERVAL_MS);
+    const interval = setInterval(fetchBalance, 60000);
 
     return () => {
       mounted = false;
@@ -116,8 +103,8 @@ export function WalletProvider({ children }) {
     connect,
     disconnect: disconnectWallet,
     network,
-    address: userData?.profile?.stxAddress?.mainnet || null,
-    balance: 0, // Placeholder for STX balance
+    address,
+    balance,
   };
 
   return (

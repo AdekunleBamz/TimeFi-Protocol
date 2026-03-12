@@ -1,18 +1,21 @@
 import React from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
+import { CopyButton } from './CopyButton';
 import './Header.css';
 
 /**
  * Main application header with wallet connection
  */
 export function Header() {
-  const { isConnected, address, balance, connect, disconnect } = useWallet();
+  const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
+  const location = useLocation();
 
   const formatBalance = (bal) => {
-    if (!bal) return '0';
+    if (bal === null || bal === undefined) return '--';
     return (bal / 1_000_000).toLocaleString('en-US', {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 6,
+      maximumFractionDigits: 2,
     });
   };
 
@@ -24,21 +27,40 @@ export function Header() {
   return (
     <header className="header">
       <div className="header-container">
-        <div className="header-logo">
+        <Link to="/" className="header-logo">
           <img src="/logo.svg" alt="TimeFi" className="header-logo-img" />
           <span className="header-logo-text">TimeFi</span>
-        </div>
+        </Link>
 
         <nav className="header-nav">
-          <a href="#dashboard" className="header-nav-link header-nav-link-active">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `header-nav-link ${
+                isActive && location.hash !== '#create-vault' && location.hash !== '#your-vaults'
+                  ? 'header-nav-link-active'
+                  : ''
+              }`
+            }
+          >
             Dashboard
-          </a>
-          <a href="#vaults" className="header-nav-link">
-            Vaults
-          </a>
-          <a href="#rewards" className="header-nav-link">
-            Rewards
-          </a>
+          </NavLink>
+          <Link
+            to="/#create-vault"
+            className={`header-nav-link ${
+              location.pathname === '/' && location.hash === '#create-vault' ? 'header-nav-link-active' : ''
+            }`}
+          >
+            Create Vault
+          </Link>
+          <Link
+            to="/#your-vaults"
+            className={`header-nav-link ${
+              location.pathname === '/' && location.hash === '#your-vaults' ? 'header-nav-link-active' : ''
+            }`}
+          >
+            Your Vaults
+          </Link>
         </nav>
 
         <div className="header-actions">
@@ -49,17 +71,29 @@ export function Header() {
                 <span className="header-balance-label">STX</span>
               </div>
 
-              <button
-                className="header-address"
-                onClick={disconnect}
-                title="Click to disconnect"
-              >
-                {truncateAddress(address)}
-              </button>
+              <div className="header-wallet-actions">
+                <a
+                  href={`https://explorer.hiro.so/address/${address}?chain=mainnet`}
+                  className="header-wallet-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {truncateAddress(address)}
+                </a>
+                <CopyButton text={address} className="header-copy-address" successMessage="Address copied" />
+                <button
+                  className="header-disconnect"
+                  onClick={disconnect}
+                  aria-label="Disconnect wallet"
+                  title="Disconnect wallet"
+                >
+                  Disconnect
+                </button>
+              </div>
             </div>
           ) : (
-            <button className="header-connect" onClick={connect}>
-              Connect Wallet
+            <button className="header-connect" onClick={connect} disabled={isConnecting}>
+              {isConnecting ? 'Connecting...' : 'Connect Wallet'}
             </button>
           )}
         </div>

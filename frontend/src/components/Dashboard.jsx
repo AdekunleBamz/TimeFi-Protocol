@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
 import { useReadOnly } from '../hooks/useReadOnly';
 import { useBlockHeight } from '../hooks/useBlockHeight';
@@ -14,8 +15,9 @@ import './Dashboard.css';
  * Main dashboard page component
  */
 export function Dashboard() {
-  const { address, isConnected } = useWallet();
+  const { address, isConnected, connect } = useWallet();
   const { blockHeight } = useBlockHeight();
+  const location = useLocation();
   
   // Fetch user vaults
   const { data: vaultIds, loading: vaultsLoading } = useReadOnly(
@@ -38,12 +40,25 @@ export function Dashboard() {
     };
   }, [vaultIds]);
 
+  useEffect(() => {
+    if (!location.hash) return;
+    const targetId = location.hash.replace('#', '');
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [location.hash]);
+
   return (
     <div className="dashboard">
       {/* Hero Section */}
-      <section className="dashboard-hero">
+      <section className="dashboard-hero" id="dashboard">
         <h1>Welcome to TimeFi</h1>
         <p>Time-locked vaults for disciplined savings on Stacks</p>
+        {!isConnected && (
+          <button type="button" className="dashboard-hero-cta" onClick={connect}>
+            Connect Wallet to Start
+          </button>
+        )}
       </section>
 
       {/* Protocol Stats */}
@@ -75,7 +90,7 @@ export function Dashboard() {
       {/* Main Content */}
       <div className="dashboard-content">
         {/* Create Vault */}
-        <section className="dashboard-section">
+        <section className="dashboard-section" id="create-vault">
           <h2>Create New Vault</h2>
           {isConnected ? (
             <CreateVaultForm />
@@ -88,7 +103,7 @@ export function Dashboard() {
 
         {/* User Vaults */}
         {isConnected && (
-          <section className="dashboard-section">
+          <section className="dashboard-section" id="your-vaults">
             <h2>Your Vaults</h2>
             {vaultsLoading ? (
               <div className="vaults-grid">

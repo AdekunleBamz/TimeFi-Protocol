@@ -105,6 +105,85 @@
   margin: 0 0 2rem;
 }
 
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.dashboard-section-header h2 {
+  margin-bottom: 0;
+}
+
+.vault-count-chip {
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #a5b4fc;
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  background: rgba(129, 140, 248, 0.1);
+}
+
+.vault-controls {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 0.75rem;
+  margin-bottom: 1.2rem;
+}
+
+.vault-control-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.vault-control-field span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.vault-control-input,
+.vault-control-select {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 10px;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vault-control-input::placeholder {
+  color: #6b7280;
+}
+
+.vault-control-input:focus,
+.vault-control-select:focus {
+  outline: none;
+  border-color: rgba(99, 102, 241, 0.75);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.dashboard-clear-filters {
+  border: 1px solid rgba(99, 102, 241, 0.45);
+  background: rgba(99, 102, 241, 0.12);
+  color: #c7d2fe;
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dashboard-clear-filters:hover {
+  background: rgba(99, 102, 241, 0.2);
+}
+
 /* Vaults Grid */
 .vaults-grid {
   display: grid;
@@ -151,6 +230,10 @@
   }
 
   .vaults-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vault-controls {
     grid-template-columns: 1fr;
   }
 }

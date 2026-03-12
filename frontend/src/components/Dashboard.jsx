@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
 import { useReadOnly } from '../hooks/useReadOnly';
@@ -18,6 +18,8 @@ export function Dashboard() {
   const { address, isConnected, connect } = useWallet();
   const { blockHeight } = useBlockHeight();
   const location = useLocation();
+  const [vaultSearch, setVaultSearch] = useState('');
+  const [vaultSort, setVaultSort] = useState('newest');
   
   // Fetch user vaults
   const { data: vaultIds, loading: vaultsLoading } = useReadOnly(
@@ -39,6 +41,22 @@ export function Dashboard() {
       activeVaults: vaultIds.length, // Would filter by active status
     };
   }, [vaultIds]);
+
+  const filteredVaultIds = useMemo(() => {
+    if (!Array.isArray(vaultIds)) return [];
+
+    const query = vaultSearch.trim().toLowerCase();
+    const searched = query
+      ? vaultIds.filter((vaultId) => String(vaultId).toLowerCase().includes(query))
+      : vaultIds;
+
+    const sorted = [...searched].sort((a, b) => {
+      if (vaultSort === 'oldest') return a - b;
+      return b - a;
+    });
+
+    return sorted;
+  }, [vaultIds, vaultSearch, vaultSort]);
 
   useEffect(() => {
     if (!location.hash) return;
@@ -65,18 +83,22 @@ export function Dashboard() {
       <section className="dashboard-stats">
         <StatsCard
           label="Total Value Locked"
-          value={totalLocked ? formatSTX(totalLocked) + ' STX' : '--'}
-          loading={!totalLocked}
+          value={
+            totalLocked === null || totalLocked === undefined
+              ? '--'
+              : `${formatSTX(totalLocked)} STX`
+          }
+          loading={totalLocked === null || totalLocked === undefined}
         />
         <StatsCard
           label="Total Vaults"
           value={vaultCount?.toLocaleString() || '--'}
-          loading={!vaultCount}
+          loading={vaultCount === null || vaultCount === undefined}
         />
         <StatsCard
           label="Current Block"
           value={blockHeight?.toLocaleString() || '--'}
-          loading={!blockHeight}
+          loading={blockHeight === null || blockHeight === undefined}
         />
         {isConnected && (
           <StatsCard
@@ -104,19 +126,66 @@ export function Dashboard() {
         {/* User Vaults */}
         {isConnected && (
           <section className="dashboard-section" id="your-vaults">
-            <h2>Your Vaults</h2>
+            <div className="dashboard-section-header">
+              <h2>Your Vaults</h2>
+              {Array.isArray(vaultIds) && vaultIds.length > 0 && (
+                <span className="vault-count-chip">
+                  {filteredVaultIds.length} / {vaultIds.length}
+                </span>
+              )}
+            </div>
+            {!vaultsLoading && Array.isArray(vaultIds) && vaultIds.length > 0 && (
+              <div className="vault-controls">
+                <label className="vault-control-field">
+                  <span>Search</span>
+                  <input
+                    type="text"
+                    className="vault-control-input"
+                    placeholder="Find by vault id"
+                    value={vaultSearch}
+                    onChange={(e) => setVaultSearch(e.target.value)}
+                  />
+                </label>
+                <label className="vault-control-field">
+                  <span>Sort</span>
+                  <select
+                    className="vault-control-select"
+                    value={vaultSort}
+                    onChange={(e) => setVaultSort(e.target.value)}
+                  >
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                  </select>
+                </label>
+              </div>
+            )}
             {vaultsLoading ? (
               <div className="vaults-grid">
                 {[1, 2, 3].map((i) => (
                   <Skeleton key={i} height={200} borderRadius={12} />
                 ))}
               </div>
-            ) : vaultIds && vaultIds.length > 0 ? (
+            ) : filteredVaultIds.length > 0 ? (
               <div className="vaults-grid">
-                {vaultIds.map((id) => (
+                {filteredVaultIds.map((id) => (
                   <VaultCard key={id} vaultId={id} />
                 ))}
               </div>
+            ) : vaultSearch.trim() ? (
+              <EmptyState
+                title="No matching vaults"
+                description={`No vault id matched "${vaultSearch.trim()}".`}
+                icon="🧭"
+                action={
+                  <button
+                    type="button"
+                    className="dashboard-clear-filters"
+                    onClick={() => setVaultSearch('')}
+                  >
+                    Clear Search
+                  </button>
+                }
+              />
             ) : (
               <EmptyState
                 title="No vaults yet"

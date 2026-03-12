@@ -215,6 +215,28 @@
   font-size: 1.125rem;
 }
 
+.vault-error-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.vault-owner-copy.copy-button {
+  color: #c7d2fe;
+  background: rgba(99, 102, 241, 0.14);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+.vault-owner-copy.copy-button:hover {
+  background: rgba(99, 102, 241, 0.24);
+}
+
+.vault-actions-note {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .vault-details {

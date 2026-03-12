@@ -125,8 +125,9 @@
 .transaction-header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 0.125rem;
+  margin-bottom: 0.25rem;
 }
 
 .transaction-type {
@@ -147,19 +148,63 @@
 .transaction-meta {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.875rem;
   font-size: 0.8125rem;
   color: #94a3b8;
+  margin-bottom: 0.625rem;
 }
 
 .transaction-status {
   text-transform: capitalize;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.transaction-status-success,
+.transaction-status-confirmed {
+  color: #8af3cb;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.transaction-status-pending {
+  color: #fde68a;
+  background: rgba(234, 179, 8, 0.14);
+}
+
+.transaction-status-failed {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.transaction-txid {
+  color: #cbd5e1;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+}
+
+.transaction-context {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.transaction-context-note {
+  font-size: 0.75rem;
+  color: #8aa2b5;
 }
 
 /* Transaction Amount */
 .transaction-amount {
   text-align: right;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
 }
 
 .transaction-value {
@@ -196,6 +241,11 @@
   background: #00d4aa;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
+}
+
+.transaction-direction {
+  font-size: 0.75rem;
+  color: #94a3b8;
 }
 
 /* Skeleton Loading */
@@ -279,5 +329,14 @@
     border-top: 1px solid var(--border-color, #e5e7eb);
     border-top-color: rgba(255, 255, 255, 0.08);
     text-align: left;
+    flex-direction: row;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .transaction-context {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 }

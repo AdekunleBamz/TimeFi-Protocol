@@ -13,10 +13,20 @@ const NotFound = lazy(() => import('./components/NotFound'));
  */
 function PageLoader() {
   return (
-    <div style={{ padding: '2rem' }} role="status" aria-live="polite">
-      <Skeleton height={200} borderRadius={12} />
-      <div style={{ marginTop: '1rem' }}>
-        <Skeleton height={400} borderRadius={12} />
+    <div className="page-loader" role="status" aria-live="polite">
+      <div className="page-loader-hero">
+        <Skeleton height={20} width={140} />
+        <Skeleton height={56} width="58%" />
+        <Skeleton height={18} width="42%" />
+      </div>
+      <div className="page-loader-grid">
+        <Skeleton height={180} />
+        <Skeleton height={180} />
+        <Skeleton height={180} />
+      </div>
+      <div className="page-loader-detail">
+        <Skeleton height={18} width={160} />
+        <Skeleton height={320} style={{ marginTop: '1rem' }} />
       </div>
     </div>
   );

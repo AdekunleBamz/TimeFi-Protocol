@@ -330,8 +330,25 @@
 
 .vault-details-error p {
   color: #94a3b8;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-size: 1.125rem;
+}
+
+.vault-error-tips {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+}
+
+.vault-error-tips span {
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #dbe5ef;
+  font-size: 0.82rem;
+  font-weight: 700;
 }
 
 .vault-error-actions {

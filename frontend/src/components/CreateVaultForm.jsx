@@ -195,7 +195,6 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               )}
               <span className="lock-period-label">{option.label}</span>
               <span className="lock-period-duration">~{option.days} days</span>
-              <span className="lock-period-blocks">{option.blocks.toLocaleString()} blocks</span>
               <span className="lock-period-apy">{option.apy}% APY</span>
               {lockPeriod === option.blocks && <span className="lock-period-state">Selected</span>}
             </button>

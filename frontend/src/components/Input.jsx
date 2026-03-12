@@ -1,12 +1,4 @@
-/**
- * Input Component - Reusable input with validation icons and accessibility support.
- *
- * @module components/Input
- * @author adekunlebamz
- */
-
 import React, { forwardRef, useId } from 'react';
-import { Tooltip } from './Tooltip';
 import './Input.css';
 
 /**
@@ -79,7 +71,7 @@ export const Input = forwardRef(({
 }, ref) => {
   const generatedId = useId();
   const inputId = id || generatedId;
-
+  
   const containerClasses = [
     'input-container',
     fullWidth && 'input-full',
@@ -122,11 +114,11 @@ export const Input = forwardRef(({
           {isValid && !error && <span className="input-icon input-status-success"><CheckIcon /></span>}
         </div>
       </div>
-
+      
       {(error || hint) && (
         <div className="input-meta">
           {error && (
-            <span id={`${inputId}-error`} className="input-error-text" role="alert" aria-live="assertive">
+            <span id={`${inputId}-error`} className="input-error-text" role="alert">
               {error}
             </span>
           )}

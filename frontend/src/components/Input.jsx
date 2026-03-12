@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useId } from 'react';
 import './Input.css';
 
 /**
@@ -22,7 +22,8 @@ export const Input = forwardRef(({
   id,
   ...props
 }, ref) => {
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+  const generatedId = useId();
+  const inputId = id || generatedId;
   
   const containerClasses = [
     'input-container',
@@ -61,16 +62,20 @@ export const Input = forwardRef(({
         {rightIcon && <span className="input-icon input-icon-right">{rightIcon}</span>}
       </div>
       
-      {error && (
-        <span id={`${inputId}-error`} className="input-error-text" role="alert">
-          {error}
-        </span>
-      )}
-      
-      {hint && !error && (
-        <span id={`${inputId}-hint`} className="input-hint">
-          {hint}
-        </span>
+      {(error || hint) && (
+        <div className="input-meta">
+          {error && (
+            <span id={`${inputId}-error`} className="input-error-text" role="alert">
+              {error}
+            </span>
+          )}
+
+          {hint && !error && (
+            <span id={`${inputId}-hint`} className="input-hint">
+              {hint}
+            </span>
+          )}
+        </div>
       )}
     </div>
   );

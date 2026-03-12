@@ -159,7 +159,12 @@ export function Dashboard() {
       <div className="dashboard-content">
         {/* Create Vault */}
         <section className="dashboard-section" id="create-vault">
-          <h2>Create New Vault</h2>
+          <div className="dashboard-section-header dashboard-section-header-create">
+            <div>
+              <h2>Create New Vault</h2>
+              <p className="dashboard-section-copy">Choose an amount, lock window, and expected yield before you sign.</p>
+            </div>
+          </div>
           {isConnected ? (
             <div className="create-vault-layout">
               <CreateVaultForm />

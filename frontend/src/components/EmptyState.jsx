@@ -45,7 +45,7 @@ export function EmptyState({
       )}
 
       {eyebrow && <p className="empty-state-eyebrow">{eyebrow}</p>}
-
+      
       {title && <h3 className="empty-state-title">{title}</h3>}
 
       {description && (
@@ -53,15 +53,10 @@ export function EmptyState({
       )}
 
       {note && <p className="empty-state-note">{note}</p>}
-
-      <div className="empty-state-actions">
-        {action && (
-          <div className="empty-state-action">{action}</div>
-        )}
-        {secondaryAction && (
-          <div className="empty-state-secondary-action">{secondaryAction}</div>
-        )}
-      </div>
+      
+      {action && (
+        <div className="empty-state-action">{action}</div>
+      )}
     </div>
   );
 }

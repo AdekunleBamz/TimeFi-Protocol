@@ -55,6 +55,23 @@
     line-height: 1.6;
 }
 
+.not-found-path {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.8rem;
+    margin-bottom: 1.4rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    font-size: 0.82rem;
+}
+
+.not-found-path code {
+    font-family: 'IBM Plex Mono', monospace;
+    color: #f8fafc;
+}
+
 .not-found-actions {
     display: flex;
     justify-content: center;

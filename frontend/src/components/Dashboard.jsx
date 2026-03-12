@@ -42,6 +42,24 @@ export function Dashboard() {
     };
   }, [vaultIds]);
 
+  const protocolSnapshot = useMemo(() => ([
+    {
+      label: 'Protocol TVL',
+      value: totalLocked === null || totalLocked === undefined ? '--' : `${formatSTX(totalLocked)} STX`,
+      tone: 'teal',
+    },
+    {
+      label: 'Vault count',
+      value: vaultCount === null || vaultCount === undefined ? '--' : vaultCount.toLocaleString(),
+      tone: 'amber',
+    },
+    {
+      label: 'Current block',
+      value: blockHeight === null || blockHeight === undefined ? '--' : `#${blockHeight.toLocaleString()}`,
+      tone: 'slate',
+    },
+  ]), [totalLocked, vaultCount, blockHeight]);
+
   const filteredVaultIds = useMemo(() => {
     if (!Array.isArray(vaultIds)) return [];
 
@@ -77,6 +95,18 @@ export function Dashboard() {
           <a href="#create-vault" className="dashboard-hero-link">Start a vault</a>
           <a href="#your-vaults" className="dashboard-hero-link">Browse your vaults</a>
         </div>
+        <div className="dashboard-hero-metrics" role="list" aria-label="Protocol snapshot">
+          {protocolSnapshot.map((metric) => (
+            <div
+              key={metric.label}
+              className={`dashboard-hero-metric dashboard-hero-metric-${metric.tone}`}
+              role="listitem"
+            >
+              <span>{metric.label}</span>
+              <strong>{metric.value}</strong>
+            </div>
+          ))}
+        </div>
         <div className="dashboard-hero-highlights">
           <span>Fixed lock windows</span>
           <span>On-chain reward requests</span>
@@ -91,17 +121,26 @@ export function Dashboard() {
 
       {isConnected && (
         <section className="dashboard-wallet-panel">
-          <div>
+          <div className="dashboard-wallet-primary">
             <span className="dashboard-wallet-label">Connected wallet</span>
             <strong>{address?.slice(0, 8)}...{address?.slice(-6)}</strong>
+            <p>Track vault progress, watch unlock timing, and jump directly into your next action.</p>
           </div>
-          <div>
+          <div className="dashboard-wallet-stat">
             <span className="dashboard-wallet-label">Available balance</span>
             <strong>{(balance / 1_000_000).toLocaleString('en-US', { maximumFractionDigits: 4 })} STX</strong>
           </div>
-          <div>
+          <div className="dashboard-wallet-stat">
+            <span className="dashboard-wallet-label">Your vaults</span>
+            <strong>{userStats.totalVaults.toLocaleString()}</strong>
+          </div>
+          <div className="dashboard-wallet-stat">
             <span className="dashboard-wallet-label">Current block</span>
             <strong>{blockHeight?.toLocaleString() || '--'}</strong>
+          </div>
+          <div className="dashboard-wallet-actions">
+            <a href="#create-vault" className="dashboard-wallet-action">Create another vault</a>
+            <a href="#your-vaults" className="dashboard-wallet-action dashboard-wallet-action-secondary">Review portfolio</a>
           </div>
         </section>
       )}

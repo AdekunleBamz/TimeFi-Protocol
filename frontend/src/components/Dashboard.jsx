@@ -222,6 +222,16 @@ export function Dashboard() {
                     Showing {filteredVaultIds.length} vault{filteredVaultIds.length === 1 ? '' : 's'}
                     {vaultSearch.trim() ? ` matching "${vaultSearch.trim()}"` : ''}
                   </span>
+                  <div className="vault-browser-state">
+                    <span className="vault-browser-chip">
+                      {vaultSort === 'newest' ? 'Newest first' : 'Oldest first'}
+                    </span>
+                    {vaultSearch.trim() && (
+                      <span className="vault-browser-chip vault-browser-chip-accent">
+                        Filter active
+                      </span>
+                    )}
+                  </div>
                   {(vaultSearch.trim() || vaultSort !== 'newest') && (
                     <button
                       type="button"

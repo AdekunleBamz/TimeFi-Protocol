@@ -121,7 +121,7 @@ function parseTime(totalSeconds) {
   const hours = Math.floor((safeSeconds % 86400) / 3600);
   const minutes = Math.floor((safeSeconds % 3600) / 60);
   const secs = safeSeconds % 60;
-
+  
   return { days, hours, minutes, secs };
 }
 

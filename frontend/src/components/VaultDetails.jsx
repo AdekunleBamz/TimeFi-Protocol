@@ -48,6 +48,20 @@ export function VaultDetails() {
     return blocksRemaining * 600;
   }, [blocksRemaining]);
 
+  const approximateRemainingLabel = useMemo(() => {
+    if (countdownSeconds === null || countdownSeconds === undefined) return '--';
+    if (countdownSeconds <= 0) return 'Ready now';
+
+    const days = Math.floor(countdownSeconds / 86400);
+    const hours = Math.ceil((countdownSeconds % 86400) / 3600);
+
+    if (days > 0) {
+      return `~${days}d ${hours}h`;
+    }
+
+    return `~${Math.ceil(countdownSeconds / 3600)}h`;
+  }, [countdownSeconds]);
+
   const vaultStatus = useMemo(() => {
     if (!normalizedVault) return null;
 
@@ -210,6 +224,24 @@ export function VaultDetails() {
             {vaultStatus === 'unlocked' && (
               <span className="progress-complete">Ready to withdraw!</span>
             )}
+          </div>
+        </section>
+
+        <section className="vault-section vault-timing">
+          <h2>Chain Timing</h2>
+          <div className="vault-timing-grid">
+            <div className="vault-timing-card">
+              <span>Current block</span>
+              <strong>{blockHeight?.toLocaleString() || '--'}</strong>
+            </div>
+            <div className="vault-timing-card">
+              <span>Unlock block</span>
+              <strong>#{normalizedVault.unlockHeight.toLocaleString()}</strong>
+            </div>
+            <div className="vault-timing-card">
+              <span>Approx. time left</span>
+              <strong>{approximateRemainingLabel}</strong>
+            </div>
           </div>
         </section>
 

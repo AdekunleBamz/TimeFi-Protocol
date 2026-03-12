@@ -47,12 +47,25 @@
     margin-bottom: 1.25rem;
 }
 
+.vault-title-group {
+    display: grid;
+    gap: 0.25rem;
+}
+
 .vault-header h3 {
     font-size: 1.25rem;
     font-weight: 800;
     color: #ffffff;
     margin: 0;
     letter-spacing: -0.02em;
+}
+
+.vault-subtitle {
+    color: #94a3b8;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 }
 
 .status {
@@ -72,6 +85,30 @@
 .status.locked {
     background: rgba(255, 255, 255, 0.05);
     color: #9ca3af;
+}
+
+.vault-time-spotlight {
+    display: grid;
+    gap: 0.3rem;
+    padding: 0.95rem 1rem;
+    margin-bottom: 1.1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(129, 140, 248, 0.18);
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.16), rgba(8, 18, 31, 0.55));
+}
+
+.vault-time-label {
+    color: #c7d2fe;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.vault-time-spotlight strong {
+    color: #ffffff;
+    font-size: 1.35rem;
+    letter-spacing: -0.03em;
 }
 
 /* Details */
@@ -135,6 +172,16 @@
 
 .vault-refresh-note {
     color: #64748b;
+    border: none;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.vault-refresh-note:hover {
+    transform: none;
+    box-shadow: none;
+    color: #94a3b8;
 }
 
 /* Actions */

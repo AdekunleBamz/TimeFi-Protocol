@@ -10,8 +10,10 @@ import './EmptyState.css';
  */
 export function EmptyState({
   icon,
+  eyebrow,
   title,
   description,
+  note,
   action,
   className = '',
 }) {
@@ -22,12 +24,16 @@ export function EmptyState({
           {icon}
         </div>
       )}
+
+      {eyebrow && <p className="empty-state-eyebrow">{eyebrow}</p>}
       
       {title && <h3 className="empty-state-title">{title}</h3>}
       
       {description && (
         <p className="empty-state-description">{description}</p>
       )}
+
+      {note && <p className="empty-state-note">{note}</p>}
       
       {action && (
         <div className="empty-state-action">{action}</div>
@@ -43,8 +49,10 @@ export function NoVaultsEmptyState({ onCreateVault }) {
   return (
     <EmptyState
       icon={<VaultIcon />}
+      eyebrow="Start here"
       title="No vaults yet"
-      description="Create your first time-locked vault to start earning rewards."
+      description="Create your first time-locked vault to start earning rewards and establish your unlock schedule."
+      note="A first vault gives you live protocol stats, transaction history, and a concrete reward projection to monitor."
       action={
         onCreateVault && (
           <button className="empty-state-button" onClick={onCreateVault}>
@@ -63,8 +71,10 @@ export function NoTransactionsEmptyState() {
   return (
     <EmptyState
       icon={<TransactionIcon />}
+      eyebrow="Activity feed"
       title="No transactions"
-      description="Your transaction history will appear here."
+      description="Your confirmed deposits, withdrawals, rewards, and emergency actions will appear here."
+      note="Once you send a transaction, this panel becomes the quickest way to confirm what happened and when."
     />
   );
 }

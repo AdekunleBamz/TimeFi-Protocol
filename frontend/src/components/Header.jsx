@@ -71,6 +71,10 @@ export function Header() {
           {isConnected ? (
             <div className="header-wallet">
               <div className="header-balance">
+                <span className="header-wallet-state">
+                  <span className="header-wallet-dot" />
+                  Wallet live
+                </span>
                 <span className="header-balance-value">{formatBalance(balance)}</span>
                 <span className="header-balance-label">STX</span>
               </div>

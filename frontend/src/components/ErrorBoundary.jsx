@@ -78,7 +78,7 @@ export class ErrorBoundary extends Component {
           <div className="error-boundary-content">
             <div className="error-boundary-icon">⚠️</div>
             <h1>Something went wrong</h1>
-            <p>The interface hit an unexpected state. Your wallet and funds are safe — this is a display error only.</p>
+            <p>The interface hit an unexpected state. Your wallet and on-chain data are not changed by this screen alone.</p>
 
             <div className="error-boundary-guidance">
               <div className="error-boundary-guidance-item">
@@ -94,8 +94,8 @@ export class ErrorBoundary extends Component {
                 <span>Return to the dashboard if this route is unstable.</span>
               </div>
             </div>
-
-            {isDevelopment && this.state.error && (
+            
+            {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="error-boundary-details">
                 <summary>Error Details</summary>
                 <pre>{this.state.error.toString()}</pre>

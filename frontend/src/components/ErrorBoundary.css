@@ -124,3 +124,9 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+@media (max-width: 640px) {
+  .error-boundary-actions {
+    flex-direction: column;
+  }
+}

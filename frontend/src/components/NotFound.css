@@ -1,6 +1,6 @@
 .not-found {
     text-align: center;
-    padding: 6rem 2rem;
+    padding: 4rem 2rem 6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,9 +9,9 @@
 }
 
 .not-found-icon {
-    font-size: 7rem;
-    margin-bottom: 1.5rem;
-    filter: drop-shadow(0 0 40px rgba(239, 68, 68, 0.25));
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 28px rgba(59, 130, 246, 0.25));
     animation: float 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
@@ -28,43 +28,50 @@
 }
 
 .not-found h1 {
-    font-size: 4rem;
+    font-size: 2.5rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #f87171, #ef4444, #dc2626);
+    background: linear-gradient(135deg, #93c5fd, #6366f1, #22d3ee);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     letter-spacing: -0.05em;
 }
 
+.not-found-code {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #a5b4fc;
+    margin-bottom: 0.75rem;
+}
+
 .not-found p {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     color: #94a3b8;
     max-width: 500px;
-    margin-bottom: 3rem;
+    margin-bottom: 1.8rem;
     line-height: 1.6;
 }
 
-.not-found-button {
-    background: linear-gradient(90deg, #00d4aa, #5546ff);
-    color: white;
-    border: none;
-    padding: 1rem 2.5rem;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
-    text-decoration: none;
+.not-found-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
-.not-found-button:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(0, 212, 170, 0.5);
+.not-found-help {
+    margin-top: 1rem;
+    display: inline-block;
+    font-size: 0.85rem;
+    color: #64748b;
 }
 
-.not-found-button:active {
-    transform: translateY(0) scale(0.96);
+@media (max-width: 640px) {
+    .not-found h1 {
+        font-size: 1.9rem;
+    }
 }

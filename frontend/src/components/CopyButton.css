@@ -3,19 +3,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
-  color: #6b7280;
+  color: #cbd5e1;
   transition: all 0.2s ease;
-  padding: 0.25rem;
-  border-radius: 6px;
+  padding: 0.45rem;
+  border-radius: 10px;
 }
 
 .copy-button:hover {
   color: #f8f9fa;
   background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.1);
+  border-color: rgba(0, 212, 170, 0.22);
+  transform: translateY(-1px);
 }
 
 .copy-button-copied {
@@ -45,19 +46,21 @@
 /* Text Variant */
 .copy-button-text {
   font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.25rem 0.5rem;
+  font-weight: 700;
+  padding: 0.55rem 0.8rem;
 }
 
 /* Copyable Address */
 .copyable-address {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.75rem;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 0.875rem;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
   transition: all 0.2s ease;
 }
 
@@ -66,9 +69,33 @@
   border-color: rgba(255, 255, 255, 0.08);
 }
 
+.copyable-address-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
 .copyable-address-text {
   font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
   font-size: 0.8125rem;
-  font-weight: 500;
-  color: #adb5bd;
+  font-weight: 600;
+  color: #d5dde5;
+}
+
+.copyable-address-meta {
+  font-size: 0.75rem;
+  color: #8fa3b8;
+}
+
+.copy-button:focus-visible {
+  outline: 2px solid #00d4aa;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .copyable-address {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }

@@ -33,23 +33,27 @@ export function Alert({
 
   return (
     <div className={`alert alert-${variant} ${className}`} role="alert" {...props}>
-      {displayIcon && <span className="alert-icon">{displayIcon}</span>}
+      {displayIcon && <span className="alert-icon" aria-hidden="true">{displayIcon}</span>}
       
       <div className="alert-content">
         {title && <div className="alert-title">{title}</div>}
         <div className="alert-message">{children}</div>
       </div>
 
-      {action && <div className="alert-action">{action}</div>}
+      {(action || dismissible) && (
+        <div className="alert-controls">
+          {action && <div className="alert-action">{action}</div>}
 
-      {dismissible && (
-        <button
-          className="alert-dismiss"
-          onClick={onDismiss}
-          aria-label="Dismiss"
-        >
-          ×
-        </button>
+          {dismissible && (
+            <button
+              className="alert-dismiss"
+              onClick={onDismiss}
+              aria-label="Dismiss"
+            >
+              ×
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

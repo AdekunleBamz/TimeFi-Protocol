@@ -78,8 +78,6 @@ export function StatusBadge({ status, className = '' }) {
     withdrawn: { variant: 'default', label: 'Withdrawn' },
     pending: { variant: 'warning', label: 'Pending', pulse: true, leadingDot: true },
     error: { variant: 'danger', label: 'Needs attention', leadingDot: true },
-    expired: { variant: 'info', label: 'Expired', leadingDot: true },
-    cancelled: { variant: 'default', label: 'Cancelled' },
   };
 
   const config = statusConfig[status] || statusConfig.active;

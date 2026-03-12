@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Countdown.css';
 
 /**
@@ -14,15 +14,20 @@ export function Countdown({
   showLabels = true,
   className = '',
 }) {
-  const [timeLeft, setTimeLeft] = useState(seconds);
+  const [timeLeft, setTimeLeft] = useState(Math.max(0, Math.floor(seconds || 0)));
+  const completedRef = useRef(false);
 
   useEffect(() => {
-    setTimeLeft(seconds);
+    setTimeLeft(Math.max(0, Math.floor(seconds || 0)));
+    completedRef.current = false;
   }, [seconds]);
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      onComplete?.();
+      if (!completedRef.current) {
+        completedRef.current = true;
+        onComplete?.();
+      }
       return;
     }
 
@@ -93,10 +98,11 @@ export function Countdown({
 }
 
 function parseTime(totalSeconds) {
-  const days = Math.floor(totalSeconds / 86400);
-  const hours = Math.floor((totalSeconds % 86400) / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const secs = totalSeconds % 60;
+  const safeSeconds = Math.max(0, Math.floor(totalSeconds || 0));
+  const days = Math.floor(safeSeconds / 86400);
+  const hours = Math.floor((safeSeconds % 86400) / 3600);
+  const minutes = Math.floor((safeSeconds % 3600) / 60);
+  const secs = safeSeconds % 60;
   
   return { days, hours, minutes, secs };
 }

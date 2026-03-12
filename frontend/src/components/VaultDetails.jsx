@@ -138,11 +138,24 @@ export function VaultDetails() {
         <button className="back-button" onClick={() => navigate(-1)}>
           ← Back
         </button>
-        <div className="vault-title">
-          <h1>Vault #{id}</h1>
-          <Badge variant={getStatusVariant(vaultStatus)}>
-            {vaultStatus}
-          </Badge>
+        <div className="vault-header-row">
+          <div className="vault-title">
+            <h1>Vault #{id}</h1>
+            <Badge variant={getStatusVariant(vaultStatus)}>
+              {vaultStatus}
+            </Badge>
+          </div>
+          <div className="vault-header-actions">
+            <CopyButton text={String(id)} variant="text" successMessage="Vault id copied" />
+            <a
+              href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=mainnet`}
+              className="vault-header-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View owner
+            </a>
+          </div>
         </div>
       </header>
 

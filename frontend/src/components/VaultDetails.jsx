@@ -97,6 +97,50 @@ export function VaultDetails() {
     return Math.min(100, Math.max(0, (elapsed / total) * 100));
   }, [normalizedVault, blocksRemaining]);
 
+  const statusBanner = useMemo(() => {
+    if (!normalizedVault) {
+      return {
+        title: 'Loading vault state',
+        message: 'Waiting for vault data from the network.',
+        tone: 'neutral',
+      };
+    }
+
+    if (vaultStatus === 'withdrawn') {
+      return {
+        title: 'Vault already withdrawn',
+        message: 'Funds have already left this vault, so no further actions are available here.',
+        tone: 'neutral',
+      };
+    }
+
+    if (vaultStatus === 'emergency') {
+      return {
+        title: 'Emergency path used',
+        message: 'This vault has already gone through the emergency unlock path.',
+        tone: 'danger',
+      };
+    }
+
+    if (vaultStatus === 'unlocked') {
+      return {
+        title: isOwner ? 'Vault is ready for withdrawal' : 'Vault has reached unlock height',
+        message: isOwner
+          ? 'You can withdraw the principal now and claim rewards if any are queued.'
+          : 'This vault is now withdrawable by its owner.',
+        tone: 'success',
+      };
+    }
+
+    return {
+      title: 'Vault is still time-locked',
+      message: isOwner
+        ? `Wait until block #${normalizedVault.unlockHeight.toLocaleString()} or use the emergency path if you accept penalties.`
+        : `This vault stays locked until block #${normalizedVault.unlockHeight.toLocaleString()}.`,
+      tone: 'warning',
+    };
+  }, [normalizedVault, vaultStatus, isOwner]);
+
   const handleWithdraw = async () => {
     try {
       await withdraw(vaultId, {
@@ -208,6 +252,14 @@ export function VaultDetails() {
         </div>
       </div>
 
+      <section className={`vault-status-banner vault-status-banner-${statusBanner.tone}`}>
+        <div>
+          <span className="vault-status-banner-label">Current state</span>
+          <strong>{statusBanner.title}</strong>
+        </div>
+        <p>{statusBanner.message}</p>
+      </section>
+
       <div className="vault-details-grid">
         {/* Main Stats */}
         <section className="vault-section vault-stats">
@@ -263,6 +315,9 @@ export function VaultDetails() {
               <strong>{approximateRemainingLabel}</strong>
             </div>
           </div>
+          <p className="vault-timing-note">
+            Stacks timing is block-based. Calendar estimates help with planning, but the unlock block is the source of truth.
+          </p>
         </section>
 
         {/* Vault Info */}
@@ -309,15 +364,24 @@ export function VaultDetails() {
             <div className="vault-action-guidance">
               <div className="vault-action-guidance-item">
                 <strong>Withdraw</strong>
-                <span>Available once the vault unlock height is reached.</span>
+                <span className={`vault-action-state ${vaultStatus === 'unlocked' ? 'vault-action-state-live' : ''}`}>
+                  {vaultStatus === 'unlocked' ? 'Available now' : 'Unlock required'}
+                </span>
+                <span className="vault-action-copy">Available once the vault unlock height is reached.</span>
               </div>
               <div className="vault-action-guidance-item">
                 <strong>Claim rewards</strong>
-                <span>Only appears when rewards are currently queued on this vault.</span>
+                <span className={`vault-action-state ${normalizedVault.rewards > 0 ? 'vault-action-state-live' : ''}`}>
+                  {normalizedVault.rewards > 0 ? 'Rewards queued' : 'Nothing queued'}
+                </span>
+                <span className="vault-action-copy">Only appears when rewards are currently queued on this vault.</span>
               </div>
               <div className="vault-action-guidance-item">
                 <strong>Emergency withdraw</strong>
-                <span>Use only if you need early access and accept the penalty path.</span>
+                <span className={`vault-action-state ${vaultStatus === 'locked' ? 'vault-action-state-warning' : ''}`}>
+                  {vaultStatus === 'locked' ? 'Available with penalty' : 'No longer needed'}
+                </span>
+                <span className="vault-action-copy">Use only if you need early access and accept the penalty path.</span>
               </div>
             </div>
             <div className="action-buttons">

@@ -54,7 +54,22 @@ export class ErrorBoundary extends Component {
           <div className="error-boundary-content">
             <div className="error-boundary-icon">⚠️</div>
             <h1>Something went wrong</h1>
-            <p>We're sorry, but an unexpected error occurred.</p>
+            <p>The interface hit an unexpected state. Your wallet and on-chain data are not changed by this screen alone.</p>
+
+            <div className="error-boundary-guidance">
+              <div className="error-boundary-guidance-item">
+                <strong>Try again</strong>
+                <span>Re-render the current view without leaving the page.</span>
+              </div>
+              <div className="error-boundary-guidance-item">
+                <strong>Reload</strong>
+                <span>Refresh app state and reconnect data from the network.</span>
+              </div>
+              <div className="error-boundary-guidance-item">
+                <strong>Go home</strong>
+                <span>Return to the dashboard if this route is unstable.</span>
+              </div>
+            </div>
             
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="error-boundary-details">
@@ -72,6 +87,9 @@ export class ErrorBoundary extends Component {
               </Button>
               <Button variant="secondary" onClick={() => window.location.reload()}>
                 Reload Page
+              </Button>
+              <Button variant="ghost" onClick={() => window.location.assign('/')}>
+                Go Home
               </Button>
             </div>
           </div>

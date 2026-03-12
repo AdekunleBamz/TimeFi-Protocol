@@ -31,6 +31,33 @@
   margin: 0 0 1.5rem;
 }
 
+.error-boundary-guidance {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.error-boundary-guidance-item {
+  display: grid;
+  gap: 0.25rem;
+  text-align: left;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.error-boundary-guidance-item strong {
+  color: #f8f9fa;
+  font-size: 0.875rem;
+}
+
+.error-boundary-guidance-item span {
+  color: #b2bdc9;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
 .error-boundary-details {
   text-align: left;
   background: rgba(255, 255, 255, 0.03);
@@ -68,6 +95,7 @@
 
 .error-boundary-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 }
@@ -95,4 +123,10 @@
   color: inherit;
   text-decoration: underline;
   cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .error-boundary-actions {
+    flex-direction: column;
+  }
 }

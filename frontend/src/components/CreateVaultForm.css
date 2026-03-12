@@ -62,6 +62,29 @@
   color: #6c757d;
 }
 
+.form-quick-amounts {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+}
+
+.form-quick-amount {
+  min-width: 56px;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.46);
+  color: #e2e8f0;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.form-quick-amount:hover:not(:disabled) {
+  border-color: rgba(0, 194, 168, 0.35);
+  background: rgba(0, 194, 168, 0.12);
+}
+
 /* Max Button */
 .form-max-button {
   padding: 0 1rem;

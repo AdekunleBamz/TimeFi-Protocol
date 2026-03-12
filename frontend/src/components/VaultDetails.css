@@ -112,6 +112,50 @@
   font-size: 1.02rem;
 }
 
+.vault-status-banner {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(8, 18, 31, 0.6);
+}
+
+.vault-status-banner-label {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vault-status-banner strong {
+  color: #f8fafc;
+  font-size: 1.15rem;
+}
+
+.vault-status-banner p {
+  color: #cbd5e1;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.vault-status-banner-success {
+  border-color: rgba(16, 185, 129, 0.24);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.vault-status-banner-warning {
+  border-color: rgba(249, 115, 22, 0.24);
+  background: rgba(249, 115, 22, 0.08);
+}
+
+.vault-status-banner-danger {
+  border-color: rgba(239, 68, 68, 0.24);
+  background: rgba(239, 68, 68, 0.08);
+}
+
 /* Sections */
 .vault-section {
   background: rgba(255, 255, 255, 0.03);
@@ -226,6 +270,13 @@
   font-size: 1rem;
 }
 
+.vault-timing-note {
+  margin-top: 0.95rem;
+  color: #94a3b8;
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
 /* Info Section */
 .info-list {
   margin: 0;
@@ -298,7 +349,30 @@
   font-size: 0.88rem;
 }
 
-.vault-action-guidance-item span {
+.vault-action-state {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.22rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  color: #dbe5ef;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vault-action-state-live {
+  background: rgba(16, 185, 129, 0.15);
+  color: #a7f3d0;
+}
+
+.vault-action-state-warning {
+  background: rgba(249, 115, 22, 0.16);
+  color: #fdba74;
+}
+
+.vault-action-copy {
   color: #9fb1c3;
   font-size: 0.8rem;
   line-height: 1.5;

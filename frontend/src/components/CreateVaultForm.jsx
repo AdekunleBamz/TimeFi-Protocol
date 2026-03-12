@@ -40,6 +40,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
 
   const balanceInSTX = balance ? balance / 1_000_000 : 0;
   const feeReserveSTX = estimateFee('create-vault') / 1_000_000;
+  const spendableBalance = Math.max(balanceInSTX - feeReserveSTX, 0);
   const selectedPeriod = useMemo(
     () => Object.values(LOCK_PERIODS).find((period) => period.blocks === lockPeriod),
     [lockPeriod]
@@ -85,8 +86,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   };
 
   const handleMaxClick = () => {
-    const maxSpendable = Math.max(balanceInSTX - feeReserveSTX, 0);
-    setAmount(maxSpendable.toFixed(6));
+    setAmount(spendableBalance.toFixed(6));
     setErrors(prev => ({ ...prev, amount: null }));
   };
 
@@ -145,28 +145,12 @@ export function CreateVaultForm({ onSuccess, onClose }) {
           </button>
         </div>
 
-        <div className="form-allocation-meter" aria-hidden="true">
-          <span
-            className={`form-allocation-fill ${parsedAmount > spendableBalance ? 'form-allocation-fill-danger' : ''}`}
-            style={{ width: `${allocationPercent}%` }}
-          />
-        </div>
-        <div className="form-inline-summary">
-          <span>
-            Locking <strong>{allocationPercent ? `${allocationPercent.toFixed(0)}%` : '0%'}</strong> of spendable balance
-          </span>
-          <span>
-            Wallet after lock: <strong>{walletLeftAfterLock.toFixed(6)} STX</strong>
-          </span>
-        </div>
-
         <div className="form-quick-amounts">
           {[0.25, 0.5, 0.75].map((ratio) => (
             <button
               key={ratio}
               type="button"
               className="form-quick-amount"
-              aria-label={`Set amount to ${Math.round(ratio * 100)} percent of spendable balance`}
               onClick={() => {
                 setAmount((spendableBalance * ratio).toFixed(6));
                 setErrors(prev => ({ ...prev, amount: null }));
@@ -177,7 +161,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             </button>
           ))}
         </div>
-
+        
         {errors.amount && (
           <span className="form-error" id="amount-error" role="alert">{errors.amount}</span>
         )}

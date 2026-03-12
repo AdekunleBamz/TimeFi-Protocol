@@ -21,7 +21,6 @@ export function VaultCard({ vaultId }) {
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [canWithdrawNow, setCanWithdrawNow] = useState(false);
   const [error, setError] = useState(null);
-  const [lastUpdated, setLastUpdated] = useState(null);
   const { getVault, getTimeRemaining, canWithdraw, loading } = useReadOnly();
 
   const fetchVaultData = async () => {
@@ -43,6 +42,24 @@ export function VaultCard({ vaultId }) {
   };
 
   useEffect(() => {
+    const fetchVaultData = async () => {
+      try {
+        const vaultData = await getVault(vaultId);
+        const value = vaultData?.value ?? vaultData;
+        setVault(value);
+
+        const remaining = await getTimeRemaining(vaultId);
+        setTimeRemaining(Number(remaining?.value ?? remaining ?? 0));
+
+        const withdrawable = await canWithdraw(vaultId);
+        setCanWithdrawNow(Boolean(withdrawable?.value ?? withdrawable));
+        setError(null);
+      } catch (err) {
+        console.error('Failed to fetch vault data:', err);
+        setError('Unable to load vault');
+      }
+    };
+
     fetchVaultData();
     const interval = setInterval(fetchVaultData, 30000); // Refresh every 30s
     return () => clearInterval(interval);
@@ -74,7 +91,7 @@ export function VaultCard({ vaultId }) {
 
   if (!vault) {
     return (
-      <div className="vault-card error" role="alert">
+      <div className="vault-card error">
         <p>{error || 'Vault not found'}</p>
       </div>
     );
@@ -82,19 +99,6 @@ export function VaultCard({ vaultId }) {
 
   const unlockBlock = vault['unlock-block'] ?? vault.unlockHeight ?? '--';
   const bot = vault.bot ?? vault['approved-bot'] ?? null;
-  const urgencyLabel = canWithdrawNow
-    ? 'Withdrawal window open'
-    : timeRemaining > 86400
-      ? 'Long lock remaining'
-      : 'Near unlock';
-  const timeStateLabel = canWithdrawNow
-    ? 'Ready now'
-    : timeRemaining > 86400
-      ? 'Still locked'
-      : 'Unlocking soon';
-  const lastUpdatedLabel = lastUpdated
-    ? lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    : '--';
 
   return (
     <div className={`vault-card ${canWithdrawNow ? 'withdrawable' : ''}`}>
@@ -124,7 +128,7 @@ export function VaultCard({ vaultId }) {
           <span className="value">{unlockBlock}</span>
         </div>
 
-        {vault.bot && (
+        {bot && (
           <div className="detail-row">
             <span className="label">Bot:</span>
             <span className="value bot">{String(bot).slice(0, 10)}...</span>
@@ -133,21 +137,10 @@ export function VaultCard({ vaultId }) {
       </div>
 
       <div className="vault-actions">
-        {canWithdrawNow ? (
-          <button
-            className="btn btn-primary"
-            onClick={() => onWithdraw(vaultId)}
-          >
-            Withdraw
-          </button>
-        ) : (
-          <button
-            className="btn btn-secondary"
-            onClick={() => onApproveBot(vaultId)}
-          >
-            Manage Bot
-          </button>
-        )}
+        <Link className="btn btn-secondary vault-open-link" to={`/vault/${vaultId}`}>
+          View Details
+        </Link>
+        {canWithdrawNow && <span className="vault-ready-pill">Ready to Withdraw</span>}
       </div>
     </div>
   );

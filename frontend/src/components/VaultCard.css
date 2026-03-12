@@ -112,11 +112,30 @@
 /* Actions */
 .vault-actions {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.vault-actions button {
+.vault-actions button,
+.vault-actions .vault-open-link {
     flex: 1;
+}
+
+.vault-open-link {
+    text-decoration: none;
+}
+
+.vault-ready-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #86efac;
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
 }
 
 /* Loading/Error */

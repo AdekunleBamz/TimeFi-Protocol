@@ -79,27 +79,42 @@ export function Tooltip({
 
 function calculatePosition(rect, position) {
   const offset = 8;
+  const margin = 12;
+  const tooltipWidth = 260;
+  const tooltipHeight = 56;
+
+  const clampX = (value) => {
+    const min = margin + tooltipWidth / 2;
+    const max = window.innerWidth - margin - tooltipWidth / 2;
+    return Math.min(Math.max(value, min), max);
+  };
+
+  const clampY = (value) => {
+    const min = margin + tooltipHeight;
+    const max = window.innerHeight - margin;
+    return Math.min(Math.max(value, min), max);
+  };
   
   switch (position) {
     case 'top':
       return {
-        x: rect.left + rect.width / 2,
-        y: rect.top - offset,
+        x: clampX(rect.left + rect.width / 2),
+        y: clampY(rect.top - offset),
       };
     case 'bottom':
       return {
-        x: rect.left + rect.width / 2,
-        y: rect.bottom + offset,
+        x: clampX(rect.left + rect.width / 2),
+        y: clampY(rect.bottom + offset),
       };
     case 'left':
       return {
-        x: rect.left - offset,
-        y: rect.top + rect.height / 2,
+        x: clampX(rect.left - offset),
+        y: clampY(rect.top + rect.height / 2),
       };
     case 'right':
       return {
-        x: rect.right + offset,
-        y: rect.top + rect.height / 2,
+        x: clampX(rect.right + offset),
+        y: clampY(rect.top + rect.height / 2),
       };
     default:
       return { x: 0, y: 0 };

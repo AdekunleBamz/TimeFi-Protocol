@@ -86,14 +86,17 @@ function ToastItem({ toast, onRemove }) {
         <span className="toast-icon">{icons[variant]}</span>
       )}
       <div className="toast-content">
-        {title && <div className="toast-title">{title}</div>}
+        <div className="toast-topline">
+          {title && <div className="toast-title">{title}</div>}
+          <span className="toast-status-label">{variant}</span>
+        </div>
         <div className="toast-message">{message}</div>
+        {action && (
+          <button className="toast-action" onClick={action.onClick}>
+            {action.label}
+          </button>
+        )}
       </div>
-      {action && (
-        <button className="toast-action" onClick={action.onClick}>
-          {action.label}
-        </button>
-      )}
       <button 
         className="toast-close" 
         onClick={() => onRemove(id)}

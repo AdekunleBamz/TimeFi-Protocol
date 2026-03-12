@@ -2,10 +2,10 @@
 .progress {
   width: 100%;
   height: 8px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(15, 23, 42, 0.66);
   border-radius: 999px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .progress-sm {
@@ -17,7 +17,7 @@
 }
 
 .progress-lg {
-  height: 14px;
+  height: 16px;
 }
 
 /* Progress Bar */
@@ -25,7 +25,7 @@
   height: 100%;
   border-radius: 999px;
   transition: width 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-  box-shadow: 0 0 15px rgba(0, 212, 170, 0.4);
+  box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.14), 0 0 18px rgba(0, 212, 170, 0.28);
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -34,7 +34,7 @@
 
 /* Variants */
 .progress-default {
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background: linear-gradient(90deg, #00c2a8, #56ccf2);
 }
 
 .progress-success {
@@ -67,8 +67,8 @@
 
 /* Label */
 .progress-label {
-  font-size: 0.625rem;
-  font-weight: 600;
+  font-size: 0.68rem;
+  font-weight: 800;
   color: white;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }

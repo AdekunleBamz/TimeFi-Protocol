@@ -15,6 +15,7 @@
   border-radius: 14px;
   overflow-x: auto;
   backdrop-filter: blur(4px);
+  scroll-snap-type: x proximity;
 }
 
 /* Individual Tab */
@@ -52,14 +53,27 @@
 
 .tab-active {
   color: #ffffff;
-  background: linear-gradient(135deg, rgba(0, 212, 170, 0.2), rgba(85, 70, 255, 0.2));
-  box-shadow: 0 4px 15px rgba(0, 212, 170, 0.2);
-  border: 1px solid rgba(0, 212, 170, 0.3);
+  background: linear-gradient(135deg, rgba(0, 212, 170, 0.18), rgba(22, 31, 42, 0.9));
+  box-shadow:
+    0 10px 24px rgba(0, 212, 170, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 212, 170, 0.24);
 }
 
 .tab-active:hover:not(:disabled) {
   color: #f8f9fa;
   background: linear-gradient(135deg, rgba(0, 212, 170, 0.24), rgba(28, 55, 63, 0.9));
+}
+
+.tab-active::after {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.35rem;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #00d4aa, rgba(255, 255, 255, 0.75));
 }
 
 .tab-active::after {

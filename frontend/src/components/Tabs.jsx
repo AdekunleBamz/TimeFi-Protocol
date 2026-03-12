@@ -1,11 +1,4 @@
-/**
- * Tabs Component - Tabbed navigation interface.
- *
- * @module components/Tabs
- * @author adekunlebamz
- */
 import React, { useState, createContext, useContext, useId } from 'react';
-import { Tooltip } from './Tooltip';
 import './Tabs.css';
 
 // Context for sharing tab state between components
@@ -88,13 +81,6 @@ export function Tab({ children, value, disabled = false, className = '' }) {
   const isActive = activeTab === value;
   const tabId = `${baseId}-${value}-tab`;
   const panelId = `${baseId}-${value}-panel`;
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      if (!disabled) setActiveTab(value);
-    }
-  };
 
   return (
     <button

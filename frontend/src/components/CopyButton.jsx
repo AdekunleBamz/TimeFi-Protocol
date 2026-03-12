@@ -51,6 +51,7 @@ export function CopyButton({
       className={iconClasses}
       onClick={handleCopy}
       aria-label={copied ? successMessage : 'Copy to clipboard'}
+      title={copied ? successMessage : 'Copy to clipboard'}
     >
       {children || (
         <>
@@ -72,13 +73,19 @@ export function CopyableAddress({ address, truncate = true, className = '' }) {
   const displayAddress = truncate && address
     ? `${address.slice(0, 6)}...${address.slice(-4)}`
     : address;
+  const copyStateLabel = 'Use copy to grab the full address';
 
   return (
     <div className={`copyable-address ${className}`}>
-      <span className="copyable-address-text" title={address}>
-        {displayAddress}
-      </span>
-      <CopyButton text={address} />
+      <div className="copyable-address-content">
+        <span className="copyable-address-text" title={address}>
+          {displayAddress}
+        </span>
+        <span className="copyable-address-meta">{copyStateLabel}</span>
+      </div>
+      <CopyButton text={address} variant="text" successMessage="Copied">
+        Copy
+      </CopyButton>
     </div>
   );
 }

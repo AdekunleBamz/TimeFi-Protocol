@@ -14,6 +14,7 @@ export function Badge({
   size = 'md',
   dot = false,
   pulse = false,
+  leadingDot = false,
   className = '',
 }) {
   const classes = [
@@ -29,7 +30,12 @@ export function Badge({
     return <span className={classes} />;
   }
 
-  return <span className={classes}>{children}</span>;
+  return (
+    <span className={classes}>
+      {leadingDot && <span className={`badge-leading-dot badge-leading-dot-${variant}`} aria-hidden="true" />}
+      <span>{children}</span>
+    </span>
+  );
 }
 
 /**
@@ -37,12 +43,12 @@ export function Badge({
  */
 export function StatusBadge({ status, className = '' }) {
   const statusConfig = {
-    active: { variant: 'success', label: 'Active' },
-    locked: { variant: 'warning', label: 'Locked' },
-    unlocked: { variant: 'info', label: 'Unlocked' },
+    active: { variant: 'success', label: 'Active', leadingDot: true, pulse: true },
+    locked: { variant: 'warning', label: 'Locked', leadingDot: true },
+    unlocked: { variant: 'info', label: 'Unlocked', leadingDot: true },
     withdrawn: { variant: 'default', label: 'Withdrawn' },
-    pending: { variant: 'warning', label: 'Pending', pulse: true },
-    error: { variant: 'danger', label: 'Error' },
+    pending: { variant: 'warning', label: 'Pending', pulse: true, leadingDot: true },
+    error: { variant: 'danger', label: 'Needs attention', leadingDot: true },
   };
 
   const config = statusConfig[status] || statusConfig.active;
@@ -51,6 +57,7 @@ export function StatusBadge({ status, className = '' }) {
     <Badge 
       variant={config.variant} 
       pulse={config.pulse}
+      leadingDot={config.leadingDot}
       className={className}
     >
       {config.label}

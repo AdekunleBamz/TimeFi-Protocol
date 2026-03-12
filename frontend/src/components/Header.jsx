@@ -22,6 +22,7 @@ import './Header.css';
 export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
   const location = useLocation();
+  const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
 
   const formatBalance = (bal) => {
     if (bal === null || bal === undefined) return '--';
@@ -41,7 +42,10 @@ export function Header() {
       <div className="header-container">
         <Link to="/" className="header-logo">
           <img src="/logo.svg" alt="TimeFi" className="header-logo-img" />
-          <span className="header-logo-text">TimeFi</span>
+          <div className="header-brand-copy">
+            <span className="header-logo-text">TimeFi</span>
+            <span className="header-network-pill">{networkLabel}</span>
+          </div>
         </Link>
 
         <nav className="header-nav">

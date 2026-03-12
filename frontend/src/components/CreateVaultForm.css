@@ -317,3 +317,9 @@
   text-align: center;
   margin-top: -0.4rem;
 }
+
+@media (max-width: 640px) {
+  .form-balance-strip {
+    grid-template-columns: 1fr;
+  }
+}

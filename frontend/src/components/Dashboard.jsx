@@ -15,7 +15,7 @@ import './Dashboard.css';
  * Main dashboard page component
  */
 export function Dashboard() {
-  const { address, isConnected, connect } = useWallet();
+  const { address, balance, isConnected, connect } = useWallet();
   const { blockHeight } = useBlockHeight();
   const location = useLocation();
   const [vaultSearch, setVaultSearch] = useState('');
@@ -88,6 +88,23 @@ export function Dashboard() {
           </button>
         )}
       </section>
+
+      {isConnected && (
+        <section className="dashboard-wallet-panel">
+          <div>
+            <span className="dashboard-wallet-label">Connected wallet</span>
+            <strong>{address?.slice(0, 8)}...{address?.slice(-6)}</strong>
+          </div>
+          <div>
+            <span className="dashboard-wallet-label">Available balance</span>
+            <strong>{(balance / 1_000_000).toLocaleString('en-US', { maximumFractionDigits: 4 })} STX</strong>
+          </div>
+          <div>
+            <span className="dashboard-wallet-label">Current block</span>
+            <strong>{blockHeight?.toLocaleString() || '--'}</strong>
+          </div>
+        </section>
+      )}
 
       {/* Protocol Stats */}
       <section className="dashboard-stats">

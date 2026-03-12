@@ -128,6 +128,37 @@
   box-shadow: 0 12px 28px rgba(0, 212, 170, 0.35);
 }
 
+.dashboard-wallet-panel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: -1.5rem 0 3rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: 1.35rem;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: linear-gradient(180deg, rgba(8, 18, 31, 0.92), rgba(14, 29, 46, 0.74));
+}
+
+.dashboard-wallet-panel div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dashboard-wallet-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  font-weight: 800;
+}
+
+.dashboard-wallet-panel strong {
+  font-size: 1rem;
+  color: #f8fafc;
+  letter-spacing: -0.02em;
+}
+
 /* Stats Section */
 .dashboard-stats {
   display: grid;
@@ -283,6 +314,11 @@
 
   .dashboard-stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-wallet-panel {
+    grid-template-columns: 1fr;
+    margin-top: -1rem;
   }
 
   .vaults-grid {

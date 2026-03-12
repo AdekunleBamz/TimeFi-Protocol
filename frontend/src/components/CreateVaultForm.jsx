@@ -90,6 +90,17 @@ export function CreateVaultForm({ onSuccess, onClose }) {
 
   return (
     <form className="create-vault-form" onSubmit={handleSubmit}>
+      <div className="form-balance-strip">
+        <div className="form-balance-chip">
+          <span>Spendable now</span>
+          <strong>{spendableBalance.toFixed(6)} STX</strong>
+        </div>
+        <div className="form-balance-chip">
+          <span>Fee reserve</span>
+          <strong>{feeReserveSTX.toFixed(6)} STX</strong>
+        </div>
+      </div>
+
       <div className="form-section">
         <label className="form-label">
           Amount to Lock

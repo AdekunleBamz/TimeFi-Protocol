@@ -6,7 +6,12 @@ import {
   makeStandardSTXPostCondition,
 } from '@stacks/transactions';
 import { openContractCall } from '@stacks/connect';
-import { STACKS_NETWORK, CONTRACT_ADDRESS, CONTRACT_NAMES } from '../utils/constants';
+import { StacksMainnet, StacksTestnet } from '@stacks/network';
+import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
+
+const STACKS_NETWORK = import.meta.env.VITE_NETWORK === 'mainnet'
+  ? new StacksMainnet()
+  : new StacksTestnet();
 
 /**
  * Build and submit a create-vault transaction

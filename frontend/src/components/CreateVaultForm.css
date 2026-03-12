@@ -176,16 +176,6 @@
   color: #f8f9fa;
 }
 
-.lock-period-duration {
-  font-size: 0.75rem;
-  color: #94a3b8;
-}
-
-.lock-period-blocks {
-  font-size: 0.72rem;
-  color: #64748b;
-}
-
 .lock-period-badge,
 .lock-period-state {
   font-size: 0.67rem;
@@ -208,6 +198,10 @@
   font-size: 0.75rem;
   color: #4ade80;
   font-weight: 700;
+}
+
+.lock-period-state {
+  color: #a5f3fc;
 }
 
 .lock-period-state {

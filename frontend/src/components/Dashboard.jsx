@@ -81,8 +81,18 @@ export function Dashboard() {
     <div className="dashboard">
       {/* Hero Section */}
       <section className="dashboard-hero" id="dashboard">
+        <div className="dashboard-hero-eyebrow">Time-locked savings protocol on Stacks</div>
         <h1>Welcome to TimeFi</h1>
         <p>Time-locked vaults for disciplined savings on Stacks</p>
+        <div className="dashboard-hero-links">
+          <a href="#create-vault" className="dashboard-hero-link">Start a vault</a>
+          <a href="#your-vaults" className="dashboard-hero-link">Browse your vaults</a>
+        </div>
+        <div className="dashboard-hero-highlights">
+          <span>Fixed lock windows</span>
+          <span>On-chain reward requests</span>
+          <span>Emergency flow support</span>
+        </div>
         {!isConnected && (
           <button type="button" className="dashboard-hero-cta" onClick={connect}>
             Connect Wallet to Start

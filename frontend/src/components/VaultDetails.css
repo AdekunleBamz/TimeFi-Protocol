@@ -226,13 +226,6 @@
   font-size: 1rem;
 }
 
-.vault-timing-note {
-  margin-top: 0.95rem;
-  color: #94a3b8;
-  font-size: 0.84rem;
-  line-height: 1.6;
-}
-
 /* Info Section */
 .info-list {
   margin: 0;
@@ -403,6 +396,10 @@
 
   .vault-progress {
     grid-column: span 1;
+  }
+
+  .vault-timing-grid {
+    grid-template-columns: 1fr;
   }
 
   .vault-actions {

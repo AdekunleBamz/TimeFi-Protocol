@@ -63,6 +63,20 @@ export function VaultDetails() {
     return blocksRemaining * 600;
   }, [blocksRemaining]);
 
+  const approximateRemainingLabel = useMemo(() => {
+    if (countdownSeconds === null || countdownSeconds === undefined) return '--';
+    if (countdownSeconds <= 0) return 'Ready now';
+
+    const days = Math.floor(countdownSeconds / 86400);
+    const hours = Math.ceil((countdownSeconds % 86400) / 3600);
+
+    if (days > 0) {
+      return `~${days}d ${hours}h`;
+    }
+
+    return `~${Math.ceil(countdownSeconds / 3600)}h`;
+  }, [countdownSeconds]);
+
   const vaultStatus = useMemo(() => {
     if (!normalizedVault) return null;
 
@@ -244,9 +258,6 @@ export function VaultDetails() {
               <strong>{approximateRemainingLabel}</strong>
             </div>
           </div>
-          <p className="vault-timing-note">
-            Stacks timing is block-based. Calendar estimates help with planning, but the unlock block is the source of truth.
-          </p>
         </section>
 
         {/* Vault Info */}

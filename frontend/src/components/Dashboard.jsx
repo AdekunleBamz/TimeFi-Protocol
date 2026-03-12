@@ -148,9 +148,24 @@ export function Dashboard() {
       <div className="dashboard-content">
         {/* Create Vault */}
         <section className="dashboard-section" id="create-vault">
-          <h2>Create New Vault</h2>
+          <div className="dashboard-section-header dashboard-section-header-create">
+            <div>
+              <h2>Create New Vault</h2>
+              <p className="dashboard-section-copy">Choose an amount, lock window, and expected yield before you sign.</p>
+            </div>
+          </div>
           {isConnected ? (
-            <CreateVaultForm />
+            <div className="create-vault-layout">
+              <CreateVaultForm />
+              <aside className="create-vault-guide">
+                <h3>Before you submit</h3>
+                <ul>
+                  <li>Longer locks improve reward potential.</li>
+                  <li>Keep extra STX free for network fees.</li>
+                  <li>Vault withdrawals unlock by block height, not local clock time.</li>
+                </ul>
+              </aside>
+            </div>
           ) : (
             <div className="connect-prompt">
               <p>Connect your wallet to create a time-locked vault</p>

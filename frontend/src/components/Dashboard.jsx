@@ -125,16 +125,22 @@ export function Dashboard() {
               ? '--'
               : `${formatSTX(totalLocked)} STX`
           }
+          icon="🏦"
+          subValue="Protocol-wide deposits"
           loading={totalLocked === null || totalLocked === undefined}
         />
         <StatsCard
           label="Total Vaults"
           value={vaultCount?.toLocaleString() || '--'}
+          icon="🧱"
+          subValue="All active + matured vaults"
           loading={vaultCount === null || vaultCount === undefined}
         />
         <StatsCard
           label="Current Block"
           value={blockHeight?.toLocaleString() || '--'}
+          icon="⛓️"
+          subValue="Live chain height"
           loading={blockHeight === null || blockHeight === undefined}
         />
         {isConnected && (

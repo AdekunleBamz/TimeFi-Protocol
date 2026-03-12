@@ -203,6 +203,10 @@ export function CreateVaultForm({ onSuccess, onClose }) {
       {selectedPeriod && parsedAmount > 0 && (
         <div className="vault-preview">
           <div className="vault-preview-row">
+            <span>Total you are locking</span>
+            <strong>{parsedAmount.toFixed(6)} STX</strong>
+          </div>
+          <div className="vault-preview-row">
             <span>Estimated rewards</span>
             <strong>~{expectedRewards.toFixed(6)} STX</strong>
           </div>
@@ -212,6 +216,10 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               ~{unlockDays} days
               {unlockBlock ? ` (block #${unlockBlock.toLocaleString()})` : ''}
             </strong>
+          </div>
+          <div className="vault-preview-row">
+            <span>Wallet left after lock + fee</span>
+            <strong>{Math.max(balanceInSTX - parsedAmount - feeReserveSTX, 0).toFixed(6)} STX</strong>
           </div>
         </div>
       )}

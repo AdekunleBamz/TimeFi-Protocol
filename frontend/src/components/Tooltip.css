@@ -17,10 +17,12 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
-  white-space: nowrap;
+  max-width: min(260px, calc(100vw - 24px));
+  white-space: normal;
   animation: tooltipFadeIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   pointer-events: none;
   letter-spacing: 0.02em;
+  line-height: 1.45;
 }
 
 /* Position transforms */

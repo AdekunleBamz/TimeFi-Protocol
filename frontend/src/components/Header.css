@@ -183,6 +183,21 @@
     gap: 0.35rem;
 }
 
+.header-wallet-compact {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding-top: 0.2rem;
+    color: #cbd5e1;
+    font-size: 0.76rem;
+}
+
+.header-wallet-compact strong {
+    color: #ffffff;
+    font-size: 0.8rem;
+}
+
 .header-wallet-link {
     background: rgba(255, 255, 255, 0.1);
     color: #f8f9fa;
@@ -296,11 +311,23 @@
     }
 
     .header-wallet {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-between;
         padding-left: 0.45rem;
     }
 
     .header-disconnect {
         font-size: 0.7rem;
         padding-inline: 0.5rem;
+    }
+
+    .header-wallet-link {
+        font-size: 0.74rem;
+        padding-inline: 0.5rem;
+    }
+
+    .header-wallet-compact {
+        display: flex;
     }
 }

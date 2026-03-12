@@ -98,6 +98,10 @@ export function Header() {
                   Disconnect
                 </button>
               </div>
+              <div className="header-wallet-compact">
+                <span>{truncateAddress(address)}</span>
+                <strong>{formatBalance(balance)} STX</strong>
+              </div>
             </div>
           ) : (
             <button className="header-connect" onClick={connect} disabled={isConnecting}>

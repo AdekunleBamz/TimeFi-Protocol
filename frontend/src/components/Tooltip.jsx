@@ -121,7 +121,7 @@ function calculatePosition(rect, position) {
     const max = window.innerHeight - margin;
     return Math.min(Math.max(value, min), max);
   };
-
+  
   switch (position) {
     case 'top':
       return {

@@ -1,33 +1,114 @@
-import { useCallback } from 'react';
-import { TimeFiClient, principalCV } from 'timefi-sdk';
-
-// Shared client instance
-const client = new TimeFiClient(import.meta.env.VITE_NETWORK || 'mainnet');
+import { useCallback, useState } from 'react';
+import { principalCV } from 'timefi-sdk';
+import { useWallet } from '../context/WalletContext';
+import { createVault as createVaultTx, withdraw as withdrawTx, emergencyWithdraw as emergencyWithdrawTx, claimRewards as claimRewardsTx } from '../services/transactions';
 
 /**
  * Custom hook for interacting with TimeFi vault contract (Transactions)
  */
 export function useContract() {
+  const { address } = useWallet();
+  const [loading, setLoading] = useState(false);
+  const [lastError, setLastError] = useState(null);
+
+  const wrapTxCallbacks = useCallback((callbacks = {}) => {
+    const { onFinish, onCancel } = callbacks;
+
+    return {
+      onFinish: (data) => {
+        setLoading(false);
+        setLastError(null);
+        onFinish?.(data);
+      },
+      onCancel: () => {
+        setLoading(false);
+        onCancel?.();
+      },
+    };
+  }, []);
+
   /**
    * Create a new time-locked vault
    */
-  const createVault = useCallback(async (amountSTX, lockDurationBlocks) => {
-    return client.getCreateVaultOptions(amountSTX, lockDurationBlocks);
-  }, []);
+  const createVault = useCallback(async (amountSTX, lockDurationBlocks, callbacks = {}) => {
+    if (!address) {
+      throw new Error('Connect your wallet to continue');
+    }
+
+    setLoading(true);
+    setLastError(null);
+
+    try {
+      const amount = Math.floor(Number(amountSTX) * 1_000_000);
+      await createVaultTx({
+        amount,
+        lockDuration: lockDurationBlocks,
+        senderAddress: address,
+        ...wrapTxCallbacks(callbacks),
+      });
+    } catch (error) {
+      setLoading(false);
+      setLastError(error.message);
+      throw error;
+    }
+  }, [address, wrapTxCallbacks]);
 
   /**
    * Withdraw from a vault after lock period
    */
-  const withdraw = useCallback(async (vaultId) => {
-    return client.getWithdrawOptions(vaultId);
-  }, []);
+  const withdraw = useCallback(async (vaultId, callbacks = {}) => {
+    setLoading(true);
+    setLastError(null);
+
+    try {
+      await withdrawTx({
+        vaultId,
+        ...wrapTxCallbacks(callbacks),
+      });
+    } catch (error) {
+      setLoading(false);
+      setLastError(error.message);
+      throw error;
+    }
+  }, [wrapTxCallbacks]);
+
+  const emergencyWithdraw = useCallback(async (vaultId, callbacks = {}) => {
+    setLoading(true);
+    setLastError(null);
+
+    try {
+      await emergencyWithdrawTx({
+        vaultId,
+        ...wrapTxCallbacks(callbacks),
+      });
+    } catch (error) {
+      setLoading(false);
+      setLastError(error.message);
+      throw error;
+    }
+  }, [wrapTxCallbacks]);
+
+  const claimRewards = useCallback(async (vaultId, callbacks = {}) => {
+    setLoading(true);
+    setLastError(null);
+
+    try {
+      await claimRewardsTx({
+        vaultId,
+        ...wrapTxCallbacks(callbacks),
+      });
+    } catch (error) {
+      setLoading(false);
+      setLastError(error.message);
+      throw error;
+    }
+  }, [wrapTxCallbacks]);
 
   /**
    * Approve a bot to manage vault
    */
   const approveBot = useCallback(async (botAddress) => {
     return {
-      ...client.getWithdrawOptions(0), // Dummy to get base options
       functionName: 'approve-bot',
       functionArgs: [principalCV(botAddress)],
     };
@@ -36,9 +117,11 @@ export function useContract() {
   return {
     createVault,
     withdraw,
+    emergencyWithdraw,
+    claimRewards,
     approveBot,
-    contractAddress: client.contractAddress,
-    network: client.network,
+    loading,
+    error: lastError,
   };
 }
 

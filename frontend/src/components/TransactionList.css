@@ -174,7 +174,7 @@
 }
 
 .transaction-value-negative {
-  color: var(--text-primary, #1f2937);
+  color: #f87171;
 }
 
 .transaction-link {
@@ -207,7 +207,10 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite;
 }
@@ -226,7 +229,10 @@
 .skeleton-line {
   height: 12px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite;
 }
@@ -271,6 +277,7 @@
     padding-top: 0.5rem;
     margin-top: 0.5rem;
     border-top: 1px solid var(--border-color, #e5e7eb);
+    border-top-color: rgba(255, 255, 255, 0.08);
     text-align: left;
   }
 }

@@ -23,6 +23,11 @@ export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
   const location = useLocation();
   const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
+  const pageLabel = location.pathname.startsWith('/vault/')
+    ? `Vault ${location.pathname.replace('/vault/', '#')}`
+    : location.pathname === '/404'
+      ? 'Route not found'
+      : 'Dashboard';
 
   const formatBalance = (bal) => {
     if (bal === null || bal === undefined) return '--';
@@ -47,6 +52,8 @@ export function Header() {
             <span className="header-network-pill">{networkLabel}</span>
           </div>
         </Link>
+
+        <div className="header-page-label">{pageLabel}</div>
 
         <nav className="header-nav">
           <NavLink

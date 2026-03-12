@@ -91,10 +91,44 @@
   color: #6c757d;
 }
 
+.form-allocation-meter {
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.form-allocation-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #00c2a8, #4f46e5);
+}
+
+.form-allocation-fill-danger {
+  background: linear-gradient(90deg, #f97316, #ef4444);
+}
+
+.form-inline-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  color: #9fb1c3;
+  font-size: 0.8rem;
+}
+
+.form-inline-summary strong {
+  color: #f8fafc;
+}
+
 .form-quick-amounts {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.7rem;
+  flex-wrap: wrap;
 }
 
 .form-quick-amount {
@@ -176,6 +210,11 @@
   color: #94a3b8;
 }
 
+.lock-period-blocks {
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
 .lock-period-badge,
 .lock-period-state {
   font-size: 0.67rem;
@@ -234,6 +273,24 @@
   gap: 0.55rem;
 }
 
+.vault-preview-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding-bottom: 0.35rem;
+}
+
+.vault-preview-header strong {
+  color: #ecfdf5;
+  font-size: 0.96rem;
+}
+
+.vault-preview-header span {
+  color: #a7f3d0;
+  font-size: 0.76rem;
+}
+
 .vault-preview-row {
   display: flex;
   justify-content: space-between;
@@ -254,6 +311,12 @@
   color: #ecfdf5;
   font-size: 0.86rem;
   text-align: right;
+}
+
+.vault-preview-note {
+  color: #c6f6df;
+  font-size: 0.78rem;
+  line-height: 1.5;
 }
 
 /* Actions */
@@ -312,5 +375,37 @@
 @media (max-width: 640px) {
   .form-balance-strip {
     grid-template-columns: 1fr;
+  }
+
+  .form-label {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-input-group {
+    flex-direction: column;
+  }
+
+  .form-max-button {
+    min-height: 44px;
+  }
+
+  .form-quick-amounts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lock-period-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vault-preview-header,
+  .vault-preview-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .vault-preview-row strong {
+    text-align: left;
   }
 }

@@ -34,6 +34,10 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     : 0;
   const unlockDays = selectedPeriod ? Math.ceil(selectedPeriod.blocks / 144) : null;
   const unlockBlock = selectedPeriod && blockHeight ? blockHeight + selectedPeriod.blocks : null;
+  const allocationPercent = spendableBalance > 0
+    ? Math.min((parsedAmount / spendableBalance) * 100, 100)
+    : 0;
+  const walletLeftAfterLock = Math.max(balanceInSTX - parsedAmount - feeReserveSTX, 0);
   const submitHint = !isConnected
     ? 'Connect a wallet to start'
     : !amount
@@ -135,6 +139,21 @@ export function CreateVaultForm({ onSuccess, onClose }) {
           </button>
         </div>
 
+        <div className="form-allocation-meter" aria-hidden="true">
+          <span
+            className={`form-allocation-fill ${parsedAmount > spendableBalance ? 'form-allocation-fill-danger' : ''}`}
+            style={{ width: `${allocationPercent}%` }}
+          />
+        </div>
+        <div className="form-inline-summary">
+          <span>
+            Locking <strong>{allocationPercent ? `${allocationPercent.toFixed(0)}%` : '0%'}</strong> of spendable balance
+          </span>
+          <span>
+            Wallet after lock: <strong>{walletLeftAfterLock.toFixed(6)} STX</strong>
+          </span>
+        </div>
+
         <div className="form-quick-amounts">
           {[0.25, 0.5, 0.75].map((ratio) => (
             <button
@@ -177,6 +196,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               )}
               <span className="lock-period-label">{option.label}</span>
               <span className="lock-period-duration">~{option.days} days</span>
+              <span className="lock-period-blocks">{option.blocks.toLocaleString()} blocks</span>
               <span className="lock-period-apy">{option.apy}% APY</span>
               {lockPeriod === option.blocks && <span className="lock-period-state">Selected</span>}
             </button>
@@ -190,6 +210,10 @@ export function CreateVaultForm({ onSuccess, onClose }) {
 
       {selectedPeriod && parsedAmount > 0 && (
         <div className="vault-preview">
+          <div className="vault-preview-header">
+            <strong>Vault preview</strong>
+            <span>Estimates update before you sign</span>
+          </div>
           <div className="vault-preview-row">
             <span>Total you are locking</span>
             <strong>{parsedAmount.toFixed(6)} STX</strong>
@@ -207,8 +231,11 @@ export function CreateVaultForm({ onSuccess, onClose }) {
           </div>
           <div className="vault-preview-row">
             <span>Wallet left after lock + fee</span>
-            <strong>{Math.max(balanceInSTX - parsedAmount - feeReserveSTX, 0).toFixed(6)} STX</strong>
+            <strong>{walletLeftAfterLock.toFixed(6)} STX</strong>
           </div>
+          <p className="vault-preview-note">
+            Unlock timing is based on block production, so actual calendar time can drift slightly.
+          </p>
         </div>
       )}
 

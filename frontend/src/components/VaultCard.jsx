@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useReadOnly } from '../hooks/useReadOnly';
 import './VaultCard.css';
 
 /**
  * VaultCard component displays vault information
  */
-export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
+export function VaultCard({ vaultId }) {
   const [vault, setVault] = useState(null);
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [canWithdrawNow, setCanWithdrawNow] = useState(false);
+  const [error, setError] = useState(null);
   const { getVault, getTimeRemaining, canWithdraw, loading } = useReadOnly();
 
   useEffect(() => {
     const fetchVaultData = async () => {
       try {
         const vaultData = await getVault(vaultId);
-        setVault(vaultData.value);
+        const value = vaultData?.value ?? vaultData;
+        setVault(value);
 
         const remaining = await getTimeRemaining(vaultId);
-        setTimeRemaining(remaining.value);
+        setTimeRemaining(Number(remaining?.value ?? remaining ?? 0));
 
         const withdrawable = await canWithdraw(vaultId);
-        setCanWithdrawNow(withdrawable.value);
+        setCanWithdrawNow(Boolean(withdrawable?.value ?? withdrawable));
+        setError(null);
       } catch (err) {
         console.error('Failed to fetch vault data:', err);
+        setError('Unable to load vault');
       }
     };
 
@@ -59,10 +64,13 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
   if (!vault) {
     return (
       <div className="vault-card error">
-        <p>Vault not found</p>
+        <p>{error || 'Vault not found'}</p>
       </div>
     );
   }
+
+  const unlockBlock = vault['unlock-block'] ?? vault.unlockHeight ?? '--';
+  const bot = vault.bot ?? vault['approved-bot'] ?? null;
 
   return (
     <div className={`vault-card ${canWithdrawNow ? 'withdrawable' : ''}`}>
@@ -86,33 +94,22 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
 
         <div className="detail-row">
           <span className="label">Unlock Block:</span>
-          <span className="value">{vault['unlock-block']}</span>
+          <span className="value">{unlockBlock}</span>
         </div>
 
-        {vault.bot && (
+        {bot && (
           <div className="detail-row">
             <span className="label">Bot:</span>
-            <span className="value bot">{vault.bot.slice(0, 10)}...</span>
+            <span className="value bot">{String(bot).slice(0, 10)}...</span>
           </div>
         )}
       </div>
 
       <div className="vault-actions">
-        {canWithdrawNow ? (
-          <button
-            className="btn btn-primary"
-            onClick={() => onWithdraw(vaultId)}
-          >
-            Withdraw
-          </button>
-        ) : (
-          <button
-            className="btn btn-secondary"
-            onClick={() => onApproveBot(vaultId)}
-          >
-            Manage Bot
-          </button>
-        )}
+        <Link className="btn btn-secondary vault-open-link" to={`/vault/${vaultId}`}>
+          View Details
+        </Link>
+        {canWithdrawNow && <span className="vault-ready-pill">Ready to Withdraw</span>}
       </div>
     </div>
   );

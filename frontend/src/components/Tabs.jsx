@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useId } from 'react';
 import './Tabs.css';
 
 const TabsContext = createContext();
@@ -10,6 +10,7 @@ const TabsContext = createContext();
  */
 export function Tabs({ children, defaultValue, onChange, className = '' }) {
   const [activeTab, setActiveTab] = useState(defaultValue);
+  const baseId = useId();
 
   const handleTabChange = (value) => {
     setActiveTab(value);
@@ -17,7 +18,7 @@ export function Tabs({ children, defaultValue, onChange, className = '' }) {
   };
 
   return (
-    <TabsContext.Provider value={{ activeTab, setActiveTab: handleTabChange }}>
+    <TabsContext.Provider value={{ activeTab, setActiveTab: handleTabChange, baseId }}>
       <div className={`tabs ${className}`}>
         {children}
       </div>
@@ -41,8 +42,10 @@ export function TabList({ children, className = '' }) {
  * @param {string} value - Tab identifier
  */
 export function Tab({ children, value, disabled = false, className = '' }) {
-  const { activeTab, setActiveTab } = useContext(TabsContext);
+  const { activeTab, setActiveTab, baseId } = useContext(TabsContext);
   const isActive = activeTab === value;
+  const tabId = `${baseId}-${value}-tab`;
+  const panelId = `${baseId}-${value}-panel`;
 
   return (
     <button
@@ -50,6 +53,8 @@ export function Tab({ children, value, disabled = false, className = '' }) {
       onClick={() => !disabled && setActiveTab(value)}
       disabled={disabled}
       role="tab"
+      id={tabId}
+      aria-controls={panelId}
       aria-selected={isActive}
       tabIndex={isActive ? 0 : -1}
     >
@@ -63,12 +68,17 @@ export function Tab({ children, value, disabled = false, className = '' }) {
  * @param {string} value - Matching tab identifier
  */
 export function TabPanel({ children, value, className = '' }) {
-  const { activeTab } = useContext(TabsContext);
+  const { activeTab, baseId } = useContext(TabsContext);
 
   if (activeTab !== value) return null;
 
   return (
-    <div className={`tab-panel ${className}`} role="tabpanel">
+    <div
+      className={`tab-panel ${className}`}
+      role="tabpanel"
+      id={`${baseId}-${value}-panel`}
+      aria-labelledby={`${baseId}-${value}-tab`}
+    >
       {children}
     </div>
   );

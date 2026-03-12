@@ -185,29 +185,49 @@ export function Dashboard() {
               )}
             </div>
             {!vaultsLoading && Array.isArray(vaultIds) && vaultIds.length > 0 && (
-              <div className="vault-controls">
-                <label className="vault-control-field">
-                  <span>Search</span>
-                  <input
-                    type="text"
-                    className="vault-control-input"
-                    placeholder="Find by vault id"
-                    value={vaultSearch}
-                    onChange={(e) => setVaultSearch(e.target.value)}
-                  />
-                </label>
-                <label className="vault-control-field">
-                  <span>Sort</span>
-                  <select
-                    className="vault-control-select"
-                    value={vaultSort}
-                    onChange={(e) => setVaultSort(e.target.value)}
-                  >
-                    <option value="newest">Newest first</option>
-                    <option value="oldest">Oldest first</option>
-                  </select>
-                </label>
-              </div>
+              <>
+                <div className="vault-controls">
+                  <label className="vault-control-field">
+                    <span>Search</span>
+                    <input
+                      type="text"
+                      className="vault-control-input"
+                      placeholder="Find by vault id"
+                      value={vaultSearch}
+                      onChange={(e) => setVaultSearch(e.target.value)}
+                    />
+                  </label>
+                  <label className="vault-control-field">
+                    <span>Sort</span>
+                    <select
+                      className="vault-control-select"
+                      value={vaultSort}
+                      onChange={(e) => setVaultSort(e.target.value)}
+                    >
+                      <option value="newest">Newest first</option>
+                      <option value="oldest">Oldest first</option>
+                    </select>
+                  </label>
+                </div>
+                <div className="vault-browser-summary">
+                  <span>
+                    Showing {filteredVaultIds.length} vault{filteredVaultIds.length === 1 ? '' : 's'}
+                    {vaultSearch.trim() ? ` matching "${vaultSearch.trim()}"` : ''}
+                  </span>
+                  {(vaultSearch.trim() || vaultSort !== 'newest') && (
+                    <button
+                      type="button"
+                      className="vault-browser-reset"
+                      onClick={() => {
+                        setVaultSearch('');
+                        setVaultSort('newest');
+                      }}
+                    >
+                      Reset browser
+                    </button>
+                  )}
+                </div>
+              </>
             )}
             {vaultsLoading ? (
               <div className="vaults-grid">

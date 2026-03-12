@@ -26,7 +26,7 @@ import './Dashboard.css';
  * <Route path="/" element={<Dashboard />} />
  */
 export function Dashboard() {
-  const { address, isConnected, connect } = useWallet();
+  const { address, balance, isConnected, connect } = useWallet();
   const { blockHeight } = useBlockHeight();
   const location = useLocation();
   const [vaultSearch, setVaultSearch] = useState('');
@@ -102,26 +102,17 @@ export function Dashboard() {
 
       {isConnected && (
         <section className="dashboard-wallet-panel">
-          <div className="dashboard-wallet-primary">
+          <div>
             <span className="dashboard-wallet-label">Connected wallet</span>
             <strong>{address?.slice(0, 8)}...{address?.slice(-6)}</strong>
-            <p>Track vault progress, watch unlock timing, and jump directly into your next action.</p>
           </div>
-          <div className="dashboard-wallet-stat">
+          <div>
             <span className="dashboard-wallet-label">Available balance</span>
             <strong>{(balance / 1_000_000).toLocaleString('en-US', { maximumFractionDigits: 4 })} STX</strong>
           </div>
-          <div className="dashboard-wallet-stat">
-            <span className="dashboard-wallet-label">Your vaults</span>
-            <strong>{userStats.totalVaults.toLocaleString()}</strong>
-          </div>
-          <div className="dashboard-wallet-stat">
+          <div>
             <span className="dashboard-wallet-label">Current block</span>
             <strong>{blockHeight?.toLocaleString() || '--'}</strong>
-          </div>
-          <div className="dashboard-wallet-actions">
-            <a href="#create-vault" className="dashboard-wallet-action">Create another vault</a>
-            <a href="#your-vaults" className="dashboard-wallet-action dashboard-wallet-action-secondary">Review portfolio</a>
           </div>
         </section>
       )}

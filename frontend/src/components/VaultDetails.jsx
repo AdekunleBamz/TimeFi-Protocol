@@ -163,11 +163,10 @@ export function VaultDetails() {
           <div className="vault-header-actions">
             <CopyButton text={String(id)} variant="text" successMessage="Vault id copied" />
             <a
-              href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=${ACTIVE_NETWORK}`}
+              href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=mainnet`}
               className="vault-header-link"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="View vault owner on Hiro Explorer (opens in new tab)"
             >
               View owner
             </a>

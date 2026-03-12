@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
 import { CopyButton } from './CopyButton';
@@ -10,12 +10,17 @@ import './Header.css';
 export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
     : location.pathname === '/404'
       ? 'Route not found'
       : 'Dashboard';
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname, location.hash]);
 
   const formatBalance = (bal) => {
     if (bal === null || bal === undefined) return '--';
@@ -43,7 +48,25 @@ export function Header() {
 
         <div className="header-page-label">{pageLabel}</div>
 
-        <nav className="header-nav">
+        <button
+          type="button"
+          className="header-menu-toggle"
+          aria-expanded={isMenuOpen}
+          aria-controls="header-navigation"
+          onClick={() => setIsMenuOpen((open) => !open)}
+        >
+          <span className="header-menu-toggle-label">Menu</span>
+          <span className="header-menu-toggle-icon" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+
+        <nav
+          id="header-navigation"
+          className={`header-nav ${isMenuOpen ? 'header-nav-open' : ''}`}
+        >
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -74,7 +97,7 @@ export function Header() {
           </Link>
         </nav>
 
-        <div className="header-actions">
+        <div className={`header-actions ${isMenuOpen ? 'header-actions-open' : ''}`}>
           {isConnected ? (
             <div className="header-wallet">
               <div className="header-balance">

@@ -207,12 +207,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 1rem 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 0.95rem;
+  margin-bottom: 0.75rem;
+  background: rgba(8, 18, 31, 0.48);
 }
 
 .info-item:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .info-item dt {
@@ -224,10 +227,12 @@
 .info-item dd {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.5rem;
   font-weight: 600;
   color: #f1f5f9;
   margin: 0;
+  text-align: right;
 }
 
 .info-item a {
@@ -324,6 +329,18 @@
 
   .vault-actions {
     grid-column: span 1;
+  }
+
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+  }
+
+  .info-item dd {
+    justify-content: flex-start;
+    text-align: left;
+    flex-wrap: wrap;
   }
 
   .action-buttons {

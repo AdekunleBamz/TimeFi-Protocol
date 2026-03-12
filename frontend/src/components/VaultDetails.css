@@ -321,30 +321,7 @@
   font-size: 0.88rem;
 }
 
-.vault-action-state {
-  display: inline-flex;
-  width: fit-content;
-  padding: 0.22rem 0.5rem;
-  border-radius: 999px;
-  background: rgba(148, 163, 184, 0.12);
-  color: #dbe5ef;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.vault-action-state-live {
-  background: rgba(16, 185, 129, 0.15);
-  color: #a7f3d0;
-}
-
-.vault-action-state-warning {
-  background: rgba(249, 115, 22, 0.16);
-  color: #fdba74;
-}
-
-.vault-action-copy {
+.vault-action-guidance-item span {
   color: #9fb1c3;
   font-size: 0.8rem;
   line-height: 1.5;
@@ -446,6 +423,10 @@
 
   .action-buttons {
     flex-direction: column;
+  }
+
+  .vault-action-guidance {
+    grid-template-columns: 1fr;
   }
 
   .action-buttons>* {

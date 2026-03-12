@@ -293,24 +293,15 @@ export function VaultDetails() {
             <div className="vault-action-guidance">
               <div className="vault-action-guidance-item">
                 <strong>Withdraw</strong>
-                <span className={`vault-action-state ${vaultStatus === 'unlocked' ? 'vault-action-state-live' : ''}`}>
-                  {vaultStatus === 'unlocked' ? 'Available now' : 'Unlock required'}
-                </span>
-                <span className="vault-action-copy">Available once the vault unlock height is reached.</span>
+                <span>Available once the vault unlock height is reached.</span>
               </div>
               <div className="vault-action-guidance-item">
                 <strong>Claim rewards</strong>
-                <span className={`vault-action-state ${normalizedVault.rewards > 0 ? 'vault-action-state-live' : ''}`}>
-                  {normalizedVault.rewards > 0 ? 'Rewards queued' : 'Nothing queued'}
-                </span>
-                <span className="vault-action-copy">Only appears when rewards are currently queued on this vault.</span>
+                <span>Only appears when rewards are currently queued on this vault.</span>
               </div>
               <div className="vault-action-guidance-item">
                 <strong>Emergency withdraw</strong>
-                <span className={`vault-action-state ${vaultStatus === 'locked' ? 'vault-action-state-warning' : ''}`}>
-                  {vaultStatus === 'locked' ? 'Available with penalty' : 'No longer needed'}
-                </span>
-                <span className="vault-action-copy">Use only if you need early access and accept the penalty path.</span>
+                <span>Use only if you need early access and accept the penalty path.</span>
               </div>
             </div>
             <div className="action-buttons">

@@ -20,9 +20,10 @@ export function Avatar({
   const hasImage = src && !src.includes('undefined');
   const initials = alt ? getInitials(alt) : address ? address.slice(0, 2).toUpperCase() : '?';
   const gradient = address ? generateGradient(address) : 'linear-gradient(135deg, #6366f1, #8b5cf6)';
+  const avatarLabel = alt || address || 'Wallet avatar';
 
   return (
-    <div className={`avatar avatar-${size} ${className}`}>
+    <div className={`avatar avatar-${size} ${className}`} title={avatarLabel}>
       {hasImage ? (
         <img 
           src={src} 
@@ -37,13 +38,14 @@ export function Avatar({
       
       <div 
         className="avatar-fallback" 
+        aria-label={avatarLabel}
         style={{ background: gradient, display: hasImage ? 'none' : 'flex' }}
       >
         {initials}
       </div>
       
       {status && (
-        <span className={`avatar-status avatar-status-${status}`} />
+        <span className={`avatar-status avatar-status-${status}`} title={status} />
       )}
     </div>
   );

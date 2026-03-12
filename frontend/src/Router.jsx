@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Skeleton } from './components/Skeleton';
 
@@ -13,7 +13,7 @@ const NotFound = lazy(() => import('./components/NotFound'));
  */
 function PageLoader() {
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ padding: '2rem' }} role="status" aria-live="polite">
       <Skeleton height={200} borderRadius={12} />
       <div style={{ marginTop: '1rem' }}>
         <Skeleton height={400} borderRadius={12} />
@@ -22,14 +22,26 @@ function PageLoader() {
   );
 }
 
+function ScrollManager() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) return;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname, location.hash]);
+
+  return null;
+}
+
 /**
  * App router configuration
  */
 export function AppRouter() {
   return (
     <BrowserRouter>
+      <ScrollManager />
       <Header />
-      <main>
+      <main className="app-main">
         <Suspense fallback={<PageLoader />}>
           <Routes>
             {/* Main routes */}

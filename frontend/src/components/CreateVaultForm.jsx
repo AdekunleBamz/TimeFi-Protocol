@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useWallet } from '../context/WalletContext';
 import { useContract } from '../hooks/useContract';
+import { useBlockHeight } from '../hooks/useBlockHeight';
 import { validateVaultCreation } from '../utils/validation';
 import { LOCK_PERIODS } from '../config/contracts';
+import { estimateFee } from '../services/transactions';
+import { useToast } from './Toast';
 import './CreateVaultForm.css';
 
 /**
@@ -11,12 +14,25 @@ import './CreateVaultForm.css';
 export function CreateVaultForm({ onSuccess, onClose }) {
   const { balance, isConnected } = useWallet();
   const { createVault, loading } = useContract();
+  const { blockHeight } = useBlockHeight();
+  const { toast } = useToast();
   
   const [amount, setAmount] = useState('');
   const [lockPeriod, setLockPeriod] = useState(null);
   const [errors, setErrors] = useState({});
 
   const balanceInSTX = balance ? balance / 1_000_000 : 0;
+  const feeReserveSTX = estimateFee('create-vault') / 1_000_000;
+  const selectedPeriod = useMemo(
+    () => Object.values(LOCK_PERIODS).find((period) => period.blocks === lockPeriod),
+    [lockPeriod]
+  );
+  const parsedAmount = Number(amount || 0);
+  const expectedRewards = selectedPeriod && parsedAmount > 0
+    ? (parsedAmount * selectedPeriod.apy) / 100
+    : 0;
+  const unlockDays = selectedPeriod ? Math.ceil(selectedPeriod.blocks / 144) : null;
+  const unlockBlock = selectedPeriod && blockHeight ? blockHeight + selectedPeriod.blocks : null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,15 +49,27 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     }
 
     try {
-      await createVault(parseFloat(amount), lockPeriod);
-      onSuccess?.();
+      await createVault(parseFloat(amount), lockPeriod, {
+        onFinish: ({ txId }) => {
+          toast.success(`Vault creation submitted: ${txId.slice(0, 10)}...`);
+          setAmount('');
+          setLockPeriod(null);
+          setErrors({});
+          onSuccess?.(txId);
+        },
+        onCancel: () => {
+          toast.info('Transaction cancelled');
+        },
+      });
     } catch (error) {
       setErrors({ submit: error.message });
+      toast.error(error.message || 'Unable to create vault');
     }
   };
 
   const handleMaxClick = () => {
-    setAmount(balanceInSTX.toString());
+    const maxSpendable = Math.max(balanceInSTX - feeReserveSTX, 0);
+    setAmount(maxSpendable.toFixed(6));
     setErrors(prev => ({ ...prev, amount: null }));
   };
 
@@ -58,7 +86,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
         <label className="form-label">
           Amount to Lock
           <span className="form-balance">
-            Balance: {balanceInSTX.toLocaleString()} STX
+            Balance: {balanceInSTX.toLocaleString()} STX (reserving {feeReserveSTX.toFixed(3)} STX fee)
           </span>
         </label>
         
@@ -68,10 +96,13 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             className={`form-input ${errors.amount ? 'form-input-error' : ''}`}
             placeholder="0.00"
             value={amount}
+            min="0"
+            step="0.000001"
             onChange={(e) => {
               setAmount(e.target.value);
               setErrors(prev => ({ ...prev, amount: null }));
             }}
+            aria-invalid={Boolean(errors.amount)}
             disabled={loading}
           />
           <button
@@ -115,6 +146,22 @@ export function CreateVaultForm({ onSuccess, onClose }) {
         )}
       </div>
 
+      {selectedPeriod && parsedAmount > 0 && (
+        <div className="vault-preview">
+          <div className="vault-preview-row">
+            <span>Estimated rewards</span>
+            <strong>~{expectedRewards.toFixed(6)} STX</strong>
+          </div>
+          <div className="vault-preview-row">
+            <span>Unlock ETA</span>
+            <strong>
+              ~{unlockDays} days
+              {unlockBlock ? ` (block #${unlockBlock.toLocaleString()})` : ''}
+            </strong>
+          </div>
+        </div>
+      )}
+
       {errors.submit && (
         <div className="form-error form-error-submit">{errors.submit}</div>
       )}
@@ -134,9 +181,9 @@ export function CreateVaultForm({ onSuccess, onClose }) {
         <button
           type="submit"
           className="form-button form-button-primary"
-          disabled={!isConnected || loading}
+          disabled={!isConnected || loading || !amount || !lockPeriod}
         >
-          {loading ? 'Creating...' : 'Create Vault'}
+          {loading ? 'Awaiting wallet...' : 'Create Vault'}
         </button>
       </div>
     </form>

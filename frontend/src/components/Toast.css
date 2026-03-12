@@ -123,23 +123,21 @@
 
 /* Action */
 .toast-action {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #d9f5ff;
+  background: none;
+  border: none;
+  color: #93c5fd;
   font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
-  min-height: 2.5rem;
-  padding: 0.55rem 0.75rem;
-  margin-top: 0.9rem;
-  border-radius: 0.7rem;
-  transition: all 0.15s;
+  padding: 0.25rem 0.5rem;
+  margin: -0.25rem;
+  border-radius: 0.4rem;
+  transition: background-color 0.15s;
   white-space: nowrap;
 }
 
 .toast-action:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(0, 212, 170, 0.22);
+  background: rgba(59, 130, 246, 0.15);
 }
 
 /* Close */

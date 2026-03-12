@@ -24,10 +24,20 @@ export function Card({
     className,
   ].filter(Boolean).join(' ');
 
+  const handleKeyDown = (event) => {
+    if (!clickable || !onClick) return;
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onClick(event);
+    }
+  };
+
   return (
     <div 
       className={classes} 
       onClick={clickable ? onClick : undefined}
+      onKeyDown={clickable ? handleKeyDown : undefined}
       role={clickable ? 'button' : undefined}
       tabIndex={clickable ? 0 : undefined}
       {...props}

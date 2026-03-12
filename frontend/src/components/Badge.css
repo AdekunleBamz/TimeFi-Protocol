@@ -3,12 +3,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.45rem;
   font-weight: 800;
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 0.3125rem 0.75rem;
   font-size: 0.6875rem;
+  border: 1px solid transparent;
 }
 
 /* Sizes */
@@ -26,6 +28,7 @@
 .badge-default {
   background: rgba(255, 255, 255, 0.1);
   color: #9ca3af;
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .badge-success {
@@ -52,6 +55,34 @@
 .badge-info {
   background: rgba(99, 102, 241, 0.15);
   color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.18);
+}
+
+.badge-leading-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.badge-leading-dot-default {
+  background: #94a3b8;
+}
+
+.badge-leading-dot-success {
+  background: #4ade80;
+}
+
+.badge-leading-dot-warning {
+  background: #fbbf24;
+}
+
+.badge-leading-dot-danger {
+  background: #f87171;
+}
+
+.badge-leading-dot-info {
+  background: #a5b4fc;
 }
 
 /* Dot Style */

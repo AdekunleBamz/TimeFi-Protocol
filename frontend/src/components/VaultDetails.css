@@ -326,15 +326,6 @@
   font-size: 1.125rem;
 }
 
-.vault-error-tips span {
-  padding: 0.45rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #dbe5ef;
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
 .vault-error-actions {
   display: flex;
   gap: 0.75rem;

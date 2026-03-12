@@ -63,20 +63,6 @@ export function VaultDetails() {
     return blocksRemaining * 600;
   }, [blocksRemaining]);
 
-  const approximateRemainingLabel = useMemo(() => {
-    if (countdownSeconds === null || countdownSeconds === undefined) return '--';
-    if (countdownSeconds <= 0) return 'Ready now';
-
-    const days = Math.floor(countdownSeconds / 86400);
-    const hours = Math.ceil((countdownSeconds % 86400) / 3600);
-
-    if (days > 0) {
-      return `~${days}d ${hours}h`;
-    }
-
-    return `~${Math.ceil(countdownSeconds / 3600)}h`;
-  }, [countdownSeconds]);
-
   const vaultStatus = useMemo(() => {
     if (!normalizedVault) return null;
 
@@ -96,50 +82,6 @@ export function VaultDetails() {
 
     return Math.min(100, Math.max(0, (elapsed / total) * 100));
   }, [normalizedVault, blocksRemaining]);
-
-  const statusBanner = useMemo(() => {
-    if (!normalizedVault) {
-      return {
-        title: 'Loading vault state',
-        message: 'Waiting for vault data from the network.',
-        tone: 'neutral',
-      };
-    }
-
-    if (vaultStatus === 'withdrawn') {
-      return {
-        title: 'Vault already withdrawn',
-        message: 'Funds have already left this vault, so no further actions are available here.',
-        tone: 'neutral',
-      };
-    }
-
-    if (vaultStatus === 'emergency') {
-      return {
-        title: 'Emergency path used',
-        message: 'This vault has already gone through the emergency unlock path.',
-        tone: 'danger',
-      };
-    }
-
-    if (vaultStatus === 'unlocked') {
-      return {
-        title: isOwner ? 'Vault is ready for withdrawal' : 'Vault has reached unlock height',
-        message: isOwner
-          ? 'You can withdraw the principal now and claim rewards if any are queued.'
-          : 'This vault is now withdrawable by its owner.',
-        tone: 'success',
-      };
-    }
-
-    return {
-      title: 'Vault is still time-locked',
-      message: isOwner
-        ? `Wait until block #${normalizedVault.unlockHeight.toLocaleString()} or use the emergency path if you accept penalties.`
-        : `This vault stays locked until block #${normalizedVault.unlockHeight.toLocaleString()}.`,
-      tone: 'warning',
-    };
-  }, [normalizedVault, vaultStatus, isOwner]);
 
   const handleWithdraw = async () => {
     try {
@@ -196,19 +138,10 @@ export function VaultDetails() {
     return (
       <div className="vault-details-error">
         <h2>Vault Not Found</h2>
-        <p>Vault #{id} could not be loaded. It may not exist on this network, or the route may be stale.</p>
-        <div className="vault-error-tips">
-          <span>Check the vault id in the URL.</span>
-          <span>Return to the dashboard to browse available vaults.</span>
-          <span>Retry if the network is still loading.</span>
-        </div>
+        <p>The vault you're looking for doesn't exist or has been removed.</p>
         <div className="vault-error-actions">
-          <Button onClick={() => navigate('/')} aria-label="Return to dashboard" title="Return to dashboard">
-            Back to Dashboard
-          </Button>
-          <Button variant="secondary" onClick={refetch} aria-label="Retry loading this vault" title="Retry loading this vault">
-            Retry
-          </Button>
+          <Button onClick={() => navigate('/')}>Back to Dashboard</Button>
+          <Button variant="secondary" onClick={refetch}>Retry</Button>
         </div>
       </div>
     );
@@ -273,7 +206,7 @@ export function VaultDetails() {
             <span className="balance-amount">{formatSTX(normalizedVault.amount)}</span>
             <span className="balance-currency">STX</span>
           </div>
-
+          
           {normalizedVault.rewards > 0 && (
             <div className="vault-rewards">
               <span className="rewards-label">Pending Rewards</span>
@@ -291,7 +224,7 @@ export function VaultDetails() {
             {vaultStatus === 'locked' && countdownSeconds !== null && (
               <>
                 <span className="progress-label">Unlocks in</span>
-                <Countdown
+                <Countdown 
                   seconds={countdownSeconds}
                   variant="compact"
                   onComplete={refetch}
@@ -332,8 +265,8 @@ export function VaultDetails() {
             <div className="info-item">
               <dt>Owner</dt>
               <dd>
-                <a
-                  href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=${ACTIVE_NETWORK}`}
+                <a 
+                  href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=mainnet`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -468,11 +401,6 @@ function getStatusVariant(status) {
   return variants[status] || 'default';
 }
 
-/**
- * normalizeVault - Normalize vault data from various API response formats.
- * @param {Object} vault - Raw vault data from contract read
- * @returns {Object|null} Normalized vault object with consistent property names
- */
 function normalizeVault(vault) {
   if (!vault) return null;
 
@@ -489,13 +417,6 @@ function normalizeVault(vault) {
   };
 }
 
-/**
- * formatCreatedDisplay - Format vault creation timestamp for display.
- * Handles various timestamp formats (milliseconds, seconds, block height).
- * @param {number} createdAt - Creation timestamp
- * @param {number} createdHeight - Block height at creation
- * @returns {string} Formatted display string
- */
 function formatCreatedDisplay(createdAt, createdHeight) {
   if (createdAt > 1_000_000_000_000) {
     return formatRelativeTime(createdAt);

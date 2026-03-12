@@ -49,9 +49,10 @@ function ScrollManager() {
 export function AppRouter() {
   return (
     <BrowserRouter>
+      <a href="#app-main-content" className="skip-link">Skip to content</a>
       <ScrollManager />
       <Header />
-      <main className="app-main">
+      <main className="app-main" id="app-main-content">
         <Suspense fallback={<PageLoader />}>
           <Routes>
             {/* Main routes */}

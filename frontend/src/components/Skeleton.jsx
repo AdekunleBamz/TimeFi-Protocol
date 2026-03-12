@@ -74,6 +74,7 @@ export function SkeletonCard({ className = '' }) {
         <Skeleton variant="text" width="60%" />
         <Skeleton variant="text" width="80%" />
         <Skeleton variant="text" width="40%" />
+        <Skeleton variant="rectangular" height={40} style={{ marginTop: '0.5rem', borderRadius: '12px' }} />
       </div>
     </div>
   );
@@ -98,6 +99,7 @@ export function SkeletonVaultCard({ className = '' }) {
           <Skeleton width={80} height={24} />
           <Skeleton width={80} height={24} />
         </div>
+        <Skeleton width="100%" height={42} style={{ borderRadius: '12px' }} />
       </div>
     </div>
   );

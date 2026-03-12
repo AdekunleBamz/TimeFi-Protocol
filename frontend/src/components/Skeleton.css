@@ -1,7 +1,9 @@
 /* Base Skeleton */
 .skeleton {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 8px;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Variants */
@@ -53,24 +55,26 @@
 /* Card Skeleton */
 .skeleton-card {
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .skeleton-card-content {
-  padding: 1rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.65rem;
 }
 
 /* Vault Card Skeleton */
 .skeleton-vault-card {
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .skeleton-vault-header {
@@ -88,10 +92,24 @@
 
 .skeleton-vault-body {
   margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .skeleton-vault-stats {
   display: flex;
   justify-content: space-between;
-  margin-top: 0.75rem;
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .skeleton-card-content,
+  .skeleton-vault-card {
+    padding: 1rem;
+  }
+
+  .skeleton-vault-stats {
+    flex-direction: column;
+  }
 }

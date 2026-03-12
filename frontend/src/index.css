@@ -153,6 +153,27 @@ header p {
   min-height: calc(100vh - 7rem);
 }
 
+.page-loader {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.page-loader-hero,
+.page-loader-detail {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.page-loader-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
 .connect-section,
 .vault-section {
   text-align: center;
@@ -256,6 +277,15 @@ footer {
     margin: 0.5rem auto 0.9rem;
     padding: 1rem;
     border-radius: 22px;
+  }
+
+  .page-loader-hero,
+  .page-loader-detail {
+    padding: 1rem;
+  }
+
+  .page-loader-grid {
+    grid-template-columns: 1fr;
   }
 }
 

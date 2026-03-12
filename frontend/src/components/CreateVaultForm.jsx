@@ -23,6 +23,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
 
   const balanceInSTX = balance ? balance / 1_000_000 : 0;
   const feeReserveSTX = estimateFee('create-vault') / 1_000_000;
+  const spendableBalance = Math.max(balanceInSTX - feeReserveSTX, 0);
   const selectedPeriod = useMemo(
     () => Object.values(LOCK_PERIODS).find((period) => period.blocks === lockPeriod),
     [lockPeriod]
@@ -68,8 +69,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   };
 
   const handleMaxClick = () => {
-    const maxSpendable = Math.max(balanceInSTX - feeReserveSTX, 0);
-    setAmount(maxSpendable.toFixed(6));
+    setAmount(spendableBalance.toFixed(6));
     setErrors(prev => ({ ...prev, amount: null }));
   };
 
@@ -113,6 +113,23 @@ export function CreateVaultForm({ onSuccess, onClose }) {
           >
             MAX
           </button>
+        </div>
+
+        <div className="form-quick-amounts">
+          {[0.25, 0.5, 0.75].map((ratio) => (
+            <button
+              key={ratio}
+              type="button"
+              className="form-quick-amount"
+              onClick={() => {
+                setAmount((spendableBalance * ratio).toFixed(6));
+                setErrors(prev => ({ ...prev, amount: null }));
+              }}
+              disabled={loading || spendableBalance <= 0}
+            >
+              {Math.round(ratio * 100)}%
+            </button>
+          ))}
         </div>
         
         {errors.amount && (

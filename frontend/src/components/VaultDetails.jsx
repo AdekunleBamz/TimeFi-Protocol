@@ -254,6 +254,20 @@ export function VaultDetails() {
         {isOwner && isConnected && (
           <section className="vault-section vault-actions">
             <h2>Actions</h2>
+            <div className="vault-action-guidance">
+              <div className="vault-action-guidance-item">
+                <strong>Withdraw</strong>
+                <span>Available once the vault unlock height is reached.</span>
+              </div>
+              <div className="vault-action-guidance-item">
+                <strong>Claim rewards</strong>
+                <span>Only appears when rewards are currently queued on this vault.</span>
+              </div>
+              <div className="vault-action-guidance-item">
+                <strong>Emergency withdraw</strong>
+                <span>Use only if you need early access and accept the penalty path.</span>
+              </div>
+            </div>
             <div className="action-buttons">
               {vaultStatus === 'unlocked' && (
                 <Button variant="primary" size="lg" fullWidth loading={txLoading} onClick={handleWithdraw}>

@@ -359,7 +359,24 @@
 .connect-prompt p {
   color: #94a3b8;
   font-size: 1.125rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.connect-prompt-highlights {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.connect-prompt-highlights span {
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #dbe5ef;
+  font-size: 0.82rem;
+  font-weight: 700;
 }
 
 /* Responsive */

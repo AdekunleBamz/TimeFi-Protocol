@@ -185,13 +185,7 @@ export function Dashboard() {
                 <span>Track every vault from one dashboard</span>
                 <span>Claim rewards when they mature</span>
               </div>
-              <button
-                type="button"
-                className="dashboard-hero-cta"
-                onClick={connect}
-                aria-label="Connect wallet to continue to vault creation"
-                title="Connect wallet to continue to vault creation"
-              >
+              <button type="button" className="dashboard-hero-cta" onClick={connect}>
                 Connect Wallet to Continue
               </button>
             </div>

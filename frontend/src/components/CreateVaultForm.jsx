@@ -79,6 +79,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     blocks: period.blocks,
     apy: period.apy,
   }));
+  const maxApy = Math.max(...lockPeriodOptions.map((option) => option.apy));
 
   return (
     <form className="create-vault-form" onSubmit={handleSubmit}>
@@ -152,8 +153,12 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               }}
               disabled={loading}
             >
+              {option.apy === maxApy && (
+                <span className="lock-period-badge">Best yield</span>
+              )}
               <span className="lock-period-label">{option.label}</span>
               <span className="lock-period-apy">{option.apy}% APY</span>
+              {lockPeriod === option.blocks && <span className="lock-period-state">Selected</span>}
             </button>
           ))}
         </div>

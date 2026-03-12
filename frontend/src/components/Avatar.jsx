@@ -51,9 +51,9 @@ export function Avatar({
           }}
         />
       ) : null}
-
-      <div
-        className="avatar-fallback"
+      
+      <div 
+        className="avatar-fallback" 
         aria-label={avatarLabel}
         style={{ background: gradient, display: hasImage ? 'none' : 'flex' }}
       >
@@ -61,7 +61,7 @@ export function Avatar({
       </div>
 
       {status && (
-        <span className={`avatar-status avatar-status-${status}`} title={status} aria-label={`Status: ${status}`} />
+        <span className={`avatar-status avatar-status-${status}`} title={status} />
       )}
     </div>
   );

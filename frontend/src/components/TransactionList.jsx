@@ -94,20 +94,15 @@ function TransactionItem({ transaction }) {
           <span className={`transaction-status transaction-status-${status}`}>
             {normalizedStatus}
           </span>
-          <span className="transaction-txid-group">
-            <span className="transaction-txid">{shortTxId}</span>
-            <CopyButton text={txId} variant="icon" className="transaction-tx-copy" />
-          </span>
-
+          <span className="transaction-txid">{shortTxId}</span>
         </div>
 
         <div className="transaction-context">
-          <a
-            href={`https://explorer.hiro.so/txid/${txId}?chain=${ACTIVE_NETWORK}`}
+          <a 
+            href={`https://explorer.hiro.so/txid/${txId}?chain=mainnet`}
             target="_blank"
             rel="noopener noreferrer"
             className="transaction-link"
-            aria-label={`View transaction ${shortTxId} on explorer (opens in new tab)`}
           >
             View on explorer
           </a>

@@ -5,6 +5,35 @@
   gap: 1.5rem;
 }
 
+.form-balance-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.form-balance-chip {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.form-balance-chip span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9fb1c3;
+}
+
+.form-balance-chip strong {
+  color: #f8fafc;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
 /* Form Section */
 .form-section {
   display: flex;
@@ -273,4 +302,10 @@
   color: #94a3b8;
   text-align: center;
   margin-top: -0.4rem;
+}
+
+@media (max-width: 640px) {
+  .form-balance-strip {
+    grid-template-columns: 1fr;
+  }
 }

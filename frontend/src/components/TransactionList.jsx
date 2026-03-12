@@ -49,6 +49,8 @@ function TransactionItem({ transaction }) {
   };
 
   const config = typeConfig[type] || typeConfig.deposit;
+  const shortTxId = formatAddress(txId);
+  const normalizedStatus = status === 'success' ? 'confirmed' : status;
 
   return (
     <div className={`transaction-item transaction-${status}`}>
@@ -68,10 +70,24 @@ function TransactionItem({ transaction }) {
           <span className="transaction-time">
             {formatRelativeTime(timestamp)}
           </span>
-          <span className="transaction-status">
-            {status === 'pending' && '⏳ '}
-            {status}
+          <span className={`transaction-status transaction-status-${status}`}>
+            {normalizedStatus}
           </span>
+          <span className="transaction-txid">{shortTxId}</span>
+        </div>
+
+        <div className="transaction-context">
+          <a 
+            href={`https://explorer.hiro.so/txid/${txId}?chain=mainnet`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transaction-link"
+          >
+            View on explorer
+          </a>
+          {vaultId && (
+            <span className="transaction-context-note">Linked to vault #{vaultId}</span>
+          )}
         </div>
       </div>
       
@@ -79,15 +95,10 @@ function TransactionItem({ transaction }) {
         <span className={`transaction-value transaction-value-${type === 'deposit' ? 'negative' : 'positive'}`}>
           {type === 'deposit' ? '-' : '+'}{formatSTX(amount)} STX
         </span>
-        
-        <a 
-          href={`https://explorer.hiro.so/txid/${txId}?chain=mainnet`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transaction-link"
-        >
-          View →
-        </a>
+
+        <span className="transaction-direction">
+          {type === 'deposit' ? 'Sent to vault' : 'Returned to wallet'}
+        </span>
       </div>
     </div>
   );

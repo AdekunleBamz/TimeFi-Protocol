@@ -71,6 +71,11 @@ export function VaultCard({ vaultId }) {
 
   const unlockBlock = vault['unlock-block'] ?? vault.unlockHeight ?? '--';
   const bot = vault.bot ?? vault['approved-bot'] ?? null;
+  const urgencyLabel = canWithdrawNow
+    ? 'Withdrawal window open'
+    : timeRemaining > 86400
+      ? 'Long lock remaining'
+      : 'Near unlock';
 
   return (
     <div className={`vault-card ${canWithdrawNow ? 'withdrawable' : ''}`}>
@@ -103,6 +108,11 @@ export function VaultCard({ vaultId }) {
             <span className="value bot">{String(bot).slice(0, 10)}...</span>
           </div>
         )}
+      </div>
+
+      <div className="vault-card-footer-meta">
+        <span className={`vault-urgency ${canWithdrawNow ? 'vault-urgency-ready' : ''}`}>{urgencyLabel}</span>
+        <span className="vault-refresh-note">Refreshes every 30s</span>
       </div>
 
       <div className="vault-actions">

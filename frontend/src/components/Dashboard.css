@@ -281,6 +281,26 @@
   background: rgba(99, 102, 241, 0.2);
 }
 
+.vault-browser-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.vault-browser-reset {
+  padding: 0.42rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.45);
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 .create-vault-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
@@ -369,6 +389,11 @@
 
   .create-vault-layout {
     grid-template-columns: 1fr;
+  }
+
+  .vault-browser-summary {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

@@ -253,6 +253,11 @@ export function Dashboard() {
                       placeholder="Find by vault id"
                       value={vaultSearch}
                       onChange={(e) => setVaultSearch(e.target.value)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Escape') {
+                          setVaultSearch('');
+                        }
+                      }}
                     />
                   </label>
                   <label className="vault-control-field">
@@ -268,7 +273,7 @@ export function Dashboard() {
                   </label>
                 </div>
                 <div className="vault-browser-summary">
-                  <span>
+                  <span role="status" aria-live="polite">
                     Showing {filteredVaultIds.length} vault{filteredVaultIds.length === 1 ? '' : 's'}
                     {vaultSearch.trim() ? ` matching "${vaultSearch.trim()}"` : ''}
                   </span>
@@ -291,7 +296,7 @@ export function Dashboard() {
                         setVaultSort('newest');
                       }}
                     >
-                      Reset browser
+                      Reset search and sort
                     </button>
                   )}
                 </div>

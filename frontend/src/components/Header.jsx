@@ -29,6 +29,32 @@ export function Header() {
       ? 'Route not found'
       : 'Dashboard';
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+    const mediaQuery = window.matchMedia('(max-width: 920px)');
+    if (!mediaQuery.matches) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMenuOpen]);
+
   const formatBalance = (bal) => {
     if (bal === null || bal === undefined) return '--';
     return (bal / 1_000_000).toLocaleString('en-US', {
@@ -55,7 +81,26 @@ export function Header() {
 
         <div className="header-page-label">{pageLabel}</div>
 
-        <nav className="header-nav">
+        <button
+          type="button"
+          className="header-menu-toggle"
+          aria-expanded={isMenuOpen}
+          aria-controls="header-navigation"
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => setIsMenuOpen((open) => !open)}
+        >
+          <span className="header-menu-toggle-label">Menu</span>
+          <span className="header-menu-toggle-icon" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+
+        <nav
+          id="header-navigation"
+          className={`header-nav ${isMenuOpen ? 'header-nav-open' : ''}`}
+        >
           <NavLink
             to="/"
             className={({ isActive }) =>

@@ -129,6 +129,8 @@
 }
 
 .header-nav-link {
+    display: inline-flex;
+    align-items: center;
     font-size: 0.78rem;
     font-weight: 700;
     color: #94a3b8;
@@ -137,10 +139,14 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     position: relative;
+    min-height: 40px;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.6rem;
 }
 
 .header-nav-link:hover {
     color: #f8f9fa;
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .header-nav-link::after {
@@ -359,6 +365,7 @@
 
     .header-nav-open {
         display: flex;
+        gap: 0.55rem;
     }
 
     .header-actions {
@@ -375,6 +382,11 @@
     .header-wallet,
     .header-connect {
         width: 100%;
+        min-height: 46px;
+    }
+
+    .header-nav-link {
+        min-height: 44px;
     }
 }
 

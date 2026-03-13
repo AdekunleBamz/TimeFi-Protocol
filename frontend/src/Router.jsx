@@ -77,10 +77,12 @@ function ScrollManager() {
 export function AppRouter() {
   return (
     <BrowserRouter>
-      <a href="#app-main-content" className="skip-link">Skip to content</a>
+      <a href="#app-main-content" className="skip-link" aria-label="Skip to main content">
+        Skip to content
+      </a>
       <ScrollManager />
       <Header />
-      <main className="app-main" id="app-main-content">
+      <main className="app-main" id="app-main-content" tabIndex={-1} aria-label="Main content">
         <Suspense fallback={<PageLoader />}>
 
           <Routes>

@@ -91,6 +91,8 @@
 }
 
 .header-nav-link {
+    display: inline-flex;
+    align-items: center;
     font-size: 0.78rem;
     font-weight: 700;
     color: #94a3b8;
@@ -99,10 +101,14 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     position: relative;
+    min-height: 40px;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.6rem;
 }
 
 .header-nav-link:hover {
     color: #f8f9fa;
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .header-nav-link::after {
@@ -306,9 +312,38 @@
     .header-nav {
         order: 3;
         width: 100%;
-        justify-content: flex-start;
-        overflow-x: auto;
-        padding-bottom: 0.2rem;
+        grid-column: 1 / -1;
+        display: none;
+        margin: 0;
+        padding: 0.85rem 0 0.15rem;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+    }
+
+    .header-nav-open {
+        display: flex;
+        gap: 0.55rem;
+    }
+
+    .header-actions {
+        grid-column: 1 / -1;
+        display: none;
+        width: 100%;
+    }
+
+    .header-actions-open {
+        display: flex;
+        padding-top: 0.2rem;
+    }
+
+    .header-wallet,
+    .header-connect {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .header-nav-link {
+        min-height: 44px;
     }
 }
 

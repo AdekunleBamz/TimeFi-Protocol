@@ -8,6 +8,9 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity 4 feat
 timefi-protocol/
 ├── contracts/
 │   └── timefi-vault.clar    # Main vault contract
+├── frontend/                # React app for end users
+├── sdk/                     # TypeScript SDK package
+├── deployments/             # Clarinet deployment plans
 ├── settings/                # Network configuration
 └── tests/                   # Contract tests
 ```
@@ -44,6 +47,22 @@ clarinet test
 
 # Start devnet
 clarinet devnet start
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### SDK
+
+```bash
+cd sdk
+npm install
+npm run build
 ```
 
 ## 📝 Contract Functions

@@ -6,11 +6,19 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "check": "clarinet check",
+    "console": "clarinet console",
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "sdk:build": "npm --prefix sdk run build",
     "test": "vitest run",
     "test:report": "vitest run -- --coverage --costs",
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
-  "author": "",
+  "author": "AdekunleBamz <adekunle@stackpulse.io>",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "license": "ISC",
   "dependencies": {
     "@stacks/clarinet-sdk": "^3.9.0",

@@ -1,51 +1,27 @@
-# Dependencies
-node_modules/
-.pnpm-store/
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# Build outputs
-dist/
-build/
-.cache/
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.local
 
 # Clarinet
 .clarinet/
-.cache/
+deployments/*.yaml
+!deployments/default.simnet-plan.yaml
 
-# Test coverage
+# Tests
 coverage/
-.nyc_output/
+*.lcov
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# Mainnet deployment config (contains private keys)
-settings/Mainnet.toml
-Mainnet.toml
-
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Temporary files
-*.tmp
-*.temp
-
-# Personal use
-scripts/
-
-# Test
-test/

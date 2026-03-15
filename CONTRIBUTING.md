@@ -28,6 +28,14 @@ Thank you for your interest in contributing to TimeFi Protocol!
    npm test
    ```
 
+### Sub-project Development
+
+The project consists of multiple components. Please refer to their respective READMEs for specific development instructions:
+
+- **Frontend**: [frontend/README.md](frontend/README.md)
+- **SDK**: [sdk/README.md](sdk/README.md)
+- **Contracts**: [contracts/README.md](contracts/README.md)
+
 ## Making Changes
 
 ### Branch Naming

@@ -16,26 +16,12 @@ The official JavaScript SDK for interacting with the **TimeFi Protocol** on the 
 
 ```bash
 npm install timefi-sdk
-```
-
-### Local SDK Development
-
-```bash
-cd sdk
-npm ci
-npm run build
-npm test
-```
 
 ### Running Tests
 
 ```bash
 npm test
 ```
-From the repository root, run `npm --prefix sdk test` to run the same SDK test command.
-
-From the repository root, use `npm run sdk:build` for SDK build validation before publishing.
-
 ## 🛠️ Quick Start
 
 ### Initialize Client

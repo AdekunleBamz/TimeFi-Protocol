@@ -78,7 +78,7 @@
     (fee (/ (* amount FEE_BPS) u10000))
     (deposit (- amount fee))
     ;; Unlock height is calculated as current block time + lock seconds
-    (unlock (+ lock-secs (current-time-secs)))
+    (unlock (+ lock-secs (stacks-block-time)))
   )
     (asserts! (>= amount MIN_DEPOSIT) ERR_AMOUNT)
     (asserts! (>= lock-secs MIN_LOCK) ERR_LOCK_PERIOD)

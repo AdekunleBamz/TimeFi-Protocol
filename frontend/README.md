@@ -100,12 +100,11 @@ Contract addresses are re-exported from `src/config/contracts.js`, while network
 
 ```javascript
 export const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N';
-// in .env
-VITE_NETWORK=mainnet
+export const NETWORK = 'mainnet'; // 'mainnet' or 'testnet'
 ```
 
 > [!TIP]
-> Always ensure your wallet is connected to the same network configured by `VITE_NETWORK`.
+> Always ensure your wallet is connected to the same network as configured in `contracts.js`.
 
 ## Environment Variables
 
@@ -114,10 +113,10 @@ Copy `.env.example` to `.env` and adjust the values for your deployment:
 ```env
 VITE_NETWORK=mainnet
 VITE_CONTRACT_ADDRESS=SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N
-VITE_VAULT_CONTRACT=timefi-vault-v-A2
-VITE_REWARDS_CONTRACT=timefi-rewards-v-A2
-VITE_GOVERNANCE_CONTRACT=timefi-governance-v-A2
-VITE_EMERGENCY_CONTRACT=timefi-emergency-v-A2
+VITE_VAULT_CONTRACT=vault-v-A2
+VITE_REWARDS_CONTRACT=rewards-v-A2
+VITE_GOVERNANCE_CONTRACT=governance-v-A2
+VITE_EMERGENCY_CONTRACT=emergency-v-A2
 VITE_HIRO_API_URL=https://api.mainnet.hiro.so
 VITE_EXPLORER_URL=https://explorer.hiro.so
 VITE_APP_NAME=TimeFi Protocol

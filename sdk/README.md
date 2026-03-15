@@ -16,8 +16,12 @@ The official JavaScript SDK for interacting with the **TimeFi Protocol** on the 
 
 ```bash
 npm install timefi-sdk
-```
 
+### Running Tests
+
+```bash
+npm test
+```
 ## 🛠️ Quick Start
 
 ### Fetch Protocol Stats

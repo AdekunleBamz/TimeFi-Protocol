@@ -25,18 +25,15 @@ A time-locked vault protocol built on the Stacks blockchain, using Clarity 4 sma
 
 ## 🏗️ Project Structure
 
-```text
-TimeFi-Protocol/
- - 📂 `contracts/` — Clarity smart contracts
- - 📂 `frontend/` — React-based web dashboard
- - 📂 `sdk/` — JavaScript/TypeScript SDK
- - 📂 `deployments/` — Clarinet deployment plans
- - 📂 `tests/regressions/` — Regression and edge-case suites
- - 📂 `tests/` — Contract testing suite
- - 📂 `docs/` — Additional documentation
-```
-
-## 🌟 Features
+timefi-protocol/
+├── contracts/       # Clarity smart contracts
+├── frontend/        # React-based web dashboard
+├── sdk/             # JavaScript/TypeScript SDK
+├── scripts/         # Deployment and maintenance scripts
+├── settings/        # Network configuration
+├── tests/           # Contract testing suite
+└── docs/            # Additional documentation
+## ✨ Features
 
 ### 🔒 Smart Contract Features
 - **Create Vaults** - Deposit STX with a time-lock

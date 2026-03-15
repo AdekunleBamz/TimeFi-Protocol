@@ -3,48 +3,22 @@
   "version": "1.0.1",
   "description": "TimeFi Protocol - Time-locked vaults for disciplined savings on Stacks blockchain.",
   "type": "module",
-  "main": "./index.js",
-  "exports": {
-    ".": "./index.js"
-  },
-  "files": [
-    "index.js",
-    "README.md",
-    "LICENSE"
-  ],
+  "private": true,
   "scripts": {
-    "contracts:check": "clarinet check",
-    "contracts:console": "clarinet console",
-    "check": "npm run contracts:check",
-    "console": "npm run contracts:console",
+    "check": "clarinet check",
+    "console": "clarinet console",
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
-    "frontend:test": "npm --prefix frontend run lint",
-    "frontend:lint": "npm --prefix frontend run lint",
     "sdk:build": "npm --prefix sdk run build",
-    "sdk:test": "npm --prefix sdk run test",
     "test": "vitest run",
-    "test:report": "vitest run --coverage --costs",
-    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
-    "verify:local": "npm run contracts:check && npm run sdk:test && npm run frontend:lint && npm run test"
+    "test:report": "vitest run -- --coverage --costs",
+    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
-  "author": "adekunlebamz <bams.kunle@gmail.com>",
+  "author": "AdekunleBamz <adekunle@stackpulse.io>",
   "engines": {
     "node": ">=18.0.0"
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AdekunleBamz/TimeFi-Protocol.git"
-  },
-  "homepage": "https://github.com/AdekunleBamz/TimeFi-Protocol#readme",
-  "bugs": {
-    "url": "https://github.com/AdekunleBamz/TimeFi-Protocol/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AdekunleBamz/TimeFi-Protocol.git"
-  },
+  "license": "ISC",
   "dependencies": {
     "@stacks/clarinet-sdk": "^3.9.0",
     "@stacks/transactions": "^7.2.0",

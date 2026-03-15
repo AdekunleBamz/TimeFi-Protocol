@@ -4,14 +4,14 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity 4 feat
 
 ## 🏗️ Project Structure
 
-```
 timefi-protocol/
-├── contracts/
-│   └── timefi-vault.clar    # Main vault contract
-├── settings/                # Network configuration
-└── tests/                   # Contract tests
-```
-
+├── contracts/       # Clarity smart contracts
+├── frontend/        # React-based web dashboard
+├── sdk/             # JavaScript/TypeScript SDK
+├── scripts/         # Deployment and maintenance scripts
+├── settings/        # Network configuration
+├── tests/           # Contract testing suite
+└── docs/            # Additional documentation
 ## ✨ Features
 
 ### Smart Contract Features

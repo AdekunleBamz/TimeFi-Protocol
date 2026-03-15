@@ -57,8 +57,10 @@
 (define-public (create-vault (amount uint) (lock-secs uint))
   (let (
     (id (+ (var-get vault-nonce) u1))
+    ;; Calculate 0.5% fee (FEE_BPS = 50)
     (fee (/ (* amount FEE_BPS) u10000))
     (deposit (- amount fee))
+    ;; Unlock height is calculated as current block time + lock seconds
     (unlock (+ lock-secs (stacks-block-time)))
   )
     (asserts! (>= amount MIN_DEPOSIT) ERR_AMOUNT)

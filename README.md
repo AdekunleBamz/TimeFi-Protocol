@@ -92,7 +92,25 @@ npm run frontend:dev
 npm run sdk:build
 ```
 
-### ✅ Local Verification Checklist
+### SDK Integration
+
+The `@timefi/sdk` provides a clean interface for interacting with the protocol:
+
+```javascript
+import { TimeFiClient } from './sdk/src/client.js';
+
+const client = new TimeFiClient('testnet');
+const vault = await client.getVault(1);
+```
+
+## 🛠️ Tech Stack
+
+- **Smart Contracts**: Clarity 4 (Stacks Blockchain)
+- **Frontend**: React + Vite + Vanilla CSS
+- **SDK**: JavaScript / `@stacks/transactions`
+- **Tooling**: Clarinet, Vitest
+
+## 📝 Contract Functions
 
 Before opening a PR or pushing to `main`, run:
 

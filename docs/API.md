@@ -6,12 +6,12 @@
 Create a new time-locked vault with STX deposit.
 
 ```clarity
-(create-vault (amount uint) (lock-secs uint))
+(create-vault (amount uint) (lock-blocks uint))
 ```
 
 **Parameters:**
 - `amount` - Amount of STX to deposit (minimum 10,000 microSTX)
-- `lock-secs` - Lock duration in seconds (3,600 to 31,536,000)
+- `lock-blocks` - Lock duration in blocks (6 to 52,560)
 
 **Returns:** `(response uint uint)` - Vault ID on success
 
@@ -19,19 +19,35 @@ Create a new time-locked vault with STX deposit.
 
 ---
 
-### `withdraw`
-Withdraw funds from an unlocked vault.
+### `request-withdraw`
+Request withdrawal from an unlocked vault (owner only).
 
 ```clarity
-(withdraw (id uint))
+(request-withdraw (id uint))
 ```
 
 **Parameters:**
-- `id` - Vault ID to withdraw from
+- `id` - Vault ID to request withdrawal for
 
 **Returns:** `(response bool uint)` - true on success
 
-**Events:** Emits `{event: "withdraw", id, owner}`
+**Events:** Emits `{event: "withdraw-requested", id, owner, amount}`
+
+---
+
+### `process-withdraw`
+Process a pending withdrawal (deployer only).
+
+```clarity
+(process-withdraw (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID to process
+
+**Returns:** `(response bool uint)` - true on success
+
+**Events:** Emits `{event: "withdraw", id, owner, amount}`
 
 ---
 
@@ -135,7 +151,7 @@ Get total number of vaults created.
 ---
 
 ### `get-time-remaining`
-Get seconds remaining until vault unlock.
+Get blocks remaining until vault unlock.
 
 ```clarity
 (get-time-remaining (id uint))
@@ -194,8 +210,8 @@ Check if principal is an approved bot.
 | Function | Returns |
 |----------|---------|
 | `get-min-deposit` | `u10000` (0.01 STX) |
-| `get-min-lock` | `u3600` (1 hour) |
-| `get-max-lock` | `u31536000` (1 year) |
+| `get-min-lock` | `u6` (~1 hour) |
+| `get-max-lock` | `u52560` (~1 year) |
 | `get-fee-bps` | `u50` (0.5%) |
 
 ---

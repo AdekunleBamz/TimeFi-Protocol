@@ -16,13 +16,13 @@ timefi-protocol/
 
 ### Smart Contract Features
 - **Create Vaults** - Deposit STX with time-lock
-- **Withdraw** - Claim funds after lock period
-- **Bot Approval** - Approve automated trading bots via `contract-hash?`
+- **Withdraw Flow** - User requests withdrawal, deployer processes payout
+- **Bot Approval** - Approve automated trading bots by principal allowlist
 - **Fee Collection** - 0.5% fee on deposits
 
 ### Clarity 4 Functions Used
-- `stacks-block-time` - For unlock time calculation
-- `contract-hash?` - For bot verification
+- `tenure-height` - For unlock height calculation
+- `map-get?` / `map-set` - For bot allowlist and vault state
 
 ## 🚀 Getting Started
 
@@ -40,7 +40,7 @@ npm install
 clarinet check
 
 # Run tests
-clarinet test
+npm test
 
 # Start devnet
 clarinet devnet start
@@ -70,9 +70,10 @@ const vault = await client.getVault(1);
 
 | Function | Parameters | Description |
 |----------|------------|-------------|
-| `create-vault` | `(amount uint) (lock-secs uint)` | Create a new time-locked vault |
-| `withdraw` | `(id uint)` | Withdraw from an unlocked vault |
-| `approve-bot` | `(bot principal)` | Approve a trading bot contract |
+| `create-vault` | `(amount uint) (lock-blocks uint)` | Create a new time-locked vault |
+| `request-withdraw` | `(id uint)` | Request withdrawal after unlock |
+| `process-withdraw` | `(id uint)` | Process payout (deployer only) |
+| `approve-bot` | `(bot principal)` | Approve a trading bot principal |
 
 ### Read-Only Functions
 
@@ -88,8 +89,8 @@ const vault = await client.getVault(1);
 
 ```clarity
 MIN_DEPOSIT: 10,000 microSTX (0.01 STX)
-MIN_LOCK: 3,600 seconds (1 hour)
-MAX_LOCK: 31,536,000 seconds (1 year)
+MIN_LOCK: 6 blocks (~1 hour)
+MAX_LOCK: 52,560 blocks (~1 year)
 FEE_BPS: 50 (0.5%)
 ```
 

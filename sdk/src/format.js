@@ -11,7 +11,10 @@ export const formatSTX = (microStx) => {
             ? microStx.value
             : microStx;
 
-        const value = typeof rawValue === 'bigint' ? Number(rawValue) : Number(rawValue);
+        // Convert to Number safely, handles string, bigint, etc.
+        const value = Number(rawValue);
+        if (isNaN(value)) return '0.000000';
+        
         const stx = value / 1_000_000;
         return stx.toLocaleString(undefined, {
             minimumFractionDigits: 0,
@@ -31,17 +34,22 @@ export const formatAddress = (address, prefix = 4, suffix = 4) => {
 
 export const formatNumber = (val) => {
     if (val === undefined || val === null) return '0';
-    return Number(val).toLocaleString();
+    const num = Number(val);
+    return isNaN(num) ? '0' : num.toLocaleString();
 };
 
 export const formatPercent = (val, decimals = 2) => {
     if (val === undefined || val === null) return '0%';
-    return (val * 100).toFixed(decimals) + '%';
+    const num = Number(val);
+    if (isNaN(num)) return '0%';
+    return (num * 100).toFixed(decimals) + '%';
 };
 
 export const formatDate = (date) => {
     if (!date) return '--';
-    return new Date(date).toLocaleDateString(undefined, {
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return '--';
+    return d.toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
@@ -54,7 +62,17 @@ export const formatRelativeTime = (date) => {
     const past = new Date(date);
     const diffInSeconds = Math.floor((now - past) / 1000);
 
-    if (diffInSeconds < 60) return 'just now';
+    // Handle future dates
+    if (diffInSeconds < -1) {
+        const absDiff = Math.abs(diffInSeconds);
+        if (absDiff < 60) return 'in a few seconds';
+        if (absDiff < 3600) return `in ${Math.floor(absDiff / 60)}m`;
+        if (absDiff < 86400) return `in ${Math.floor(absDiff / 3600)}h`;
+        return `in ${Math.floor(absDiff / 86400)}d`;
+    }
+
+    if (diffInSeconds < 5) return 'just now';
+    if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
     if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
     if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
     if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;

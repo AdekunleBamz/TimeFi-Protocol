@@ -38,14 +38,17 @@ export class TimeFiClient {
     }
 
     async getVault(vaultId) {
+        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
         return this.callReadOnly('get-vault', [uintCV(vaultId)]);
     }
 
     async getTimeRemaining(vaultId) {
+        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
         return this.callReadOnly('get-time-remaining', [uintCV(vaultId)]);
     }
 
     async canWithdraw(vaultId) {
+        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
         return this.callReadOnly('can-withdraw', [uintCV(vaultId)]);
     }
 
@@ -68,6 +71,7 @@ export class TimeFiClient {
     }
 
     getWithdrawOptions(vaultId) {
+        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
         return {
             contractAddress: this.contractAddress,
             contractName: CONTRACT_NAMES.VAULT,

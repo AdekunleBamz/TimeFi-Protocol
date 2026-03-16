@@ -46,6 +46,24 @@ clarinet test
 clarinet devnet start
 ```
 
+### SDK Integration
+
+The `@timefi/sdk` provides a clean interface for interacting with the protocol:
+
+```javascript
+import { TimeFiClient } from './sdk/src/client.js';
+
+const client = new TimeFiClient('testnet');
+const vault = await client.getVault(1);
+```
+
+## 🛠️ Tech Stack
+
+- **Smart Contracts**: Clarity 4 (Stacks Blockchain)
+- **Frontend**: React + Vite + Vanilla CSS
+- **SDK**: JavaScript / `@stacks/transactions`
+- **Tooling**: Clarinet, Vitest
+
 ## 📝 Contract Functions
 
 ### Public Functions

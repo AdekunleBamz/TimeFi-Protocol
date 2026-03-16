@@ -81,37 +81,19 @@ export class TimeFiClient {
         }
     }
 
-     /**
-     * Retrieves vault details by ID.
-     * @param {number|string|BigInt} id - The unique ID of the vault.
-     * @returns {Promise<Object>} The vault details.
-     * @throws {Error} If vault ID is missing or invalid.
-     */
-    async getVault(id) {
-        this.#validateVaultId(id);
-        return this.callReadOnly('get-vault', [uintCV(id)]);
+    async getVault(vaultId) {
+        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
+        return this.callReadOnly('get-vault', [uintCV(vaultId)]);
     }
 
-    /**
-     * Gets the remaining time in blocks until the vault unlocks.
-     * @param {number|string|BigInt} id - The unique ID of the vault.
-     * @returns {Promise<number>} The number of blocks remaining.
-     * @throws {Error} If vault ID is missing or invalid.
-     */
-    async getTimeRemaining(id) {
-        this.#validateVaultId(id);
-        return this.callReadOnly('get-time-remaining', [uintCV(id)]);
+    async getTimeRemaining(vaultId) {
+        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
+        return this.callReadOnly('get-time-remaining', [uintCV(vaultId)]);
     }
 
-    /**
-     * Checks if a vault is currently eligible for withdrawal.
-     * @param {number|string|BigInt} id - The unique ID of the vault.
-     * @returns {Promise<boolean>} True if withdrawal is possible.
-     * @throws {Error} If vault ID is missing or invalid.
-     */
-    async canWithdraw(id) {
-        this.#validateVaultId(id);
-        return this.callReadOnly('can-withdraw', [uintCV(id)]);
+    async canWithdraw(vaultId) {
+        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
+        return this.callReadOnly('can-withdraw', [uintCV(vaultId)]);
     }
 
     /**
@@ -740,14 +722,8 @@ export class TimeFiClient {
         };
     }
 
-     /**
-     * Generates options for a request-withdraw transaction.
-     * @param {number|string|BigInt} id - The unique ID of the vault to withdraw from.
-     * @returns {Object} Transaction options for @stacks/transactions.
-     * @throws {Error} If vault ID is missing or invalid.
-     */
-     getWithdrawOptions(id) {
-        this.#validateVaultId(id);
+    getWithdrawOptions(vaultId) {
+        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
         return {
             contractAddress: this.#contractAddress,
             contractName: CONTRACT_NAMES.VAULT,

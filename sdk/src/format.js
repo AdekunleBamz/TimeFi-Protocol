@@ -40,6 +40,10 @@ export const formatSTX = (amountMicroStx) => {
         const value = Number(normalizedRawValue);
         if (!Number.isFinite(value)) return '0.000000';
 
+        // Convert to Number safely, handles string, bigint, etc.
+        const value = Number(rawValue);
+        if (isNaN(value)) return '0.000000';
+        
         const stx = value / 1_000_000;
         return stx.toLocaleString(undefined, {
             minimumFractionDigits: 0,
@@ -66,71 +70,24 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
     return `${normalizedAddress.slice(0, prefixLength)}...${normalizedAddress.slice(-suffixLength)}`;
 };
 
-/**
- * Validates that a string is a properly formatted Stacks address.
- * Checks for the pattern: starts with S, followed by 33 alphanumeric chars.
- * @param {string} address - The address to validate.
- * @returns {boolean} True if address matches Stacks mainnet format (SP...).
- */
-export function isValidStacksAddress(address) {
-    if (typeof address !== 'string') return false;
-    const normalized = address.trim();
-    return /^S[A-Z0-9]{33}$/.test(normalized);
-}
+export const formatNumber = (val) => {
+    if (val === undefined || val === null) return '0';
+    const num = Number(val);
+    return isNaN(num) ? '0' : num.toLocaleString();
+};
 
-/**
- * Formats a number with locale-specific separators (en-US).
- * @param {number|string} numberToFormat - The numeric value to format.
- * @param {number} [fractionDigits=2] - Number of decimal places to show.
- * @returns {string} Formatted number string.
- * @throws {Error} If val cannot be converted to a number.
- */
-export function formatNumber(numberToFormat, fractionDigits = 2) {
-    if (numberToFormat === undefined || numberToFormat === null) return '0.00';
-    const normalizedValue = normalizeDisplayNumber(numberToFormat);
-    const parsedNumber = Number(normalizedValue);
-    if (!Number.isFinite(parsedNumber)) return '0.00';
-    const normalizedFractionDigits = normalizeFractionDigits(fractionDigits);
-    return new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: normalizedFractionDigits,
-        maximumFractionDigits: normalizedFractionDigits
-    }).format(parsedNumber);
-}
+export const formatPercent = (val, decimals = 2) => {
+    if (val === undefined || val === null) return '0%';
+    const num = Number(val);
+    if (isNaN(num)) return '0%';
+    return (num * 100).toFixed(decimals) + '%';
+};
 
-/**
- * Formats a percentage-point value as a percentage string.
- * @param {number|string} valueToFormat - Percentage points (e.g., 5.25 becomes "5.25%").
- * @param {number} [fractionDigits=2] - Number of decimal places to include.
- * @returns {string} Formatted percentage string.
- * @throws {Error} If decimalValue cannot be converted to a number.
- */
-export function formatPercent(valueToFormat, fractionDigits = 2) {
-    const normalizedValue = normalizeDisplayNumber(valueToFormat);
-    const parsedNumber = Number(normalizedValue);
-    if (valueToFormat === undefined || valueToFormat === null || !Number.isFinite(parsedNumber)) {
-        return '0.00%';
-    }
-    const normalizedFractionDigits = normalizeFractionDigits(fractionDigits);
-    return new Intl.NumberFormat('en-US', {
-        style: 'percent',
-        minimumFractionDigits: normalizedFractionDigits,
-        maximumFractionDigits: normalizedFractionDigits
-    }).format(parsedNumber / 100);
-}
-
-/**
- * Formats a date or timestamp into a localized date string (en-US, MMM D YYYY).
- * Returns '--' if the input is missing or cannot be parsed as a valid date.
- * @param {Date|string|number} dateToFormat - The date to format.
- * @returns {string} Formatted date string or '--' if invalid.
- * @throws {Error} If date cannot be parsed.
- */
-export function formatDate(dateToFormat) {
-    if (dateToFormat === undefined || dateToFormat === null || dateToFormat === '') return '--';
-    if (typeof dateToFormat === 'boolean') return '--';
-    const dateInstance = new Date(dateToFormat);
-    if (isNaN(dateInstance.getTime())) return '--';
-    return new Intl.DateTimeFormat('en-US', {
+export const formatDate = (date) => {
+    if (!date) return '--';
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return '--';
+    return d.toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
@@ -150,8 +107,20 @@ export function formatRelativeTime(dateToFormat) {
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
 
-    const secondsDiff = Math.floor((dateInstance - new Date()) / 1000);
-    const rtf = new Intl.RelativeTimeFormat('en-US', { numeric: 'auto' });
+    // Handle future dates
+    if (diffInSeconds < -1) {
+        const absDiff = Math.abs(diffInSeconds);
+        if (absDiff < 60) return 'in a few seconds';
+        if (absDiff < 3600) return `in ${Math.floor(absDiff / 60)}m`;
+        if (absDiff < 86400) return `in ${Math.floor(absDiff / 3600)}h`;
+        return `in ${Math.floor(absDiff / 86400)}d`;
+    }
+
+    if (diffInSeconds < 5) return 'just now';
+    if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
 
     if (Math.abs(secondsDiff) < 60) return rtf.format(secondsDiff, 'second');
     const minutesDiff = Math.floor(secondsDiff / 60);

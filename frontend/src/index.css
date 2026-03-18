@@ -28,7 +28,13 @@ html {
   color: #ffffff;
 }
 
+:focus-visible {
+  outline: 2px solid #00d4aa;
+  outline-offset: 4px;
+}
+
 body {
+
   font-family: 'Manrope', 'Segoe UI', sans-serif;
   background:
     radial-gradient(circle at 12% 18%, rgba(86, 204, 242, 0.18), transparent 24%),

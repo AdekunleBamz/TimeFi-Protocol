@@ -17,8 +17,10 @@ export function StatsCard({
   change,
   icon,
   loading = false,
+  onRefresh,
   className = '',
 }) {
+
   if (loading) {
     return (
       <div className={`stats-card stats-card-loading ${className}`}>
@@ -33,7 +35,23 @@ export function StatsCard({
 
   return (
     <div className={`stats-card ${className}`}>
-      {icon && <div className="stats-icon">{icon}</div>}
+      <div className="stats-card-header">
+        {icon && <div className="stats-icon">{icon}</div>}
+        {onRefresh && (
+          <button
+            type="button"
+            className="stats-refresh"
+            onClick={onRefresh}
+            aria-label={`Refresh ${label}`}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M23 4v6h-6M1 20v-6h6" />
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+          </button>
+        )}
+      </div>
+
       
       <div className="stats-content">
         <span className="stats-label">{label}</span>

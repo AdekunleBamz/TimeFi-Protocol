@@ -68,13 +68,28 @@
 .tab-active::after {
   content: '';
   position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 0.35rem;
-  height: 2px;
+  left: 20%;
+  right: 20%;
+  bottom: 0;
+  height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #00d4aa, rgba(255, 255, 255, 0.75));
+  background: #00d4aa;
+  box-shadow: 0 0 12px rgba(0, 212, 170, 0.4);
+  animation: tab-underline-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+@keyframes tab-underline-in {
+  from {
+    transform: scaleX(0.4);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
 
 /* Tab Panel */
 .tab-panel {

@@ -41,9 +41,11 @@ export function Progress({
 
 /**
  * Circular progress indicator
- * @param {number} value - Current value (0-100)
- * @param {number} size - Size in pixels (default: 60)
- * @param {number} strokeWidth - Stroke width (default: 6)
+ * @param {Object} props - Component props
+ * @param {number} props.value - Current value (0-100)
+ * @param {number} props.size - Size in pixels (default: 60)
+ * @param {number} props.strokeWidth - Stroke width (default: 6)
+ * @param {boolean} props.showLabel - Show percentage label
  */
 export function CircularProgress({
   value = 0,
@@ -52,6 +54,7 @@ export function CircularProgress({
   showLabel = false,
   className = '',
 }) {
+
   const percentage = Math.min(Math.max(value, 0), 100);
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;

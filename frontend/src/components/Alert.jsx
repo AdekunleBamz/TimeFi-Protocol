@@ -92,28 +92,45 @@ export function Alert({
 }
 
 /**
- * Alert variants as separate components
+ * Info alert variant
+ * @param {Object} props - Alert component props
  */
 export function InfoAlert(props) {
   return <Alert variant="info" {...props} />;
 }
 
+/**
+ * Success alert variant
+ * @param {Object} props - Alert component props
+ */
 export function SuccessAlert(props) {
   return <Alert variant="success" {...props} />;
 }
 
+/**
+ * Warning alert variant
+ * @param {Object} props - Alert component props
+ */
 export function WarningAlert(props) {
   return <Alert variant="warning" {...props} />;
 }
 
+/**
+ * Error alert variant
+ * @param {Object} props - Alert component props
+ */
 export function ErrorAlert(props) {
   return <Alert variant="error" {...props} />;
 }
 
 /**
  * Inline alert for form fields
+ * @param {Object} props - Component props
+ * @param {string} props.variant - Alert type: 'error' | 'warning' | 'info'
+ * @param {React.ReactNode} props.children - Alert content
  */
 export function InlineAlert({ variant = 'error', children, className = '' }) {
+
   return (
     <div className={`inline-alert inline-alert-${variant} ${className}`}>
       {children}

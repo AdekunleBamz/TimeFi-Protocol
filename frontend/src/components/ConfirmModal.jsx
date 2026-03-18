@@ -5,6 +5,16 @@ import './ConfirmModal.css';
 
 /**
  * Reusable Confirmation Modal
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether modal is visible
+ * @param {Function} props.onClose - Call on close request
+ * @param {Function} props.onConfirm - Call on confirmation
+ * @param {string} props.title - Modal heading
+ * @param {string} props.description - Modal body text
+ * @param {string} props.confirmText - Label for confirm button
+ * @param {string} props.cancelText - Label for cancel button
+ * @param {string} props.variant - 'primary' or 'danger'
+ * @param {boolean} props.loading - Shows loading state on confirm button
  */
 export function ConfirmModal({
   isOpen,
@@ -17,6 +27,7 @@ export function ConfirmModal({
   variant = 'primary', // 'primary' or 'danger'
   loading = false,
 }) {
+
   const modalRef = useRef(null);
 
   useEffect(() => {

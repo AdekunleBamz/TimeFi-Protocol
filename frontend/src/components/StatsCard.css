@@ -1,8 +1,10 @@
 /* Stats Card */
 .stats-card {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
+
   background: linear-gradient(165deg, rgba(10, 20, 33, 0.98), rgba(17, 34, 52, 0.72));
   border: 1px solid rgba(148, 163, 184, 0.14);
   border-radius: 18px;
@@ -33,6 +35,42 @@
   border-color: #00d4aa;
   box-shadow: 0 0 20px rgba(0, 212, 170, 0.4);
 }
+
+.stats-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.stats-refresh {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stats-refresh:hover:not(:disabled) {
+  background: rgba(0, 212, 170, 0.12);
+  border-color: rgba(0, 212, 170, 0.25);
+  color: #00d4aa;
+}
+
+.stats-refresh:active:not(:disabled) svg {
+  transform: rotate(180deg);
+}
+
+.stats-refresh svg {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 
 /* Icon */
 .stats-icon {

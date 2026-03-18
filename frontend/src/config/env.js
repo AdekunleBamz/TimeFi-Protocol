@@ -10,10 +10,10 @@ export const env = {
   // Contract Configuration
   contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS || 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N',
   contracts: {
-    vault: import.meta.env.VITE_VAULT_CONTRACT || 'vault-v-A2',
-    rewards: import.meta.env.VITE_REWARDS_CONTRACT || 'rewards-v-A2',
-    governance: import.meta.env.VITE_GOVERNANCE_CONTRACT || 'governance-v-A2',
-    emergency: import.meta.env.VITE_EMERGENCY_CONTRACT || 'emergency-v-A2',
+    vault: import.meta.env.VITE_VAULT_CONTRACT || 'timefi-vault-v-A2',
+    rewards: import.meta.env.VITE_REWARDS_CONTRACT || 'timefi-rewards-v-A2',
+    governance: import.meta.env.VITE_GOVERNANCE_CONTRACT || 'timefi-governance-v-A2',
+    emergency: import.meta.env.VITE_EMERGENCY_CONTRACT || 'timefi-emergency-v-A2',
   },
   
   // API Configuration

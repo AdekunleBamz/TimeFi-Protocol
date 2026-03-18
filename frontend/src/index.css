@@ -14,24 +14,41 @@ html {
   --panel-bg-strong: rgba(11, 24, 39, 0.92);
   --panel-border: rgba(148, 163, 184, 0.18);
   --panel-border-strong: rgba(148, 163, 184, 0.26);
+  
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-tertiary: #64748b;
+  
   --accent-primary: #00c2a8;
+  --accent-primary-hover: #00d4aa;
   --accent-secondary: #ff9f43;
   --accent-tertiary: #56ccf2;
+  
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+
   --shadow-soft: 0 24px 60px rgba(3, 8, 20, 0.42);
+  --shadow-glow: 0 0 20px rgba(0, 194, 168, 0.2);
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 }
 
 ::selection {
-  background: rgba(0, 212, 170, 0.25);
+  background: rgba(0, 212, 170, 0.3);
   color: #ffffff;
 }
 
 :focus-visible {
-  outline: 2px solid #00d4aa;
+  outline: 3px solid var(--accent-tertiary);
   outline-offset: 4px;
+  box-shadow: 0 0 0 6px var(--app-bg), 0 0 0 9px var(--accent-tertiary);
 }
+
 
 body {
 

@@ -12,8 +12,13 @@ export function NotFound() {
   return (
     <div className="not-found">
       <div className="not-found-content">
-        <div className="not-found-icon" aria-hidden="true">🧭</div>
+        <div className="not-found-illustration" aria-hidden="true">
+          <div className="vault-outline">
+            <div className="vault-lock-handle" />
+          </div>
+        </div>
         <div className="not-found-code">404</div>
+
         <h1>Page Not Found</h1>
         <p>The page you requested is unavailable. Use the shortcuts below to recover quickly.</p>
         <div className="not-found-path">Requested path: <code>{location.pathname}</code></div>

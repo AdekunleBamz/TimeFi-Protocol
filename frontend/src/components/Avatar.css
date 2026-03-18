@@ -75,27 +75,32 @@
 /* Status Indicator */
 .avatar-status {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 25%;
-  height: 25%;
-  min-width: 8px;
-  min-height: 8px;
+  bottom: 12%;
+  right: 12%;
+  width: 22%;
+  height: 22%;
+  min-width: 10px;
+  min-height: 10px;
   border-radius: 50%;
-  border: 2px solid #0f0f23;
+  border: 2px solid #07111f;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  z-index: 2;
 }
 
 .avatar-status-online {
-  background: #22c55e;
+  background: #00d4aa;
+  box-shadow: 0 0 10px rgba(0, 212, 170, 0.5);
 }
 
 .avatar-status-offline {
-  background: #6b7280;
+  background: #475569;
 }
 
 .avatar-status-away {
   background: #f59e0b;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
 }
+
 
 /* Avatar Group */
 .avatar-group {

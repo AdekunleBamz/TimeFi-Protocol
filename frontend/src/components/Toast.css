@@ -22,24 +22,21 @@
   border-radius: 16px;
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
   pointer-events: all;
-  animation: toast-slide-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: toast-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes toast-slide-in {
+@keyframes toast-enter {
   0% {
-    transform: translateX(100%) scale(0.9);
+    transform: translateY(1.5rem) scale(0.92);
     opacity: 0;
   }
 
-  70% {
-    transform: translateX(-10px) scale(1.02);
-  }
-
   100% {
-    transform: translateX(0) scale(1);
+    transform: translateY(0) scale(1);
     opacity: 1;
   }
 }
+
 
 /* Variants */
 .toast-success {

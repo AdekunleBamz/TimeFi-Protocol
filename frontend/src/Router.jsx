@@ -55,7 +55,9 @@ export function AppRouter() {
       <ScrollManager />
       <Header />
       <main className="app-main" id="app-main-content" tabIndex={-1} aria-label="Main content">
+        <ScrollToTop />
         <Suspense fallback={<PageLoader />}>
+
           <Routes>
             {/* Main routes */}
             <Route path="/" element={<Dashboard />} />

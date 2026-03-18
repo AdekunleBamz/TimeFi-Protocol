@@ -373,39 +373,81 @@
 }
 
 @media (max-width: 640px) {
+  .create-vault-form {
+    gap: 1.25rem;
+  }
+
   .form-balance-strip {
     grid-template-columns: 1fr;
+    gap: 0.625rem;
   }
 
   .form-label {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
   }
 
   .form-input-group {
-    flex-direction: column;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .form-input {
+    padding: 0.75rem 0.875rem;
+    font-size: 1.1rem; /* Slightly larger for easier mobile interaction */
   }
 
   .form-max-button {
-    min-height: 44px;
+    min-height: auto;
+    padding: 0 0.8rem;
   }
 
   .form-quick-amounts {
-    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
   }
 
   .lock-period-grid {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
-  .vault-preview-header,
-  .vault-preview-row {
+  .lock-period-option {
+    padding: 1.25rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lock-period-group {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .vault-preview-row strong {
-    text-align: left;
+  .lock-period-badge {
+    position: static;
+    margin-top: 0.25rem;
+  }
+
+  .vault-preview-header,
+  .vault-preview-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .form-button {
+    width: 100%;
+    min-height: 48px;
   }
 }
+

@@ -40,8 +40,11 @@ export function Badge({
 
 /**
  * Status badge with predefined states
+ * @param {Object} props - Component props
+ * @param {string} props.status - 'active', 'locked', 'unlocked', 'withdrawn', 'pending', 'error'
  */
 export function StatusBadge({ status, className = '' }) {
+
   const statusConfig = {
     active: { variant: 'success', label: 'Active', leadingDot: true, pulse: true },
     locked: { variant: 'warning', label: 'Locked', leadingDot: true },

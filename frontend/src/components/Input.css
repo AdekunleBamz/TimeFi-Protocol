@@ -124,6 +124,27 @@
   right: 0.75rem;
 }
 
+.input-icon-right-group {
+  position: absolute;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.input-status-success {
+  color: #00d4aa;
+}
+
+.input-status-error {
+  color: #ef4444;
+}
+
+.input-success {
+  border-color: rgba(0, 212, 170, 0.3);
+}
+
 .input:focus+.input-icon,
 .input-wrapper:focus-within .input-icon {
   color: #00d4aa;
@@ -135,8 +156,9 @@
 }
 
 .input-with-right-icon {
-  padding-right: 2.75rem;
+  padding-right: 3.5rem;
 }
+
 
 /* Helper Text */
 .input-meta {

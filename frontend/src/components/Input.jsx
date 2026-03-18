@@ -1,10 +1,25 @@
 import React, { forwardRef, useId } from 'react';
 import './Input.css';
 
+const CheckIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const ErrorIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="12" y1="8" x2="12" y2="12" />
+    <line x1="12" y1="16" x2="12.01" y2="16" />
+  </svg>
+);
+
 /**
- * Reusable Input component
+ * Reusable Input component with validation icons
  * @param {string} label - Label text
  * @param {string} error - Error message
+ * @param {boolean} isValid - Marks input as valid (shows success icon)
  * @param {string} hint - Helper text
  * @param {string} size - 'sm', 'md', 'lg' (default: 'md')
  * @param {ReactNode} leftIcon - Icon on the left
@@ -13,6 +28,7 @@ import './Input.css';
 export const Input = forwardRef(({
   label,
   error,
+  isValid,
   hint,
   size = 'md',
   leftIcon,
@@ -35,8 +51,9 @@ export const Input = forwardRef(({
     'input',
     `input-${size}`,
     error && 'input-error',
+    isValid && 'input-success',
     leftIcon && 'input-with-left-icon',
-    rightIcon && 'input-with-right-icon',
+    (rightIcon || error || isValid) && 'input-with-right-icon',
   ].filter(Boolean).join(' ');
 
   return (
@@ -59,7 +76,11 @@ export const Input = forwardRef(({
           {...props}
         />
         
-        {rightIcon && <span className="input-icon input-icon-right">{rightIcon}</span>}
+        <div className="input-icon-right-group">
+          {rightIcon && <span className="input-icon">{rightIcon}</span>}
+          {error && <span className="input-icon input-status-error"><ErrorIcon /></span>}
+          {isValid && !error && <span className="input-icon input-status-success"><CheckIcon /></span>}
+        </div>
       </div>
       
       {(error || hint) && (
@@ -84,3 +105,4 @@ export const Input = forwardRef(({
 Input.displayName = 'Input';
 
 export default Input;
+

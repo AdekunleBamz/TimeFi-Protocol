@@ -11,6 +11,16 @@ export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
@@ -58,7 +68,8 @@ export function Header() {
   };
 
   return (
-    <header className="header">
+    <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
+
       <div className="header-container">
         <Link to="/" className="header-logo" aria-label="TimeFi Home">
           <img src="/logo.svg" alt="" className="header-logo-img" aria-hidden="true" />

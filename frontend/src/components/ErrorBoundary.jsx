@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button } from './Button';
 import './ErrorBoundary.css';
 
+const isDevelopment = import.meta.env.DEV;
+
 /**
  * Error Boundary component to catch and handle React errors
  */
@@ -19,7 +21,7 @@ export class ErrorBoundary extends Component {
     this.setState({ errorInfo });
     
     // Log error to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (isDevelopment) {
       console.error('Error caught by ErrorBoundary:', error, errorInfo);
     }
     
@@ -71,7 +73,7 @@ export class ErrorBoundary extends Component {
               </div>
             </div>
             
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {isDevelopment && this.state.error && (
               <details className="error-boundary-details">
                 <summary>Error Details</summary>
                 <pre>{this.state.error.toString()}</pre>

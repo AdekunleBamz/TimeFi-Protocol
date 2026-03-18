@@ -48,10 +48,10 @@ clarinet devnet start
 
 ### SDK Integration
 
-The `@timefi/sdk` provides a clean interface for interacting with the protocol:
+The `timefi-sdk` package provides a clean interface for interacting with the protocol:
 
 ```javascript
-import { TimeFiClient } from './sdk/src/client.js';
+import { TimeFiClient } from 'timefi-sdk';
 
 const client = new TimeFiClient('testnet');
 const vault = await client.getVault(1);

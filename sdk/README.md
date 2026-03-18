@@ -27,7 +27,7 @@ npm test
 ### Fetch Protocol Stats
 
 ```javascript
-import { TimeFiClient, formatSTX } from '@timefi/sdk';
+import { TimeFiClient, formatSTX } from 'timefi-sdk';
 
 // Initialize for Stacks Mainnet
 const client = new TimeFiClient('mainnet');
@@ -40,7 +40,7 @@ console.log(`Current TVL: ${formatSTX(tvl)} STX`);
 ### Format a Stacks Address
 
 ```javascript
-import { formatAddress } from '@timefi/sdk';
+import { formatAddress } from 'timefi-sdk';
 
 const shortAddress = formatAddress('SP3...XYZ123');
 console.log(shortAddress); // SP3...Z123

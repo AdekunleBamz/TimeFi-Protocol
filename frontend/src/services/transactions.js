@@ -1,6 +1,6 @@
 import {
-  makeContractCall,
   uintCV,
+  boolCV,
   PostConditionMode,
   FungibleConditionCode,
   makeStandardSTXPostCondition,
@@ -65,7 +65,7 @@ export async function withdraw({ vaultId, onFinish, onCancel }) {
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,
     contractName: CONTRACT_NAMES.VAULT,
-    functionName: 'withdraw',
+    functionName: 'request-withdraw',
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
@@ -91,7 +91,7 @@ export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,
     contractName: CONTRACT_NAMES.EMERGENCY,
-    functionName: 'emergency-withdraw',
+    functionName: 'request-emergency-withdraw',
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
@@ -117,7 +117,7 @@ export async function claimRewards({ vaultId, onFinish, onCancel }) {
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,
     contractName: CONTRACT_NAMES.REWARDS,
-    functionName: 'claim-rewards',
+    functionName: 'request-claim-rewards',
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
@@ -135,19 +135,25 @@ export async function claimRewards({ vaultId, onFinish, onCancel }) {
  * Build and submit a vote transaction
  * @param {Object} params - Transaction parameters
  * @param {number} params.proposalId - Proposal ID to vote on
+ * @param {number} params.vaultId - Vault ID used as voting power
  * @param {boolean} params.inFavor - Vote in favor or against
  * @param {Function} params.onFinish - Callback on transaction completion
  * @param {Function} params.onCancel - Callback on user cancel
  */
-export async function vote({ proposalId, inFavor, onFinish, onCancel }) {
+export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel }) {
+  if (vaultId === undefined || vaultId === null) {
+    throw new Error('vaultId is required to cast a governance vote');
+  }
+
   await openContractCall({
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,
     contractName: CONTRACT_NAMES.GOVERNANCE,
-    functionName: 'vote',
+    functionName: 'cast-vote',
     functionArgs: [
       uintCV(proposalId),
-      inFavor ? uintCV(1) : uintCV(0),
+      uintCV(vaultId),
+      boolCV(Boolean(inFavor)),
     ],
     postConditionMode: PostConditionMode.Deny,
     onFinish: (data) => {
@@ -170,10 +176,10 @@ export function estimateFee(functionName) {
   // Base fees for different operations (in microSTX)
   const fees = {
     'create-vault': 5000,
-    'withdraw': 3000,
-    'emergency-withdraw': 4000,
-    'claim-rewards': 3000,
-    'vote': 2000,
+    'request-withdraw': 3000,
+    'request-emergency-withdraw': 4000,
+    'request-claim-rewards': 3000,
+    'cast-vote': 2000,
   };
   
   return fees[functionName] || 3000;

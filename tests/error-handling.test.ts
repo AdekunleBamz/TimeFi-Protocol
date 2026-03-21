@@ -97,7 +97,8 @@ describe("TimeFi Vault - Error Handling", () => {
         wallet1
       );
 
-      expect(result.result).toBeErr(Cl.uint(100));
+      // Non-contract principals are rejected with ERR_BOT.
+      expect(result.result).toBeErr(Cl.uint(106));
     });
   });
 

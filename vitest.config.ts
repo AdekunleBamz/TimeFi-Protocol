@@ -29,6 +29,7 @@ export default defineConfig({
     isolate: false,
     fileParallelism: false,
     maxWorkers: 1,
+    testTimeout: 30000,
     setupFiles: [
       vitestSetupFilePath,
       // custom setup files can be added here

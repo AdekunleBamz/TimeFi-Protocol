@@ -27,6 +27,7 @@ export default defineConfig({
     pool: "threads",
     // clarinet handles test isolation by resetting the simnet between tests
     isolate: false,
+    fileParallelism: false,
     maxWorkers: 1,
     setupFiles: [
       vitestSetupFilePath,

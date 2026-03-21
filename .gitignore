@@ -21,6 +21,7 @@ deployments/*.yaml
 # Tests
 coverage/
 *.lcov
+/test/
 
 # IDE
 .vscode/

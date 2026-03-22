@@ -48,6 +48,9 @@ npm run check
 # Run tests
 npm run test
 
+# Run tests with coverage + costs
+npm run test:report
+
 # Start devnet
 clarinet devnet start
 

@@ -22,7 +22,7 @@ timefi-protocol/
 - **Fee Collection** - 0.5% fee on deposits
 
 ### Clarity 4 Functions Used
-- `stacks-block-time` - For unlock time calculation
+- `get-stacks-block-info?` - For block-time based unlock calculation
 - `contract-hash?` - For bot verification
 
 ## 🚀 Getting Started

@@ -163,11 +163,11 @@ export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel })
     ],
     postConditionMode: PostConditionMode.Deny,
     onFinish: (data) => {
-      console.log('Vote transaction:', data.txId);
+      logTxEvent('Vote transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Vote cancelled');
+      logTxEvent('Vote cancelled');
       onCancel?.();
     },
   });

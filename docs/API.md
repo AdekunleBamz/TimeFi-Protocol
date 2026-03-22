@@ -244,3 +244,5 @@ Both return response-wrapped uint values.
 | u104 | ERR_LOCK_PERIOD | Invalid lock period |
 | u105 | ERR_ALREADY | Action already performed |
 | u106 | ERR_BOT | Invalid bot contract |
+
+Built-in runtime errors (for example `u4`) may appear when Clarity arithmetic/unwrap checks fail.

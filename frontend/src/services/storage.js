@@ -27,6 +27,10 @@ function isStorageAvailable() {
   }
 }
 
+export function resetStorageAvailabilityCache() {
+  storageAvailableCache = null;
+}
+
 /**
  * In-memory fallback storage
  */

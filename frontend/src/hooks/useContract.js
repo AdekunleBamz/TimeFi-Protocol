@@ -69,6 +69,7 @@ export function useContract() {
    * Withdraw from a vault after lock period
    */
   const withdraw = useCallback(async (vaultId, callbacks = {}) => {
+    ensureConnected();
     setLoading(true);
     setLastError(null);
 
@@ -82,7 +83,7 @@ export function useContract() {
       setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [getErrorMessage, wrapTxCallbacks]);
+  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
 
   const emergencyWithdraw = useCallback(async (vaultId, callbacks = {}) => {
     setLoading(true);

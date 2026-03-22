@@ -33,6 +33,13 @@ function safeJsonParse(value, defaultValue = null) {
   }
 }
 
+function normalizeKey(key) {
+  if (typeof key !== 'string' || key.length === 0) {
+    throw new Error('storage key must be a non-empty string');
+  }
+  return STORAGE_PREFIX + key;
+}
+
 /**
  * Get item from storage
  * @param {string} key - Storage key

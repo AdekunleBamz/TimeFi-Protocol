@@ -9,6 +9,13 @@ plan:
     - id: 0
       transactions:
         - contract-publish:
+            contract-name: timefi-vault-v-A2
+            expected-sender: SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N
+            cost: 237540
+            path: contracts/timefi-vault-v-A2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
             contract-name: timefi-emergency-v-A2
             expected-sender: SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N
             cost: 107980

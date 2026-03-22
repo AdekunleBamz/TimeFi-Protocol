@@ -67,6 +67,7 @@ import { TimeFiClient } from 'timefi-sdk';
 
 const client = new TimeFiClient('testnet');
 const vault = await client.getVault(1);
+const tvl = await client.getTVL();
 ```
 
 ## 🛠️ Tech Stack

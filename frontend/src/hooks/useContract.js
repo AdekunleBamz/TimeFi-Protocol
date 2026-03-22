@@ -47,11 +47,16 @@ export function useContract() {
   const createVault = useCallback(async (amountSTX, lockDurationBlocks, callbacks = {}) => {
     ensureConnected();
 
+    const numericAmount = Number(amountSTX);
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
+      throw new Error('amountSTX must be a positive number');
+    }
+
     setLoading(true);
     setLastError(null);
 
     try {
-      const amount = Math.floor(Number(amountSTX) * 1_000_000);
+      const amount = Math.floor(numericAmount * 1_000_000);
       await createVaultTx({
         amount,
         lockDuration: lockDurationBlocks,

@@ -176,6 +176,7 @@ export default {
   setItem,
   removeItem,
   clearAll,
+  resetStorageAvailabilityCache,
   StorageKeys,
   session,
 };

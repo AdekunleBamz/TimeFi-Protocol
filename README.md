@@ -12,6 +12,7 @@ timefi-protocol/
 ├── settings/        # Network configuration
 ├── tests/           # Contract testing suite
 └── docs/            # Additional documentation
+
 ## ✨ Features
 
 ### Smart Contract Features

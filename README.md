@@ -10,6 +10,7 @@ timefi-protocol/
 ├── sdk/             # JavaScript/TypeScript SDK
 ├── scripts/         # Deployment and maintenance scripts
 ├── settings/        # Network configuration
+├── test/            # Mainnet script utilities and artifacts
 ├── tests/           # Contract testing suite
 └── docs/            # Additional documentation
 

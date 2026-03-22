@@ -11,7 +11,7 @@ export const env = {
   network: normalizeNetwork(import.meta.env.VITE_NETWORK) || 'mainnet',
   
   // Contract Configuration
-  contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS || 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N',
+  contractAddress: (import.meta.env.VITE_CONTRACT_ADDRESS || 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').trim(),
   contracts: {
     vault: import.meta.env.VITE_VAULT_CONTRACT || 'timefi-vault-v-A2',
     rewards: import.meta.env.VITE_REWARDS_CONTRACT || 'timefi-rewards-v-A2',

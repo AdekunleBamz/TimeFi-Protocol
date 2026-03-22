@@ -181,6 +181,8 @@ Check if vault can be withdrawn (active and past unlock).
 
 **Returns:** `(response bool uint)`
 
+Read-only check only; it does not move funds.
+
 ---
 
 ### `is-vault-owner`

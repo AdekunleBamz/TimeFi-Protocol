@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { Cl } from "@stacks/transactions";
 
 const accounts = simnet.getAccounts();
+const deployer = accounts.get("deployer")!;
 const wallet1 = accounts.get("wallet_1")!;
 const wallet2 = accounts.get("wallet_2")!;
 
@@ -219,5 +220,10 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
   it("should return false for is-bot on regular wallet principal", () => {
     const result = simnet.callReadOnlyFn(CONTRACT_NAME, "is-bot", [Cl.principal(wallet1)], wallet1);
     expect(result.result).toStrictEqual(Cl.bool(false));
+  });
+
+  it("should initialize treasury to deployer principal", () => {
+    const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-treasury", [], wallet1);
+    expect(result.result).toBeOk(Cl.principal(deployer));
   });
 });

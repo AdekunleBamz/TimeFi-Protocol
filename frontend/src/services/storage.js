@@ -4,19 +4,26 @@
  */
 
 const STORAGE_PREFIX = 'timefi_';
+let storageAvailableCache = null;
 
 /**
  * Check if localStorage is available
  * @returns {boolean}
  */
 function isStorageAvailable() {
+  if (storageAvailableCache !== null) {
+    return storageAvailableCache;
+  }
+
   try {
     const testKey = '__storage_test__';
     window.localStorage.setItem(testKey, testKey);
     window.localStorage.removeItem(testKey);
-    return true;
+    storageAvailableCache = true;
+    return storageAvailableCache;
   } catch (e) {
-    return false;
+    storageAvailableCache = false;
+    return storageAvailableCache;
   }
 }
 

@@ -54,7 +54,7 @@ export const env = {
   
   // Helper to get full contract ID
   getContractId(contractName) {
-    const name = this.contracts[contractName] || contractName;
+    const name = this.contracts[contractName] ?? contractName;
     return `${this.contractAddress}.${name}`;
   },
   

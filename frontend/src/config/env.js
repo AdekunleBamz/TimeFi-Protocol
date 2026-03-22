@@ -3,9 +3,11 @@
  * Centralized access to environment variables with defaults
  */
 
+const normalizeNetwork = (value) => String(value || '').trim().toLowerCase();
+
 export const env = {
   // Network
-  network: import.meta.env.VITE_NETWORK || 'mainnet',
+  network: normalizeNetwork(import.meta.env.VITE_NETWORK) || 'mainnet',
   
   // Contract Configuration
   contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS || 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N',

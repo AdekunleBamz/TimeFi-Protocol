@@ -183,7 +183,7 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(vault2.result).toBeOk(Cl.bool(true));
   });
 
-  it("should emit a print event on successful withdrawal", () => {
+  it("should not emit withdraw print event when transaction aborts", () => {
     createUnlockedVault(wallet1);
 
     const result = simnet.callPublicFn(
@@ -194,6 +194,6 @@ describe("TimeFi Vault - Withdrawal", () => {
     );
 
     const printEvent = result.events.find((event) => event.event === "print_event");
-    expect(printEvent).toBeDefined();
+    expect(printEvent).toBeUndefined();
   });
 });

@@ -56,10 +56,10 @@ export function useContract() {
       });
     } catch (error) {
       setLoading(false);
-      setLastError(error.message);
+      setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [address, wrapTxCallbacks]);
+  }, [address, getErrorMessage, wrapTxCallbacks]);
 
   /**
    * Withdraw from a vault after lock period

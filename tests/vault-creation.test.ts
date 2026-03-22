@@ -68,9 +68,9 @@ describe("TimeFi Vault - Create Vault", () => {
       expect(vaultResult.result.type).toBe(ClarityType.ResponseOk);
       
       const vault = vaultResult.result.value;
-      expect(vault.data.owner).toStrictEqual(Cl.principal(wallet1));
-      expect(vault.data.amount).toStrictEqual(Cl.uint(expectedDeposit));
-      expect(vault.data.active).toStrictEqual(Cl.bool(true));
+      expect(vault.owner).toStrictEqual(Cl.principal(wallet1));
+      expect(vault.amount).toStrictEqual(Cl.uint(expectedDeposit));
+      expect(vault.active).toStrictEqual(Cl.bool(true));
     });
 
     it("should increment vault nonce for each new vault", () => {

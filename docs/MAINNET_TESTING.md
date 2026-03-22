@@ -24,6 +24,12 @@ This guide documents how to run the mainnet stress and coverage scripts safely.
 node test/full-test-333.js
 ```
 
+### Wallet Funding
+
+```bash
+node test/fund-wallets.js
+```
+
 You can override runtime values with environment variables:
 
 ```bash

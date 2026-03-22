@@ -51,6 +51,9 @@ export function useContract() {
     if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
       throw new Error('amountSTX must be a positive number');
     }
+    if (!Number.isInteger(lockDurationBlocks) || lockDurationBlocks <= 0) {
+      throw new Error('lockDurationBlocks must be a positive integer');
+    }
 
     setLoading(true);
     setLastError(null);

@@ -67,3 +67,4 @@ This affects local assertions and does not automatically imply a mainnet regress
 
 - `INSUFFICIENT BALANCE` in `fund-wallets.js` means wallet 1 cannot cover `walletsToFund * (amount + gas)`.
 - Top-up transfer fees (`TRANSFER_FEE`) are separate from contract call fees (`GAS_FEE`) in `full-test-333.js`.
+- Governance steps can still confirm on-chain with abort status if no active proposal exists.

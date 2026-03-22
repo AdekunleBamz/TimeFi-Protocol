@@ -100,4 +100,25 @@ describe("TimeFi Vault - Withdrawal", () => {
 
     expect(canWithdraw.result).toBeOk(Cl.bool(false));
   });
+
+  it("should decrease total value locked after withdrawal", () => {
+    const amount = 1_000_000;
+    const expectedFee = (amount * 50) / 10000;
+
+    simnet.callPublicFn(
+      CONTRACT_NAME,
+      "create-vault",
+      [Cl.uint(amount), Cl.uint(3600)],
+      wallet1
+    );
+    simnet.mineEmptyBlocks(4000);
+
+    simnet.callPublicFn(CONTRACT_NAME, "withdraw", [Cl.uint(1)], wallet1);
+
+    const tvl = simnet.callReadOnlyFn(CONTRACT_NAME, "get-tvl", [], wallet1);
+    expect(tvl.result).toBeOk(Cl.uint(0));
+
+    const totalFees = simnet.callReadOnlyFn(CONTRACT_NAME, "get-total-fees", [], wallet1);
+    expect(totalFees.result).toBeOk(Cl.uint(expectedFee));
+  });
 });

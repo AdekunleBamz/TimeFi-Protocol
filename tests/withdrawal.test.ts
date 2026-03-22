@@ -135,4 +135,17 @@ describe("TimeFi Vault - Withdrawal", () => {
 
     expect(secondAttempt.result.type).toBe("err");
   });
+
+  it("should return true for can-withdraw once lock has matured", () => {
+    createUnlockedVault(wallet1);
+
+    const result = simnet.callReadOnlyFn(
+      CONTRACT_NAME,
+      "can-withdraw",
+      [Cl.uint(1)],
+      wallet1
+    );
+
+    expect(result.result).toBeOk(Cl.bool(true));
+  });
 });

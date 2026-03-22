@@ -130,7 +130,7 @@ export function useContract() {
   /**
    * Approve a bot to manage vault
    */
-  const approveBot = useCallback(async (botAddress) => {
+  const approveBot = useCallback((botAddress) => {
     return {
       functionName: 'approve-bot',
       functionArgs: [principalCV(botAddress)],

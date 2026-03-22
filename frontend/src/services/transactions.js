@@ -19,6 +19,12 @@ function logTxEvent(...args) {
   }
 }
 
+function assertVaultId(vaultId) {
+  if (vaultId === undefined || vaultId === null) {
+    throw new Error('vaultId is required');
+  }
+}
+
 /**
  * Build and submit a create-vault transaction
  * @param {Object} params - Transaction parameters

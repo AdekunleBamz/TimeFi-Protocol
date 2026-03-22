@@ -75,11 +75,11 @@ export async function withdraw({ vaultId, onFinish, onCancel }) {
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
-      console.log('Withdraw transaction:', data.txId);
+      logTxEvent('Withdraw transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Withdraw cancelled');
+      logTxEvent('Withdraw cancelled');
       onCancel?.();
     },
   });

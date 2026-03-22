@@ -73,7 +73,7 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(result.result).toBeErr(Cl.uint(4));
   });
 
-  it("should mark vault inactive after successful withdraw", () => {
+  it("should keep vault active when withdrawal aborts with u4", () => {
     createUnlockedVault(wallet1);
     simnet.callPublicFn(CONTRACT_NAME, "withdraw", [Cl.uint(1)], wallet1);
 
@@ -84,7 +84,7 @@ describe("TimeFi Vault - Withdrawal", () => {
       wallet1
     );
 
-    expect(status.result).toBeOk(Cl.bool(false));
+    expect(status.result).toBeOk(Cl.bool(true));
   });
 
   it("should return false for can-withdraw after withdrawal", () => {

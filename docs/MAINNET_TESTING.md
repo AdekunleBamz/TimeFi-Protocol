@@ -62,3 +62,7 @@ This affects local assertions and does not automatically imply a mainnet regress
 
 - Per-wallet operational floor in full test loop: `0.04 STX`
 - Per-wallet one-time pre-fund target to avoid frequent top-ups: `0.09 STX`
+
+## Troubleshooting
+
+- `INSUFFICIENT BALANCE` in `fund-wallets.js` means wallet 1 cannot cover `walletsToFund * (amount + gas)`.

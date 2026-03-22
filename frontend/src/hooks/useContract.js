@@ -19,6 +19,12 @@ export function useContract() {
     return String(error || 'Unexpected transaction error');
   }, []);
 
+  const ensureConnected = useCallback(() => {
+    if (!address) {
+      throw new Error('Connect your wallet to continue');
+    }
+  }, [address]);
+
   const wrapTxCallbacks = useCallback((callbacks = {}) => {
     const { onFinish, onCancel } = callbacks;
 
@@ -39,9 +45,7 @@ export function useContract() {
    * Create a new time-locked vault
    */
   const createVault = useCallback(async (amountSTX, lockDurationBlocks, callbacks = {}) => {
-    if (!address) {
-      throw new Error('Connect your wallet to continue');
-    }
+    ensureConnected();
 
     setLoading(true);
     setLastError(null);
@@ -59,7 +63,7 @@ export function useContract() {
       setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [address, getErrorMessage, wrapTxCallbacks]);
+  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
 
   /**
    * Withdraw from a vault after lock period

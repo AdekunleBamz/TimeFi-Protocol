@@ -121,4 +121,18 @@ describe("TimeFi Vault - Withdrawal", () => {
     const totalFees = simnet.callReadOnlyFn(CONTRACT_NAME, "get-total-fees", [], wallet1);
     expect(totalFees.result).toBeOk(Cl.uint(expectedFee));
   });
+
+  it("should reject a second withdrawal attempt on same vault", () => {
+    createUnlockedVault(wallet1);
+    simnet.callPublicFn(CONTRACT_NAME, "withdraw", [Cl.uint(1)], wallet1);
+
+    const secondAttempt = simnet.callPublicFn(
+      CONTRACT_NAME,
+      "withdraw",
+      [Cl.uint(1)],
+      wallet1
+    );
+
+    expect(secondAttempt.result.type).toBe("err");
+  });
 });

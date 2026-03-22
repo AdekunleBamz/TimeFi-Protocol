@@ -168,6 +168,8 @@ Get current treasury address.
 
 **Returns:** `(response principal uint)`
 
+Defaults to deployer at deployment and can be changed via `set-treasury`.
+
 ---
 
 ### `can-withdraw`

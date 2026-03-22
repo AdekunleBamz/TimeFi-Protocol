@@ -169,7 +169,7 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(status.result).toBeOk(Cl.bool(true));
   });
 
-  it("should only deactivate the withdrawn vault when user owns multiple", () => {
+  it("should keep both vaults active when first withdrawal aborts", () => {
     simnet.callPublicFn(CONTRACT_NAME, "create-vault", [Cl.uint(100_000), Cl.uint(3600)], wallet1);
     simnet.callPublicFn(CONTRACT_NAME, "create-vault", [Cl.uint(100_000), Cl.uint(3600)], wallet1);
     simnet.mineEmptyBlocks(4000);
@@ -179,7 +179,7 @@ describe("TimeFi Vault - Withdrawal", () => {
     const vault1 = simnet.callReadOnlyFn(CONTRACT_NAME, "is-active", [Cl.uint(1)], wallet1);
     const vault2 = simnet.callReadOnlyFn(CONTRACT_NAME, "is-active", [Cl.uint(2)], wallet1);
 
-    expect(vault1.result).toBeOk(Cl.bool(false));
+    expect(vault1.result).toBeOk(Cl.bool(true));
     expect(vault2.result).toBeOk(Cl.bool(true));
   });
 

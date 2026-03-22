@@ -13,6 +13,8 @@ This guide documents how to run the mainnet stress and coverage scripts safely.
 - `test/fund-wallets.js`: pre-funds test wallets from wallet 1.
 - `test/full-test-333.js`: runs a 333 confirmed transaction flow across vault, rewards, governance, and emergency contracts.
 
+Both scripts target Hiro mainnet API and the `*-v-A2` contract set by default.
+
 ## Default Mainnet Values
 
 - `full-test-333.js` uses `GAS_FEE=1000` microSTX (`0.001 STX`) by default.

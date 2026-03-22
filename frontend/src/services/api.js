@@ -205,7 +205,7 @@ export async function getPendingRewards(vaultId) {
     [uintCV(vaultId)]
   );
   
-  return parseInt(result.value, 10);
+  return safeParseInt(result.value);
 }
 
 export default {

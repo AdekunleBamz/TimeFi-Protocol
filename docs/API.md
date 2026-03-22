@@ -1,5 +1,7 @@
 # TimeFi Protocol API Reference
 
+Scope: this reference describes the core vault contract interface used by local tests.
+
 ## Public Functions
 
 ### `create-vault`

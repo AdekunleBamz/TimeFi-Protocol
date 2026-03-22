@@ -51,4 +51,15 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
 
     expect(result.result).toBeOk(Cl.uint(0));
   });
+
+  it("should floor fee calculations for non-even amounts", () => {
+    const result = simnet.callReadOnlyFn(
+      CONTRACT_NAME,
+      "calculate-fee",
+      [Cl.uint(12_345)],
+      wallet1
+    );
+
+    expect(result.result).toBeOk(Cl.uint(61));
+  });
 });

@@ -103,6 +103,7 @@ export function useContract() {
   }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
 
   const claimRewards = useCallback(async (vaultId, callbacks = {}) => {
+    ensureConnected();
     setLoading(true);
     setLastError(null);
 
@@ -116,7 +117,7 @@ export function useContract() {
       setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [getErrorMessage, wrapTxCallbacks]);
+  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
 
   /**
    * Approve a bot to manage vault

@@ -4,6 +4,8 @@ Scope: this reference describes the core vault contract interface used by local 
 
 ## Public Functions
 
+Admin-only functions in this list enforce deployer authorization checks.
+
 ### `create-vault`
 Create a new time-locked vault with STX deposit.
 

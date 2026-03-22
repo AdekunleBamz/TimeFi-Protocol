@@ -35,6 +35,8 @@ Withdraw funds from an unlocked vault.
 
 **Events:** Emits `{event: "withdraw", id, owner}`
 
+> Local simnet tests may expose `u4` from chain-time lookup in edge timing scenarios.
+
 ---
 
 ### `approve-bot`

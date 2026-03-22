@@ -93,4 +93,9 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-fee-bps", [], wallet1);
     expect(result.result).toStrictEqual(Cl.uint(50));
   });
+
+  it("should return a valid principal for treasury", () => {
+    const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-treasury", [], wallet1);
+    expect(result.result.type).toBe("ok");
+  });
 });

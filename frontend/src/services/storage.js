@@ -82,7 +82,7 @@ export function setItem(key, value) {
   
   try {
     if (isStorageAvailable()) {
-      localStorage.setItem(prefixedKey, JSON.stringify(value));
+      window.localStorage.setItem(prefixedKey, JSON.stringify(value));
     } else {
       memoryStorage.set(prefixedKey, value);
     }

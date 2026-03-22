@@ -13,6 +13,12 @@ const STACKS_NETWORK = import.meta.env.VITE_NETWORK === 'mainnet'
   ? new StacksMainnet()
   : new StacksTestnet();
 
+function logTxEvent(...args) {
+  if (import.meta.env.VITE_ENABLE_DEBUG === 'true') {
+    console.log(...args);
+  }
+}
+
 /**
  * Build and submit a create-vault transaction
  * @param {Object} params - Transaction parameters

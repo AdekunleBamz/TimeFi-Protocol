@@ -11,6 +11,14 @@ export function useContract() {
   const [loading, setLoading] = useState(false);
   const [lastError, setLastError] = useState(null);
 
+  const getErrorMessage = useCallback((error) => {
+    if (error instanceof Error && error.message) {
+      return error.message;
+    }
+
+    return String(error || 'Unexpected transaction error');
+  }, []);
+
   const wrapTxCallbacks = useCallback((callbacks = {}) => {
     const { onFinish, onCancel } = callbacks;
 

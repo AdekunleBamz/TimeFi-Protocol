@@ -70,14 +70,16 @@ export async function getAccountBalance(address) {
  */
 export async function getAccountTransactions(address, options = {}) {
   const { limit = 20, offset = 0 } = options;
+  const safeLimit = Math.max(1, Math.min(50, safeParseInt(limit, 20)));
+  const safeOffset = Math.max(0, safeParseInt(offset, 0));
   const data = await fetchAPI(
-    `/extended/v1/address/${address}/transactions?limit=${limit}&offset=${offset}`
+    `/extended/v1/address/${address}/transactions?limit=${safeLimit}&offset=${safeOffset}`
   );
   
   return {
     transactions: data.results.map(normalizeTransaction),
     total: data.total,
-    hasMore: offset + limit < data.total,
+    hasMore: safeOffset + safeLimit < data.total,
   };
 }
 

@@ -11,6 +11,11 @@ import { STACKS_NETWORK, CONTRACT_ADDRESS, CONTRACT_NAMES } from '../utils/const
  */
 const HIRO_API_URL = 'https://api.mainnet.hiro.so';
 
+function safeParseInt(value, fallback = 0) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isNaN(parsed) ? fallback : parsed;
+}
+
 /**
  * Fetch wrapper with error handling
  */

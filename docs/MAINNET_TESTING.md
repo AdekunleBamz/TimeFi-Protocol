@@ -40,3 +40,5 @@ MAX_TXS=50 GAS_FEE=1000 CREATE_AMOUNT=10000 node test/full-test-333.js
 
 - Phase 1: per-wallet contract coverage (`vault`, `rewards`, `governance`, `emergency`)
 - Phase 2: filler loop until `MAX_TXS` confirmed transactions
+
+A transaction is counted as "confirmed" when it reaches terminal on-chain status (`success` or `abort_*`).

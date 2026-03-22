@@ -46,4 +46,17 @@ describe("TimeFi Vault - Withdrawal", () => {
 
     expect(result.result).toBeErr(Cl.uint(104));
   });
+
+  it("should return ERR_UNAUTHORIZED for non-owner", () => {
+    createUnlockedVault(wallet1);
+
+    const result = simnet.callPublicFn(
+      CONTRACT_NAME,
+      "withdraw",
+      [Cl.uint(1)],
+      wallet2
+    );
+
+    expect(result.result).toBeErr(Cl.uint(100));
+  });
 });

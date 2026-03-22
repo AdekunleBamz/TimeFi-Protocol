@@ -89,6 +89,8 @@ Changing treasury affects where create-vault and top-up fees are sent.
 
 ## Read-Only Functions
 
+Most read-only helpers return response values; `is-bot` returns a plain boolean.
+
 ### `get-vault`
 Get vault details by ID.
 

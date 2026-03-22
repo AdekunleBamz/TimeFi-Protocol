@@ -5,6 +5,6 @@ authors = ["Bamzz"]
 telemetry = false
 
 [contracts.timefi-vault]
-path = "contracts/timefi-vault.clar"
+path = "contracts/timefi-vault-v-A2.clar"
 clarity_version = 4
 epoch = "3.3"

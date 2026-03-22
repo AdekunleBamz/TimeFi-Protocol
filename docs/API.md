@@ -47,7 +47,7 @@ Approve a contract as an automated trading bot. Admin only.
 ```
 
 **Parameters:**
-- `bot` - Contract principal to approve
+- `bot` - Principal intended for bot automation checks (`contract-hash?` based in this contract version)
 
 **Returns:** `(response bool uint)`
 

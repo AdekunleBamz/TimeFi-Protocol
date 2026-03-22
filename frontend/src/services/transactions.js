@@ -101,11 +101,11 @@ export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
-      console.log('Emergency withdraw transaction:', data.txId);
+      logTxEvent('Emergency withdraw transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Emergency withdraw cancelled');
+      logTxEvent('Emergency withdraw cancelled');
       onCancel?.();
     },
   });

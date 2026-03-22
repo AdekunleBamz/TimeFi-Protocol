@@ -55,6 +55,9 @@ export const env = {
   // Helper to get full contract ID
   getContractId(contractName) {
     const name = this.contracts[contractName] ?? contractName;
+    if (!name) {
+      throw new Error('contractName is required');
+    }
     return `${this.contractAddress}.${name}`;
   },
   

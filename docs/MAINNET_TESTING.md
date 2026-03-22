@@ -52,3 +52,8 @@ A transaction is counted as "confirmed" when it reaches terminal on-chain status
 
 - `full-test-333.js` traps `SIGINT` and exits cleanly after finishing the active step.
 - Progress is persisted repeatedly, so interrupted runs still preserve partial state.
+
+## Current Caveat in Local Simnet Tests
+
+The local `timefi-vault.clar` withdrawal path can return `u4` in tests due to chain-time lookup behavior.
+This affects local assertions and does not automatically imply a mainnet regression.

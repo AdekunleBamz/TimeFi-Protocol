@@ -43,6 +43,10 @@ export const env = {
   get isDevnet() {
     return this.network === 'devnet';
   },
+
+  get isKnownNetwork() {
+    return SUPPORTED_NETWORKS.includes(this.network);
+  },
   
   // Helper to get full contract ID
   getContractId(contractName) {

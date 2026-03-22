@@ -186,4 +186,11 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     const tvl = simnet.callReadOnlyFn(CONTRACT_NAME, "get-tvl", [], wallet1);
     expect(tvl.result).toBeOk(Cl.uint(199_000));
   });
+
+  it("should return true from can-withdraw after lock duration passes", () => {
+    createVault();
+    simnet.mineEmptyBlocks(4000);
+    const result = simnet.callReadOnlyFn(CONTRACT_NAME, "can-withdraw", [Cl.uint(1)], wallet1);
+    expect(result.result).toBeOk(Cl.bool(true));
+  });
 });

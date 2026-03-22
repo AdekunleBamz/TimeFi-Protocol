@@ -17,6 +17,8 @@ Create a new time-locked vault with STX deposit.
 
 **Events:** Emits `{event: "create", id, owner, amount, unlock}`
 
+**Transfer behavior:** principal-after-fee goes to deployer custodian, fee goes to `treasury`.
+
 ---
 
 ### `withdraw`

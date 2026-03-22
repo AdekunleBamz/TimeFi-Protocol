@@ -2,6 +2,8 @@
 
 Scope: this reference describes the core vault contract interface used by local tests.
 
+For script operations and funding flows, see `docs/MAINNET_TESTING.md`.
+
 ## Public Functions
 
 Admin-only functions in this list enforce deployer authorization checks.

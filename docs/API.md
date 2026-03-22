@@ -155,6 +155,8 @@ Get seconds remaining until vault unlock.
 
 **Returns:** `(response uint uint)` - 0 if already unlocked
 
+Computed from block-time data, so local clock time is only approximate.
+
 ---
 
 ### `get-treasury`

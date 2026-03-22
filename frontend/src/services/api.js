@@ -35,6 +35,10 @@ async function fetchAPI(endpoint, options = {}) {
     throw new Error(error.error || `API Error: ${response.status}`);
   }
 
+  if (response.status === 204) {
+    return {};
+  }
+
   return response.json();
 }
 

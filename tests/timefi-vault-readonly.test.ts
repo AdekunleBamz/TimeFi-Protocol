@@ -215,4 +215,9 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-vault", [Cl.uint(999)], wallet1);
     expect(result.result).toBeErr(Cl.uint(101));
   });
+
+  it("should return false for is-bot on regular wallet principal", () => {
+    const result = simnet.callReadOnlyFn(CONTRACT_NAME, "is-bot", [Cl.principal(wallet1)], wallet1);
+    expect(result.result).toStrictEqual(Cl.bool(false));
+  });
 });

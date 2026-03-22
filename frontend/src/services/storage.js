@@ -101,7 +101,7 @@ export function removeItem(key) {
   
   try {
     if (isStorageAvailable()) {
-      localStorage.removeItem(prefixedKey);
+      window.localStorage.removeItem(prefixedKey);
     }
     memoryStorage.delete(prefixedKey);
   } catch (error) {

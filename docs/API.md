@@ -118,6 +118,8 @@ Get total value locked in the protocol.
 
 **Returns:** `(response uint uint)`
 
+TVL tracks deposited principal (post-fee), not cumulative protocol fees.
+
 ---
 
 ### `get-total-fees`

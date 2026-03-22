@@ -73,6 +73,8 @@ export async function createVault({ amount, lockDuration, senderAddress, onFinis
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function withdraw({ vaultId, onFinish, onCancel }) {
+  assertVaultId(vaultId);
+
   await openContractCall({
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,

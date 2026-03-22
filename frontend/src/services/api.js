@@ -190,7 +190,7 @@ export async function getVaultCount() {
     []
   );
   
-  return parseInt(result.value, 10);
+  return safeParseInt(result.value);
 }
 
 /**

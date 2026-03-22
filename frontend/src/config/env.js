@@ -4,6 +4,7 @@
  */
 
 const normalizeNetwork = (value) => String(value || '').trim().toLowerCase();
+const SUPPORTED_NETWORKS = ['mainnet', 'testnet', 'devnet'];
 
 export const env = {
   // Network

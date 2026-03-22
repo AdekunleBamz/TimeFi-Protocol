@@ -77,9 +77,9 @@ export async function getAccountTransactions(address, options = {}) {
   );
   
   return {
-    transactions: data.results.map(normalizeTransaction),
-    total: data.total,
-    hasMore: safeOffset + safeLimit < data.total,
+    transactions: (data.results || []).map(normalizeTransaction),
+    total: safeParseInt(data.total),
+    hasMore: safeOffset + safeLimit < safeParseInt(data.total),
   };
 }
 

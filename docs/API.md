@@ -194,6 +194,8 @@ Check if principal owns a vault.
 
 **Returns:** `(response bool uint)`
 
+Useful for frontends before enabling owner-only actions.
+
 ---
 
 ### `is-bot`

@@ -83,4 +83,9 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-min-lock", [], wallet1);
     expect(result.result).toStrictEqual(Cl.uint(3_600));
   });
+
+  it("should expose max lock constant", () => {
+    const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-max-lock", [], wallet1);
+    expect(result.result).toStrictEqual(Cl.uint(31_536_000));
+  });
 });

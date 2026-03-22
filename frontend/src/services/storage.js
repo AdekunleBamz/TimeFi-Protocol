@@ -115,9 +115,9 @@ export function removeItem(key) {
 export function clearAll() {
   try {
     if (isStorageAvailable()) {
-      Object.keys(localStorage).forEach((key) => {
+      Object.keys(window.localStorage).forEach((key) => {
         if (key.startsWith(STORAGE_PREFIX)) {
-          localStorage.removeItem(key);
+          window.localStorage.removeItem(key);
         }
       });
     }

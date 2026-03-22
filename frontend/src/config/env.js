@@ -21,7 +21,7 @@ export const env = {
   
   // API Configuration
   hiroApiUrl: import.meta.env.VITE_HIRO_API_URL || 'https://api.mainnet.hiro.so',
-  explorerUrl: import.meta.env.VITE_EXPLORER_URL || 'https://explorer.hiro.so',
+  explorerUrl: (import.meta.env.VITE_EXPLORER_URL || 'https://explorer.hiro.so').trim(),
   
   // App Info
   appName: import.meta.env.VITE_APP_NAME || 'TimeFi Protocol',

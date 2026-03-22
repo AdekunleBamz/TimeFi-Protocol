@@ -30,6 +30,11 @@ node test/full-test-333.js
 node test/fund-wallets.js
 ```
 
+Wallet ordering assumptions:
+
+- `wallets[0]` is treated as funding wallet
+- `wallets.slice(1)` are recipients/test actors
+
 You can override runtime values with environment variables:
 
 ```bash

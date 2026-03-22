@@ -41,7 +41,7 @@ npm install
 clarinet check
 
 # Run tests
-clarinet test
+npm run test
 
 # Start devnet
 clarinet devnet start

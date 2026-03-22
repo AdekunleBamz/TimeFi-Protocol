@@ -153,7 +153,7 @@ export const session = {
   
   remove(key) {
     try {
-      sessionStorage.removeItem(STORAGE_PREFIX + key);
+      sessionStorage.removeItem(normalizeKey(key));
     } catch {
       // Ignore
     }

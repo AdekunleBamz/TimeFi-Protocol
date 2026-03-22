@@ -1,6 +1,6 @@
 import {
-  makeContractCall,
   uintCV,
+  boolCV,
   PostConditionMode,
   FungibleConditionCode,
   makeStandardSTXPostCondition,
@@ -12,6 +12,18 @@ import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
 const STACKS_NETWORK = import.meta.env.VITE_NETWORK === 'mainnet'
   ? new StacksMainnet()
   : new StacksTestnet();
+
+function logTxEvent(...args) {
+  if (import.meta.env.VITE_ENABLE_DEBUG === 'true') {
+    console.log(...args);
+  }
+}
+
+function assertVaultId(vaultId) {
+  if (vaultId === undefined || vaultId === null) {
+    throw new Error('vaultId is required');
+  }
+}
 
 /**
  * Build and submit a create-vault transaction
@@ -43,11 +55,11 @@ export async function createVault({ amount, lockDuration, senderAddress, onFinis
     postConditions,
     postConditionMode: PostConditionMode.Deny,
     onFinish: (data) => {
-      console.log('Create vault transaction:', data.txId);
+      logTxEvent('Create vault transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Create vault cancelled');
+      logTxEvent('Create vault cancelled');
       onCancel?.();
     },
   });
@@ -61,19 +73,21 @@ export async function createVault({ amount, lockDuration, senderAddress, onFinis
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function withdraw({ vaultId, onFinish, onCancel }) {
+  assertVaultId(vaultId);
+
   await openContractCall({
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,
     contractName: CONTRACT_NAMES.VAULT,
-    functionName: 'withdraw',
+    functionName: 'request-withdraw',
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
-      console.log('Withdraw transaction:', data.txId);
+      logTxEvent('Withdraw transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Withdraw cancelled');
+      logTxEvent('Withdraw cancelled');
       onCancel?.();
     },
   });
@@ -87,19 +101,21 @@ export async function withdraw({ vaultId, onFinish, onCancel }) {
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
+  assertVaultId(vaultId);
+
   await openContractCall({
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,
     contractName: CONTRACT_NAMES.EMERGENCY,
-    functionName: 'emergency-withdraw',
+    functionName: 'request-emergency-withdraw',
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
-      console.log('Emergency withdraw transaction:', data.txId);
+      logTxEvent('Emergency withdraw transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Emergency withdraw cancelled');
+      logTxEvent('Emergency withdraw cancelled');
       onCancel?.();
     },
   });
@@ -113,19 +129,21 @@ export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function claimRewards({ vaultId, onFinish, onCancel }) {
+  assertVaultId(vaultId);
+
   await openContractCall({
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,
     contractName: CONTRACT_NAMES.REWARDS,
-    functionName: 'claim-rewards',
+    functionName: 'request-claim-rewards',
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
-      console.log('Claim rewards transaction:', data.txId);
+      logTxEvent('Claim rewards transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Claim rewards cancelled');
+      logTxEvent('Claim rewards cancelled');
       onCancel?.();
     },
   });
@@ -135,27 +153,37 @@ export async function claimRewards({ vaultId, onFinish, onCancel }) {
  * Build and submit a vote transaction
  * @param {Object} params - Transaction parameters
  * @param {number} params.proposalId - Proposal ID to vote on
+ * @param {number} params.vaultId - Vault ID used as voting power
  * @param {boolean} params.inFavor - Vote in favor or against
  * @param {Function} params.onFinish - Callback on transaction completion
  * @param {Function} params.onCancel - Callback on user cancel
  */
-export async function vote({ proposalId, inFavor, onFinish, onCancel }) {
+export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel }) {
+  if (proposalId === undefined || proposalId === null) {
+    throw new Error('proposalId is required to cast a governance vote');
+  }
+
+  if (vaultId === undefined || vaultId === null) {
+    throw new Error('vaultId is required to cast a governance vote');
+  }
+
   await openContractCall({
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,
     contractName: CONTRACT_NAMES.GOVERNANCE,
-    functionName: 'vote',
+    functionName: 'cast-vote',
     functionArgs: [
       uintCV(proposalId),
-      inFavor ? uintCV(1) : uintCV(0),
+      uintCV(vaultId),
+      boolCV(Boolean(inFavor)),
     ],
     postConditionMode: PostConditionMode.Deny,
     onFinish: (data) => {
-      console.log('Vote transaction:', data.txId);
+      logTxEvent('Vote transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Vote cancelled');
+      logTxEvent('Vote cancelled');
       onCancel?.();
     },
   });
@@ -168,15 +196,15 @@ export async function vote({ proposalId, inFavor, onFinish, onCancel }) {
  */
 export function estimateFee(functionName) {
   // Base fees for different operations (in microSTX)
-  const fees = {
+  const fees = Object.freeze({
     'create-vault': 5000,
-    'withdraw': 3000,
-    'emergency-withdraw': 4000,
-    'claim-rewards': 3000,
-    'vote': 2000,
-  };
+    'request-withdraw': 3000,
+    'request-emergency-withdraw': 4000,
+    'request-claim-rewards': 3000,
+    'cast-vote': 2000,
+  });
   
-  return fees[functionName] || 3000;
+  return fees[functionName] ?? 3000;
 }
 
 export default {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { formatSTX, formatRelativeTime, formatAddress } from '../utils/format';
+import { CopyButton } from './CopyButton';
 import './TransactionList.css';
+
 
 /**
  * Transaction list component
@@ -73,7 +75,11 @@ function TransactionItem({ transaction }) {
           <span className={`transaction-status transaction-status-${status}`}>
             {normalizedStatus}
           </span>
-          <span className="transaction-txid">{shortTxId}</span>
+          <span className="transaction-txid-group">
+            <span className="transaction-txid">{shortTxId}</span>
+            <CopyButton text={txId} variant="icon" className="transaction-tx-copy" />
+          </span>
+
         </div>
 
         <div className="transaction-context">

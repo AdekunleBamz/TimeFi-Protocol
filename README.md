@@ -4,16 +4,15 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity 4 feat
 
 ## 🏗️ Project Structure
 
-```
 timefi-protocol/
-├── contracts/
-│   └── timefi-vault.clar    # Main vault contract
-├── frontend/                # React app for end users
-├── sdk/                     # TypeScript SDK package
-├── deployments/             # Clarinet deployment plans
-├── settings/                # Network configuration
-└── tests/                   # Contract tests
-```
+├── contracts/       # Clarity smart contracts
+├── frontend/        # React-based web dashboard
+├── sdk/             # JavaScript/TypeScript SDK
+├── scripts/         # Deployment and maintenance scripts
+├── settings/        # Network configuration
+├── test/            # Mainnet script utilities and artifacts
+├── tests/           # Contract testing suite
+└── docs/            # Additional documentation
 
 ## ✨ Features
 
@@ -24,7 +23,7 @@ timefi-protocol/
 - **Fee Collection** - 0.5% fee on deposits
 
 ### Clarity 4 Functions Used
-- `stacks-block-time` - For unlock time calculation
+- `get-stacks-block-info?` - For block-time based unlock calculation
 - `contract-hash?` - For bot verification
 
 ## 🚀 Getting Started
@@ -32,6 +31,7 @@ timefi-protocol/
 ### Prerequisites
 - Clarinet installed
 - Node.js 18+
+- Access to a Stacks node API for mainnet script runs
 
 ### Development
 
@@ -42,11 +42,23 @@ npm install
 # Check contracts
 clarinet check
 
+# Validate with project script
+npm run check
+
 # Run tests
-clarinet test
+npm run test
+
+# Run tests with coverage + costs
+npm run test:report
 
 # Start devnet
 clarinet devnet start
+
+# Run frontend (Vite)
+npm run frontend:dev
+
+# Build SDK package
+npm run sdk:build
 ```
 
 ### Frontend
@@ -65,6 +77,25 @@ npm install
 npm run build
 ```
 
+### SDK Integration
+
+The `timefi-sdk` package provides a clean interface for interacting with the protocol:
+
+```javascript
+import { TimeFiClient } from 'timefi-sdk';
+
+const client = new TimeFiClient('testnet');
+const vault = await client.getVault(1);
+const tvl = await client.getTVL();
+```
+
+## 🛠️ Tech Stack
+
+- **Smart Contracts**: Clarity 4 (Stacks Blockchain)
+- **Frontend**: React + Vite + Vanilla CSS
+- **SDK**: JavaScript / `@stacks/transactions`
+- **Tooling**: Clarinet, Vitest
+
 ## 📝 Contract Functions
 
 ### Public Functions
@@ -81,6 +112,8 @@ npm run build
 |----------|------------|-------------|
 | `get-vault` | `(id uint)` | Get vault details |
 | `is-active` | `(id uint)` | Check if vault is active |
+| `get-time-remaining` | `(id uint)` | Get seconds to unlock |
+| `can-withdraw` | `(id uint)` | Check withdrawal readiness |
 | `is-bot` | `(sender principal)` | Check if sender is approved bot |
 
 ## ⚙️ Configuration
@@ -93,6 +126,10 @@ MIN_LOCK: 3,600 seconds (1 hour)
 MAX_LOCK: 31,536,000 seconds (1 year)
 FEE_BPS: 50 (0.5%)
 ```
+
+## 📚 Operations Docs
+
+- Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
 
 ## 📄 License
 

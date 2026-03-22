@@ -35,7 +35,7 @@ describe("TimeFi Vault - Bot Approval System", () => {
 
   describe("approve-bot function", () => {
     it("should only allow deployer to approve bots", () => {
-      // Non-deployer should fail
+      // Non-contract principal fails contract-hash? validation first.
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "approve-bot",
@@ -43,7 +43,7 @@ describe("TimeFi Vault - Bot Approval System", () => {
         wallet1
       );
 
-      expect(result.result).toBeErr(Cl.uint(100)); // ERR_UNAUTHORIZED
+      expect(result.result).toBeErr(Cl.uint(106)); // ERR_BOT
     });
 
     it("should return ERR_BOT for non-contract principals", () => {

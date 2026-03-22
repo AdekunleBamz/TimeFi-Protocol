@@ -11,6 +11,11 @@ import { STACKS_NETWORK, CONTRACT_ADDRESS, CONTRACT_NAMES } from '../utils/const
  */
 const HIRO_API_URL = 'https://api.mainnet.hiro.so';
 
+function safeParseInt(value, fallback = 0) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isNaN(parsed) ? fallback : parsed;
+}
+
 /**
  * Fetch wrapper with error handling
  */
@@ -30,6 +35,10 @@ async function fetchAPI(endpoint, options = {}) {
     throw new Error(error.error || `API Error: ${response.status}`);
   }
 
+  if (response.status === 204) {
+    return {};
+  }
+
   return response.json();
 }
 
@@ -39,7 +48,7 @@ async function fetchAPI(endpoint, options = {}) {
  */
 export async function getBlockHeight() {
   const data = await fetchAPI('/extended/v1/block?limit=1');
-  return data.results[0]?.height || 0;
+  return safeParseInt(data.results?.[0]?.height);
 }
 
 /**
@@ -50,10 +59,10 @@ export async function getBlockHeight() {
 export async function getAccountBalance(address) {
   const data = await fetchAPI(`/extended/v1/address/${address}/stx`);
   return {
-    balance: parseInt(data.balance, 10),
-    locked: parseInt(data.locked, 10),
-    totalSent: parseInt(data.total_sent, 10),
-    totalReceived: parseInt(data.total_received, 10),
+    balance: safeParseInt(data.balance),
+    locked: safeParseInt(data.locked),
+    totalSent: safeParseInt(data.total_sent),
+    totalReceived: safeParseInt(data.total_received),
   };
 }
 
@@ -65,14 +74,16 @@ export async function getAccountBalance(address) {
  */
 export async function getAccountTransactions(address, options = {}) {
   const { limit = 20, offset = 0 } = options;
+  const safeLimit = Math.max(1, Math.min(50, safeParseInt(limit, 20)));
+  const safeOffset = Math.max(0, safeParseInt(offset, 0));
   const data = await fetchAPI(
-    `/extended/v1/address/${address}/transactions?limit=${limit}&offset=${offset}`
+    `/extended/v1/address/${address}/transactions?limit=${safeLimit}&offset=${safeOffset}`
   );
   
   return {
-    transactions: data.results.map(normalizeTransaction),
-    total: data.total,
-    hasMore: offset + limit < data.total,
+    transactions: (data.results || []).map(normalizeTransaction),
+    total: safeParseInt(data.total),
+    hasMore: safeOffset + safeLimit < safeParseInt(data.total),
   };
 }
 
@@ -95,10 +106,10 @@ function normalizeTransaction(tx) {
     type: tx.tx_type,
     status: tx.tx_status,
     sender: tx.sender_address,
-    fee: parseInt(tx.fee_rate, 10),
+    fee: safeParseInt(tx.fee_rate),
     nonce: tx.nonce,
     blockHeight: tx.block_height,
-    blockTime: tx.block_time * 1000,
+    blockTime: safeParseInt(tx.block_time) * 1000,
     contractCall: tx.contract_call ? {
       contractId: tx.contract_call.contract_id,
       functionName: tx.contract_call.function_name,
@@ -185,7 +196,7 @@ export async function getVaultCount() {
     []
   );
   
-  return parseInt(result.value, 10);
+  return safeParseInt(result.value);
 }
 
 /**
@@ -200,7 +211,7 @@ export async function getPendingRewards(vaultId) {
     [uintCV(vaultId)]
   );
   
-  return parseInt(result.value, 10);
+  return safeParseInt(result.value);
 }
 
 export default {

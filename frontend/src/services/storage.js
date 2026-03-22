@@ -4,26 +4,52 @@
  */
 
 const STORAGE_PREFIX = 'timefi_';
+let storageAvailableCache = null;
 
 /**
  * Check if localStorage is available
  * @returns {boolean}
  */
 function isStorageAvailable() {
+  if (storageAvailableCache !== null) {
+    return storageAvailableCache;
+  }
+
   try {
     const testKey = '__storage_test__';
     window.localStorage.setItem(testKey, testKey);
     window.localStorage.removeItem(testKey);
-    return true;
+    storageAvailableCache = true;
+    return storageAvailableCache;
   } catch (e) {
-    return false;
+    storageAvailableCache = false;
+    return storageAvailableCache;
   }
+}
+
+export function resetStorageAvailabilityCache() {
+  storageAvailableCache = null;
 }
 
 /**
  * In-memory fallback storage
  */
 const memoryStorage = new Map();
+
+function safeJsonParse(value, defaultValue = null) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return defaultValue;
+  }
+}
+
+function normalizeKey(key) {
+  if (typeof key !== 'string' || key.length === 0) {
+    throw new Error('storage key must be a non-empty string');
+  }
+  return STORAGE_PREFIX + key;
+}
 
 /**
  * Get item from storage
@@ -32,12 +58,12 @@ const memoryStorage = new Map();
  * @returns {any} Stored value or default
  */
 export function getItem(key, defaultValue = null) {
-  const prefixedKey = STORAGE_PREFIX + key;
+  const prefixedKey = normalizeKey(key);
   
   try {
     if (isStorageAvailable()) {
-      const item = localStorage.getItem(prefixedKey);
-      return item ? JSON.parse(item) : defaultValue;
+      const item = window.localStorage.getItem(prefixedKey);
+      return item ? safeJsonParse(item, defaultValue) : defaultValue;
     }
     return memoryStorage.get(prefixedKey) ?? defaultValue;
   } catch (error) {
@@ -52,11 +78,11 @@ export function getItem(key, defaultValue = null) {
  * @param {any} value - Value to store
  */
 export function setItem(key, value) {
-  const prefixedKey = STORAGE_PREFIX + key;
+  const prefixedKey = normalizeKey(key);
   
   try {
     if (isStorageAvailable()) {
-      localStorage.setItem(prefixedKey, JSON.stringify(value));
+      window.localStorage.setItem(prefixedKey, JSON.stringify(value));
     } else {
       memoryStorage.set(prefixedKey, value);
     }
@@ -71,11 +97,11 @@ export function setItem(key, value) {
  * @param {string} key - Storage key
  */
 export function removeItem(key) {
-  const prefixedKey = STORAGE_PREFIX + key;
+  const prefixedKey = normalizeKey(key);
   
   try {
     if (isStorageAvailable()) {
-      localStorage.removeItem(prefixedKey);
+      window.localStorage.removeItem(prefixedKey);
     }
     memoryStorage.delete(prefixedKey);
   } catch (error) {
@@ -89,9 +115,9 @@ export function removeItem(key) {
 export function clearAll() {
   try {
     if (isStorageAvailable()) {
-      Object.keys(localStorage).forEach((key) => {
+      Object.keys(window.localStorage).forEach((key) => {
         if (key.startsWith(STORAGE_PREFIX)) {
-          localStorage.removeItem(key);
+          window.localStorage.removeItem(key);
         }
       });
     }
@@ -121,8 +147,8 @@ export const StorageKeys = {
 export const session = {
   get(key, defaultValue = null) {
     try {
-      const item = sessionStorage.getItem(STORAGE_PREFIX + key);
-      return item ? JSON.parse(item) : defaultValue;
+      const item = sessionStorage.getItem(normalizeKey(key));
+      return item ? safeJsonParse(item, defaultValue) : defaultValue;
     } catch {
       return defaultValue;
     }
@@ -130,7 +156,7 @@ export const session = {
   
   set(key, value) {
     try {
-      sessionStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value));
+      sessionStorage.setItem(normalizeKey(key), JSON.stringify(value));
     } catch (error) {
       console.warn('Session storage error:', error);
     }
@@ -138,7 +164,7 @@ export const session = {
   
   remove(key) {
     try {
-      sessionStorage.removeItem(STORAGE_PREFIX + key);
+      sessionStorage.removeItem(normalizeKey(key));
     } catch {
       // Ignore
     }
@@ -150,6 +176,7 @@ export default {
   setItem,
   removeItem,
   clearAll,
+  resetStorageAvailabilityCache,
   StorageKeys,
   session,
 };

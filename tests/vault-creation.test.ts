@@ -66,11 +66,30 @@ describe("TimeFi Vault - Create Vault", () => {
       );
 
       expect(vaultResult.result.type).toBe(ClarityType.ResponseOk);
-      
-      const vault = vaultResult.result.value;
-      expect(vault.data.owner).toStrictEqual(Cl.principal(wallet1));
-      expect(vault.data.amount).toStrictEqual(Cl.uint(expectedDeposit));
-      expect(vault.data.active).toStrictEqual(Cl.bool(true));
+
+      const ownerResult = simnet.callReadOnlyFn(
+        CONTRACT_NAME,
+        "is-vault-owner",
+        [Cl.uint(1), Cl.principal(wallet1)],
+        wallet1
+      );
+      expect(ownerResult.result).toBeOk(Cl.bool(true));
+
+      const activeResult = simnet.callReadOnlyFn(
+        CONTRACT_NAME,
+        "is-active",
+        [Cl.uint(1)],
+        wallet1
+      );
+      expect(activeResult.result).toBeOk(Cl.bool(true));
+
+      const tvlResult = simnet.callReadOnlyFn(
+        CONTRACT_NAME,
+        "get-tvl",
+        [],
+        wallet1
+      );
+      expect(tvlResult.result).toBeOk(Cl.uint(expectedDeposit));
     });
 
     it("should increment vault nonce for each new vault", () => {

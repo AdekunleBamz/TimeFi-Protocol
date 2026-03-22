@@ -11,6 +11,20 @@ export function useContract() {
   const [loading, setLoading] = useState(false);
   const [lastError, setLastError] = useState(null);
 
+  const getErrorMessage = useCallback((error) => {
+    if (error instanceof Error && error.message) {
+      return error.message;
+    }
+
+    return String(error || 'Unexpected transaction error');
+  }, []);
+
+  const ensureConnected = useCallback(() => {
+    if (!address) {
+      throw new Error('Connect your wallet to continue');
+    }
+  }, [address]);
+
   const wrapTxCallbacks = useCallback((callbacks = {}) => {
     const { onFinish, onCancel } = callbacks;
 
@@ -31,15 +45,21 @@ export function useContract() {
    * Create a new time-locked vault
    */
   const createVault = useCallback(async (amountSTX, lockDurationBlocks, callbacks = {}) => {
-    if (!address) {
-      throw new Error('Connect your wallet to continue');
+    ensureConnected();
+
+    const numericAmount = Number(amountSTX);
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
+      throw new Error('amountSTX must be a positive number');
+    }
+    if (!Number.isInteger(lockDurationBlocks) || lockDurationBlocks <= 0) {
+      throw new Error('lockDurationBlocks must be a positive integer');
     }
 
     setLoading(true);
     setLastError(null);
 
     try {
-      const amount = Math.floor(Number(amountSTX) * 1_000_000);
+      const amount = Math.floor(numericAmount * 1_000_000);
       await createVaultTx({
         amount,
         lockDuration: lockDurationBlocks,
@@ -48,15 +68,16 @@ export function useContract() {
       });
     } catch (error) {
       setLoading(false);
-      setLastError(error.message);
+      setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [address, wrapTxCallbacks]);
+  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
 
   /**
    * Withdraw from a vault after lock period
    */
   const withdraw = useCallback(async (vaultId, callbacks = {}) => {
+    ensureConnected();
     setLoading(true);
     setLastError(null);
 
@@ -67,12 +88,13 @@ export function useContract() {
       });
     } catch (error) {
       setLoading(false);
-      setLastError(error.message);
+      setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [wrapTxCallbacks]);
+  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
 
   const emergencyWithdraw = useCallback(async (vaultId, callbacks = {}) => {
+    ensureConnected();
     setLoading(true);
     setLastError(null);
 
@@ -83,12 +105,13 @@ export function useContract() {
       });
     } catch (error) {
       setLoading(false);
-      setLastError(error.message);
+      setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [wrapTxCallbacks]);
+  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
 
   const claimRewards = useCallback(async (vaultId, callbacks = {}) => {
+    ensureConnected();
     setLoading(true);
     setLastError(null);
 
@@ -99,15 +122,15 @@ export function useContract() {
       });
     } catch (error) {
       setLoading(false);
-      setLastError(error.message);
+      setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [wrapTxCallbacks]);
+  }, [ensureConnected, getErrorMessage, wrapTxCallbacks]);
 
   /**
    * Approve a bot to manage vault
    */
-  const approveBot = useCallback(async (botAddress) => {
+  const approveBot = useCallback((botAddress) => {
     return {
       functionName: 'approve-bot',
       functionArgs: [principalCV(botAddress)],

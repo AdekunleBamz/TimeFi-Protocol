@@ -1,6 +1,12 @@
 # TimeFi Protocol API Reference
 
+Scope: this reference describes the core vault contract interface used by local tests.
+
+For script operations and funding flows, see `docs/MAINNET_TESTING.md`.
+
 ## Public Functions
+
+Admin-only functions in this list enforce deployer authorization checks.
 
 ### `create-vault`
 Create a new time-locked vault with STX deposit.
@@ -16,6 +22,8 @@ Create a new time-locked vault with STX deposit.
 **Returns:** `(response uint uint)` - Vault ID on success
 
 **Events:** Emits `{event: "create", id, owner, amount, unlock}`
+
+**Transfer behavior:** principal-after-fee goes to deployer custodian, fee goes to `treasury`.
 
 ---
 
@@ -33,6 +41,8 @@ Withdraw funds from an unlocked vault.
 
 **Events:** Emits `{event: "withdraw", id, owner}`
 
+> Local simnet tests may expose `u4` from chain-time lookup in edge timing scenarios.
+
 ---
 
 ### `approve-bot`
@@ -43,7 +53,7 @@ Approve a contract as an automated trading bot. Admin only.
 ```
 
 **Parameters:**
-- `bot` - Contract principal to approve
+- `bot` - Principal intended for bot automation checks (`contract-hash?` based in this contract version)
 
 **Returns:** `(response bool uint)`
 
@@ -75,9 +85,13 @@ Update the treasury address. Admin only.
 
 **Returns:** `(response bool uint)`
 
+Changing treasury affects where create-vault and top-up fees are sent.
+
 ---
 
 ## Read-Only Functions
+
+Most read-only helpers return response values; `is-bot` returns a plain boolean.
 
 ### `get-vault`
 Get vault details by ID.
@@ -87,6 +101,8 @@ Get vault details by ID.
 ```
 
 **Returns:** Vault tuple with owner, amount, lock-time, unlock-time, active
+
+The tuple is wrapped in a Clarity response (`ok`/`err`).
 
 ---
 
@@ -110,6 +126,8 @@ Get total value locked in the protocol.
 
 **Returns:** `(response uint uint)`
 
+TVL tracks deposited principal (post-fee), not cumulative protocol fees.
+
 ---
 
 ### `get-total-fees`
@@ -120,6 +138,8 @@ Get total fees collected.
 ```
 
 **Returns:** `(response uint uint)`
+
+This value is cumulative protocol fee accounting, not a wallet balance query.
 
 ---
 
@@ -143,6 +163,8 @@ Get seconds remaining until vault unlock.
 
 **Returns:** `(response uint uint)` - 0 if already unlocked
 
+Computed from block-time data, so local clock time is only approximate.
+
 ---
 
 ### `get-treasury`
@@ -153,6 +175,8 @@ Get current treasury address.
 ```
 
 **Returns:** `(response principal uint)`
+
+Defaults to deployer at deployment and can be changed via `set-treasury`.
 
 ---
 
@@ -165,6 +189,8 @@ Check if vault can be withdrawn (active and past unlock).
 
 **Returns:** `(response bool uint)`
 
+Read-only check only; it does not move funds.
+
 ---
 
 ### `is-vault-owner`
@@ -176,6 +202,8 @@ Check if principal owns a vault.
 
 **Returns:** `(response bool uint)`
 
+Useful for frontends before enabling owner-only actions.
+
 ---
 
 ### `is-bot`
@@ -186,6 +214,8 @@ Check if principal is an approved bot.
 ```
 
 **Returns:** `bool`
+
+In this contract variant, non-contract principals resolve to `false`.
 
 ---
 
@@ -207,6 +237,8 @@ Check if principal is an approved bot.
 (calculate-deposit-after-fee (amount uint))
 ```
 
+Both return response-wrapped uint values.
+
 ---
 
 ## Error Codes
@@ -220,3 +252,5 @@ Check if principal is an approved bot.
 | u104 | ERR_LOCK_PERIOD | Invalid lock period |
 | u105 | ERR_ALREADY | Action already performed |
 | u106 | ERR_BOT | Invalid bot contract |
+
+Built-in runtime errors (for example `u4`) may appear when Clarity arithmetic/unwrap checks fail.

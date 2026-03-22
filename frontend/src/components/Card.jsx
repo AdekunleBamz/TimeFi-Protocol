@@ -49,8 +49,12 @@ export function Card({
 
 /**
  * Card header section
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Header content
+ * @param {React.ReactNode} props.action - Optional action button/link
  */
 export function CardHeader({ children, className = '', action }) {
+
   return (
     <div className={`card-header ${className}`}>
       <div className="card-header-content">{children}</div>
@@ -61,29 +65,41 @@ export function CardHeader({ children, className = '', action }) {
 
 /**
  * Card title
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Title text
  */
 export function CardTitle({ children, className = '' }) {
+
   return <h3 className={`card-title ${className}`}>{children}</h3>;
 }
 
 /**
  * Card description
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Description text
  */
 export function CardDescription({ children, className = '' }) {
+
   return <p className={`card-description ${className}`}>{children}</p>;
 }
 
 /**
  * Card body/content section
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Main content
  */
 export function CardContent({ children, className = '' }) {
+
   return <div className={`card-content ${className}`}>{children}</div>;
 }
 
 /**
  * Card footer section
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Footer content
  */
 export function CardFooter({ children, className = '' }) {
+
   return <div className={`card-footer ${className}`}>{children}</div>;
 }
 

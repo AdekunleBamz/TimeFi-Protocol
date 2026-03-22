@@ -14,5 +14,8 @@ export {
 
 // App-specific formatting can be added here
 export const formatBlockHeight = (height) => {
-    return Number(height).toLocaleString();
+    if (height === undefined || height === null || height === '') return '--';
+    const numericHeight = Number(height);
+    if (!Number.isFinite(numericHeight)) return '--';
+    return numericHeight.toLocaleString();
 };

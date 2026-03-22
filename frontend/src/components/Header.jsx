@@ -11,6 +11,16 @@ export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
@@ -58,24 +68,25 @@ export function Header() {
   };
 
   return (
-    <header className="header">
+    <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
+
       <div className="header-container">
-        <Link to="/" className="header-logo">
-          <img src="/logo.svg" alt="TimeFi" className="header-logo-img" />
+        <Link to="/" className="header-logo" aria-label="TimeFi Home">
+          <img src="/logo.svg" alt="" className="header-logo-img" aria-hidden="true" />
           <div className="header-brand-copy">
             <span className="header-logo-text">TimeFi</span>
             <span className="header-network-pill">{networkLabel}</span>
           </div>
         </Link>
 
-        <div className="header-page-label">{pageLabel}</div>
+        <div className="header-page-label" aria-live="polite">{pageLabel}</div>
 
         <button
           type="button"
           className="header-menu-toggle"
           aria-expanded={isMenuOpen}
           aria-controls="header-navigation"
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           onClick={() => setIsMenuOpen((open) => !open)}
         >
           <span className="header-menu-toggle-label">Menu</span>
@@ -89,9 +100,11 @@ export function Header() {
         <nav
           id="header-navigation"
           className={`header-nav ${isMenuOpen ? 'header-nav-open' : ''}`}
+          aria-label="Main navigation"
         >
           <NavLink
             to="/"
+            aria-label="Navigate to Dashboard"
             className={({ isActive }) =>
               `header-nav-link ${
                 isActive && location.hash !== '#create-vault' && location.hash !== '#your-vaults'
@@ -104,6 +117,7 @@ export function Header() {
           </NavLink>
           <Link
             to="/#create-vault"
+            aria-label="Navigate to Create Vault section"
             className={`header-nav-link ${
               location.pathname === '/' && location.hash === '#create-vault' ? 'header-nav-link-active' : ''
             }`}
@@ -112,6 +126,7 @@ export function Header() {
           </Link>
           <Link
             to="/#your-vaults"
+            aria-label="Navigate to Your Vaults section"
             className={`header-nav-link ${
               location.pathname === '/' && location.hash === '#your-vaults' ? 'header-nav-link-active' : ''
             }`}
@@ -119,6 +134,7 @@ export function Header() {
             Your Vaults
           </Link>
         </nav>
+
 
         <div className={`header-actions ${isMenuOpen ? 'header-actions-open' : ''}`}>
           {isConnected ? (

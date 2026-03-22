@@ -145,7 +145,7 @@ export const session = {
   
   set(key, value) {
     try {
-      sessionStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value));
+      sessionStorage.setItem(normalizeKey(key), JSON.stringify(value));
     } catch (error) {
       console.warn('Session storage error:', error);
     }

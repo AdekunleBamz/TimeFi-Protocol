@@ -47,6 +47,10 @@ export const env = {
   get isKnownNetwork() {
     return SUPPORTED_NETWORKS.includes(this.network);
   },
+
+  get explorerChain() {
+    return this.isKnownNetwork ? this.network : 'mainnet';
+  },
   
   // Helper to get full contract ID
   getContractId(contractName) {
@@ -56,12 +60,12 @@ export const env = {
   
   // Helper to get explorer URL for address
   getExplorerAddressUrl(address) {
-    return `${this.explorerUrl}/address/${address}?chain=${this.network}`;
+    return `${this.explorerUrl}/address/${address}?chain=${this.explorerChain}`;
   },
   
   // Helper to get explorer URL for transaction
   getExplorerTxUrl(txId) {
-    return `${this.explorerUrl}/txid/${txId}?chain=${this.network}`;
+    return `${this.explorerUrl}/txid/${txId}?chain=${this.explorerChain}`;
   },
 };
 

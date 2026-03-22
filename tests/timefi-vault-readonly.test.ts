@@ -210,4 +210,9 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     );
     expect(result.result).toBeOk(Cl.uint(0));
   });
+
+  it("should return ERR_NOT_FOUND from get-vault on unknown id", () => {
+    const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-vault", [Cl.uint(999)], wallet1);
+    expect(result.result).toBeErr(Cl.uint(101));
+  });
 });

@@ -91,10 +91,10 @@ export function useContract() {
       });
     } catch (error) {
       setLoading(false);
-      setLastError(error.message);
+      setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [wrapTxCallbacks]);
+  }, [getErrorMessage, wrapTxCallbacks]);
 
   const claimRewards = useCallback(async (vaultId, callbacks = {}) => {
     setLoading(true);

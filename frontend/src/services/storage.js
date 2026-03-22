@@ -47,7 +47,7 @@ function normalizeKey(key) {
  * @returns {any} Stored value or default
  */
 export function getItem(key, defaultValue = null) {
-  const prefixedKey = STORAGE_PREFIX + key;
+  const prefixedKey = normalizeKey(key);
   
   try {
     if (isStorageAvailable()) {

@@ -131,6 +131,8 @@ Get total fees collected.
 
 **Returns:** `(response uint uint)`
 
+This value is cumulative protocol fee accounting, not a wallet balance query.
+
 ---
 
 ### `get-vault-count`

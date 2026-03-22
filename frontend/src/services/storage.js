@@ -136,7 +136,7 @@ export const StorageKeys = {
 export const session = {
   get(key, defaultValue = null) {
     try {
-      const item = sessionStorage.getItem(STORAGE_PREFIX + key);
+      const item = sessionStorage.getItem(normalizeKey(key));
       return item ? safeJsonParse(item, defaultValue) : defaultValue;
     } catch {
       return defaultValue;

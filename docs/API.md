@@ -207,6 +207,8 @@ Check if principal is an approved bot.
 
 **Returns:** `bool`
 
+In this contract variant, non-contract principals resolve to `false`.
+
 ---
 
 ### Protocol Constants

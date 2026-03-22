@@ -57,3 +57,8 @@ A transaction is counted as "confirmed" when it reaches terminal on-chain status
 
 The local `timefi-vault.clar` withdrawal path can return `u4` in tests due to chain-time lookup behavior.
 This affects local assertions and does not automatically imply a mainnet regression.
+
+## Practical Funding Targets
+
+- Per-wallet operational floor in full test loop: `0.04 STX`
+- Per-wallet one-time pre-fund target to avoid frequent top-ups: `0.09 STX`

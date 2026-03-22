@@ -172,4 +172,11 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     const count = simnet.callReadOnlyFn(CONTRACT_NAME, "get-vault-count", [], wallet1);
     expect(count.result).toBeOk(Cl.uint(2));
   });
+
+  it("should accumulate total fees across multiple vault creations", () => {
+    createVault();
+    createVault();
+    const fees = simnet.callReadOnlyFn(CONTRACT_NAME, "get-total-fees", [], wallet1);
+    expect(fees.result).toBeOk(Cl.uint(1000));
+  });
 });

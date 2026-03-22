@@ -50,6 +50,12 @@ npm run test
 
 # Start devnet
 clarinet devnet start
+
+# Run frontend (Vite)
+npm run frontend:dev
+
+# Build SDK package
+npm run sdk:build
 ```
 
 ### SDK Integration

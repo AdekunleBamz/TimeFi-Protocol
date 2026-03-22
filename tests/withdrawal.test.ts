@@ -59,4 +59,17 @@ describe("TimeFi Vault - Withdrawal", () => {
 
     expect(result.result).toBeErr(Cl.uint(100));
   });
+
+  it("should allow owner withdrawal after unlock", () => {
+    createUnlockedVault(wallet1);
+
+    const result = simnet.callPublicFn(
+      CONTRACT_NAME,
+      "withdraw",
+      [Cl.uint(1)],
+      wallet1
+    );
+
+    expect(result.result).toBeOk(Cl.bool(true));
+  });
 });

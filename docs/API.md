@@ -229,6 +229,8 @@ In this contract variant, non-contract principals resolve to `false`.
 (calculate-deposit-after-fee (amount uint))
 ```
 
+Both return response-wrapped uint values.
+
 ---
 
 ## Error Codes

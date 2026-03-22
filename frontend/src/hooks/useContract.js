@@ -107,10 +107,10 @@ export function useContract() {
       });
     } catch (error) {
       setLoading(false);
-      setLastError(error.message);
+      setLastError(getErrorMessage(error));
       throw error;
     }
-  }, [wrapTxCallbacks]);
+  }, [getErrorMessage, wrapTxCallbacks]);
 
   /**
    * Approve a bot to manage vault

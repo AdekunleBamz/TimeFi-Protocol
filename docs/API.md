@@ -94,6 +94,8 @@ Get vault details by ID.
 
 **Returns:** Vault tuple with owner, amount, lock-time, unlock-time, active
 
+The tuple is wrapped in a Clarity response (`ok`/`err`).
+
 ---
 
 ### `is-active`

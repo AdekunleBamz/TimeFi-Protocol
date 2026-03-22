@@ -100,7 +100,7 @@ function normalizeTransaction(tx) {
     type: tx.tx_type,
     status: tx.tx_status,
     sender: tx.sender_address,
-    fee: parseInt(tx.fee_rate, 10),
+    fee: safeParseInt(tx.fee_rate),
     nonce: tx.nonce,
     blockHeight: tx.block_height,
     blockTime: tx.block_time * 1000,

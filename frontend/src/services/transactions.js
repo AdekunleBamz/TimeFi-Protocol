@@ -127,11 +127,11 @@ export async function claimRewards({ vaultId, onFinish, onCancel }) {
     functionArgs: [uintCV(vaultId)],
     postConditionMode: PostConditionMode.Allow,
     onFinish: (data) => {
-      console.log('Claim rewards transaction:', data.txId);
+      logTxEvent('Claim rewards transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Claim rewards cancelled');
+      logTxEvent('Claim rewards cancelled');
       onCancel?.();
     },
   });

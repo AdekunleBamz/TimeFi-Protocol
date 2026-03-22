@@ -23,3 +23,9 @@ This guide documents how to run the mainnet stress and coverage scripts safely.
 ```bash
 node test/full-test-333.js
 ```
+
+You can override runtime values with environment variables:
+
+```bash
+MAX_TXS=50 GAS_FEE=1000 CREATE_AMOUNT=10000 node test/full-test-333.js
+```

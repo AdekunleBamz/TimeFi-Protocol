@@ -86,7 +86,7 @@ export function setItem(key, value) {
  * @param {string} key - Storage key
  */
 export function removeItem(key) {
-  const prefixedKey = STORAGE_PREFIX + key;
+  const prefixedKey = normalizeKey(key);
   
   try {
     if (isStorageAvailable()) {

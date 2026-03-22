@@ -24,7 +24,7 @@ export const env = {
   explorerUrl: (import.meta.env.VITE_EXPLORER_URL || 'https://explorer.hiro.so').trim(),
   
   // App Info
-  appName: import.meta.env.VITE_APP_NAME || 'TimeFi Protocol',
+  appName: (import.meta.env.VITE_APP_NAME || 'TimeFi Protocol').trim(),
   appDescription: import.meta.env.VITE_APP_DESCRIPTION || 'Time-locked vaults on Stacks',
   
   // Feature Flags

@@ -56,7 +56,7 @@ export async function getAccountBalance(address) {
   const data = await fetchAPI(`/extended/v1/address/${address}/stx`);
   return {
     balance: safeParseInt(data.balance),
-    locked: parseInt(data.locked, 10),
+    locked: safeParseInt(data.locked),
     totalSent: parseInt(data.total_sent, 10),
     totalReceived: parseInt(data.total_received, 10),
   };

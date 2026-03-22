@@ -47,3 +47,8 @@ A transaction is counted as "confirmed" when it reaches terminal on-chain status
 
 - `test/full-test-results.json`: transaction timeline and aggregate summary
 - `test/funding-results.json`: wallet funding transaction outcomes
+
+## Safety Behavior
+
+- `full-test-333.js` traps `SIGINT` and exits cleanly after finishing the active step.
+- Progress is persisted repeatedly, so interrupted runs still preserve partial state.

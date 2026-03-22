@@ -6,6 +6,15 @@ const wallet1 = accounts.get("wallet_1")!;
 
 const CONTRACT_NAME = "timefi-vault";
 
+function createVault(amount = 100_000, lockSecs = 3600) {
+  return simnet.callPublicFn(
+    CONTRACT_NAME,
+    "create-vault",
+    [Cl.uint(amount), Cl.uint(lockSecs)],
+    wallet1
+  );
+}
+
 describe("TimeFi Vault - Read-Only Coverage", () => {
   it("should return ERR_NOT_FOUND for get-time-remaining on unknown id", () => {
     const result = simnet.callReadOnlyFn(

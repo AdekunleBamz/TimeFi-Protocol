@@ -67,7 +67,7 @@ export function getItem(key, defaultValue = null) {
  * @param {any} value - Value to store
  */
 export function setItem(key, value) {
-  const prefixedKey = STORAGE_PREFIX + key;
+  const prefixedKey = normalizeKey(key);
   
   try {
     if (isStorageAvailable()) {

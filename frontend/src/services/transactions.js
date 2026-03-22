@@ -196,15 +196,15 @@ export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel })
  */
 export function estimateFee(functionName) {
   // Base fees for different operations (in microSTX)
-  const fees = {
+  const fees = Object.freeze({
     'create-vault': 5000,
     'request-withdraw': 3000,
     'request-emergency-withdraw': 4000,
     'request-claim-rewards': 3000,
     'cast-vote': 2000,
-  };
+  });
   
-  return fees[functionName] || 3000;
+  return fees[functionName] ?? 3000;
 }
 
 export default {

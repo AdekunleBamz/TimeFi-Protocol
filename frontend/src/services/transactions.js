@@ -49,11 +49,11 @@ export async function createVault({ amount, lockDuration, senderAddress, onFinis
     postConditions,
     postConditionMode: PostConditionMode.Deny,
     onFinish: (data) => {
-      console.log('Create vault transaction:', data.txId);
+      logTxEvent('Create vault transaction:', data.txId);
       onFinish?.(data);
     },
     onCancel: () => {
-      console.log('Create vault cancelled');
+      logTxEvent('Create vault cancelled');
       onCancel?.();
     },
   });

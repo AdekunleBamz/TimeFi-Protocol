@@ -20,7 +20,7 @@ export const env = {
   },
   
   // API Configuration
-  hiroApiUrl: import.meta.env.VITE_HIRO_API_URL || 'https://api.mainnet.hiro.so',
+  hiroApiUrl: (import.meta.env.VITE_HIRO_API_URL || 'https://api.mainnet.hiro.so').trim(),
   explorerUrl: (import.meta.env.VITE_EXPLORER_URL || 'https://explorer.hiro.so').trim(),
   
   // App Info

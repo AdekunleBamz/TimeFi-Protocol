@@ -17,3 +17,9 @@ This guide documents how to run the mainnet stress and coverage scripts safely.
 
 - `full-test-333.js` uses `GAS_FEE=1000` microSTX (`0.001 STX`) by default.
 - `fund-wallets.js` currently uses `GAS_FEE=1000` microSTX and `AMOUNT_PER_WALLET=200000` microSTX (`0.2 STX`).
+
+## Running Full Test
+
+```bash
+node test/full-test-333.js
+```

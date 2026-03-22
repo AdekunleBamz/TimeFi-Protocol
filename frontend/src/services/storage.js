@@ -62,7 +62,7 @@ export function getItem(key, defaultValue = null) {
   
   try {
     if (isStorageAvailable()) {
-      const item = localStorage.getItem(prefixedKey);
+      const item = window.localStorage.getItem(prefixedKey);
       return item ? safeJsonParse(item, defaultValue) : defaultValue;
     }
     return memoryStorage.get(prefixedKey) ?? defaultValue;

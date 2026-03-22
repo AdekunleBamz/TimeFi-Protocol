@@ -57,7 +57,7 @@ export async function getAccountBalance(address) {
   return {
     balance: safeParseInt(data.balance),
     locked: safeParseInt(data.locked),
-    totalSent: parseInt(data.total_sent, 10),
+    totalSent: safeParseInt(data.total_sent),
     totalReceived: parseInt(data.total_received, 10),
   };
 }

@@ -148,4 +148,24 @@ describe("TimeFi Vault - Withdrawal", () => {
 
     expect(result.result).toBeOk(Cl.bool(true));
   });
+
+  it("should keep vault active when unauthorized withdrawal is attempted", () => {
+    createUnlockedVault(wallet1);
+
+    const unauthorized = simnet.callPublicFn(
+      CONTRACT_NAME,
+      "withdraw",
+      [Cl.uint(1)],
+      wallet2
+    );
+    expect(unauthorized.result).toBeErr(Cl.uint(100));
+
+    const status = simnet.callReadOnlyFn(
+      CONTRACT_NAME,
+      "is-active",
+      [Cl.uint(1)],
+      wallet1
+    );
+    expect(status.result).toBeOk(Cl.bool(true));
+  });
 });

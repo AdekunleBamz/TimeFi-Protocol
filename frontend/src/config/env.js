@@ -6,6 +6,7 @@
 const normalizeNetwork = (value) => String(value || '').trim().toLowerCase();
 const SUPPORTED_NETWORKS = ['mainnet', 'testnet', 'devnet'];
 export { SUPPORTED_NETWORKS };
+const parseBoolean = (value) => String(value || '').trim().toLowerCase() === 'true';
 
 export const env = {
   // Network
@@ -29,8 +30,8 @@ export const env = {
   appDescription: (import.meta.env.VITE_APP_DESCRIPTION || 'Time-locked vaults on Stacks').trim(),
   
   // Feature Flags
-  enableTestnet: import.meta.env.VITE_ENABLE_TESTNET === 'true',
-  enableDebug: import.meta.env.VITE_ENABLE_DEBUG === 'true',
+  enableTestnet: parseBoolean(import.meta.env.VITE_ENABLE_TESTNET),
+  enableDebug: parseBoolean(import.meta.env.VITE_ENABLE_DEBUG),
   
   // Derived values
   get isMainnet() {

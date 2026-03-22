@@ -129,6 +129,8 @@ export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function claimRewards({ vaultId, onFinish, onCancel }) {
+  assertVaultId(vaultId);
+
   await openContractCall({
     network: STACKS_NETWORK,
     contractAddress: CONTRACT_ADDRESS,

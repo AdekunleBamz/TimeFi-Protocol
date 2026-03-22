@@ -25,6 +25,14 @@ function isStorageAvailable() {
  */
 const memoryStorage = new Map();
 
+function safeJsonParse(value, defaultValue = null) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return defaultValue;
+  }
+}
+
 /**
  * Get item from storage
  * @param {string} key - Storage key

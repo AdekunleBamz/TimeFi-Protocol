@@ -61,6 +61,22 @@ npm run frontend:dev
 npm run sdk:build
 ```
 
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### SDK
+
+```bash
+cd sdk
+npm install
+npm run build
+```
+
 ### SDK Integration
 
 The `timefi-sdk` package provides a clean interface for interacting with the protocol:

@@ -93,6 +93,8 @@ const tvl = await client.getTVL();
 |----------|------------|-------------|
 | `get-vault` | `(id uint)` | Get vault details |
 | `is-active` | `(id uint)` | Check if vault is active |
+| `get-time-remaining` | `(id uint)` | Get seconds to unlock |
+| `can-withdraw` | `(id uint)` | Check withdrawal readiness |
 | `is-bot` | `(sender principal)` | Check if sender is approved bot |
 
 ## ⚙️ Configuration

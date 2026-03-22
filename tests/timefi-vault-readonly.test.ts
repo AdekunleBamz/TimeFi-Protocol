@@ -154,4 +154,15 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     );
     expect(result.result).toBeOk(Cl.bool(true));
   });
+
+  it("should return false from is-vault-owner for non-owner principal", () => {
+    createVault();
+    const result = simnet.callReadOnlyFn(
+      CONTRACT_NAME,
+      "is-vault-owner",
+      [Cl.uint(1), Cl.principal(wallet2)],
+      wallet1
+    );
+    expect(result.result).toBeOk(Cl.bool(false));
+  });
 });

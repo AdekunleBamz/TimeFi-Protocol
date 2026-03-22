@@ -127,4 +127,9 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     const result = simnet.callReadOnlyFn(CONTRACT_NAME, "is-active", [Cl.uint(999)], wallet1);
     expect(result.result).toBeErr(Cl.uint(101));
   });
+
+  it("should return ERR_NOT_FOUND from can-withdraw on unknown vault", () => {
+    const result = simnet.callReadOnlyFn(CONTRACT_NAME, "can-withdraw", [Cl.uint(999)], wallet1);
+    expect(result.result).toBeErr(Cl.uint(101));
+  });
 });

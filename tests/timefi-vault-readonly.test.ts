@@ -40,4 +40,15 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     const fees = simnet.callReadOnlyFn(CONTRACT_NAME, "get-total-fees", [], wallet1);
     expect(fees.result).toBeOk(Cl.uint(5000));
   });
+
+  it("should return zero fee for zero amount", () => {
+    const result = simnet.callReadOnlyFn(
+      CONTRACT_NAME,
+      "calculate-fee",
+      [Cl.uint(0)],
+      wallet1
+    );
+
+    expect(result.result).toBeOk(Cl.uint(0));
+  });
 });

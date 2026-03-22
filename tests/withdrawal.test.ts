@@ -28,4 +28,22 @@ describe("TimeFi Vault - Withdrawal", () => {
 
     expect(result.result).toBeErr(Cl.uint(101));
   });
+
+  it("should return ERR_LOCK_PERIOD while vault is still locked", () => {
+    simnet.callPublicFn(
+      CONTRACT_NAME,
+      "create-vault",
+      [Cl.uint(100_000), Cl.uint(3600)],
+      wallet1
+    );
+
+    const result = simnet.callPublicFn(
+      CONTRACT_NAME,
+      "withdraw",
+      [Cl.uint(1)],
+      wallet1
+    );
+
+    expect(result.result).toBeErr(Cl.uint(104));
+  });
 });

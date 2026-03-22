@@ -40,6 +40,9 @@ npm install
 # Check contracts
 clarinet check
 
+# Validate with project script
+npm run check
+
 # Run tests
 npm run test
 

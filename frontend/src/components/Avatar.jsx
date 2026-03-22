@@ -53,9 +53,14 @@ export function Avatar({
 
 /**
  * Avatar group for multiple avatars
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - List of Avatar components
+ * @param {number} props.max - Max avatars to display (default: 4)
+ * @param {string} props.size - Size of avatars (default: 'md')
  */
 export function AvatarGroup({ children, max = 4, size = 'md', className = '' }) {
   const avatars = React.Children.toArray(children);
+
   const visible = avatars.slice(0, max);
   const remaining = avatars.length - max;
 
@@ -76,8 +81,13 @@ export function AvatarGroup({ children, max = 4, size = 'md', className = '' }) 
   );
 }
 
-// Generate initials from name
+/** 
+ * Generate initials from name
+ * @param {string} name 
+ * @returns {string} 
+ */
 function getInitials(name) {
+
   return name
     .split(' ')
     .map(part => part[0])
@@ -86,8 +96,13 @@ function getInitials(name) {
     .slice(0, 2);
 }
 
-// Generate gradient from address
+/** 
+ * Generate gradient from address 
+ * @param {string} address 
+ * @returns {string} 
+ */
 function generateGradient(address) {
+
   const hash = address.split('').reduce((acc, char) => {
     return char.charCodeAt(0) + ((acc << 5) - acc);
   }, 0);

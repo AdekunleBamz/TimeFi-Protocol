@@ -72,8 +72,8 @@ describe("TimeFi Vault - Admin Functions", () => {
         wallet1
       );
 
-      // Should fail because wallet1 is not a contract (ERR_BOT) or unauthorized
-      expect(result.result.type).toBe(7); // ResponseErr type
+      // Non-contract principals are rejected before deployer check.
+      expect(result.result).toBeErr(Cl.uint(106));
     });
 
     it("should return ERR_BOT for non-contract principal", () => {

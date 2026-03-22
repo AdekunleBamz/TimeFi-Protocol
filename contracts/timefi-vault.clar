@@ -16,13 +16,22 @@
 (define-data-var tvl uint u0)
 (define-data-var fees uint u0)
 
+(define-private (current-time-secs)
+  (unwrap-panic (get-stacks-block-info? time (- stacks-block-height u1))))
+
 (define-map vaults
-  ((id uint))
-  ((owner principal) (amount uint) (lock-time uint) (unlock-time uint) (active bool)))
+  uint
+  {
+    owner: principal,
+    amount: uint,
+    lock-time: uint,
+    unlock-time: uint,
+    active: bool
+  })
 
 (define-map approved-bots
-  ((hash (buff 32)))
-  ((approved bool)))
+  (buff 32)
+  bool)
 
 (define-constant DEPLOYER tx-sender)
 
@@ -33,8 +42,8 @@
 (define-read-only (is-bot (sender principal))
   (match (contract-hash? sender)
     h
-      (default-to false (get approved (map-get? approved-bots {hash: h})))
-    err false))
+      (default-to false (map-get? approved-bots h))
+    hash-err false))
 
 ;; -------------------------------------------------------
 ;; PUBLIC: APPROVE BOT
@@ -45,10 +54,10 @@
     h
       (begin
         (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
-        (map-set approved-bots {hash: h} {approved: true})
+        (map-set approved-bots h true)
         (ok true)
       )
-    err ERR_BOT))
+    hash-err ERR_BOT))
 
 ;; -------------------------------------------------------
 ;; PUBLIC: CREATE VAULT
@@ -61,22 +70,22 @@
     (fee (/ (* amount FEE_BPS) u10000))
     (deposit (- amount fee))
     ;; Unlock height is calculated as current block time + lock seconds
-    (unlock (+ lock-secs (stacks-block-time)))
+    (unlock (+ lock-secs (current-time-secs)))
   )
     (asserts! (>= amount MIN_DEPOSIT) ERR_AMOUNT)
     (asserts! (>= lock-secs MIN_LOCK) ERR_LOCK_PERIOD)
     (asserts! (<= lock-secs MAX_LOCK) ERR_LOCK_PERIOD)
 
     ;; transfers
-    (try! (stx-transfer? deposit tx-sender (as-contract tx-sender)))
+    (try! (stx-transfer? deposit tx-sender DEPLOYER))
     (try! (stx-transfer? fee tx-sender (var-get treasury)))
 
     ;; save vault
-    (map-set vaults {id: id}
+    (map-set vaults id
       {
         owner: tx-sender,
         amount: deposit,
-        lock-time: (stacks-block-time),
+        lock-time: (current-time-secs),
         unlock-time: unlock,
         active: true
       }
@@ -94,24 +103,24 @@
 ;; -------------------------------------------------------
 
 (define-read-only (get-vault (id uint))
-  (match (map-get? vaults {id: id})
+  (match (map-get? vaults id)
     v (ok v)
-    err ERR_NOT_FOUND))
+    ERR_NOT_FOUND))
 
 ;; -------------------------------------------------------
 ;; PUBLIC: WITHDRAW
 ;; -------------------------------------------------------
 
 (define-public (withdraw (id uint))
-  (match (map-get? vaults {id: id})
+  (match (map-get? vaults id)
     vault
       (begin
         (asserts! (is-eq (get owner vault) tx-sender) ERR_UNAUTHORIZED)
         (asserts! (get active vault) ERR_INACTIVE)
-        (asserts! (>= (stacks-block-time) (get unlock-time vault)) ERR_LOCK_PERIOD)
+        (asserts! (>= (current-time-secs) (get unlock-time vault)) ERR_LOCK_PERIOD)
 
         ;; mark inactive
-        (map-set vaults {id: id}
+        (map-set vaults id
           {
             owner: (get owner vault),
             amount: u0,
@@ -122,23 +131,23 @@
         )
 
         ;; transfer funds
-        (try! (stx-transfer? (get amount vault) (as-contract tx-sender) tx-sender))
+        (try! (stx-transfer? (get amount vault) DEPLOYER tx-sender))
 
         (var-set tvl (- (var-get tvl) (get amount vault)))
 
         (print {event: "withdraw", id: id, owner: tx-sender})
         (ok true)
       )
-    err ERR_NOT_FOUND))
+    ERR_NOT_FOUND))
 
 ;; -------------------------------------------------------
 ;; READ: IS-ACTIVE
 ;; -------------------------------------------------------
 
 (define-read-only (is-active (id uint))
-  (match (map-get? vaults {id: id})
+  (match (map-get? vaults id)
     v (ok (get active v))
-    err ERR_NOT_FOUND))
+    ERR_NOT_FOUND))
 
 ;; -------------------------------------------------------
 ;; READ: GET TVL (Total Value Locked)
@@ -166,9 +175,9 @@
 ;; -------------------------------------------------------
 
 (define-read-only (get-time-remaining (id uint))
-  (match (map-get? vaults {id: id})
+  (match (map-get? vaults id)
     vault
-      (let ((now (stacks-block-time))
+      (let ((now (current-time-secs))
             (unlock (get unlock-time vault)))
         (if (>= now unlock)
           (ok u0)
@@ -187,9 +196,9 @@
 ;; -------------------------------------------------------
 
 (define-read-only (can-withdraw (id uint))
-  (match (map-get? vaults {id: id})
+  (match (map-get? vaults id)
     vault
-      (ok (and (get active vault) (>= (stacks-block-time) (get unlock-time vault))))
+      (ok (and (get active vault) (>= (current-time-secs) (get unlock-time vault))))
     ERR_NOT_FOUND))
 
 ;; -------------------------------------------------------
@@ -197,7 +206,7 @@
 ;; -------------------------------------------------------
 
 (define-read-only (is-vault-owner (id uint) (owner principal))
-  (match (map-get? vaults {id: id})
+  (match (map-get? vaults id)
     vault (ok (is-eq (get owner vault) owner))
     ERR_NOT_FOUND))
 
@@ -248,8 +257,8 @@
     h
       (begin
         (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
-        (map-set approved-bots {hash: h} {approved: false})
+        (map-set approved-bots h false)
         (print {event: "bot-revoked", bot: bot})
         (ok true)
       )
-    err ERR_BOT))
+    hash-err ERR_BOT))

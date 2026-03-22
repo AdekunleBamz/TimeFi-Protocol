@@ -7,6 +7,7 @@ import './EmptyState.css';
  * @param {string} title - Main heading
  * @param {string} description - Supporting text
  * @param {ReactNode} action - CTA button/link
+ * @param {ReactNode} secondaryAction - Optional secondary CTA
  */
 export function EmptyState({
   icon,
@@ -15,6 +16,7 @@ export function EmptyState({
   description,
   note,
   action,
+  secondaryAction,
   className = '',
 }) {
   return (
@@ -35,9 +37,14 @@ export function EmptyState({
 
       {note && <p className="empty-state-note">{note}</p>}
       
-      {action && (
-        <div className="empty-state-action">{action}</div>
-      )}
+      <div className="empty-state-actions">
+        {action && (
+          <div className="empty-state-action">{action}</div>
+        )}
+        {secondaryAction && (
+          <div className="empty-state-secondary-action">{secondaryAction}</div>
+        )}
+      </div>
     </div>
   );
 }
@@ -60,9 +67,15 @@ export function NoVaultsEmptyState({ onCreateVault }) {
           </button>
         )
       }
+      secondaryAction={
+        <a href="https://docs.timefi.io" target="_blank" rel="noopener noreferrer" className="empty-state-link">
+          Learn how it works
+        </a>
+      }
     />
   );
 }
+
 
 /**
  * Pre-configured empty state for no transactions

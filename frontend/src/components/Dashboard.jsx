@@ -9,7 +9,9 @@ import { VaultCard } from './VaultCard';
 import { CreateVaultForm } from './CreateVaultForm';
 import { EmptyState } from './EmptyState';
 import { Skeleton } from './Skeleton';
+import { Tooltip } from './Tooltip';
 import './Dashboard.css';
+
 
 /**
  * Main dashboard page component
@@ -97,15 +99,17 @@ export function Dashboard() {
         </div>
         <div className="dashboard-hero-metrics" role="list" aria-label="Protocol snapshot">
           {protocolSnapshot.map((metric) => (
-            <div
-              key={metric.label}
-              className={`dashboard-hero-metric dashboard-hero-metric-${metric.tone}`}
-              role="listitem"
-            >
-              <span>{metric.label}</span>
-              <strong>{metric.value}</strong>
-            </div>
+            <Tooltip key={metric.label} content={`Live ${metric.label.toLowerCase()} tracking`}>
+              <div
+                className={`dashboard-hero-metric dashboard-hero-metric-${metric.tone}`}
+                role="listitem"
+              >
+                <span>{metric.label}</span>
+                <strong>{metric.value}</strong>
+              </div>
+            </Tooltip>
           ))}
+
         </div>
         <div className="dashboard-hero-highlights">
           <span>Fixed lock windows</span>

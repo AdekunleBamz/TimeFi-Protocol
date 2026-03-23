@@ -40,7 +40,7 @@ Wallet ordering assumptions:
 You can override runtime values with environment variables:
 
 ```bash
-MAX_TXS=50 GAS_FEE=1000 CREATE_AMOUNT=10000 node test/full-test-333.js
+MAX_TXS=50 GAS_FEE=1000 CREATE_AMOUNT=10000 node tests/full-test-333.js
 ```
 
 ## Funding Formula

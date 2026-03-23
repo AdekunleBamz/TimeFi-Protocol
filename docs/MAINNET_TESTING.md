@@ -23,7 +23,7 @@ Both scripts target Hiro mainnet API and the `*-v-A2` contract set by default.
 ## Running Full Test
 
 ```bash
-node test/full-test-333.js
+node tests/full-test-333.js
 ```
 
 ### Wallet Funding

@@ -85,4 +85,4 @@ This affects local assertions and does not automatically imply a mainnet regress
 ## Preflight Sanity Checks
 
 - Confirm wallet 1 nonce can be fetched before funding starts.
-- Confirm each recipient address is unique in `test/wallets.json`.
+- Confirm each recipient address is unique in `tests/wallets.json`.

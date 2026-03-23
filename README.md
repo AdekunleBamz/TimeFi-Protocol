@@ -11,7 +11,7 @@ timefi-protocol/
 ├── contracts/       # Clarity smart contracts
 ├── frontend/        # React-based web dashboard
 ├── sdk/             # JavaScript/TypeScript SDK
-├── scripts/         # Deployment and maintenance scripts
+├── deployments/     # Clarinet deployment plans
 ├── settings/        # Network configuration
 ├── test/            # Mainnet script utilities and artifacts
 ├── tests/           # Contract testing suite

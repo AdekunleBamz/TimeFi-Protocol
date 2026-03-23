@@ -58,7 +58,7 @@ A transaction is counted as "confirmed" when it reaches terminal on-chain status
 
 ## Output Artifacts
 
-- `test/full-test-results.json`: transaction timeline and aggregate summary
+- `tests/full-test-results.json`: transaction timeline and aggregate summary
 - `test/funding-results.json`: wallet funding transaction outcomes
 
 ## Safety Behavior

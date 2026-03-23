@@ -29,7 +29,7 @@ node tests/full-test-333.js
 ### Wallet Funding
 
 ```bash
-node test/fund-wallets.js
+node tests/fund-wallets.js
 ```
 
 Wallet ordering assumptions:

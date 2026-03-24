@@ -15,16 +15,17 @@ export function WalletProvider({ children }) {
   const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.WALLET_SESSION, null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [balance, setBalance] = useState(0);
+  const networkType = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
 
   const network = useMemo(() => (
-    import.meta.env.VITE_NETWORK === 'mainnet' ? new StacksMainnet() : new StacksTestnet()
-  ), []);
+    networkType === 'mainnet' ? new StacksMainnet() : new StacksTestnet()
+  ), [networkType]);
   const address = useMemo(() => {
     if (!userData?.profile?.stxAddress) return null;
-    return import.meta.env.VITE_NETWORK === 'mainnet'
+    return networkType === 'mainnet'
       ? userData.profile.stxAddress.mainnet
       : userData.profile.stxAddress.testnet;
-  }, [userData]);
+  }, [networkType, userData]);
 
   const connect = useCallback(() => {
     setIsConnecting(true);

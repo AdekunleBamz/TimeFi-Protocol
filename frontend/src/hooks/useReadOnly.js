@@ -3,7 +3,11 @@ import { TimeFiClient, uintCV, principalCV } from 'timefi-sdk';
 import { useFetch } from './useAsync';
 
 // Shared client instance
-const client = new TimeFiClient(import.meta.env.VITE_NETWORK || 'mainnet');
+const ACTIVE_NETWORK =
+  String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'mainnet'
+    ? 'mainnet'
+    : 'testnet';
+const client = new TimeFiClient(ACTIVE_NETWORK);
 
 /**
  * Custom hook for read-only contract queries

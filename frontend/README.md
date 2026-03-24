@@ -95,15 +95,16 @@ npm run build
 
 ## Configuration
 
-Contract addresses and network configuration are in `src/config/contracts.js`:
+Contract addresses are re-exported from `src/config/contracts.js`, while network selection is resolved from `src/config/env.js` and `.env` variables:
 
 ```javascript
 export const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N';
-export const NETWORK = 'mainnet'; // 'mainnet' or 'testnet'
+// in .env
+VITE_NETWORK=mainnet
 ```
 
 > [!TIP]
-> Always ensure your wallet is connected to the same network as configured in `contracts.js`.
+> Always ensure your wallet is connected to the same network configured by `VITE_NETWORK`.
 
 ## Environment Variables
 

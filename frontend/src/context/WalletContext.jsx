@@ -11,17 +11,22 @@ const appDetails = {
   icon: '/logo.svg',
 };
 
+const ACTIVE_NETWORK =
+  String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'mainnet'
+    ? 'mainnet'
+    : 'testnet';
+
 export function WalletProvider({ children }) {
   const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.WALLET_SESSION, null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [balance, setBalance] = useState(0);
 
   const network = useMemo(() => (
-    import.meta.env.VITE_NETWORK === 'mainnet' ? new StacksMainnet() : new StacksTestnet()
+    ACTIVE_NETWORK === 'mainnet' ? new StacksMainnet() : new StacksTestnet()
   ), []);
   const address = useMemo(() => {
     if (!userData?.profile?.stxAddress) return null;
-    return import.meta.env.VITE_NETWORK === 'mainnet'
+    return ACTIVE_NETWORK === 'mainnet'
       ? userData.profile.stxAddress.mainnet
       : userData.profile.stxAddress.testnet;
   }, [userData]);

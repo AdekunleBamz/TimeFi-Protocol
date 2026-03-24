@@ -12,7 +12,10 @@ export function Header() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const explorerChain = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
+  const activeNetwork =
+    String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'testnet'
+      ? 'testnet'
+      : 'mainnet';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,8 +25,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const networkValue = (import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
-  const networkLabel = networkValue.toUpperCase();
+  const networkLabel = activeNetwork.toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
     : location.pathname === '/404'
@@ -152,7 +154,7 @@ export function Header() {
 
               <div className="header-wallet-actions">
                 <a
-                  href={`https://explorer.hiro.so/address/${address}?chain=${explorerChain}`}
+                  href={`https://explorer.hiro.so/address/${address}?chain=${activeNetwork}`}
                   className="header-wallet-link"
                   target="_blank"
                   rel="noopener noreferrer"

@@ -1,6 +1,8 @@
 /**
  * Application-wide constants
  */
+import { StacksMainnet, StacksTestnet } from '@stacks/network';
+import { CONTRACT_ADDRESS, CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT } from '../config/contracts';
 
 // Network configuration
 export const NETWORK = {
@@ -10,6 +12,7 @@ export const NETWORK = {
 };
 
 export const CURRENT_NETWORK = NETWORK.MAINNET;
+const ACTIVE_NETWORK = String(import.meta.env.VITE_NETWORK || CURRENT_NETWORK).trim().toLowerCase();
 
 // Block time estimates (in seconds)
 export const BLOCK_TIME = {
@@ -17,6 +20,7 @@ export const BLOCK_TIME = {
   TESTNET: 120, // ~2 minutes
   DEVNET: 30,   // ~30 seconds
 };
+export const BLOCK_TIME_SECONDS = BLOCK_TIME.MAINNET;
 
 // API endpoints
 export const API_ENDPOINTS = {
@@ -37,6 +41,7 @@ export const STX = {
   MILLI: 1000,
   UNIT: 1_000_000,
 };
+export const MINIMUM_DEPOSIT = Math.floor(Number(MIN_DEPOSIT || 0) * STX.UNIT);
 
 // Vault status codes
 export const VAULT_STATUS = {
@@ -89,6 +94,18 @@ export const LINKS = {
   DISCORD: 'https://discord.gg/timefi',
   EXPLORER: 'https://explorer.hiro.so',
 };
+
+const lockPeriods = Object.values(LOCK_PERIODS || {})
+  .map((period) => Number(period?.blocks))
+  .filter((value) => Number.isFinite(value) && value > 0);
+export const MINIMUM_LOCK_BLOCKS = lockPeriods.length ? Math.min(...lockPeriods) : 0;
+export const MAXIMUM_LOCK_BLOCKS = lockPeriods.length ? Math.max(...lockPeriods) : 0;
+
+export const STACKS_NETWORK = ACTIVE_NETWORK === NETWORK.MAINNET
+  ? new StacksMainnet()
+  : new StacksTestnet();
+
+export { CONTRACT_ADDRESS, CONTRACT_NAMES };
 
 // Animation durations (ms)
 export const ANIMATION = {

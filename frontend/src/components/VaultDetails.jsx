@@ -14,6 +14,11 @@ import { useToast } from './Toast';
 import { Skeleton } from './Skeleton';
 import './VaultDetails.css';
 
+const ACTIVE_NETWORK =
+  String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'testnet'
+    ? 'testnet'
+    : 'mainnet';
+
 /**
  * Vault details page component
  */
@@ -211,7 +216,7 @@ export function VaultDetails() {
           <div className="vault-header-actions">
             <CopyButton text={String(id)} variant="text" successMessage="Vault id copied" />
             <a
-              href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=mainnet`}
+              href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=${ACTIVE_NETWORK}`}
               className="vault-header-link"
               target="_blank"
               rel="noopener noreferrer"
@@ -313,7 +318,7 @@ export function VaultDetails() {
               <dt>Owner</dt>
               <dd>
                 <a 
-                  href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=mainnet`}
+                  href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=${ACTIVE_NETWORK}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -9,7 +9,10 @@ import { STACKS_NETWORK, CONTRACT_ADDRESS, CONTRACT_NAMES } from '../utils/const
 /**
  * Base API configuration
  */
-const HIRO_API_URL = 'https://api.mainnet.hiro.so';
+const ACTIVE_NETWORK = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
+const HIRO_API_URL = ACTIVE_NETWORK === 'testnet'
+  ? 'https://api.testnet.hiro.so'
+  : 'https://api.mainnet.hiro.so';
 
 function safeParseInt(value, fallback = 0) {
   const parsed = Number.parseInt(value, 10);

@@ -25,6 +25,8 @@ export function VaultDetails() {
   const { withdraw, emergencyWithdraw, claimRewards, loading: txLoading } = useContract();
   const { toast } = useToast();
   const vaultId = Number.parseInt(id, 10);
+  const network = (import.meta.env.VITE_NETWORK || 'mainnet').toLowerCase();
+  const explorerChain = network === 'testnet' ? 'testnet' : 'mainnet';
 
   const { data: vault, loading, error, refetch } = useReadOnly(
     'get-vault-details',
@@ -211,7 +213,7 @@ export function VaultDetails() {
           <div className="vault-header-actions">
             <CopyButton text={String(id)} variant="text" successMessage="Vault id copied" />
             <a
-              href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=mainnet`}
+              href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=${explorerChain}`}
               className="vault-header-link"
               target="_blank"
               rel="noopener noreferrer"
@@ -313,7 +315,7 @@ export function VaultDetails() {
               <dt>Owner</dt>
               <dd>
                 <a 
-                  href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=mainnet`}
+                  href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=${explorerChain}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

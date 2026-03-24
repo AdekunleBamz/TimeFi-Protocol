@@ -53,6 +53,8 @@ function TransactionItem({ transaction }) {
   const config = typeConfig[type] || typeConfig.deposit;
   const shortTxId = formatAddress(txId);
   const normalizedStatus = status === 'success' ? 'confirmed' : status;
+  const network = (import.meta.env.VITE_NETWORK || 'mainnet').toLowerCase();
+  const explorerChain = network === 'testnet' ? 'testnet' : 'mainnet';
 
   return (
     <div className={`transaction-item transaction-${status}`}>
@@ -84,7 +86,7 @@ function TransactionItem({ transaction }) {
 
         <div className="transaction-context">
           <a 
-            href={`https://explorer.hiro.so/txid/${txId}?chain=mainnet`}
+            href={`https://explorer.hiro.so/txid/${txId}?chain=${explorerChain}`}
             target="_blank"
             rel="noopener noreferrer"
             className="transaction-link"

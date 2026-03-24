@@ -9,7 +9,11 @@ export const NETWORK = {
   DEVNET: 'devnet',
 };
 
-export const CURRENT_NETWORK = NETWORK.MAINNET;
+export const CURRENT_NETWORK = (
+  String(import.meta.env.VITE_NETWORK || NETWORK.MAINNET).trim().toLowerCase() === NETWORK.TESTNET
+    ? NETWORK.TESTNET
+    : NETWORK.MAINNET
+);
 
 // Block time estimates (in seconds)
 export const BLOCK_TIME = {

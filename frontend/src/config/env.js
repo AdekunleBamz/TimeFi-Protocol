@@ -7,10 +7,11 @@ const normalizeNetwork = (value) => String(value || '').trim().toLowerCase();
 const SUPPORTED_NETWORKS = ['mainnet', 'testnet', 'devnet'];
 export { SUPPORTED_NETWORKS };
 const parseBoolean = (value) => String(value || '').trim().toLowerCase() === 'true';
+const configuredNetwork = normalizeNetwork(import.meta.env.VITE_NETWORK) || 'mainnet';
 
 export const env = {
   // Network
-  network: normalizeNetwork(import.meta.env.VITE_NETWORK) || 'mainnet',
+  network: configuredNetwork,
   
   // Contract Configuration
   contractAddress: (import.meta.env.VITE_CONTRACT_ADDRESS || 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').trim(),
@@ -22,7 +23,10 @@ export const env = {
   },
   
   // API Configuration
-  hiroApiUrl: (import.meta.env.VITE_HIRO_API_URL || 'https://api.mainnet.hiro.so').trim(),
+  hiroApiUrl: (
+    import.meta.env.VITE_HIRO_API_URL
+    || (configuredNetwork === 'testnet' ? 'https://api.testnet.hiro.so' : 'https://api.mainnet.hiro.so')
+  ).trim(),
   explorerUrl: (import.meta.env.VITE_EXPLORER_URL || 'https://explorer.hiro.so').trim(),
   
   // App Info

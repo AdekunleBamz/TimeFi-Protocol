@@ -7,7 +7,7 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity 4 feat
 
 ## 🏗️ Project Structure
 
-timefi-protocol/
+TimeFi-Protocol/
 ├── contracts/       # Clarity smart contracts
 ├── frontend/        # React-based web dashboard
 ├── sdk/             # JavaScript/TypeScript SDK

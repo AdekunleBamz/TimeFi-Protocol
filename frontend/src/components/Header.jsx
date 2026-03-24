@@ -21,7 +21,8 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
+  const networkValue = (import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
+  const networkLabel = networkValue.toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
     : location.pathname === '/404'

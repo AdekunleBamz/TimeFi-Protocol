@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 
+const ACTIVE_NETWORK =
+    String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'mainnet'
+        ? 'mainnet'
+        : 'testnet';
+
 /**
  * Hook for fetching current Stacks block height
  */
@@ -11,7 +16,7 @@ export function useBlockHeight() {
 
     const fetchBlockHeight = useCallback(async () => {
         try {
-            const network = import.meta.env.VITE_NETWORK === 'mainnet'
+            const network = ACTIVE_NETWORK === 'mainnet'
                 ? new StacksMainnet()
                 : new StacksTestnet();
 

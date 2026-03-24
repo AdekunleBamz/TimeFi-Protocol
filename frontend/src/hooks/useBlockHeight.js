@@ -11,7 +11,8 @@ export function useBlockHeight() {
 
     const fetchBlockHeight = useCallback(async () => {
         try {
-            const network = import.meta.env.VITE_NETWORK === 'mainnet'
+            const networkType = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
+            const network = networkType === 'mainnet'
                 ? new StacksMainnet()
                 : new StacksTestnet();
 

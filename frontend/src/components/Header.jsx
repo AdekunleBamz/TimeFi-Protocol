@@ -21,7 +21,9 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
+  const network = (import.meta.env.VITE_NETWORK || 'mainnet').toLowerCase();
+  const explorerChain = network === 'testnet' ? 'testnet' : 'mainnet';
+  const networkLabel = network.toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
     : location.pathname === '/404'
@@ -150,7 +152,7 @@ export function Header() {
 
               <div className="header-wallet-actions">
                 <a
-                  href={`https://explorer.hiro.so/address/${address}?chain=mainnet`}
+                  href={`https://explorer.hiro.so/address/${address}?chain=${explorerChain}`}
                   className="header-wallet-link"
                   target="_blank"
                   rel="noopener noreferrer"

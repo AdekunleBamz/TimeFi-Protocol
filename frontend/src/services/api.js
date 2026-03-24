@@ -5,11 +5,12 @@ import {
   uintCV,
 } from '@stacks/transactions';
 import { STACKS_NETWORK, CONTRACT_ADDRESS, CONTRACT_NAMES } from '../utils/constants';
+import { env } from '../config/env';
 
 /**
  * Base API configuration
  */
-const HIRO_API_URL = 'https://api.mainnet.hiro.so';
+const HIRO_API_URL = env.hiroApiUrl;
 
 function safeParseInt(value, fallback = 0) {
   const parsed = Number.parseInt(value, 10);

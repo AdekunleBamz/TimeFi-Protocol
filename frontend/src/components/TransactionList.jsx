@@ -3,6 +3,11 @@ import { formatSTX, formatRelativeTime, formatAddress } from '../utils/format';
 import { CopyButton } from './CopyButton';
 import './TransactionList.css';
 
+const ACTIVE_NETWORK =
+  String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'testnet'
+    ? 'testnet'
+    : 'mainnet';
+
 
 /**
  * Transaction list component
@@ -84,7 +89,7 @@ function TransactionItem({ transaction }) {
 
         <div className="transaction-context">
           <a 
-            href={`https://explorer.hiro.so/txid/${txId}?chain=mainnet`}
+            href={`https://explorer.hiro.so/txid/${txId}?chain=${ACTIVE_NETWORK}`}
             target="_blank"
             rel="noopener noreferrer"
             className="transaction-link"

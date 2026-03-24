@@ -10,6 +10,8 @@ import './TransactionList.css';
  * @param {boolean} loading - Show loading state
  */
 export function TransactionList({ transactions = [], loading = false }) {
+  const explorerChain = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
+
   if (loading) {
     return (
       <div className="transaction-list">
@@ -84,7 +86,7 @@ function TransactionItem({ transaction }) {
 
         <div className="transaction-context">
           <a 
-            href={`https://explorer.hiro.so/txid/${txId}?chain=mainnet`}
+            href={`https://explorer.hiro.so/txid/${txId}?chain=${explorerChain}`}
             target="_blank"
             rel="noopener noreferrer"
             className="transaction-link"

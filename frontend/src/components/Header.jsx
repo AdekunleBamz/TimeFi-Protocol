@@ -12,6 +12,7 @@ export function Header() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const explorerChain = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -151,7 +152,7 @@ export function Header() {
 
               <div className="header-wallet-actions">
                 <a
-                  href={`https://explorer.hiro.so/address/${address}?chain=mainnet`}
+                  href={`https://explorer.hiro.so/address/${address}?chain=${explorerChain}`}
                   className="header-wallet-link"
                   target="_blank"
                   rel="noopener noreferrer"

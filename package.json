@@ -15,7 +15,7 @@
     "test:report": "vitest run -- --coverage --costs",
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
-  "author": "AdekunleBamz <adekunle@stackpulse.io>",
+  "author": "AdekunleBamz <bams.kunle@gmail.com>",
   "engines": {
     "node": ">=18.0.0"
   },
@@ -26,6 +26,7 @@
     "@types/node": "^24.4.0",
     "chokidar-cli": "^3.0.0",
     "vitest": "^4.0.7",
-    "vitest-environment-clarinet": "^3.0.0"
+    "vitest-environment-clarinet": "^3.0.0",
+    "timefi-sdk": "^0.1.0"
   }
 }

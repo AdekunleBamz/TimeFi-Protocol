@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: fee floor for tiny positive amount.
 
 describe("Fee Boundary 0002", () => {
   it("calculate-fee should floor to 0 for amount 1", () => {

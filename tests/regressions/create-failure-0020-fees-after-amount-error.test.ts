@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: failed create must not collect protocol fees.
 
 describe("Create Failure 0020", () => {
   it("should keep total fees at 0 after amount validation failure", () => {

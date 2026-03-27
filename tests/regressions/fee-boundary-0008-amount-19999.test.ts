@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: amount 19,999 verifies upper edge of this fee bucket.
 
 describe("Fee Boundary 0008", () => {
   it("calculate-fee should return 99 for amount 19999", () => {

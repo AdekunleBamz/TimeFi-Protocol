@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: amount 20,000 marks next fee-step boundary.
 
 describe("Fee Boundary 0009", () => {
   it("calculate-fee should return 100 for amount 20000", () => {

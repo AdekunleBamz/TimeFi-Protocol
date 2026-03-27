@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: amount 200 keeps deposit fee floor expectations stable.
 
 describe("Deposit Boundary 0012", () => {
   it("calculate-deposit-after-fee should return 199 for amount 200", () => {

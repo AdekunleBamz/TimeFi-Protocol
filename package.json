@@ -24,11 +24,7 @@
     "sdk:test": "npm --prefix sdk run test",
     "test": "vitest run",
     "test:report": "vitest run --coverage --costs",
-    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "verify:local": "npm run contracts:check && npm run sdk:test && npm run frontend:lint",
-    "prepare": "husky"
+    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
   "author": "adekunlebamz <bams.kunle@gmail.com>",
   "engines": {

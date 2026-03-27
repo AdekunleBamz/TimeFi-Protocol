@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: fee accounting remains correct after create at 10,001.
 
 describe("Create State 0023", () => {
   it("should record fee 50 after creating a vault with amount 10001", () => {

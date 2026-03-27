@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: failed amount check must not consume next vault id.
 
 describe("Create Flow 0021", () => {
   it("should assign id 1 after an earlier amount-validation failure", () => {

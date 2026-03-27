@@ -94,7 +94,7 @@ export const STORAGE_KEYS = {
 // External links
 export const LINKS = {
   DOCS: 'https://docs.timefi.io',
-  GITHUB: 'https://github.com/AdekunleBamz/TimeFi-Protocol',
+  GITHUB: 'https://github.com/AdeekunleeBamz/TimeFi-Protocol',
   TWITTER: 'https://twitter.com/timefi_protocol',
   DISCORD: 'https://discord.gg/timefi',
   EXPLORER: 'https://explorer.hiro.so',

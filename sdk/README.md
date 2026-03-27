@@ -58,4 +58,4 @@ The SDK provides the following exports:
 
 ## 📄 License
 
-MIT © [AdekunleBamz](https://github.com/AdekunleBamz)
+MIT © [AdeekunleeBamz](https://github.com/AdeekunleeBamz)

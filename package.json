@@ -15,7 +15,7 @@
     "test:report": "vitest run --coverage --costs",
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
-  "author": "AdekunleBamz <bams.kunle@gmail.com>",
+  "author": "AdeekunleeBamz <bams.kunle@gmail.com>",
   "engines": {
     "node": ">=18.0.0"
   },

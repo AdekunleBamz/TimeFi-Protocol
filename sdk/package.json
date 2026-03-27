@@ -11,12 +11,12 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/AdekunleBamz/TimeFi-Protocol.git"
+        "url": "git+https://github.com/AdeekunleeBamz/TimeFi-Protocol.git"
     },
     "bugs": {
-        "url": "https://github.com/AdekunleBamz/TimeFi-Protocol/issues"
+        "url": "https://github.com/AdeekunleeBamz/TimeFi-Protocol/issues"
     },
-    "homepage": "https://github.com/AdekunleBamz/TimeFi-Protocol#readme",
+    "homepage": "https://github.com/AdeekunleeBamz/TimeFi-Protocol#readme",
     "publishConfig": {
         "access": "public"
     },
@@ -31,7 +31,7 @@
         "defi",
         "time-lock"
     ],
-    "author": "AdekunleBamz",
+    "author": "AdeekunleeBamz",
     "license": "MIT",
     "dependencies": {
         "@stacks/network": "^6.13.0",

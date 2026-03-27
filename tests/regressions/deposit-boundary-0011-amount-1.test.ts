@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: minimum deposit amount remains accepted.
 
 describe("Deposit Boundary 0011", () => {
   it("calculate-deposit-after-fee should return 1 for amount 1", () => {

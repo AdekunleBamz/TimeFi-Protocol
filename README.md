@@ -83,9 +83,6 @@ For detailed contribution guidelines, please see [CONTRIBUTING.md](CONTRIBUTING.
 # Install dependencies
 npm ci
 
-# Install root lint dependency (required by npm run lint / husky pre-commit)
-npm install --save-dev eslint
-
 # Check contracts
 npm run contracts:check
 

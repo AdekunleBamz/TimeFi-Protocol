@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: failed create must not increase total value locked.
 
 describe("Create Failure 0019", () => {
   it("should keep TVL at 0 after amount validation failure", () => {

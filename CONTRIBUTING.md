@@ -20,7 +20,7 @@ Thank you for your interest in contributing to TimeFi Protocol!
 
 3. Install dependencies:
    ```bash
-   npm install
+   npm ci
    ```
 
 4. Run tests:

@@ -40,7 +40,7 @@ timefi-protocol/
 
 ```bash
 # Install dependencies
-npm install
+npm ci
 
 # Check contracts
 clarinet check

@@ -12,7 +12,7 @@
     "frontend:build": "npm --prefix frontend run build",
     "sdk:build": "npm --prefix sdk run build",
     "test": "vitest run",
-    "test:report": "vitest run -- --coverage --costs",
+    "test:report": "vitest run --coverage --costs",
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
   "author": "AdekunleBamz <bams.kunle@gmail.com>",

@@ -16,6 +16,7 @@ The official JavaScript SDK for interacting with the **TimeFi Protocol** on the 
 
 ```bash
 npm install timefi-sdk
+```
 
 ### Running Tests
 

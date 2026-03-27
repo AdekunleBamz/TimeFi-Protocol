@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: very large amount keeps fee math stable.
 
 describe("Fee Boundary 0010", () => {
   it("calculate-fee should handle large amount deterministically", () => {

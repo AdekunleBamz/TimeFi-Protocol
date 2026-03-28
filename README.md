@@ -76,7 +76,7 @@ npm run dev
 
 ```bash
 cd sdk
-npm install
+npm ci
 npm run build
 ```
 

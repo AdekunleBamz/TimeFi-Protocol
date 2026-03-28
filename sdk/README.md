@@ -18,6 +18,15 @@ The official JavaScript SDK for interacting with the **TimeFi Protocol** on the 
 npm install timefi-sdk
 ```
 
+### Local SDK Development
+
+```bash
+cd sdk
+npm ci
+npm run build
+npm test
+```
+
 ### Running Tests
 
 ```bash

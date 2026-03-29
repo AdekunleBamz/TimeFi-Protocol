@@ -55,6 +55,12 @@ export const formatNumber = (val) => {
     return isNaN(num) ? '0' : num.toLocaleString();
 };
 
+/**
+ * Formats a decimal value as a percentage string.
+ * @param {number|string} val - The decimal value (e.g., 0.05).
+ * @param {number} [decimals=2] - Number of decimal places to include.
+ * @returns {string} Formatted percentage string.
+ */
 export const formatPercent = (val, decimals = 2) => {
     if (val === undefined || val === null) return '0%';
     const num = Number(val);

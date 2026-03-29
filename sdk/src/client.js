@@ -80,7 +80,7 @@ export class TimeFiClient {
      * @throws {Error} If id is missing or invalid.
      */
     async getTimeRemaining(id) {
-        if (id === undefined || id === null) throw new Error('id is required');
+        this.#validateVaultId(id);
         return this.callReadOnly('get-time-remaining', [uintCV(id)]);
     }
 

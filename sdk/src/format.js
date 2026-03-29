@@ -10,13 +10,13 @@
 + * @param {number|BigInt|string|Object} microStx - The value in microSTX.
 + * @returns {string} Formatted STX string.
 + */
- export const formatSTX = (microStx) => {
-    if (microStx === undefined || microStx === null) return '0.000000';
+ export const formatSTX = (amountMicroStx) => {
+    if (amountMicroStx === undefined || amountMicroStx === null) return '0.000000';
     try {
         // Extract inner value if wrapped in an object
-        const rawValue = (typeof microStx === 'object' && microStx !== null && 'value' in microStx)
-            ? microStx.value
-            : microStx;
+        const rawValue = (typeof amountMicroStx === 'object' && amountMicroStx !== null && 'value' in amountMicroStx)
+            ? amountMicroStx.value
+            : amountMicroStx;
 
         // Convert to Number safely, handles string, bigint, etc.
         const value = Number(rawValue);
@@ -40,10 +40,10 @@
  * @param {number} [suffix=4] - Number of characters to keep at the end.
  * @returns {string} Truncated address string.
  */
-export const formatAddress = (address, prefix = 4, suffix = 4) => {
-    if (!address) return '';
-    if (address.length <= prefix + suffix) return address;
-    return `${address.slice(0, prefix + 2)}...${address.slice(-suffix)}`;
+export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4) => {
+    if (!stacksAddress) return '';
+    if (stacksAddress.length <= prefixLength + suffixLength) return stacksAddress;
+    return `${stacksAddress.slice(0, prefixLength + 2)}...${stacksAddress.slice(-suffixLength)}`;
 };
 
 /**

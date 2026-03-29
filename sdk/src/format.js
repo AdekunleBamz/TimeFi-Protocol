@@ -31,12 +31,24 @@
     }
 };
 
+/**
+ * Truncates a Stacks address for display.
+ * @param {string} address - The full Stacks address.
+ * @param {number} [prefix=4] - Number of characters to keep at the start.
+ * @param {number} [suffix=4] - Number of characters to keep at the end.
+ * @returns {string} Truncated address string.
+ */
 export const formatAddress = (address, prefix = 4, suffix = 4) => {
     if (!address) return '';
     if (address.length <= prefix + suffix) return address;
     return `${address.slice(0, prefix + 2)}...${address.slice(-suffix)}`;
 };
 
+/**
+ * Formats a number with locale-specific separators.
+ * @param {number|string} val - The numeric value to format.
+ * @returns {string} Formatted number string.
+ */
 export const formatNumber = (val) => {
     if (val === undefined || val === null) return '0';
     const num = Number(val);

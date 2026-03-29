@@ -152,9 +152,9 @@ export class TimeFiClient {
      * @private
      * @throws {Error} If ID is missing or invalid.
      */
-    #validateVaultId(id) {
+     #validateVaultId(id) {
         if (id === undefined || id === null) {
-            throw new Error('Vault ID is required and must be defined');
+            throw new Error('Vault ID is required');
         }
     }
 }

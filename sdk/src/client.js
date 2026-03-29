@@ -129,8 +129,8 @@ export class TimeFiClient {
      * @returns {Object} Transaction options for @stacks/transactions.
      * @throws {Error} If id is missing or invalid.
      */
-    getWithdrawOptions(id) {
-        if (id === undefined || id === null) throw new Error('id is required');
+     getWithdrawOptions(id) {
+        this.#validateVaultId(id);
         return {
             contractAddress: this.contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
@@ -140,5 +140,17 @@ export class TimeFiClient {
             anchorMode: AnchorMode.Any,
             postConditionMode: PostConditionMode.Deny,
         };
+    }
+
+    /**
+     * Internal helper to validate vault IDs.
+     * @param {number|string|BigInt} id - The vault ID to validate.
+     * @private
+     * @throws {Error} If ID is missing or invalid.
+     */
+    #validateVaultId(id) {
+        if (id === undefined || id === null) {
+            throw new Error('Vault ID is required and must be defined');
+        }
     }
 }

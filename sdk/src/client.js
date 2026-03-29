@@ -140,9 +140,19 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The vault balance in microSTX.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async getVaultAmount(id) {
-        this.#validateVaultId(id);
+      async getVaultAmount(id) {
+        await this.#validateVaultId(id);
         return this.callReadOnly('get-vault-amount', [uintCV(id)]);
+    }
+ 
+    /**
+     * Alias for getVaultAmount. Retrieves the locked STX amount in a specific vault.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<number>} The amount in microSTX.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultBalance(id) {
+        return this.getVaultAmount(id);
     }
  
     /**

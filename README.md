@@ -157,6 +157,17 @@ FEE_BPS: 50 (0.5%)
  **Q: What is microSTX?**
  A: It is the smallest unit of STX. 1 STX = 1,000,000 microSTX.
  
+ **Q: What is the minimum lock period?**
+ A: The minimum lock period is 3,600 seconds (1 hour).
+ 
+ ## 🗺️ Roadmap 2026
+ 
+ - **Q1 2026**: Mobile Wallet Support & SDK v2
+ - **Q2 2026**: Multi-sig Vaults & Fee Sharing
+ 
+ - **Q3 2026**: L2 Integrations (Starknet/Arbitrum)
+ - **Q4 2026**: Decentralized Frontend & DAO
+ 
  ## 📖 Operations Docs
 
 ## 📄 License

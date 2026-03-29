@@ -16,6 +16,9 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity 4 feat
 [![Semantic Versioning](https://img.shields.io/badge/semver-2.0.0-blue.svg?style=flat-square)](https://semver.org)
 [![Testing: Vitest](https://img.shields.io/badge/testing-vitest-blue.svg)](https://vitest.dev)
 [![Maintenance: Active](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/AdekunleBamz/TimeFi-Protocol/graphs/commit-activity)
+[![Security Policy](https://img.shields.io/badge/security-policy-brightgreen.svg)](SECURITY.md)
+[![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-contributor%20covenant-ff69b4.svg)](CODE_OF_CONDUCT.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![GitHub Stars](https://img.shields.io/github/stars/AdekunleBamz/TimeFi-Protocol?style=social)](https://github.com/AdekunleBamz/TimeFi-Protocol)
 [![GitHub Forks](https://img.shields.io/github/forks/AdekunleBamz/TimeFi-Protocol?style=social)](https://github.com/AdekunleBamz/TimeFi-Protocol)
 
@@ -151,6 +154,8 @@ FEE_BPS: 50 (0.5%)
   - Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
   - **Audit Status**: [Internal Audit v1.0] (Pending External Review)
   - **Security Bounty**: Bug bounty program coming Q2 2026.
+  - **Emergency Pause**: Protocol can be paused by multisig in case of critical vulnerability.
+  - **Formal Verification**: Clarity contracts are being verified using TLA+.
   
    ### 🌐 Network API Endpoints
  

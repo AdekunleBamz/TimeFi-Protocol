@@ -63,11 +63,11 @@ export const formatNumber = (numericValue) => {
  * @param {number} [decimals=2] - Number of decimal places to include.
  * @returns {string} Formatted percentage string.
  */
-export const formatPercent = (val, decimals = 2) => {
-    if (val === undefined || val === null) return '0%';
-    const num = Number(val);
+export const formatPercent = (decimalValue, decimalPlaces = 2) => {
+    if (decimalValue === undefined || decimalValue === null) return '0%';
+    const num = Number(decimalValue);
     if (isNaN(num)) return '0%';
-    return (num * 100).toFixed(decimals) + '%';
+    return (num * 100).toFixed(decimalPlaces) + '%';
 };
 
 /**

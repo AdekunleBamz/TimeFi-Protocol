@@ -104,26 +104,19 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
  * @returns {string} Formatted relative time string.
  * @throws {Error} If date cannot be parsed.
  */
-export const formatRelativeTime = (rawInput) => {
-    if (!rawInput) return '--';
-    const currentDateTime = new Date();
-    const pastDate = new Date(rawInput);
-    const secondsDifference = Math.floor((currentDateTime - pastDate) / 1000);
-
-    // Handle future dates
-    if (secondsDifference < -1) {
-        const absoluteDifference = Math.abs(secondsDifference);
-        if (absoluteDifference < 60) return 'in a few seconds';
-        if (absoluteDifference < 3600) return `in ${Math.floor(absoluteDifference / 60)}m`;
-        if (absoluteDifference < 86400) return `in ${Math.floor(absoluteDifference / 3600)}h`;
-        return `in ${Math.floor(absoluteDifference / 86400)}d`;
-    }
-
-    if (secondsDifference < 5) return 'just now';
-    if (secondsDifference < 60) return `${secondsDifference}s ago`;
-    if (secondsDifference < 3600) return `${Math.floor(secondsDifference / 60)}m ago`;
-    if (secondsDifference < 86400) return `${Math.floor(secondsDifference / 3600)}h ago`;
-    if (secondsDifference < 604800) return `${Math.floor(secondsDifference / 86400)}d ago`;
-
-    return formatDate(date);
-};
+ export function formatRelativeTime(dateToFormat) {
+    if (!dateToFormat) return '--';
+    const dateInstance = new Date(dateToFormat);
+    if (isNaN(dateInstance.getTime())) return '--';
+    
+    const secondsDiff = Math.floor((dateInstance - new Date()) / 1000);
+    const rtf = new Intl.RelativeTimeFormat('en-US', { numeric: 'auto' });
+    
+    if (Math.abs(secondsDiff) < 60) return rtf.format(secondsDiff, 'second');
+    const minutesDiff = Math.floor(secondsDiff / 60);
+    if (Math.abs(minutesDiff) < 60) return rtf.format(minutesDiff, 'minute');
+    const hoursDiff = Math.floor(minutesDiff / 60);
+    if (Math.abs(hoursDiff) < 24) return rtf.format(hoursDiff, 'hour');
+    const daysDiff = Math.floor(hoursDiff / 24);
+    return rtf.format(daysDiff, 'day');
+}

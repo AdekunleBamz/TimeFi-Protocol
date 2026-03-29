@@ -21,6 +21,10 @@ export const CONTRACT_NAMES = {
     EMERGENCY: 'timefi-emergency-v-A2',
 };
 
+/**
+ * Predefined lock periods and their corresponding APY/multiplier values.
+ * @constant {Object}
+ */
 export const LOCK_PERIODS = {
     MONTH_1: { label: '1 Month', blocks: 4320, apy: 1 },
     MONTH_3: { label: '3 Months', blocks: 12960, apy: 3 },

@@ -103,9 +103,20 @@ const ClarityResponseType = {
      * @returns {Promise<boolean>} True if withdrawal is possible.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async canWithdraw(id) {
+     async canWithdraw(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('can-withdraw', [uintCV(id)]);
+    }
+ 
+    /**
+     * Checks if a vault is currently active (funds locked).
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<boolean>} True if the vault is active.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async isActive(id) {
+        this.#validateVaultId(id);
+        return this.callReadOnly('is-active', [uintCV(id)]);
     }
 
      /**

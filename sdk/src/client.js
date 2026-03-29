@@ -247,11 +247,23 @@ const ClarityResponseType = {
      * Retrieves the core contract metadata (address and name).
      * @returns {Object} Contract address and vault contract name.
      */
-    getContractMetadata() {
+     getContractMetadata() {
         return {
             address: this.#contractAddress,
             name: CONTRACT_NAMES.VAULT
         };
+    }
+ 
+    /**
+     * Retrieves aggregated protocol metrics.
+     * @returns {Promise<Object>} Object containing TVL, vault count, and block height.
+     */
+    async getProtocolMetrics() {
+        const [stats, blockHeight] = await Promise.all([
+            this.getProtocolStats(),
+            this.getBlockHeight()
+        ]);
+        return { ...stats, blockHeight };
     }
  
     /**

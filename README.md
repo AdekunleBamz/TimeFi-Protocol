@@ -188,8 +188,8 @@ FEE_BPS: 50 (0.5%)
  - **Q1 2026**: Mobile Wallet Support & SDK v2
  - **Q2 2026**: Multi-sig Vaults & Fee Sharing
  
- - **Q3 2026**: L2 Integrations (Starknet/Arbitrum)
- - **Q4 2026**: Decentralized Frontend & DAO
+ - **Q3 2026**: L2 Integrations (Starknet/Arbitrum) & L3 Hyperchains
+ - **Q4 2026**: Decentralized Frontend & DAO Governance
  
  ## 📖 Operations Docs
  

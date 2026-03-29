@@ -95,22 +95,22 @@ export const formatRelativeTime = (date) => {
     if (!date) return '--';
     const currentDateTime = new Date();
     const pastDate = new Date(date);
-    const diffInSeconds = Math.floor((currentDateTime - pastDate) / 1000);
+    const secondsDifference = Math.floor((currentDateTime - pastDate) / 1000);
 
     // Handle future dates
-    if (diffInSeconds < -1) {
-        const absDiff = Math.abs(diffInSeconds);
+    if (secondsDifference < -1) {
+        const absDiff = Math.abs(secondsDifference);
         if (absDiff < 60) return 'in a few seconds';
         if (absDiff < 3600) return `in ${Math.floor(absDiff / 60)}m`;
         if (absDiff < 86400) return `in ${Math.floor(absDiff / 3600)}h`;
         return `in ${Math.floor(absDiff / 86400)}d`;
     }
 
-    if (diffInSeconds < 5) return 'just now';
-    if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
-    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
-    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
-    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
+    if (secondsDifference < 5) return 'just now';
+    if (secondsDifference < 60) return `${secondsDifference}s ago`;
+    if (secondsDifference < 3600) return `${Math.floor(secondsDifference / 60)}m ago`;
+    if (secondsDifference < 86400) return `${Math.floor(secondsDifference / 3600)}h ago`;
+    if (secondsDifference < 604800) return `${Math.floor(secondsDifference / 86400)}d ago`;
 
     return formatDate(date);
 };

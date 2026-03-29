@@ -55,7 +55,7 @@ export class TimeFiClient {
         });
  
         // Handle ResponseCV (ok/err) explicitly
-        if (callResult.type === ClarityResponseType.OK || callResult.type === ClarityResponseType.ERR) {
+        if (callResult.type === RESPONSE_TYPES.OK || callResult.type === RESPONSE_TYPES.ERR) {
             return cvToValue(callResult.value);
         }
  

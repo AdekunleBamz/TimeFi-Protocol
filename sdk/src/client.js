@@ -334,13 +334,25 @@ const ClarityResponseType = {
      * Retrieves all global protocol data.
      * @returns {Promise<Object>} Object containing metrics, metadata, and config.
      */
-    async getProtocolData() {
+     async getProtocolData() {
         const [metrics, metadata, config] = await Promise.all([
             this.getProtocolMetrics(),
             this.getContractMetadata(),
             this.getProtocolConfig()
         ]);
         return { ...metrics, metadata, ...config };
+    }
+ 
+    /**
+     * Retrieves a simplified summary of global protocol data.
+     * @returns {Promise<Object>} Object containing metrics and essential metadata.
+     */
+    async getProtocolDataSummary() {
+        const [metrics, metadata] = await Promise.all([
+            this.getProtocolMetrics(),
+            this.getContractMetadata()
+        ]);
+        return { ...metrics, contract: metadata.address };
     }
  
     /**

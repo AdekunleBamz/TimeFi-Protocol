@@ -37,12 +37,13 @@ export class TimeFiClient {
 
     // --- Read-only Methods ---
 
-    /**
+     /**
      * Internal helper to call a read-only contract function.
      * @param {string} functionName - Name of the Clarity function.
      * @param {any[]} functionArgs - Arguments for the function call.
-     * @param {string} [senderAddress] - Optional sender address.
+     * @param {string} [senderAddress] - Optional sender address (defaults to contract address).
      * @returns {Promise<any>} The parsed result of the call.
+     * @private
      */
     async callReadOnly(functionName, functionArgs = [], senderAddress) {
         const callResult = await callReadOnlyFunction({

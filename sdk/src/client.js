@@ -512,8 +512,16 @@ const ClarityResponseType = {
      * Gets the current Total Value Locked (TVL) in the protocol.
      * @returns {Promise<number>} The total microSTX locked in all vaults.
      */
-    async getTVL() {
+     async getTVL() {
         return this.callReadOnly('get-tvl', []);
+    }
+ 
+    /**
+     * Alias for getTVL. Gets the current Total Value Locked (TVL) in the protocol.
+     * @returns {Promise<number>} The TVL in microSTX.
+     */
+    async getProtocolTVL() {
+        return this.getTVL();
     }
 
     // --- Transaction Signing Options Helpers ---

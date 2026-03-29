@@ -81,6 +81,10 @@ export class TimeFiClient {
         return this.callReadOnly('can-withdraw', [uintCV(vaultId)]);
     }
 
+    /**
+     * Gets the current Total Value Locked (TVL) in the protocol.
+     * @returns {Promise<number>} The total microSTX locked.
+     */
     async getTVL() {
         return this.callReadOnly('get-tvl', []);
     }

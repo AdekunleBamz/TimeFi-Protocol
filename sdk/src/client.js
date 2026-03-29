@@ -112,6 +112,8 @@ export class TimeFiClient {
      * @returns {Object} Transaction options for @stacks/transactions.
      */
     getCreateVaultOptions(amountSTX, lockDurationBlocks) {
+        if (!amountSTX || amountSTX <= 0) throw new Error('amountSTX must be greater than 0');
+        if (!lockDurationBlocks || lockDurationBlocks <= 0) throw new Error('lockDurationBlocks must be greater than 0');
         return {
             contractAddress: this.contractAddress,
             contractName: CONTRACT_NAMES.VAULT,

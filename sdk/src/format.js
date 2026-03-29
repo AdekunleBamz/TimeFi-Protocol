@@ -75,9 +75,9 @@ export const formatPercent = (decimalValue, decimalPlaces = 2) => {
  * @param {Date|string|number} date - The date to format.
  * @returns {string} Formatted date string or '--' if invalid.
  */
-export const formatDate = (date) => {
-    if (!date) return '--';
-    const dateInstance = new Date(date);
+export const formatDate = (inputDate) => {
+    if (!inputDate) return '--';
+    const dateInstance = new Date(inputDate);
     if (isNaN(dateInstance.getTime())) return '--';
     return dateInstance.toLocaleDateString(undefined, {
         year: 'numeric',
@@ -91,10 +91,10 @@ export const formatDate = (date) => {
  * @param {Date|string|number} date - The date to compare with now.
  * @returns {string} Formatted relative time string.
  */
-export const formatRelativeTime = (date) => {
-    if (!date) return '--';
+export const formatRelativeTime = (rawInput) => {
+    if (!rawInput) return '--';
     const currentDateTime = new Date();
-    const pastDate = new Date(date);
+    const pastDate = new Date(rawInput);
     const secondsDifference = Math.floor((currentDateTime - pastDate) / 1000);
 
     // Handle future dates

@@ -77,9 +77,9 @@ export const formatPercent = (decimalValue, decimalPlaces = 2) => {
  */
 export const formatDate = (date) => {
     if (!date) return '--';
-    const d = new Date(date);
-    if (isNaN(d.getTime())) return '--';
-    return d.toLocaleDateString(undefined, {
+    const dateInstance = new Date(date);
+    if (isNaN(dateInstance.getTime())) return '--';
+    return dateInstance.toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'short',
         day: 'numeric'

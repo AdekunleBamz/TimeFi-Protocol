@@ -180,9 +180,26 @@ const ClarityResponseType = {
      * @returns {Promise<boolean>} True if the lock period has ended.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async isExpired(id) {
+     async isExpired(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('is-expired', [uintCV(id)]);
+    }
+ 
+    /**
+     * Returns a human-readable status for a specific vault.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<'Active'|'Expired'|'Unknown'>} The current vault status.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultStatus(id) {
+        const [active, expired] = await Promise.all([
+            this.isActive(id),
+            this.isExpired(id)
+        ]);
+ 
+        if (active && !expired) return 'Active';
+        if (expired) return 'Expired';
+        return 'Unknown';
     }
 
      /**

@@ -10,6 +10,15 @@ import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from './constants.js';
 
 /**
+ * Clarity conversion response types.
+ * @constant
+ */
+const ClarityResponseType = {
+    OK: 7,
+    ERR: 8
+};
+
+/**
  * Client for interacting with the TimeFi Protocol on the Stacks blockchain.
  */
 export class TimeFiClient {

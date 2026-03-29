@@ -19,7 +19,10 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity 4 feat
 [![Security Policy](https://img.shields.io/badge/security-policy-brightgreen.svg)](SECURITY.md)
 [![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-contributor%20covenant-ff69b4.svg)](CODE_OF_CONDUCT.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![GitHub Stars](https://img.shields.io/github/stars/AdekunleBamz/TimeFi-Protocol?style=social)](https://github.com/AdekunleBamz/TimeFi-Protocol)
+[![GitHub stars](https://img.shields.io/github/stars/AdekunleBamz/TimeFi-Protocol?style=social)](https://github.com/AdekunleBamz/TimeFi-Protocol)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/AdekunleBamz/TimeFi-Protocol/ci.yml?branch=main&style=flat-square)](https://github.com/AdekunleBamz/TimeFi-Protocol/actions)
+[![Coverage Status](https://img.shields.io/coveralls/github/AdekunleBamz/TimeFi-Protocol?style=flat-square)](https://coveralls.io/github/AdekunleBamz/TimeFi-Protocol)
+[![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen?style=flat-square)](docs/API.md)
 [![GitHub Forks](https://img.shields.io/github/forks/AdekunleBamz/TimeFi-Protocol?style=social)](https://github.com/AdekunleBamz/TimeFi-Protocol)
 
 ## 🏗️ Project Structure

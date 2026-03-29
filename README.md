@@ -1,4 +1,4 @@
-# TimeFi Protocol
+# 🕰️ TimeFi Protocol
 
 A time-locked vault protocol built on the Stacks blockchain using Clarity 4 features.
 

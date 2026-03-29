@@ -172,9 +172,19 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The lock duration in blocks.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async getVaultDuration(id) {
-        this.#validateVaultId(id);
+      async getVaultDuration(id) {
+        await this.#validateVaultId(id);
         return this.callReadOnly('get-vault-duration', [uintCV(id)]);
+    }
+ 
+    /**
+     * Alias for getVaultDuration. Retrieves the lock duration (in blocks) of a vault.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<number>} The duration in blocks.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultLockPeriod(id) {
+        return this.getVaultDuration(id);
     }
  
     /**

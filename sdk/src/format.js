@@ -78,6 +78,7 @@ export const formatPercent = (decimalValue, decimalPlaces = 2) => {
  * Formats a date or timestamp into a localized date string.
  * @param {Date|string|number} date - The date to format.
  * @returns {string} Formatted date string or '--' if invalid.
+ * @throws {Error} If date cannot be parsed.
  */
 export const formatDate = (inputDate) => {
     if (!inputDate) return '--';

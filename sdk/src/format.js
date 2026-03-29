@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Formatting Utilities
  * Standard formatting for STX, addresses, numbers, and dates

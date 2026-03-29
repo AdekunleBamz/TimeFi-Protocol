@@ -272,12 +272,25 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} Object containing address, nonce, balance, and vault data.
      * @throws {Error} If address is missing.
      */
-    async getAccountSummary(address) {
+     async getAccountSummary(address) {
         const data = await this.getAccountData(address);
         return {
             ...data,
             vaultCount: data.vaults.length
         };
+    }
+ 
+    /**
+     * Retrieves all global protocol data.
+     * @returns {Promise<Object>} Object containing metrics, metadata, and config.
+     */
+    async getProtocolData() {
+        const [metrics, metadata, config] = await Promise.all([
+            this.getProtocolMetrics(),
+            this.getContractMetadata(),
+            this.getProtocolConfig()
+        ]);
+        return { ...metrics, metadata, ...config };
     }
  
     /**

@@ -353,12 +353,26 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} Object containing address, nonce, balance, and vault data.
      * @throws {Error} If address is missing.
      */
-     async getAccountSummary(address) {
+      async getAccountSummary(address) {
         const data = await this.getAccountData(address);
         return {
             ...data,
             vaultCount: data.vaults.length
         };
+    }
+ 
+    /**
+     * Retrieves a high-level overview for a specific account, including protocol vitals.
+     * @param {string} address - The Stacks address to query.
+     * @returns {Promise<Object>} Object containing account summary and protocol vitals.
+     * @throws {Error} If address is missing.
+     */
+    async getAccountOverview(address) {
+        const [account, vitals] = await Promise.all([
+            this.getAccountSummary(address),
+            this.getProtocolVitals()
+        ]);
+        return { ...account, protocol: vitals };
     }
  
     /**

@@ -170,7 +170,8 @@ FEE_BPS: 50 (0.5%)
  
  ## 📖 Operations Docs
  
- - Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
+ - Mainnet testing and funding flows: [MAINNET_TESTING.md](docs/MAINNET_TESTING.md)
+ - Technical Specification: [TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md)
  
  ## 🤝 Acknowledgments
  
@@ -182,5 +183,8 @@ FEE_BPS: 50 (0.5%)
  - **AdekunleBamz**: Lead Developer
  
  ## 📄 License
-
-MIT License
+ 
+ MIT License - Copyright (c) 2026 TimeFi Protocol Team
+ 
+ ---
+ Made with ❤️ by the [TimeFi Team](https://github.com/AdekunleBamz/TimeFi-Protocol)

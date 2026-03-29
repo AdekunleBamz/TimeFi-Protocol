@@ -28,15 +28,22 @@ const ClarityResponseType = {
  * Client for interacting with the TimeFi Protocol on the Stacks blockchain.
  */
 export class TimeFiClient {
+    #network;
+    #contractAddress;
+ 
     /**
      * Initializes a new TimeFiClient.
-     * @param {'mainnet' | 'testnet'} networkType - The Stacks network to target.
+     * @param {'mainnet' | 'testnet'} [selectedNetwork='mainnet'] - The Stacks network to target.
+     * @throws {Error} If selectedNetwork is invalid.
      */
     constructor(selectedNetwork = 'mainnet') {
-        this.network = selectedNetwork === 'mainnet'
+        if (!['mainnet', 'testnet'].includes(selectedNetwork)) {
+            throw new Error('Invalid network type. Must be "mainnet" or "testnet".');
+        }
+        this.#network = selectedNetwork === 'mainnet'
             ? new StacksMainnet()
             : new StacksTestnet();
-        this.contractAddress = CONTRACT_ADDRESS;
+        this.#contractAddress = CONTRACT_ADDRESS;
     }
 
     // --- Read-only Methods ---
@@ -49,22 +56,21 @@ export class TimeFiClient {
      * @returns {Promise<any>} The parsed result of the call.
      * @private
      */
-    async callReadOnly(functionName, functionArgs = [], senderAddress) {
+     async callReadOnly(functionName, functionArgs = [], senderAddress) {
         const callResult = await callReadOnlyFunction({
-            contractAddress: this.contractAddress,
+            contractAddress: this.#contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
             functionName,
             functionArgs,
-            network: this.network,
-            senderAddress: senderAddress || this.contractAddress,
+            network: this.#network,
+            senderAddress: senderAddress || this.#contractAddress,
         });
  
-        // Handle ResponseCV (ok/err) explicitly
-        if (callResult.type === RESPONSE_TYPES.OK || callResult.type === RESPONSE_TYPES.ERR) {
-            return cvToValue(callResult.value);
-        }
+        // Handle common Clarity response patterns (ResponseCV)
+        const isResponseCV = callResult.type === ClarityResponseType.OK || 
+                           callResult.type === ClarityResponseType.ERR;
  
-        return cvToValue(callResult);
+        return isResponseCV ? cvToValue(callResult.value) : cvToValue(callResult);
     }
 
      /**

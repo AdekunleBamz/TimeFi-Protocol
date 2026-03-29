@@ -64,8 +64,9 @@ export class TimeFiClient {
 
     /**
      * Retrieves vault details by ID.
-     * @param {number} vaultId - The unique ID of the vault.
-     * @returns {Promise<any>} The vault data.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<Object>} The vault details.
+     * @throws {Error} If id is missing or invalid.
      */
     async getVault(id) {
         if (id === undefined || id === null) throw new Error('id is required');

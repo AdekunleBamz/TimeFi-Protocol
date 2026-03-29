@@ -37,9 +37,11 @@ TimeFi-Protocol/
  - Node.js 18+
  - Access to a Stacks node API for the network you are targeting (mainnet by default)
  
- ### 🧪 Development
-
-```bash
+ ### 🛠️ Development
+ 
+ For detailed contribution guidelines, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+ 
+ ```bash
 # Install dependencies
 npm ci
 

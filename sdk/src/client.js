@@ -123,20 +123,20 @@ export class TimeFiClient {
      * @returns {Object} Transaction options for @stacks/transactions.
      * @throws {Error} If amountSTX or lockDurationBlocks is invalid.
      */
-    getCreateVaultOptions(amountSTX, lockDurationBlocks) {
+     getCreateVaultOptions(amountSTX, lockDurationBlocks) {
         if (!amountSTX || amountSTX <= 0) throw new Error('amountSTX must be greater than 0');
         if (!lockDurationBlocks || lockDurationBlocks <= 0) throw new Error('lockDurationBlocks must be greater than 0');
         return {
-            contractAddress: this.contractAddress,
+            contractAddress: this.#contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
             functionName: 'create-vault',
             functionArgs: [uintCV(amountSTX * 1_000_000), uintCV(lockDurationBlocks)],
-            network: this.network,
+            network: this.#network,
             anchorMode: AnchorMode.Any,
             postConditionMode: PostConditionMode.Deny,
         };
     }
-
+ 
      /**
      * Generates options for a request-withdraw transaction.
      * @param {number|string|BigInt} id - The unique ID of the vault to withdraw from.
@@ -146,11 +146,11 @@ export class TimeFiClient {
      getWithdrawOptions(id) {
         this.#validateVaultId(id);
         return {
-            contractAddress: this.contractAddress,
+            contractAddress: this.#contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
             functionName: 'request-withdraw',
             functionArgs: [uintCV(id)],
-            network: this.network,
+            network: this.#network,
             anchorMode: AnchorMode.Any,
             postConditionMode: PostConditionMode.Deny,
         };

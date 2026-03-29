@@ -51,6 +51,11 @@ export class TimeFiClient {
         return cvToValue(result);
     }
 
+    /**
+     * Retrieves vault details by ID.
+     * @param {number} vaultId - The unique ID of the vault.
+     * @returns {Promise<any>} The vault data.
+     */
     async getVault(vaultId) {
         if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
         return this.callReadOnly('get-vault', [uintCV(vaultId)]);

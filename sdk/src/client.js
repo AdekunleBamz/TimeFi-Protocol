@@ -228,11 +228,19 @@ const ClarityResponseType = {
      * @param {number} lockDurationBlocks - Duration in blocks.
      * @returns {Promise<number>} The estimated APY as a percentage.
      */
-    async getVaultApy(lockDurationBlocks) {
+     async getVaultApy(lockDurationBlocks) {
         if (!lockDurationBlocks || lockDurationBlocks <= 0) throw new Error('Lock duration must be greater than 0');
         // This is a client-side calculation based on protocol rules (placeholder for now)
         // Simplified formula: (bonus_per_block * blocks_per_year) / principal
         return 5.0; // Placeholder 5% APY
+    }
+ 
+    /**
+     * Retrieves the complete protocol configuration.
+     * @returns {Promise<Object>} Object containing version and status.
+     */
+    async getProtocolConfig() {
+        return this.getEmergencyStatus();
     }
  
     /**

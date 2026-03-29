@@ -6,10 +6,11 @@
  */
 
 /**
-+ * Formats a microSTX value into a human-readable STX string.
-+ * @param {number|BigInt|string|Object} microStx - The value in microSTX.
-+ * @returns {string} Formatted STX string.
-+ */
+ * Formats a microSTX value into a human-readable STX string.
+ * @param {number|BigInt|string|Object} microStx - The value in microSTX.
+ * @returns {string} Formatted STX string.
+ * @throws {Error} If microStx cannot be converted to a number.
+ */
  export const formatSTX = (amountMicroStx) => {
     if (amountMicroStx === undefined || amountMicroStx === null) return '0.000000';
     try {

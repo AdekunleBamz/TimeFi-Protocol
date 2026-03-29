@@ -432,8 +432,16 @@ const ClarityResponseType = {
      * Gets the current Stacks blockchain block height.
      * @returns {Promise<number>} The current block height.
      */
-     async getBlockHeight() {
+      async getBlockHeight() {
         return this.callReadOnly('get-block-height', []);
+    }
+ 
+    /**
+     * Alias for getBlockHeight. Gets the current Stacks blockchain block height.
+     * @returns {Promise<number>} The current block height.
+     */
+    async getProtocolBlockHeight() {
+        return this.getBlockHeight();
     }
  
     /**

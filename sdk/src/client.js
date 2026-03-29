@@ -274,6 +274,37 @@ const ClarityResponseType = {
     }
  
     /**
+     * Retrieves all core details for a specific vault in a single object.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<Object>} Object containing owner, balance, duration, and status.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+       async getVaultSummary(id) {
+        const [details, timeRemaining, createdAt, unlockBlock] = await Promise.all([
+            this.getVaultDetails(id),
+            this.getTimeRemaining(id),
+            this.getCreatedAt(id),
+            this.getUnlockBlock(id)
+        ]);
+ 
+        return { ...details, timeRemaining, createdAt, unlockBlock };
+    }
+ 
+    /**
+     * Retrieves an extended summary of a vault, including expiry status.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<Object>} Object containing summary and expiry.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultDetailsExtended(id) {
+        const [summary, expired] = await Promise.all([
+            this.getVaultSummary(id),
+            this.isExpired(id)
+        ]);
+        return { ...summary, expired };
+    }
+ 
+    /**
      * Estimates the Annual Percentage Yield (APY) for a hypothetical vault.
      * @param {number} lockDurationBlocks - Duration in blocks.
      * @returns {Promise<number>} The estimated APY as a percentage.

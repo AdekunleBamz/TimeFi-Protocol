@@ -336,13 +336,26 @@ const ClarityResponseType = {
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<Object>} Object containing static vault properties.
      */
-    async getVaultStaticData(id) {
+     async getVaultStaticData(id) {
         const [owner, createdAt, duration] = await Promise.all([
             this.getVaultOwner(id),
             this.getCreatedAt(id),
             this.getVaultDuration(id)
         ]);
         return { id, owner, createdAt, duration };
+    }
+ 
+    /**
+     * Gets the number of blocks elapsed since a vault was created.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<number>} Blocks since creation.
+     */
+    async getVaultAge(id) {
+        const [createdAt, currentHeight] = await Promise.all([
+            this.getCreatedAt(id),
+            this.getBlockHeight()
+        ]);
+        return Math.max(0, currentHeight - createdAt);
     }
  
     /**

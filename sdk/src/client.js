@@ -58,21 +58,25 @@ const ClarityResponseType = {
      * @returns {Promise<any>} The parsed result of the call.
      * @private
      */
-     async callReadOnly(functionName, functionArgs = [], senderAddress) {
-        const callResult = await callReadOnlyFunction({
-            contractAddress: this.#contractAddress,
-            contractName: CONTRACT_NAMES.VAULT,
-            functionName,
-            functionArgs,
-            network: this.#network,
-            senderAddress: senderAddress || this.#contractAddress,
-        });
- 
-        // Handle common Clarity response patterns (ResponseCV)
-        const isResponseCV = callResult.type === ClarityResponseType.OK || 
-                           callResult.type === ClarityResponseType.ERR;
- 
-        return isResponseCV ? cvToValue(callResult.value) : cvToValue(callResult);
+      async callReadOnly(functionName, functionArgs = [], senderAddress) {
+        try {
+            const callResult = await callReadOnlyFunction({
+                contractAddress: this.#contractAddress,
+                contractName: CONTRACT_NAMES.VAULT,
+                functionName,
+                functionArgs,
+                network: this.#network,
+                senderAddress: senderAddress || this.#contractAddress,
+            });
+    
+            // Handle common Clarity response patterns (ResponseCV)
+            const isResponseCV = callResult.type === ClarityResponseType.OK || 
+                               callResult.type === ClarityResponseType.ERR;
+    
+            return isResponseCV ? cvToValue(callResult.value) : cvToValue(callResult);
+        } catch (error) {
+            throw new Error(`Failed to call read-only function "${functionName}": ${error.message}`);
+        }
     }
 
      /**

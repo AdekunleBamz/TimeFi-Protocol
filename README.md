@@ -17,9 +17,9 @@ TimeFi-Protocol/
 ├── tests/           # Contract testing suite
 └── docs/            # Additional documentation
 
-## ✨ Features
+## 🌟 Features
 
-### Smart Contract Features
+### 🔒 Smart Contract Features
 - **Create Vaults** - Deposit STX with time-lock
 - **Withdraw** - Claim funds after lock period
 - **Bot Approval** - Approve automated trading bots via `contract-hash?`

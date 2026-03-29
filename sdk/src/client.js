@@ -136,9 +136,20 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The vault balance in microSTX.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async getVaultAmount(id) {
+     async getVaultAmount(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('get-vault-amount', [uintCV(id)]);
+    }
+ 
+    /**
+     * Gets the specific block height at which a vault can be unlocked.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<number>} The block height for unlocking.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getUnlockBlock(id) {
+        this.#validateVaultId(id);
+        return this.callReadOnly('get-unlock-block', [uintCV(id)]);
     }
 
      /**

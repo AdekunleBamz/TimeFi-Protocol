@@ -8,6 +8,10 @@
  */
 export const CONTRACT_ADDRESS = 'SP2ZNGJ85ENDY6QRHQ5P2D4FXKGZWCKT2A0ZDJB58';
 
+/**
+ * Object containing contract name identifiers used in the protocol.
+ * @constant {Object}
+ */
 export const CONTRACT_NAMES = {
     VAULT: 'timefi-vault-v-A2',
     REWARDS: 'timefi-rewards-v-A2',

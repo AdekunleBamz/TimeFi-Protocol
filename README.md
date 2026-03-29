@@ -121,7 +121,7 @@ const tvl = await client.getTVL();
 
 ## ⚙️ Configuration
 
-### Constants
+### 🔢 Constants
 
 ```clarity
 MIN_DEPOSIT: 10,000 microSTX (0.01 STX)

@@ -87,16 +87,16 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
  * @returns {string} Formatted date string or '--' if invalid.
  * @throws {Error} If date cannot be parsed.
  */
-export const formatDate = (inputDate) => {
-    if (!inputDate) return '--';
-    const dateInstance = new Date(inputDate);
+ export function formatDate(dateToFormat) {
+    if (!dateToFormat) return '--';
+    const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
-    return dateInstance.toLocaleDateString(undefined, {
+    return new Intl.DateTimeFormat('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
-    });
-};
+    }).format(dateInstance);
+}
 
 /**
  * Returns a relative time string (e.g., '5m ago', 'in 1h').

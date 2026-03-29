@@ -4,6 +4,9 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity 4 feat
 
 [![npm version](https://img.shields.io/npm/v/timefi-sdk.svg?style=flat-square)](https://www.npmjs.com/package/timefi-sdk)
 [![npm downloads](https://img.shields.io/npm/dm/timefi-sdk.svg?style=flat-square)](https://www.npmjs.com/package/timefi-sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Built on Stacks](https://img.shields.io/badge/Built%20on-Stacks-orange)](https://stacks.co)
+[![Clarity 4](https://img.shields.io/badge/Clarity-4-blue)](https://clarity-lang.org)
 
 ## 🏗️ Project Structure
 

@@ -84,6 +84,11 @@ export const formatDate = (date) => {
     });
 };
 
+/**
+ * Returns a relative time string (e.g., '5m ago', 'in 1h').
+ * @param {Date|string|number} date - The date to compare with now.
+ * @returns {string} Formatted relative time string.
+ */
 export const formatRelativeTime = (date) => {
     if (!date) return '--';
     const now = new Date();

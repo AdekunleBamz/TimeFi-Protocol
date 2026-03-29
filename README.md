@@ -36,7 +36,7 @@ TimeFi-Protocol/
 - Node.js 18+
 - Access to a Stacks node API for the network you are targeting (mainnet by default)
 
-### Development
+### 🧪 Development
 
 ```bash
 # Install dependencies
@@ -64,7 +64,7 @@ npm run frontend:dev
 npm run sdk:build
 ```
 
-### Frontend
+### 💻 Frontend
 
 ```bash
 cd frontend

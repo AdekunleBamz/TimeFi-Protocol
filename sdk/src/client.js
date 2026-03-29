@@ -126,7 +126,7 @@ export class TimeFiClient {
     /**
      * Generates options for a request-withdraw transaction.
      * @param {number|string|BigInt} id - The unique ID of the vault to withdraw from.
-     * @returns {Promise<Object>} Transaction options for @stacks/transactions.
+     * @returns {Object} Transaction options for @stacks/transactions.
      * @throws {Error} If id is missing or invalid.
      */
     getWithdrawOptions(id) {

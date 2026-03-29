@@ -186,6 +186,12 @@ FEE_BPS: 50 (0.5%)
  - Mainnet testing and funding flows: [MAINNET_TESTING.md](docs/MAINNET_TESTING.md)
  - Technical Specification: [TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md)
  
+ ## 📦 Package Metadata
+ - **Name**: `timefi-sdk`
+ - **Version**: `0.1.0`
+ - **Architecture**: ES Modules
+ - **License**: MIT
+ 
  ## 🤝 Acknowledgments
  
  - **Stacks Foundation**: For the Clarity 4 development tools.

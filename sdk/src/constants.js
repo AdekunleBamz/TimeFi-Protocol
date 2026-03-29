@@ -2,7 +2,11 @@
  * Protocol Constants
  */
 
-export const CONTRACT_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N';
+/**
+ * The deployed contract address for the TimeFi Protocol.
+ * @constant {string}
+ */
+export const CONTRACT_ADDRESS = 'SP2ZNGJ85ENDY6QRHQ5P2D4FXKGZWCKT2A0ZDJB58';
 
 export const CONTRACT_NAMES = {
     VAULT: 'timefi-vault-v-A2',

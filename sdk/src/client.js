@@ -258,12 +258,26 @@ const ClarityResponseType = {
      * Retrieves aggregated protocol metrics.
      * @returns {Promise<Object>} Object containing TVL, vault count, and block height.
      */
-    async getProtocolMetrics() {
+     async getProtocolMetrics() {
         const [stats, blockHeight] = await Promise.all([
             this.getProtocolStats(),
             this.getBlockHeight()
         ]);
         return { ...stats, blockHeight };
+    }
+ 
+    /**
+     * Retrieves an aggregated summary for a specific account.
+     * @param {string} address - The Stacks address to query.
+     * @returns {Promise<Object>} Object containing address, nonce, balance, and vault data.
+     * @throws {Error} If address is missing.
+     */
+    async getAccountSummary(address) {
+        const data = await this.getAccountData(address);
+        return {
+            ...data,
+            vaultCount: data.vaults.length
+        };
     }
  
     /**

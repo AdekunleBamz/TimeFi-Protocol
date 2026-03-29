@@ -147,6 +147,11 @@ FEE_BPS: 50 (0.5%)
  - **Discord**: [Join our Discord](https://discord.gg/timefi)
  - **Twitter**: [@TimeFiProtocol](https://twitter.com/TimeFiProtocol)
  
+ ## 🪐 Ecosystem
+ 
+ - **Stacks Explorer**: View protocol transactions on-chain.
+ - **Console.xyz**: Community discussions and governance.
+ 
  ## 📖 Operations Docs
 
 ## 📄 License

@@ -32,6 +32,7 @@ export const LOCK_PERIODS = {
     MONTH_3: { label: '3 Months', blocks: 12960, apy: 3 },
     /** 6 months lock (25920 blocks) with 6% APY multiplier */
     MONTH_6: { label: '6 Months', blocks: 25920, apy: 6 },
+    /** 9 months lock (38880 blocks) with 9% APY multiplier */
     MONTH_9: { label: '9 Months', blocks: 38880, apy: 9 },
     YEAR_1: { label: '1 Year', blocks: 52560, apy: 12 },
 };

@@ -5,7 +5,11 @@
 
 export * from './constants.js';
 export * from './format.js';
-export * from './client.js';
+/**
+ * TimeFi SDK
+ * Main entry point for the TimeFi Protocol JavaScript/TypeScript SDK.
+ */
+export { TimeFiClient } from './client.js';
 
 // Re-export Stacks utilities for convenience
 export {

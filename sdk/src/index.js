@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * TimeFi SDK
  * Core library for interacting with TimeFi Protocol

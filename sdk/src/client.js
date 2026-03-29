@@ -169,9 +169,20 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The creation block height.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async getCreatedAt(id) {
+     async getCreatedAt(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('get-created-at', [uintCV(id)]);
+    }
+ 
+    /**
+     * Checks if a specific vault's lock duration has expired.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<boolean>} True if the lock period has ended.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async isExpired(id) {
+        this.#validateVaultId(id);
+        return this.callReadOnly('is-expired', [uintCV(id)]);
     }
 
      /**

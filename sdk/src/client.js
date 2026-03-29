@@ -79,7 +79,7 @@ export class TimeFiClient {
      * @returns {Promise<Object>} The vault details.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async getVault(id) {
+     async getVault(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('get-vault', [uintCV(id)]);
     }

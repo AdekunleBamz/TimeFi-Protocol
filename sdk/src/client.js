@@ -350,12 +350,25 @@ const ClarityResponseType = {
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<number>} Blocks since creation.
      */
-    async getVaultAge(id) {
+     async getVaultAge(id) {
         const [createdAt, currentHeight] = await Promise.all([
             this.getCreatedAt(id),
             this.getBlockHeight()
         ]);
         return Math.max(0, currentHeight - createdAt);
+    }
+ 
+    /**
+     * Calculates the number of blocks remaining until a vault can be unlocked.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<number>} Remaining blocks until unlock height.
+     */
+    async getVaultRemainingBlocks(id) {
+        const [unlockBlock, currentHeight] = await Promise.all([
+            this.getUnlockBlock(id),
+            this.getBlockHeight()
+        ]);
+        return Math.max(0, unlockBlock - currentHeight);
     }
  
     /**

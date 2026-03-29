@@ -31,7 +31,7 @@ TimeFi-Protocol/
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 📋 Prerequisites
 - Clarinet installed
 - Node.js 18+
 - Access to a Stacks node API for the network you are targeting (mainnet by default)

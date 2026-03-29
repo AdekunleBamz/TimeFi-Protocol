@@ -109,7 +109,7 @@ const tvl = await client.getTVL();
 | `withdraw` | `(id uint)` | Withdraw from an unlocked vault |
 | `approve-bot` | `(bot principal)` | Approve a trading bot contract |
 
-### Read-Only Functions
+### 🔍 Read-Only Functions
 
 | Function | Parameters | Description |
 |----------|------------|-------------|

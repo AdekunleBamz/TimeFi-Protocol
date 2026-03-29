@@ -347,8 +347,16 @@ const ClarityResponseType = {
      * Gets the total number of vaults created in the protocol.
      * @returns {Promise<number>} The total vault count.
      */
-      async getVaultCount() {
+       async getVaultCount() {
         return this.callReadOnly('get-vault-count', []);
+    }
+ 
+    /**
+     * Alias for getVaultCount. Gets the total number of vaults created in the protocol.
+     * @returns {Promise<number>} The total vault count.
+     */
+    async getProtocolVaultCount() {
+        return this.getVaultCount();
     }
  
     /**

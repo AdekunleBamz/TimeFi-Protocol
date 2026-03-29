@@ -344,8 +344,20 @@ const ClarityResponseType = {
      * Retrieves the semantic version of the TimeFi Protocol contract.
      * @returns {Promise<string>} The protocol version string.
      */
-    async getProtocolVersion() {
+     async getProtocolVersion() {
         return this.callReadOnly('get-protocol-version', []);
+    }
+ 
+    /**
+     * Retrieves the current emergency status and protocol version.
+     * @returns {Promise<Object>} Object containing version and pause status.
+     */
+    async getEmergencyStatus() {
+        const [version, paused] = await Promise.all([
+            this.getProtocolVersion(),
+            this.isPaused()
+        ]);
+        return { version, paused };
     }
 
      /**

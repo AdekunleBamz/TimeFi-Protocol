@@ -433,9 +433,19 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The balance in microSTX.
      * @throws {Error} If address is missing.
      */
-     async getSTXBalance(address) {
+      async getSTXBalance(address) {
         if (!address) throw new Error('Address is required');
         return this.callReadOnly('get-stx-balance', [principalCV(address)]);
+    }
+ 
+    /**
+     * Alias for getSTXBalance. Retrieves the liquid STX balance of a specific account.
+     * @param {string} address - The Stacks address to check.
+     * @returns {Promise<number>} The balance in microSTX.
+     * @throws {Error} If address is missing.
+     */
+    async getAccountSTXBalance(address) {
+        return this.getSTXBalance(address);
     }
  
     /**

@@ -13,6 +13,10 @@ import { CONTRACT_ADDRESS, CONTRACT_NAMES } from './constants.js';
  * Client for interacting with the TimeFi Protocol on the Stacks blockchain.
  */
 export class TimeFiClient {
+    /**
+     * Initializes a new TimeFiClient.
+     * @param {'mainnet' | 'testnet'} networkType - The Stacks network to target.
+     */
     constructor(networkType = 'mainnet') {
         this.network = networkType === 'mainnet'
             ? new StacksMainnet()
@@ -22,6 +26,13 @@ export class TimeFiClient {
 
     // --- Read-only Methods ---
 
+    /**
+     * Internal helper to call a read-only contract function.
+     * @param {string} functionName - Name of the Clarity function.
+     * @param {any[]} functionArgs - Arguments for the function call.
+     * @param {string} [senderAddress] - Optional sender address.
+     * @returns {Promise<any>} The parsed result of the call.
+     */
     async callReadOnly(functionName, functionArgs = [], senderAddress) {
         const result = await callReadOnlyFunction({
             contractAddress: this.contractAddress,

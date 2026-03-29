@@ -336,8 +336,16 @@ const ClarityResponseType = {
      * Checks if the TimeFi Protocol is currently in a paused state.
      * @returns {Promise<boolean>} True if the protocol is paused.
      */
-    async isPaused() {
+     async isPaused() {
         return this.callReadOnly('is-paused', []);
+    }
+ 
+    /**
+     * Retrieves the semantic version of the TimeFi Protocol contract.
+     * @returns {Promise<string>} The protocol version string.
+     */
+    async getProtocolVersion() {
+        return this.callReadOnly('get-protocol-version', []);
     }
 
      /**

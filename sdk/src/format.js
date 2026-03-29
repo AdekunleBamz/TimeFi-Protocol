@@ -51,9 +51,9 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
  * @param {number|string} val - The numeric value to format.
  * @returns {string} Formatted number string.
  */
-export const formatNumber = (val) => {
-    if (val === undefined || val === null) return '0';
-    const num = Number(val);
+export const formatNumber = (numericValue) => {
+    if (numericValue === undefined || numericValue === null) return '0';
+    const num = Number(numericValue);
     return isNaN(num) ? '0' : num.toLocaleString();
 };
 

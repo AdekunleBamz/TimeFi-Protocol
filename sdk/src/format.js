@@ -99,11 +99,11 @@ export const formatRelativeTime = (date) => {
 
     // Handle future dates
     if (secondsDifference < -1) {
-        const absDiff = Math.abs(secondsDifference);
-        if (absDiff < 60) return 'in a few seconds';
-        if (absDiff < 3600) return `in ${Math.floor(absDiff / 60)}m`;
-        if (absDiff < 86400) return `in ${Math.floor(absDiff / 3600)}h`;
-        return `in ${Math.floor(absDiff / 86400)}d`;
+        const absoluteDifference = Math.abs(secondsDifference);
+        if (absoluteDifference < 60) return 'in a few seconds';
+        if (absoluteDifference < 3600) return `in ${Math.floor(absoluteDifference / 60)}m`;
+        if (absoluteDifference < 86400) return `in ${Math.floor(absoluteDifference / 3600)}h`;
+        return `in ${Math.floor(absoluteDifference / 86400)}d`;
     }
 
     if (secondsDifference < 5) return 'just now';

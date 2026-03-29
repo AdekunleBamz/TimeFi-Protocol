@@ -147,9 +147,20 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The block height for unlocking.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async getUnlockBlock(id) {
+     async getUnlockBlock(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('get-unlock-block', [uintCV(id)]);
+    }
+ 
+    /**
+     * Retrieves the original lock duration (in blocks) for a specific vault.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<number>} The lock duration in blocks.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultDuration(id) {
+        this.#validateVaultId(id);
+        return this.callReadOnly('get-vault-duration', [uintCV(id)]);
     }
 
      /**

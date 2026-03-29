@@ -4,6 +4,9 @@
  */
 
 export * from './constants.js';
+/**
+ * Formatting utilities for STX, addresses, and dates.
+ */
 export * from './format.js';
 /**
  * TimeFi SDK

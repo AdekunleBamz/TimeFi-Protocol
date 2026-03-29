@@ -12,8 +12,9 @@ import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from './constants.js';
 
 /**
- * Clarity conversion response types.
- * @constant
+ * Clarity conversion response types used by @stacks/transactions.
+ * @constant {Object}
+ * @private
  */
 const ClarityResponseType = {
     OK: 7,

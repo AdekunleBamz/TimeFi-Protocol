@@ -188,6 +188,9 @@ FEE_BPS: 50 (0.5%)
  
  ## 📄 License
  
+ - [Security Policy](SECURITY.md)
+ - [Code of Conduct](CODE_OF_CONDUCT.md)
+ 
  MIT License - Copyright (c) 2026 TimeFi Protocol Team
  
  ---

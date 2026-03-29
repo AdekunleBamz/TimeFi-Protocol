@@ -114,9 +114,20 @@ const ClarityResponseType = {
      * @returns {Promise<boolean>} True if the vault is active.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async isActive(id) {
+     async isActive(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('is-active', [uintCV(id)]);
+    }
+ 
+    /**
+     * Retrieves the owner address of a specific vault.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<string>} The owner's Stacks address.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultOwner(id) {
+        this.#validateVaultId(id);
+        return this.callReadOnly('get-vault-owner', [uintCV(id)]);
     }
 
      /**

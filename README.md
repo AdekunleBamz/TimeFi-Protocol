@@ -72,7 +72,7 @@ npm ci
 npm run dev
 ```
 
-### SDK
+### 📦 SDK
 
 ```bash
 cd sdk
@@ -80,7 +80,7 @@ npm ci
 npm run build
 ```
 
-### SDK Integration
+### 🔗 SDK Integration
 
 The `timefi-sdk` package provides a clean interface for interacting with the protocol:
 

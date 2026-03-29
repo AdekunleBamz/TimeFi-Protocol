@@ -63,11 +63,11 @@ export class TimeFiClient {
         return cvToValue(callResult);
     }
 
-    /**
+     /**
      * Retrieves vault details by ID.
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<Object>} The vault details.
-     * @throws {Error} If id is missing or invalid.
+     * @throws {Error} If vault ID is missing or invalid.
      */
     async getVault(id) {
         this.#validateVaultId(id);

@@ -1,5 +1,9 @@
 "use strict";
 
+ import {
+    StacksMainnet,
+    StacksTestnet 
+} from '@stacks/network';
 import {
     callReadOnlyFunction,
     cvToValue,
@@ -8,7 +12,6 @@ import {
     AnchorMode,
     PostConditionMode
 } from '@stacks/transactions';
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from './constants.js';
 
 /**

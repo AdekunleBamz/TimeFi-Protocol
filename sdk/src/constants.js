@@ -26,6 +26,7 @@ export const CONTRACT_NAMES = {
  * @constant {Object}
  */
 export const LOCK_PERIODS = {
+    /** 1 month lock (4320 blocks) with 1% APY multiplier */
     MONTH_1: { label: '1 Month', blocks: 4320, apy: 1 },
     MONTH_3: { label: '3 Months', blocks: 12960, apy: 3 },
     MONTH_6: { label: '6 Months', blocks: 25920, apy: 6 },

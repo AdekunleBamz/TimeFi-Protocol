@@ -378,12 +378,24 @@ const ClarityResponseType = {
      * Retrieves a simplified summary of global protocol data.
      * @returns {Promise<Object>} Object containing metrics and essential metadata.
      */
-    async getProtocolDataSummary() {
+     async getProtocolDataSummary() {
         const [metrics, metadata] = await Promise.all([
             this.getProtocolMetrics(),
             this.getContractMetadata()
         ]);
         return { ...metrics, contract: metadata.address };
+    }
+ 
+    /**
+     * Retrieves the essential health metrics of the protocol.
+     * @returns {Promise<Object>} Object containing paused status, version, and TVL.
+     */
+    async getProtocolVitals() {
+        const [status, tvl] = await Promise.all([
+            this.getEmergencyStatus(),
+            this.getTVL()
+        ]);
+        return { ...status, tvl };
     }
  
     /**

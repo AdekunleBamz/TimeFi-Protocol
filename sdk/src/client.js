@@ -239,8 +239,19 @@ const ClarityResponseType = {
      * Retrieves the complete protocol configuration.
      * @returns {Promise<Object>} Object containing version and status.
      */
-    async getProtocolConfig() {
+     async getProtocolConfig() {
         return this.getEmergencyStatus();
+    }
+ 
+    /**
+     * Retrieves the core contract metadata (address and name).
+     * @returns {Object} Contract address and vault contract name.
+     */
+    getContractMetadata() {
+        return {
+            address: this.#contractAddress,
+            name: CONTRACT_NAMES.VAULT
+        };
     }
  
     /**

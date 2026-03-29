@@ -125,13 +125,13 @@ export class TimeFiClient {
      * @param {number} vaultId - The unique ID of the vault to withdraw from.
      * @returns {Object} Transaction options for @stacks/transactions.
      */
-    getWithdrawOptions(vaultId) {
-        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
+    getWithdrawOptions(id) {
+        if (id === undefined || id === null) throw new Error('id is required');
         return {
             contractAddress: this.contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
             functionName: 'request-withdraw',
-            functionArgs: [uintCV(vaultId)],
+            functionArgs: [uintCV(id)],
             network: this.network,
             anchorMode: AnchorMode.Any,
             postConditionMode: PostConditionMode.Deny,

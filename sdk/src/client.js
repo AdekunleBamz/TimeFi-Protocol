@@ -135,13 +135,31 @@ const ClarityResponseType = {
     }
  
     /**
-     * Alias for getVaultOwner. Retrieves the owner address of a specific vault.
+     * Alias for getVaultStatus. Retrieves the human-readable status of a specific vault.
      * @param {number|string|BigInt} id - The unique ID of the vault.
-     * @returns {Promise<string>} The Stacks address of the owner.
+     * @returns {Promise<string>} 'active' or 'expired'.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async getVaultOwnerAddress(id) {
-        return this.getVaultOwner(id);
+    async getVaultState(id) {
+        return this.getVaultStatus(id);
+    }
+
+    /**
+     * Checks if a specific vault is currently active.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<boolean>} True if active.
+     */
+    async isVaultActive(id) {
+        return this.isActive(id);
+    }
+
+    /**
+     * Checks if a specific vault has expired.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<boolean>} True if expired.
+     */
+    async isVaultExpired(id) {
+        return this.isExpired(id);
     }
  
     /**
@@ -183,6 +201,15 @@ const ClarityResponseType = {
      * @throws {Error} If vault ID is missing or invalid.
      */
     async getVaultUnlockBlock(id) {
+        return this.getUnlockBlock(id);
+    }
+
+    /**
+     * Alias for getUnlockBlock. Retrieves the block height at which a vault can be unlocked.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<number>} The unlock block height.
+     */
+    async getVaultUnlockHeight(id) {
         return this.getUnlockBlock(id);
     }
  
@@ -303,6 +330,20 @@ const ClarityResponseType = {
         ]);
         return { ...summary, expired };
     }
+
+    /**
+     * Retrieves static metadata for a vault (owner, creation block, duration).
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<Object>} Object containing static vault properties.
+     */
+    async getVaultStaticData(id) {
+        const [owner, createdAt, duration] = await Promise.all([
+            this.getVaultOwner(id),
+            this.getCreatedAt(id),
+            this.getVaultDuration(id)
+        ]);
+        return { id, owner, createdAt, duration };
+    }
  
     /**
      * Estimates the Annual Percentage Yield (APY) for a hypothetical vault.
@@ -373,6 +414,24 @@ const ClarityResponseType = {
             this.getProtocolVitals()
         ]);
         return { ...account, protocol: vitals };
+    }
+
+    /**
+     * Alias for getAccountOverview. Retrieves account and protocol health data.
+     * @param {string} address - The Stacks address to query.
+     * @returns {Promise<Object>} Aggregated vitals.
+     */
+    async getAccountVitals(address) {
+        return this.getAccountOverview(address);
+    }
+
+    /**
+     * Alias for getAccountSTXBalance. Retrieves the STX balance of an account.
+     * @param {string} address - The Stacks address to check.
+     * @returns {Promise<number>} Balance in microSTX.
+     */
+    async getAccountBalance(address) {
+        return this.getSTXBalance(address);
     }
  
     /**

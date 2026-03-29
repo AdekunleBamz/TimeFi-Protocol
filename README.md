@@ -168,6 +168,10 @@ FEE_BPS: 50 (0.5%)
  - **Q3 2026**: L2 Integrations (Starknet/Arbitrum)
  - **Q4 2026**: Decentralized Frontend & DAO
  
+  ## 🔒 Post-Conditions
+ 
+ The protocol uses strict post-conditions to ensure funds are only moved as expected. For example, `STXTransfer` post-conditions are used in `create-vault`.
+ 
  ## 📖 Operations Docs
 
 ## 🤝 Acknowledgments

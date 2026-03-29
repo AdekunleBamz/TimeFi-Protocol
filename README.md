@@ -146,10 +146,11 @@ FEE_BPS: 50 (0.5%)
 ```
 
 ## 🧱 Infrastructure
- 
- - Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
- 
-  ### 🌐 Network API Endpoints
+  - Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
+  - **Audit Status**: [Internal Audit v1.0] (Pending External Review)
+  - **Security Bounty**: Bug bounty program coming Q2 2026.
+  
+   ### 🌐 Network API Endpoints
  
  - **Mainnet**: `https://stacks-node-api.mainnet.stacks.co`
  - **Testnet**: `https://stacks-node-api.testnet.stacks.co`

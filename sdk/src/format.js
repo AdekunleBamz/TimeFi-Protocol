@@ -94,8 +94,8 @@ export const formatDate = (date) => {
 export const formatRelativeTime = (date) => {
     if (!date) return '--';
     const currentDateTime = new Date();
-    const past = new Date(date);
-    const diffInSeconds = Math.floor((currentDateTime - past) / 1000);
+    const pastDate = new Date(date);
+    const diffInSeconds = Math.floor((currentDateTime - pastDate) / 1000);
 
     // Handle future dates
     if (diffInSeconds < -1) {

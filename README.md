@@ -92,7 +92,7 @@ const vault = await client.getVault(1);
 const tvl = await client.getTVL();
 ```
 
-## 🛠️ Tech Stack
+## 🔧 Tech Stack
 
 - **Smart Contracts**: Clarity 4 (Stacks Blockchain)
 - **Frontend**: React + Vite + Vanilla CSS

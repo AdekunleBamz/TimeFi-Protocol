@@ -53,7 +53,7 @@ export class TimeFiClient {
         });
 
         // Handle ResponseCV (ok/err) explicitly
-        if (result.type === 7 || result.type === 8) { // ok or err
+        if (result.type === ClarityResponseType.OK || result.type === ClarityResponseType.ERR) {
             return cvToValue(result.value);
         }
 

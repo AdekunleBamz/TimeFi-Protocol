@@ -106,11 +106,12 @@ export class TimeFiClient {
 
     // --- Transaction Signing Options Helpers ---
 
-    /**
+     /**
      * Generates options for a create-vault transaction.
      * @param {number} amountSTX - Amount of STX to lock (not microSTX).
      * @param {number} lockDurationBlocks - Number of blocks to lock the funds.
      * @returns {Object} Transaction options for @stacks/transactions.
+     * @throws {Error} If amountSTX or lockDurationBlocks is invalid.
      */
     getCreateVaultOptions(amountSTX, lockDurationBlocks) {
         if (!amountSTX || amountSTX <= 0) throw new Error('amountSTX must be greater than 0');

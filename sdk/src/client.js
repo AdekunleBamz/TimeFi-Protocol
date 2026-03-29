@@ -291,8 +291,26 @@ const ClarityResponseType = {
      * Gets the current Stacks blockchain block height.
      * @returns {Promise<number>} The current block height.
      */
-    async getBlockHeight() {
+     async getBlockHeight() {
         return this.callReadOnly('get-block-height', []);
+    }
+ 
+    /**
+     * Retrieves all vault IDs owned by a specific account.
+     * @param {string} owner - The Stacks address to query.
+     * @returns {Promise<number[]>} Array of vault IDs.
+     * @throws {Error} If owner address is missing.
+     */
+    async getVaultsByOwner(owner) {
+        if (!owner) throw new Error('Owner address is required');
+        // This is a placeholder for a more complex iteration if the contract doesn't support bulk fetch
+        // Assuming there's a getter for count per owner
+        const count = await this.callReadOnly('get-vault-count-by-owner', [principalCV(owner)]);
+        const tasks = [];
+        for (let i = 0; i < count; i++) {
+            tasks.push(this.getVaultIdByOwnerIndex(owner, i));
+        }
+        return Promise.all(tasks);
     }
 
      /**

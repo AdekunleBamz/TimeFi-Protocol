@@ -224,20 +224,15 @@ const ClarityResponseType = {
     }
  
     /**
-     * Retrieves a complete summary of a vault, including temporal data.
-     * @param {number|string|BigInt} id - The unique ID of the vault.
-     * @returns {Promise<Object>} Object containing all vault properties.
-     * @throws {Error} If vault ID is missing or invalid.
+     * Estimates the Annual Percentage Yield (APY) for a hypothetical vault.
+     * @param {number} lockDurationBlocks - Duration in blocks.
+     * @returns {Promise<number>} The estimated APY as a percentage.
      */
-    async getVaultSummary(id) {
-        const [details, timeRemaining, createdAt, unlockBlock] = await Promise.all([
-            this.getVaultDetails(id),
-            this.getTimeRemaining(id),
-            this.getCreatedAt(id),
-            this.getUnlockBlock(id)
-        ]);
- 
-        return { ...details, timeRemaining, createdAt, unlockBlock };
+    async getVaultApy(lockDurationBlocks) {
+        if (!lockDurationBlocks || lockDurationBlocks <= 0) throw new Error('Lock duration must be greater than 0');
+        // This is a client-side calculation based on protocol rules (placeholder for now)
+        // Simplified formula: (bonus_per_block * blocks_per_year) / principal
+        return 5.0; // Placeholder 5% APY
     }
  
     /**

@@ -130,7 +130,7 @@ MAX_LOCK: 31,536,000 seconds (1 year)
 FEE_BPS: 50 (0.5%)
 ```
 
-## 📚 Operations Docs
+## 📖 Operations Docs
 
 - Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
 

@@ -156,11 +156,11 @@ export class TimeFiClient {
         };
     }
 
-    /**
+     /**
      * Internal helper to validate vault IDs.
      * @param {number|string|BigInt} id - The vault ID to validate.
      * @private
-     * @throws {Error} If ID is missing or invalid.
+     * @throws {Error} If vault ID is missing or invalid.
      */
      #validateVaultId(id) {
         if (id === undefined || id === null) {

@@ -123,8 +123,8 @@ export class TimeFiClient {
      * @returns {Object} Transaction options for @stacks/transactions.
      * @throws {Error} If amountSTX or lockDurationBlocks is invalid.
      */
-     getCreateVaultOptions(amountSTX, lockDurationBlocks) {
-        if (!amountSTX || amountSTX <= 0) throw new Error('amountSTX must be greater than 0');
+      getCreateVaultOptions(amountSTX, lockDurationBlocks) {
+        if (!amountSTX || amountSTX <= 0) throw new Error('Amount must be greater than 0 STX');
         if (!lockDurationBlocks || lockDurationBlocks <= 0) throw new Error('lockDurationBlocks must be greater than 0');
         return {
             contractAddress: this.#contractAddress,

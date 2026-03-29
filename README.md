@@ -152,6 +152,11 @@ FEE_BPS: 50 (0.5%)
  - **Stacks Explorer**: View protocol transactions on-chain.
  - **Console.xyz**: Community discussions and governance.
  
+ ## ❓ FAQ
+ 
+ **Q: What is microSTX?**
+ A: It is the smallest unit of STX. 1 STX = 1,000,000 microSTX.
+ 
  ## 📖 Operations Docs
 
 ## 📄 License

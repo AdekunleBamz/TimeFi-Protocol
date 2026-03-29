@@ -99,9 +99,9 @@ const tvl = await client.getTVL();
 - **SDK**: JavaScript / `@stacks/transactions`
 - **Tooling**: Clarinet, Vitest
 
-## 📝 Contract Functions
+## 🧾 Contract Functions
 
-### Public Functions
+### 🔓 Public Functions
 
 | Function | Parameters | Description |
 |----------|------------|-------------|

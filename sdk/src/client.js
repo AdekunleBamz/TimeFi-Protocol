@@ -440,9 +440,19 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The vault count for the owner.
      * @throws {Error} If owner address is missing.
      */
-    async getVaultsByOwnerCount(owner) {
+     async getVaultsByOwnerCount(owner) {
         if (!owner) throw new Error('Owner address is required');
         return this.callReadOnly('get-vault-count-by-owner', [principalCV(owner)]);
+    }
+ 
+    /**
+     * Alias for getVaultsByOwnerCount. Gets the number of vaults owned by a specific account.
+     * @param {string} address - The Stacks address of the owner.
+     * @returns {Promise<number>} The vault count for the owner.
+     * @throws {Error} If address is missing.
+     */
+    async getAccountVaultCount(address) {
+        return this.getVaultsByOwnerCount(address);
     }
  
     /**

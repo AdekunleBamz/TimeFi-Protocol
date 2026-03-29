@@ -223,8 +223,21 @@ const ClarityResponseType = {
      * Gets the total number of vaults created in the protocol.
      * @returns {Promise<number>} The total vault count.
      */
-    async getVaultCount() {
+     async getVaultCount() {
         return this.callReadOnly('get-vault-count', []);
+    }
+ 
+    /**
+     * Retrieves a vault ID by its global registration index.
+     * @param {number|string|BigInt} index - The global index of the vault.
+     * @returns {Promise<number>} The vault ID.
+     * @throws {Error} If index is missing or invalid.
+     */
+    async getVaultIdByIndex(index) {
+        if (index === undefined || index === null) {
+            throw new Error('Index is required');
+        }
+        return this.callReadOnly('get-vault-id-by-index', [uintCV(index)]);
     }
 
      /**

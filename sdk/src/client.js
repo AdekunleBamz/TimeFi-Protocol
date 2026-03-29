@@ -193,9 +193,19 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The creation block height.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async getCreatedAt(id) {
-        this.#validateVaultId(id);
+      async getCreatedAt(id) {
+        await this.#validateVaultId(id);
         return this.callReadOnly('get-created-at', [uintCV(id)]);
+    }
+ 
+    /**
+     * Alias for getCreatedAt. Retrieves the block height at which a vault was created.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<number>} The creation block height.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultCreationBlock(id) {
+        return this.getCreatedAt(id);
     }
  
     /**

@@ -282,9 +282,17 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The balance in microSTX.
      * @throws {Error} If address is missing.
      */
-    async getSTXBalance(address) {
+     async getSTXBalance(address) {
         if (!address) throw new Error('Address is required');
         return this.callReadOnly('get-stx-balance', [principalCV(address)]);
+    }
+ 
+    /**
+     * Gets the current Stacks blockchain block height.
+     * @returns {Promise<number>} The current block height.
+     */
+    async getBlockHeight() {
+        return this.callReadOnly('get-block-height', []);
     }
 
      /**

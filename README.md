@@ -104,7 +104,7 @@ const tvl = await client.getTVL();
 
 ## 🧾 Contract Functions
 
-### 🔓 Public Functions
+### 🔓 Public Contract Functions
 
 | Function | Parameters | Description |
 |----------|------------|-------------|
@@ -112,7 +112,7 @@ const tvl = await client.getTVL();
 | `withdraw` | `(id uint)` | Withdraw from an unlocked vault |
 | `approve-bot` | `(bot principal)` | Approve a trading bot contract |
 
-### 🔍 Read-Only Functions
+### 🔍 Read-Only Contract Functions
 
 | Function | Parameters | Description |
 |----------|------------|-------------|

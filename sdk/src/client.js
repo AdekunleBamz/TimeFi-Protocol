@@ -9,6 +9,9 @@ import {
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from './constants.js';
 
+/**
+ * Client for interacting with the TimeFi Protocol on the Stacks blockchain.
+ */
 export class TimeFiClient {
     constructor(networkType = 'mainnet') {
         this.network = networkType === 'mainnet'

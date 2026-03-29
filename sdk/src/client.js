@@ -400,9 +400,19 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The account nonce.
      * @throws {Error} If address is missing.
      */
-     async getNonce(address) {
+      async getNonce(address) {
         if (!address) throw new Error('Address is required');
         return this.callReadOnly('get-nonce', [principalCV(address)]);
+    }
+ 
+    /**
+     * Alias for getNonce. Retrieves the current nonce for a specific account.
+     * @param {string} address - The Stacks address to check.
+     * @returns {Promise<number>} The account nonce.
+     * @throws {Error} If address is missing.
+     */
+    async getAccountNonce(address) {
+        return this.getNonce(address);
     }
  
     /**

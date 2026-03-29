@@ -323,13 +323,21 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} Object containing nonce, STX balance, and vault IDs.
      * @throws {Error} If address is missing.
      */
-    async getAccountData(address) {
+     async getAccountData(address) {
         const [nonce, balance, vaults] = await Promise.all([
             this.getNonce(address),
             this.getSTXBalance(address),
             this.getVaultsByOwner(address)
         ]);
         return { address, nonce, balance, vaults };
+    }
+ 
+    /**
+     * Checks if the TimeFi Protocol is currently in a paused state.
+     * @returns {Promise<boolean>} True if the protocol is paused.
+     */
+    async isPaused() {
+        return this.callReadOnly('is-paused', []);
     }
 
      /**

@@ -145,7 +145,12 @@ FEE_BPS: 50 (0.5%)
  - **Mainnet**: `https://stacks-node-api.mainnet.stacks.co`
  - **Testnet**: `https://stacks-node-api.testnet.stacks.co`
  
- ## 🗳️ Governance
+  ### ⚙️ Deployment Settings
+  - **Clarinet Settings**: [settings/Clarinet.toml](settings/Clarinet.toml)
+  - **Mainnet Plan**: [deployments/default.mainnet-plan.yaml](deployments/default.mainnet-plan.yaml)
+  - **Testnet Plan**: [deployments/default.testnet-plan.yaml](deployments/default.testnet-plan.yaml)
+  
+  ## 🗳️ Governance
  
  TimeFi Protocol is governed by its community. Future proposals will be handled via the on-chain governance module.
  

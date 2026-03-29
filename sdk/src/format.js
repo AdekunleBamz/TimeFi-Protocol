@@ -3,7 +3,12 @@
  * Standard formatting for STX, addresses, numbers, and dates
  */
 
-export const formatSTX = (microStx) => {
+/**
++ * Formats a microSTX value into a human-readable STX string.
++ * @param {number|BigInt|string|Object} microStx - The value in microSTX.
++ * @returns {string} Formatted STX string.
++ */
+ export const formatSTX = (microStx) => {
     if (microStx === undefined || microStx === null) return '0.000000';
     try {
         // Extract inner value if wrapped in an object

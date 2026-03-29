@@ -137,7 +137,8 @@ FEE_BPS: 50 (0.5%)
  
  - Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
  
- ### 🌐 Network Endpoints
+  ### 🌐 Network API Endpoints
+ 
  - **Mainnet**: `https://stacks-node-api.mainnet.stacks.co`
  - **Testnet**: `https://stacks-node-api.testnet.stacks.co`
  

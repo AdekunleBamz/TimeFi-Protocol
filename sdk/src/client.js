@@ -268,12 +268,23 @@ const ClarityResponseType = {
      * Retrieves global protocol statistics.
      * @returns {Promise<Object>} Object containing TVL and total vault count.
      */
-    async getProtocolStats() {
+     async getProtocolStats() {
         const [tvl, count] = await Promise.all([
             this.getTVL(),
             this.getVaultCount()
         ]);
         return { tvl, count };
+    }
+ 
+    /**
+     * Retrieves the liquid STX balance of a specific account.
+     * @param {string} address - The Stacks address to check.
+     * @returns {Promise<number>} The balance in microSTX.
+     * @throws {Error} If address is missing.
+     */
+    async getSTXBalance(address) {
+        if (!address) throw new Error('Address is required');
+        return this.callReadOnly('get-stx-balance', [principalCV(address)]);
     }
 
      /**

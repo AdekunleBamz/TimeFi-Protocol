@@ -233,11 +233,24 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The vault ID.
      * @throws {Error} If index is missing or invalid.
      */
-    async getVaultIdByIndex(index) {
+     async getVaultIdByIndex(index) {
         if (index === undefined || index === null) {
             throw new Error('Index is required');
         }
         return this.callReadOnly('get-vault-id-by-index', [uintCV(index)]);
+    }
+ 
+    /**
+     * Retrieves a vault ID by its owner-specific index.
+     * @param {string} owner - The Stacks address of the owner.
+     * @param {number|string|BigInt} index - The index of the vault for this owner.
+     * @returns {Promise<number>} The vault ID.
+     * @throws {Error} If owner or index is missing.
+     */
+    async getVaultIdByOwnerIndex(owner, index) {
+        if (!owner) throw new Error('Owner address is required');
+        if (index === undefined || index === null) throw new Error('Index is required');
+        return this.callReadOnly('get-vault-id-by-owner-index', [principalCV(owner), uintCV(index)]);
     }
 
      /**

@@ -191,7 +191,7 @@ const ClarityResponseType = {
      * @returns {Promise<'Active'|'Expired'|'Unknown'>} The current vault status.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async getVaultStatus(id) {
+     async getVaultStatus(id) {
         const [active, expired] = await Promise.all([
             this.isActive(id),
             this.isExpired(id)
@@ -200,6 +200,23 @@ const ClarityResponseType = {
         if (active && !expired) return 'Active';
         if (expired) return 'Expired';
         return 'Unknown';
+    }
+ 
+    /**
+     * Retrieves all core details for a specific vault in a single object.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<Object>} Object containing owner, balance, duration, and status.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultDetails(id) {
+        const [owner, amount, duration, status] = await Promise.all([
+            this.getVaultOwner(id),
+            this.getVaultAmount(id),
+            this.getVaultDuration(id),
+            this.getVaultStatus(id)
+        ]);
+ 
+        return { id, owner, amount, duration, status };
     }
 
      /**

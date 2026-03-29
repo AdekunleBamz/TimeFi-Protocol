@@ -38,4 +38,8 @@ export const LOCK_PERIODS = {
  * @constant {number}
  */
 export const MIN_DEPOSIT = 0.01;
+/**
+ * Maximum deposit amount allowed in microSTX (1,000,000 STX).
+ * @constant {number}
+ */
 export const MAX_DEPOSIT = 1000000;

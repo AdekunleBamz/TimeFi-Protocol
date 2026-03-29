@@ -75,8 +75,9 @@ export class TimeFiClient {
 
     /**
      * Gets the remaining time in blocks until the vault unlocks.
-     * @param {number} vaultId - The unique ID of the vault.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<number>} The number of blocks remaining.
+     * @throws {Error} If id is missing or invalid.
      */
     async getTimeRemaining(id) {
         if (id === undefined || id === null) throw new Error('id is required');
@@ -85,8 +86,9 @@ export class TimeFiClient {
 
     /**
      * Checks if a vault is currently eligible for withdrawal.
-     * @param {number} vaultId - The unique ID of the vault.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<boolean>} True if withdrawal is possible.
+     * @throws {Error} If id is missing or invalid.
      */
     async canWithdraw(id) {
         if (id === undefined || id === null) throw new Error('id is required');

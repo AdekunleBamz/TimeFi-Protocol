@@ -301,7 +301,7 @@ const ClarityResponseType = {
      * @returns {Promise<number[]>} Array of vault IDs.
      * @throws {Error} If owner address is missing.
      */
-    async getVaultsByOwner(owner) {
+     async getVaultsByOwner(owner) {
         if (!owner) throw new Error('Owner address is required');
         // This is a placeholder for a more complex iteration if the contract doesn't support bulk fetch
         // Assuming there's a getter for count per owner
@@ -311,6 +311,21 @@ const ClarityResponseType = {
             tasks.push(this.getVaultIdByOwnerIndex(owner, i));
         }
         return Promise.all(tasks);
+    }
+ 
+    /**
+     * Retrieves all relevant blockchain data for a specific account.
+     * @param {string} address - The Stacks address to query.
+     * @returns {Promise<Object>} Object containing nonce, STX balance, and vault IDs.
+     * @throws {Error} If address is missing.
+     */
+    async getAccountData(address) {
+        const [nonce, balance, vaults] = await Promise.all([
+            this.getNonce(address),
+            this.getSTXBalance(address),
+            this.getVaultsByOwner(address)
+        ]);
+        return { address, nonce, balance, vaults };
     }
 
      /**

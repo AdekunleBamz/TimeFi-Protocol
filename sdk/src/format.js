@@ -95,6 +95,7 @@ export const formatDate = (inputDate) => {
  * Returns a relative time string (e.g., '5m ago', 'in 1h').
  * @param {Date|string|number} date - The date to compare with now.
  * @returns {string} Formatted relative time string.
+ * @throws {Error} If date cannot be parsed.
  */
 export const formatRelativeTime = (rawInput) => {
     if (!rawInput) return '--';

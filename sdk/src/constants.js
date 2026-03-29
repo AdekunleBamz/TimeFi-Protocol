@@ -33,5 +33,9 @@ export const LOCK_PERIODS = {
     YEAR_1: { label: '1 Year', blocks: 52560, apy: 12 },
 };
 
+/**
+ * Minimum deposit amount allowed in microSTX.
+ * @constant {number}
+ */
 export const MIN_DEPOSIT = 0.01;
 export const MAX_DEPOSIT = 1000000;

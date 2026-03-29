@@ -53,8 +53,8 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
  */
 export const formatNumber = (numericValue) => {
     if (numericValue === undefined || numericValue === null) return '0';
-    const num = Number(numericValue);
-    return isNaN(num) ? '0' : num.toLocaleString();
+    const parsedNumber = Number(numericValue);
+    return isNaN(parsedNumber) ? '0' : parsedNumber.toLocaleString();
 };
 
 /**
@@ -65,9 +65,9 @@ export const formatNumber = (numericValue) => {
  */
 export const formatPercent = (decimalValue, decimalPlaces = 2) => {
     if (decimalValue === undefined || decimalValue === null) return '0%';
-    const num = Number(decimalValue);
-    if (isNaN(num)) return '0%';
-    return (num * 100).toFixed(decimalPlaces) + '%';
+    const parsedPercent = Number(decimalValue);
+    if (isNaN(parsedPercent)) return '0%';
+    return (parsedPercent * 100).toFixed(decimalPlaces) + '%';
 };
 
 /**

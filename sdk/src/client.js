@@ -208,7 +208,7 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} Object containing owner, balance, duration, and status.
      * @throws {Error} If vault ID is missing or invalid.
      */
-    async getVaultDetails(id) {
+     async getVaultDetails(id) {
         const [owner, amount, duration, status] = await Promise.all([
             this.getVaultOwner(id),
             this.getVaultAmount(id),
@@ -217,6 +217,14 @@ const ClarityResponseType = {
         ]);
  
         return { id, owner, amount, duration, status };
+    }
+ 
+    /**
+     * Gets the total number of vaults created in the protocol.
+     * @returns {Promise<number>} The total vault count.
+     */
+    async getVaultCount() {
+        return this.callReadOnly('get-vault-count', []);
     }
 
      /**

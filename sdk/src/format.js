@@ -54,11 +54,15 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
  * @returns {string} Formatted number string.
  * @throws {Error} If val cannot be converted to a number.
  */
-export const formatNumber = (numericValue) => {
-    if (numericValue === undefined || numericValue === null) return '0';
-    const parsedNumber = Number(numericValue);
-    return isNaN(parsedNumber) ? '0' : parsedNumber.toLocaleString();
-};
+ export function formatNumber(numberToFormat, fractionDigits = 2) {
+    if (numberToFormat === undefined || numberToFormat === null) return '0.00';
+    const parsedNumber = Number(numberToFormat);
+    if (isNaN(parsedNumber)) return '0.00';
+    return new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits
+    }).format(parsedNumber);
+}
 
 /**
  * Formats a decimal value as a percentage string.
@@ -67,12 +71,15 @@ export const formatNumber = (numericValue) => {
  * @returns {string} Formatted percentage string.
  * @throws {Error} If decimalValue cannot be converted to a number.
  */
-export const formatPercent = (decimalValue, decimalPlaces = 2) => {
-    if (decimalValue === undefined || decimalValue === null) return '0%';
-    const parsedPercent = Number(decimalValue);
-    if (isNaN(parsedPercent)) return '0%';
-    return (parsedPercent * 100).toFixed(decimalPlaces) + '%';
-};
+export function formatPercent(valueToFormat, fractionDigits = 2) {
+    const parsedNumber = Number(valueToFormat);
+    if (isNaN(parsedNumber)) throw new Error('Invalid percentage value');
+    return new Intl.NumberFormat('en-US', {
+        style: 'percent',
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits
+    }).format(parsedNumber / 100);
+}
 
 /**
  * Formats a date or timestamp into a localized date string.

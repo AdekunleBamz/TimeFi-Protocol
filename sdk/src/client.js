@@ -77,9 +77,9 @@ export class TimeFiClient {
      * @param {number} vaultId - The unique ID of the vault.
      * @returns {Promise<number>} The number of blocks remaining.
      */
-    async getTimeRemaining(vaultId) {
-        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
-        return this.callReadOnly('get-time-remaining', [uintCV(vaultId)]);
+    async getTimeRemaining(id) {
+        if (id === undefined || id === null) throw new Error('id is required');
+        return this.callReadOnly('get-time-remaining', [uintCV(id)]);
     }
 
     /**
@@ -87,9 +87,9 @@ export class TimeFiClient {
      * @param {number} vaultId - The unique ID of the vault.
      * @returns {Promise<boolean>} True if withdrawal is possible.
      */
-    async canWithdraw(vaultId) {
-        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
-        return this.callReadOnly('can-withdraw', [uintCV(vaultId)]);
+    async canWithdraw(id) {
+        if (id === undefined || id === null) throw new Error('id is required');
+        return this.callReadOnly('can-withdraw', [uintCV(id)]);
     }
 
     /**

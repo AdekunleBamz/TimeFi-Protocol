@@ -65,6 +65,7 @@ export const formatNumber = (numericValue) => {
  * @param {number|string} val - The decimal value (e.g., 0.05).
  * @param {number} [decimals=2] - Number of decimal places to include.
  * @returns {string} Formatted percentage string.
+ * @throws {Error} If decimalValue cannot be converted to a number.
  */
 export const formatPercent = (decimalValue, decimalPlaces = 2) => {
     if (decimalValue === undefined || decimalValue === null) return '0%';

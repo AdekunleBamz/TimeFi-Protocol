@@ -91,7 +91,7 @@ export class TimeFiClient {
      * @throws {Error} If id is missing or invalid.
      */
     async canWithdraw(id) {
-        if (id === undefined || id === null) throw new Error('id is required');
+        this.#validateVaultId(id);
         return this.callReadOnly('can-withdraw', [uintCV(id)]);
     }
 

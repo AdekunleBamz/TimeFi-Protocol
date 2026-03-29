@@ -25,7 +25,7 @@ TimeFi-Protocol/
 - **Bot Approval** - Approve automated trading bots via `contract-hash?`
 - **Fee Collection** - 0.5% fee on deposits
 
-### Clarity 4 Functions Used
+### 📜 Clarity 4 Functions Used
 - `get-stacks-block-info?` - For block-time based unlock calculation
 - `contract-hash?` - For bot verification
 

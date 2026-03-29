@@ -259,9 +259,21 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The account nonce.
      * @throws {Error} If address is missing.
      */
-    async getNonce(address) {
+     async getNonce(address) {
         if (!address) throw new Error('Address is required');
         return this.callReadOnly('get-nonce', [principalCV(address)]);
+    }
+ 
+    /**
+     * Retrieves global protocol statistics.
+     * @returns {Promise<Object>} Object containing TVL and total vault count.
+     */
+    async getProtocolStats() {
+        const [tvl, count] = await Promise.all([
+            this.getTVL(),
+            this.getVaultCount()
+        ]);
+        return { tvl, count };
     }
 
      /**

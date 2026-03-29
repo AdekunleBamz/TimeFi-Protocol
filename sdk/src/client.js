@@ -212,7 +212,7 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} Object containing owner, balance, duration, and status.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async getVaultDetails(id) {
+      async getVaultDetails(id) {
         const [owner, amount, duration, status] = await Promise.all([
             this.getVaultOwner(id),
             this.getVaultAmount(id),
@@ -221,6 +221,23 @@ const ClarityResponseType = {
         ]);
  
         return { id, owner, amount, duration, status };
+    }
+ 
+    /**
+     * Retrieves a complete summary of a vault, including temporal data.
+     * @param {number|string|BigInt} id - The unique ID of the vault.
+     * @returns {Promise<Object>} Object containing all vault properties.
+     * @throws {Error} If vault ID is missing or invalid.
+     */
+    async getVaultSummary(id) {
+        const [details, timeRemaining, createdAt, unlockBlock] = await Promise.all([
+            this.getVaultDetails(id),
+            this.getTimeRemaining(id),
+            this.getCreatedAt(id),
+            this.getUnlockBlock(id)
+        ]);
+ 
+        return { ...details, timeRemaining, createdAt, unlockBlock };
     }
  
     /**

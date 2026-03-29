@@ -130,9 +130,24 @@ MAX_LOCK: 31,536,000 seconds (1 year)
 FEE_BPS: 50 (0.5%)
 ```
 
-## 📖 Operations Docs
-
-- Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
+## 🧱 Infrastructure
+ 
+ - Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
+ 
+ ### 🌐 Network Endpoints
+ - **Mainnet**: `https://stacks-node-api.mainnet.stacks.co`
+ - **Testnet**: `https://stacks-node-api.testnet.stacks.co`
+ 
+ ## 🗳️ Governance
+ 
+ TimeFi Protocol is governed by its community. Future proposals will be handled via the on-chain governance module.
+ 
+ ## 👥 Community
+ 
+ - **Discord**: [Join our Discord](https://discord.gg/timefi)
+ - **Twitter**: [@TimeFiProtocol](https://twitter.com/TimeFiProtocol)
+ 
+ ## 📖 Operations Docs
 
 ## 📄 License
 

@@ -170,6 +170,15 @@ FEE_BPS: 50 (0.5%)
  
  ## 📖 Operations Docs
 
-## 📄 License
+## 🤝 Acknowledgments
+ 
+ - **Stacks Foundation**: For the Clarity 4 development tools.
+ - **Hiro Systems**: For the Stacks/Transactions library.
+ 
+ ## 👤 Contributors
+ 
+ - **AdekunleBamz**: Lead Developer
+ 
+ ## 📄 License
 
 MIT License

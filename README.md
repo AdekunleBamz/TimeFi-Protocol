@@ -156,8 +156,9 @@ FEE_BPS: 50 (0.5%)
  
  ## 🪐 Ecosystem
  
- - **Stacks Explorer**: View protocol transactions on-chain.
- - **Console.xyz**: Community discussions and governance.
+ - **Mainnet Explorer**: [View on Stacks Explorer](https://explorer.hiro.so/?chain=mainnet)
+ - **Testnet Explorer**: [View on Stacks Explorer](https://explorer.hiro.so/?chain=testnet)
+ - **Console.xyz**: [Community discussions and governance](https://console.xyz)
  
  ## ❓ FAQ
  

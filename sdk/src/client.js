@@ -28,8 +28,8 @@ export class TimeFiClient {
      * Initializes a new TimeFiClient.
      * @param {'mainnet' | 'testnet'} networkType - The Stacks network to target.
      */
-    constructor(networkType = 'mainnet') {
-        this.network = networkType === 'mainnet'
+    constructor(selectedNetwork = 'mainnet') {
+        this.network = selectedNetwork === 'mainnet'
             ? new StacksMainnet()
             : new StacksTestnet();
         this.contractAddress = CONTRACT_ADDRESS;
@@ -45,7 +45,7 @@ export class TimeFiClient {
      * @returns {Promise<any>} The parsed result of the call.
      */
     async callReadOnly(functionName, functionArgs = [], senderAddress) {
-        const result = await callReadOnlyFunction({
+        const callResult = await callReadOnlyFunction({
             contractAddress: this.contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
             functionName,
@@ -53,13 +53,13 @@ export class TimeFiClient {
             network: this.network,
             senderAddress: senderAddress || this.contractAddress,
         });
-
+ 
         // Handle ResponseCV (ok/err) explicitly
-        if (result.type === ClarityResponseType.OK || result.type === ClarityResponseType.ERR) {
-            return cvToValue(result.value);
+        if (callResult.type === ClarityResponseType.OK || callResult.type === ClarityResponseType.ERR) {
+            return cvToValue(callResult.value);
         }
-
-        return cvToValue(result);
+ 
+        return cvToValue(callResult);
     }
 
     /**
@@ -67,9 +67,9 @@ export class TimeFiClient {
      * @param {number} vaultId - The unique ID of the vault.
      * @returns {Promise<any>} The vault data.
      */
-    async getVault(vaultId) {
-        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
-        return this.callReadOnly('get-vault', [uintCV(vaultId)]);
+    async getVault(id) {
+        if (id === undefined || id === null) throw new Error('id is required');
+        return this.callReadOnly('get-vault', [uintCV(id)]);
     }
 
     /**

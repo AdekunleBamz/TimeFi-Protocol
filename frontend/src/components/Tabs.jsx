@@ -5,6 +5,7 @@
  * @author adekunlebamz
  */
 import React, { useState, createContext, useContext, useId } from 'react';
+import { Tooltip } from './Tooltip';
 import './Tabs.css';
 
 // Context for sharing tab state between components

@@ -13,6 +13,7 @@ import { showConnect, disconnect } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../utils/constants';
+import { Tooltip } from '../components/Tooltip';
 
 /**
  * WalletContext - React Context for wallet connection state management.

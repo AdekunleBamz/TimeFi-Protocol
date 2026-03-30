@@ -23,6 +23,7 @@
  * import * as UI from './components';
  * <UI.Button variant="primary">Click me</UI.Button>
  */
+import { Tooltip } from './Tooltip';
 
 // Layout
 export { Header } from './Header';

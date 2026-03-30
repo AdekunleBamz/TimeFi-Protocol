@@ -23,6 +23,9 @@ npm install timefi-sdk
 ```bash
 npm test
 ```
+
+From the repository root, use `npm run sdk:build` for SDK build validation before publishing.
+
 ## 🛠️ Quick Start
 
 ### Fetch Protocol Stats

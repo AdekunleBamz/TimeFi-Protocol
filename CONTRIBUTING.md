@@ -57,8 +57,9 @@ Follow conventional commits:
 1. Create a feature branch from `main`
 2. Make your changes
 3. Run tests locally
-4. Push and create a PR
-5. Wait for review
+4. Run `npm run check` from repository root
+5. Push and create a PR
+6. Wait for review
 
 ## Contract Development
 

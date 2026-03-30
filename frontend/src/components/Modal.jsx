@@ -7,6 +7,7 @@
 
 import React, { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { Tooltip } from './Tooltip';
 import './Modal.css';
 
 /**

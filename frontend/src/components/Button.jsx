@@ -6,6 +6,7 @@
  */
 
 import React, { useState } from 'react';
+import { Tooltip } from './Tooltip';
 import './Button.css';
 
 /**

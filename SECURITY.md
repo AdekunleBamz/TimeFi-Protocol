@@ -8,6 +8,7 @@ If you discover a security vulnerability, please:
 2. Email security concerns privately to the maintainers
 3. Include a detailed description of the vulnerability
 4. Allow reasonable time for a fix before public disclosure
+5. Include affected network, contract name, and any relevant txid when available
 
 ## Supported Versions
 

@@ -5,6 +5,7 @@
  * @author adekunlebamz
  */
 import React, { useState, useCallback } from 'react';
+import { Tooltip } from './Tooltip';
 import './CopyButton.css';
 
 /**

@@ -19,20 +19,9 @@ Create a new time-locked vault with STX deposit.
 - `amount` - Amount of STX to deposit in microSTX (minimum 10,000 microSTX = 0.01 STX)
 - `lock-blocks` - Lock duration in Stacks blocks (minimum 6, maximum 52,560)
 
-**Examples:**
-```javascript
-// Deposit 100 STX for ~30 days
-const amountMicroStx = 100 * 1_000_000; // 100,000,000 microSTX
-const lockDuration = 4_320; // ~30 days in blocks
-await createVault(amountMicroStx, lockDuration);
+Amounts are provided in microSTX, so UI conversions should happen before contract submission.
 
-// Deposit 1000 STX for ~1 year
-const amountMicroStx = 1000 * 1_000_000; // 1,000,000,000 microSTX
-const lockDuration = 52_560; // ~1 year in blocks
-await createVault(amountMicroStx, lockDuration);
-```
-
-**Returns:** `(response uint uint)` - Vault ID on success, error code on failure
+**Returns:** `(response uint uint)` - Vault ID on success
 
 **Events:** Emits `{event: "create", id, owner, amount, unlock}`
 

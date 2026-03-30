@@ -23,6 +23,8 @@ npm install timefi-sdk
 ```bash
 npm test
 ```
+From repository root, run `npm --prefix sdk test` for the same SDK test command.
+
 ## 🛠️ Quick Start
 
 ### Fetch Protocol Stats

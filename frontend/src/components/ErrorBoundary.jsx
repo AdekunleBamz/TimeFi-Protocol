@@ -6,6 +6,7 @@
  */
 import React, { Component } from 'react';
 import { Button } from './Button';
+import { Tooltip } from './Tooltip';
 import './ErrorBoundary.css';
 
 const isDevelopment = import.meta.env.DEV;

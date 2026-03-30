@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from './Button';
+import { Tooltip } from './Tooltip';
 import './ConfirmModal.css';
 
 /**

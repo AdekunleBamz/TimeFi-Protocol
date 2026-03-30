@@ -12,6 +12,7 @@ import { Countdown } from './Countdown';
 import { CopyButton } from './CopyButton';
 import { useToast } from './Toast';
 import { Skeleton } from './Skeleton';
+import { Tooltip } from './Tooltip';
 import './VaultDetails.css';
 
 const ACTIVE_NETWORK =

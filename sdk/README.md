@@ -23,7 +23,6 @@ npm install timefi-sdk
 ```bash
 npm test
 ```
-From repository root, run `npm --prefix sdk test` for the same SDK test command.
 
 From the repository root, use `npm run sdk:build` for SDK build validation before publishing.
 

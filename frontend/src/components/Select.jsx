@@ -5,6 +5,7 @@
  * @author adekunlebamz
  */
 import React, { useState, useRef, useEffect } from 'react';
+import { Tooltip } from './Tooltip';
 import './Select.css';
 
 /**

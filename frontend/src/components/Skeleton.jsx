@@ -5,6 +5,7 @@
  * @author adekunlebamz
  */
 import React from 'react';
+import { Tooltip } from './Tooltip';
 import './Skeleton.css';
 
 /**

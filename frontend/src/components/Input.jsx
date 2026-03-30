@@ -6,6 +6,7 @@
  */
 
 import React, { forwardRef, useId } from 'react';
+import { Tooltip } from './Tooltip';
 import './Input.css';
 
 /**

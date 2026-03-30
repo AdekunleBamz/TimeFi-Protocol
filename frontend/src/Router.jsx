@@ -13,6 +13,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import { Header } from './components/Header';
 import { Skeleton } from './components/Skeleton';
 import { ScrollToTop } from './components/ScrollToTop';
+import { Tooltip } from './components/Tooltip';
 
 // Lazy load pages for code splitting
 const Dashboard = lazy(() => import('./components/Dashboard'));

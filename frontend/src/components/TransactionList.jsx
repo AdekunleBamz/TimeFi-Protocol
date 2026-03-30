@@ -1,6 +1,7 @@
 import React from 'react';
 import { formatSTX, formatRelativeTime, formatAddress } from '../utils/format';
 import { CopyButton } from './CopyButton';
+import { Tooltip } from './Tooltip';
 import './TransactionList.css';
 
 const ACTIVE_NETWORK =

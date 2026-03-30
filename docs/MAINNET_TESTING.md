@@ -8,6 +8,8 @@ This guide documents how to run the mainnet stress and coverage scripts safely.
 - A funded mainnet wallet in `tests/wallets.json` position `wallets[0]`
 - `@stacks/transactions` and `@stacks/network` installed via `npm ci`
 
+Run `npm run check` once before mainnet scripts to catch local contract/test drift.
+
 ## Scripts Covered
 
 - `tests/fund-wallets.js`: pre-funds test wallets from wallet 1.

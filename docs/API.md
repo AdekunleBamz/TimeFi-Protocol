@@ -19,6 +19,8 @@ Create a new time-locked vault with STX deposit.
 - `amount` - Amount of STX to deposit (minimum 10,000 microSTX)
 - `lock-secs` - Lock duration in seconds (3,600 to 31,536,000)
 
+Amounts are provided in microSTX, so UI conversions should happen before contract submission.
+
 **Returns:** `(response uint uint)` - Vault ID on success
 
 **Events:** Emits `{event: "create", id, owner, amount, unlock}`

@@ -1,3 +1,9 @@
+/**
+ * Avatar Component - User profile image display.
+ *
+ * @module components/Avatar
+ * @author adekunlebamz
+ */
 import React from 'react';
 import './Avatar.css';
 

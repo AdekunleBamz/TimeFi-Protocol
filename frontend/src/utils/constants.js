@@ -1,10 +1,27 @@
 /**
- * Application-wide constants
+ * Application Constants - Centralized configuration values for TimeFi.
+ *
+ * Contains network settings, block times, API endpoints, fee defaults,
+ * error codes, UI settings, and external links used throughout the app.
+ *
+ * @module utils/constants
  */
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT } from '../config/contracts';
 
-// Current active network from environment
+/**
+ * Network environment identifiers
+ * @enum {string}
+ */
+const NETWORK = {
+  MAINNET: 'mainnet',
+  TESTNET: 'testnet',
+};
+
+/**
+ * CURRENT_NETWORK - Active network based on environment variable.
+ * @type {string}
+ */
 export const CURRENT_NETWORK = (
   String(import.meta.env.VITE_NETWORK || NETWORK.MAINNET).trim().toLowerCase() === NETWORK.TESTNET
     ? NETWORK.TESTNET
@@ -12,7 +29,10 @@ export const CURRENT_NETWORK = (
 );
 const ACTIVE_NETWORK = CURRENT_NETWORK;
 
-// Block time estimates (in seconds)
+/**
+ * BLOCK_TIME - Estimated block times for different networks (in seconds).
+ * @type {Object.<string, number>}
+ */
 export const BLOCK_TIME = {
   MAINNET: 600, // ~10 minutes
   TESTNET: 120, // ~2 minutes
@@ -20,20 +40,29 @@ export const BLOCK_TIME = {
 };
 export const BLOCK_TIME_SECONDS = BLOCK_TIME.MAINNET;
 
-// API endpoints
+/**
+ * API_ENDPOINTS - Hiro API endpoints for different networks.
+ * @type {Object.<string, string>}
+ */
 export const API_ENDPOINTS = {
   MAINNET: 'https://api.mainnet.hiro.so',
   TESTNET: 'https://api.testnet.hiro.so',
 };
 
-// Transaction fee defaults (in microSTX)
+/**
+ * FEES - Default transaction fee estimates (in microSTX).
+ * @type {Object.<string, number>}
+ */
 export const FEES = {
   DEFAULT: 2000,
   FAST: 5000,
   SLOW: 1000,
 };
 
-// STX denomination
+/**
+ * STX - STX token denomination multipliers.
+ * @type {Object.<string, number>}
+ */
 export const STX = {
   MICRO: 1,
   MILLI: 1000,
@@ -41,7 +70,10 @@ export const STX = {
 };
 export const MINIMUM_DEPOSIT = Math.floor(Number(MIN_DEPOSIT || 0) * STX.UNIT);
 
-// Vault status codes
+/**
+ * VAULT_STATUS - Possible vault lifecycle states.
+ * @type {Object.<string, string>}
+ */
 export const VAULT_STATUS = {
   ACTIVE: 'active',
   LOCKED: 'locked',
@@ -50,7 +82,10 @@ export const VAULT_STATUS = {
   EMERGENCY: 'emergency',
 };
 
-// Error codes from contract
+/**
+ * ERROR_CODES - Clarity contract error code mappings.
+ * @type {Object.<number, string>}
+ */
 export const ERROR_CODES = {
   100: 'Owner only',
   101: 'Not found',
@@ -67,7 +102,10 @@ export const ERROR_CODES = {
   112: 'Max vaults reached',
 };
 
-// UI constants
+/**
+ * UI - User interface configuration constants.
+ * @type {Object.<string, number>}
+ */
 export const UI = {
   TOAST_DURATION: 5000,
   DEBOUNCE_DELAY: 300,
@@ -76,7 +114,10 @@ export const UI = {
   PAGINATION_SIZE: 20,
 };
 
-// Local storage keys
+/**
+ * STORAGE_KEYS - Standardized localStorage key prefixes.
+ * @type {Object.<string, string>}
+ */
 export const STORAGE_KEYS = {
   WALLET_SESSION: 'timefi_wallet_session',
   USER_PREFERENCES: 'timefi_preferences',
@@ -84,7 +125,10 @@ export const STORAGE_KEYS = {
   THEME: 'timefi_theme',
 };
 
-// External links
+/**
+ * LINKS - External resource URLs for TimeFi ecosystem.
+ * @type {Object.<string, string>}
+ */
 export const LINKS = {
   DOCS: 'https://docs.timefi.io',
   GITHUB: 'https://github.com/AdekunleBamz/TimeFi-Protocol',
@@ -105,7 +149,10 @@ export const STACKS_NETWORK = ACTIVE_NETWORK === NETWORK.MAINNET
 
 export { CONTRACT_ADDRESS, CONTRACT_NAMES };
 
-// Animation durations (ms)
+/**
+ * ANIMATION - Standard animation durations (in milliseconds).
+ * @type {Object.<string, number>}
+ */
 export const ANIMATION = {
   FAST: 150,
   NORMAL: 300,

@@ -1,3 +1,9 @@
+/**
+ * Progress Component - Progress bars and loading indicators.
+ *
+ * @module components/Progress
+ * @author adekunlebamz
+ */
 import React from 'react';
 import './Progress.css';
 

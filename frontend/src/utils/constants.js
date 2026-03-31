@@ -1,10 +1,11 @@
 /**
- * Application Constants - Centralized configuration values for TimeFi.
+ * Constants - Application-wide constant values.
  *
- * Contains network settings, block times, API endpoints, fee defaults,
- * error codes, UI settings, and external links used throughout the app.
+ * Provides centralized configuration values used throughout
+ * the application for consistent behavior.
  *
  * @module utils/constants
+ * @author adekunlebamz
  */
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT } from '../config/contracts';

@@ -4,7 +4,17 @@ import { useReadOnly } from '../hooks/useReadOnly';
 import './VaultCard.css';
 
 /**
- * VaultCard component displays vault information
+ * VaultCard - Card display for individual vault information.
+ *
+ * Shows vault status, time remaining, locked amount, unlock block,
+ * and approved bot. Auto-refreshes every 30 seconds and highlights
+ * when withdrawal is available.
+ *
+ * @param {Object} props - Component props
+ * @param {number|string} props.vaultId - Unique vault identifier
+ * @returns {JSX.Element} Vault card element
+ * @example
+ * <VaultCard vaultId={12345} />
  */
 export function VaultCard({ vaultId }) {
   const [vault, setVault] = useState(null);

@@ -1,3 +1,9 @@
+/**
+ * Toast Component - Notification messages with auto-dismiss.
+ *
+ * @module components/Toast
+ * @author adekunlebamz
+ */
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import './Toast.css';

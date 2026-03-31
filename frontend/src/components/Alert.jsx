@@ -1,3 +1,10 @@
+/**
+ * Alert Component - Notification banner with variants and dismissible option.
+ *
+ * @module components/Alert
+ * @author adekunlebamz
+ */
+
 import React from 'react';
 import './Alert.css';
 

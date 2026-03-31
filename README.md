@@ -93,18 +93,18 @@ npm run sdk:build
 ### 💻 Frontend Dashboard
 
 ```bash
- cd frontend
- npm ci
- npm run dev
- ```
- 
+cd frontend
+npm ci
+npm run dev
+```
+
 ### 📦 SDK Library
 
 ```bash
- cd sdk
- npm ci
- npm run build
- ```
+cd sdk
+npm ci
+npm run build
+```
 
 ### 🔗 SDK Library Integration
 

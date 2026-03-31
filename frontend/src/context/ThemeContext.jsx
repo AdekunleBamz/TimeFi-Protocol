@@ -1,9 +1,29 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
+/**
+ * ThemeContext - React Context for theme management.
+ *
+ * Provides light/dark/system theme state and controls to all
+ * child components. Persists user preference to localStorage.
+ *
+ * @type {React.Context<Object|null>}
+ */
 const ThemeContext = createContext(null);
 
 /**
- * Theme provider component
+ * ThemeProvider - React Context provider for theme state.
+ *
+ * Manages theme selection (light/dark/system), resolves system
+ * preference via matchMedia, and applies theme class to document root.
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components
+ * @param {string} [props.defaultTheme='system'] - Fallback theme if no stored preference
+ * @returns {JSX.Element} Theme context provider
+ * @example
+ * <ThemeProvider defaultTheme="dark">
+ *   <App />
+ * </ThemeProvider>
  */
 export function ThemeProvider({ children, defaultTheme = 'system' }) {
   const [theme, setThemeState] = useState(() => {
@@ -52,7 +72,9 @@ export function ThemeProvider({ children, defaultTheme = 'system' }) {
 }
 
 /**
- * Hook to get resolved theme from system preference
+ * useResolvedTheme - Internal hook to resolve theme from system preference.
+ * @param {string} theme - Theme setting ('light', 'dark', or 'system')
+ * @returns {string} Resolved theme ('light' or 'dark')
  */
 function useResolvedTheme(theme) {
   const [resolved, setResolved] = useState(() => {
@@ -82,7 +104,15 @@ function useResolvedTheme(theme) {
 }
 
 /**
- * Hook to use theme
+ * useTheme - Hook to access theme context.
+ *
+ * Provides current theme state, resolved theme, and theme control
+ * functions to any component in the tree.
+ *
+ * @returns {{ theme: string, resolvedTheme: string, setTheme: Function, toggleTheme: Function, isDark: boolean, isLight: boolean, isSystem: boolean }}
+ * @throws {Error} If used outside of ThemeProvider
+ * @example
+ * const { isDark, toggleTheme } = useTheme();
  */
 export function useTheme() {
   const context = useContext(ThemeContext);

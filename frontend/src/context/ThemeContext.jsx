@@ -1,3 +1,13 @@
+/**
+ * Theme Context - Dark/light mode state management.
+ *
+ * Provides theme switching with localStorage persistence
+ * and system preference detection.
+ *
+ * @module context/ThemeContext
+ * @author adekunlebamz
+ */
+
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 /**

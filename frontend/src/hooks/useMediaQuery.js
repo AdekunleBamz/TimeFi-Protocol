@@ -8,6 +8,7 @@ import { useState, useEffect, useMemo } from 'react';
  *
  * @param {string} query - CSS media query string (e.g., '(min-width: 768px)')
  * @returns {boolean} Whether the media query currently matches
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia} for matchMedia API
  * @example
  * const isMobile = useMediaQuery('(max-width: 639px)');
  * const prefersDark = useMediaQuery('(prefers-color-scheme: dark)');

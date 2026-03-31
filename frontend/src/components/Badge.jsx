@@ -1,3 +1,9 @@
+/**
+ * Badge Component - Small status indicators and labels.
+ *
+ * @module components/Badge
+ * @author adekunlebamz
+ */
 import React from 'react';
 import './Badge.css';
 

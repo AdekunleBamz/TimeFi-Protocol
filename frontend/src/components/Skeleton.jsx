@@ -1,3 +1,9 @@
+/**
+ * Skeleton Component - Loading placeholder UI elements.
+ *
+ * @module components/Skeleton
+ * @author adekunlebamz
+ */
 import React from 'react';
 import './Skeleton.css';
 

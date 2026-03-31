@@ -1,10 +1,20 @@
 /**
- * CSS Custom Properties for theming
- * These variables are used throughout the application
+ * TimeFi Protocol - Theme System
+ *
+ * CSS Custom Properties for light/dark theme support.
+ * Provides consistent color palette, shadows, and spacing
+ * across all components.
+ *
+ * @author adekunlebamz
+ * @module styles/theme
  */
 
+/* ========================================
+   LIGHT THEME (Default)
+   Used when no theme preference is set
+   ======================================== */
 :root {
-  /* Colors - Light Theme */
+  /* Primary brand colors */
   --primary: #4f46e5;
   --primary-hover: #4338ca;
   --primary-light: rgba(79, 70, 229, 0.1);
@@ -51,7 +61,10 @@
   --transition-slow: 0.3s ease;
 }
 
-/* Dark Theme */
+/* ========================================
+   DARK THEME
+   Activated via .dark class or data-theme="dark"
+   ======================================== */
 :root.dark,
 [data-theme="dark"] {
   --primary: #6366f1;

@@ -1,10 +1,17 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
 /**
- * Hook that debounces a value
+ * useDebounce - Hook that debounces a value by delaying updates.
+ *
+ * Useful for scenarios like search input where you want to wait
+ * until the user stops typing before triggering an action.
+ *
  * @param {any} value - Value to debounce
- * @param {number} delay - Delay in ms
- * @returns {any} Debounced value
+ * @param {number} [delay=300] - Debounce delay in milliseconds
+ * @returns {any} Debounced value that updates after delay
+ * @example
+ * const [search, setSearch] = useState('');
+ * const debouncedSearch = useDebounce(search, 500);
  */
 export function useDebounce(value, delay = 300) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -23,9 +30,18 @@ export function useDebounce(value, delay = 300) {
 }
 
 /**
- * Hook that debounces a callback function
+ * useDebouncedCallback - Hook that debounces a callback function.
+ *
+ * Returns a memoized callback that delays execution until
+ * after the specified delay has passed since the last call.
+ *
  * @param {Function} callback - Function to debounce
- * @param {number} delay - Delay in ms
+ * @param {number} [delay=300] - Debounce delay in milliseconds
+ * @returns {Function} Debounced callback function
+ * @example
+ * const handleSearch = useDebouncedCallback((query) => {
+ *   api.search(query);
+ * }, 300);
  */
 export function useDebouncedCallback(callback, delay = 300) {
     const timeoutRef = useRef();
@@ -42,7 +58,10 @@ export function useDebouncedCallback(callback, delay = 300) {
 }
 
 /**
- * Alias for useDebounce
+ * useDebouncedValue - Alias for useDebounce.
+ * @param {any} value - Value to debounce
+ * @param {number} [delay] - Debounce delay in milliseconds
+ * @returns {any} Debounced value
  */
 export function useDebouncedValue(value, delay) {
     return useDebounce(value, delay);

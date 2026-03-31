@@ -10,10 +10,25 @@ const ACTIVE_NETWORK =
 const client = new TimeFiClient(ACTIVE_NETWORK);
 
 /**
- * Custom hook for read-only contract queries
- * Supports two modes:
- * 1. Data-fetching: useReadOnly('fn-name', [args]) -> { data, loading, error }
- * 2. Method-based: const { getVault } = useReadOnly() -> getVault(id)
+ * useReadOnly - Custom hook for read-only Clarity contract queries.
+ *
+ * Provides two modes of operation:
+ * 1. Data-fetching mode: useReadOnly('fn-name', [args]) returns { data, loading, error, refetch }
+ * 2. Method mode: useReadOnly() returns { getVault, getTVL, getTimeRemaining, ... }
+ *
+ * Uses TimeFiClient from timefi-sdk for consistent contract interaction.
+ *
+ * @param {string} [functionName] - Contract function name for data-fetching mode
+ * @param {Array} [functionArgs=[]] - Clarity CV arguments for the function
+ * @param {Object} [options={}] - Query options (e.g., { enabled: true })
+ * @returns {Object} Either data-fetching result or method bag depending on mode
+ * @example
+ * // Data-fetching mode
+ * const { data: vault } = useReadOnly('get-vault', [uintCV(123)]);
+ *
+ * // Method mode
+ * const { getVault, canWithdraw } = useReadOnly();
+ * const vault = await getVault(123);
  */
 export function useReadOnly(functionName, functionArgs = [], options = {}) {
   const [loadingFlag, setLoadingFlag] = useState(false);

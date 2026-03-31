@@ -230,8 +230,8 @@ A: The minimum lock period is 3,600 seconds (1 hour).
 
 - [Security Policy](SECURITY.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
- 
- MIT License - Copyright (c) 2026 TimeFi Protocol Team
- 
- ---
+
+MIT License - Copyright (c) 2026 TimeFi Protocol Team
+
+---
  Made with ❤️ by the [TimeFi Team](https://github.com/AdekunleBamz/TimeFi-Protocol)

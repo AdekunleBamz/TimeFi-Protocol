@@ -1,8 +1,8 @@
 
 {
-  "name": "timefi-protocol-tests",
+  "name": "timefi-protocol",
   "version": "1.0.0",
-  "description": "Run unit tests on this project.",
+  "description": "TimeFi Protocol - Time-locked vaults for disciplined savings on Stacks blockchain.",
   "type": "module",
   "private": true,
   "scripts": {
@@ -15,7 +15,7 @@
     "test:report": "vitest run --coverage --costs",
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
-  "author": "AdeekunleeBamz <bams.kunle@gmail.com>",
+  "author": "adekunlebamz <bams.kunle@gmail.com>",
   "engines": {
     "node": ">=18.0.0"
   },

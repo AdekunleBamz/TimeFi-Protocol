@@ -2,10 +2,21 @@ import React, { useState, useCallback } from 'react';
 import './CopyButton.css';
 
 /**
- * Copy to clipboard button
- * @param {string} text - Text to copy
- * @param {string} successMessage - Message shown after copy (default: 'Copied!')
- * @param {number} timeout - Success message timeout in ms (default: 2000)
+ * CopyButton - Button component for copying text to clipboard.
+ *
+ * Provides visual feedback when content is copied and includes
+ * a fallback mechanism for older browsers without Clipboard API.
+ *
+ * @param {Object} props - Component props
+ * @param {string} props.text - Text content to copy to clipboard
+ * @param {React.ReactNode} [props.children] - Custom button content (icon or text)
+ * @param {string} [props.successMessage='Copied!'] - Message shown after successful copy
+ * @param {number} [props.timeout=2000] - Duration to show success state in ms
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @param {string} [props.variant='icon'] - Button style: 'icon' or 'text'
+ * @returns {JSX.Element} Copy button element
+ * @example
+ * <CopyButton text="SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N" successMessage="Address copied!" />
  */
 export function CopyButton({
   text,
@@ -67,7 +78,18 @@ export function CopyButton({
 }
 
 /**
- * Address display with copy button
+ * CopyableAddress - Address display with integrated copy button.
+ *
+ * Shows a truncated Stacks address with a copy button for easy
+ * clipboard access. Useful for wallet addresses and contract IDs.
+ *
+ * @param {Object} props - Component props
+ * @param {string} props.address - Full Stacks address to display and copy
+ * @param {boolean} [props.truncate=true] - Truncate address to short form
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Address display with copy functionality
+ * @example
+ * <CopyableAddress address="SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N" />
  */
 export function CopyableAddress({ address, truncate = true, className = '' }) {
   const displayAddress = truncate && address
@@ -90,7 +112,10 @@ export function CopyableAddress({ address, truncate = true, className = '' }) {
   );
 }
 
-// Icons
+/**
+ * CopyIcon - SVG icon for copy action.
+ * @returns {JSX.Element} Copy icon SVG
+ */
 function CopyIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -99,6 +124,10 @@ function CopyIcon() {
   );
 }
 
+/**
+ * CheckIcon - SVG icon for success/confirmation state.
+ * @returns {JSX.Element} Check icon SVG
+ */
 function CheckIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">

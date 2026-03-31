@@ -30,3 +30,19 @@ coverage/
 .idea/
 *.swp
 *.swo
+
+# Build artifacts
+*.log
+dist/
+build/
+
+# Environment
+.env*.local
+.env*.production
+
+# Cache
+.cache/
+*.cache
+
+# Coverage
+.nyc_output/

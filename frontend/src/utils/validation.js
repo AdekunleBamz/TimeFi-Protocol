@@ -1,9 +1,28 @@
 import { LOCK_PERIODS, MIN_DEPOSIT, MAX_DEPOSIT } from '../config/contracts';
 
 /**
- * Validate Stacks address format
- * @param {string} address - Address to validate
- * @returns {{ valid: boolean, error?: string }}
+ * Validation Utilities - Form and data validation for TimeFi operations.
+ *
+ * Provides comprehensive validation for addresses, amounts, lock periods,
+ * and complete form validation for vault creation and withdrawals.
+ *
+ * @module utils/validation
+ */
+
+/**
+ * validateAddress - Validate a Stacks blockchain address format.
+ *
+ * Checks for valid prefix (SP for mainnet, ST for testnet),
+ * correct length, and valid base58 characters.
+ *
+ * @param {string} address - Stacks address to validate
+ * @returns {{ valid: boolean, error?: string }} Validation result with error message if invalid
+ * @example
+ * validateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N')
+ * // returns { valid: true }
+ *
+ * validateAddress('invalid')
+ * // returns { valid: false, error: 'Invalid address length' }
  */
 export function validateAddress(address) {
   if (!address) {
@@ -34,10 +53,20 @@ export function validateAddress(address) {
 }
 
 /**
- * Validate deposit amount
- * @param {string|number} amount - Amount in STX
- * @param {number} balance - User's balance in STX
- * @returns {{ valid: boolean, error?: string }}
+ * validateDepositAmount - Validate a deposit amount against protocol limits.
+ *
+ * Checks that the amount is a valid number, within the allowed range
+ * (MIN_DEPOSIT to MAX_DEPOSIT), and doesn't exceed user's balance.
+ *
+ * @param {string|number} amount - Deposit amount in STX
+ * @param {number} [balance] - User's available balance in STX (optional)
+ * @returns {{ valid: boolean, error?: string }} Validation result with error message if invalid
+ * @example
+ * validateDepositAmount(100, 500)
+ * // returns { valid: true }
+ *
+ * validateDepositAmount(0, 500)
+ * // returns { valid: false, error: 'Amount must be greater than 0' }
  */
 export function validateDepositAmount(amount, balance) {
   const numAmount = Number(amount);
@@ -66,9 +95,16 @@ export function validateDepositAmount(amount, balance) {
 }
 
 /**
- * Validate lock period selection
+ * validateLockPeriod - Validate a lock period against available options.
+ *
+ * Ensures the selected period matches one of the predefined lock periods
+ * from the contract configuration.
+ *
  * @param {number} period - Lock period in blocks
- * @returns {{ valid: boolean, error?: string }}
+ * @returns {{ valid: boolean, error?: string }} Validation result with error message if invalid
+ * @example
+ * validateLockPeriod(3600) // 1 hour in blocks
+ * // returns { valid: true }
  */
 export function validateLockPeriod(period) {
   if (!period) {
@@ -85,12 +121,19 @@ export function validateLockPeriod(period) {
 }
 
 /**
- * Validate vault creation form
- * @param {Object} data - Form data
- * @param {string} data.amount - Deposit amount
+ * validateVaultCreation - Validate complete vault creation form data.
+ *
+ * Performs comprehensive validation of all vault creation fields
+ * and returns all validation errors at once.
+ *
+ * @param {Object} data - Form data object
+ * @param {string} data.amount - Deposit amount in STX
  * @param {number} data.lockPeriod - Lock period in blocks
- * @param {number} data.balance - User's balance
- * @returns {{ valid: boolean, errors: Object }}
+ * @param {number} data.balance - User's available balance in STX
+ * @returns {{ valid: boolean, errors: Object.<string, string> }} Validation result with error map
+ * @example
+ * validateVaultCreation({ amount: 100, lockPeriod: 3600, balance: 500 })
+ * // returns { valid: true, errors: {} }
  */
 export function validateVaultCreation({ amount, lockPeriod, balance }) {
   const errors = {};
@@ -112,10 +155,17 @@ export function validateVaultCreation({ amount, lockPeriod, balance }) {
 }
 
 /**
- * Validate withdrawal request
- * @param {Object} vault - Vault data
- * @param {number} currentHeight - Current block height
- * @returns {{ valid: boolean, error?: string }}
+ * validateWithdrawal - Validate that a vault can be withdrawn.
+ *
+ * Checks that the vault exists, hasn't been withdrawn already,
+ * and that the lock period has completed.
+ *
+ * @param {Object} vault - Vault data object with depositHeight, lockPeriod, isWithdrawn
+ * @param {number} currentHeight - Current blockchain block height
+ * @returns {{ valid: boolean, error?: string }} Validation result with error message if invalid
+ * @example
+ * validateWithdrawal(vaultData, currentBlockHeight)
+ * // returns { valid: true } if vault can be withdrawn
  */
 export function validateWithdrawal(vault, currentHeight) {
   if (!vault) {
@@ -140,9 +190,16 @@ export function validateWithdrawal(vault, currentHeight) {
 }
 
 /**
- * Validate bot address for auto-compound
- * @param {string} botAddress - Bot address to validate
- * @returns {{ valid: boolean, error?: string }}
+ * validateBotAddress - Validate a bot address for auto-compound approval.
+ *
+ * Performs full address validation to ensure the bot address
+ * is a valid Stacks address format.
+ *
+ * @param {string} botAddress - Stacks address of the bot to validate
+ * @returns {{ valid: boolean, error?: string }} Validation result with error message if invalid
+ * @example
+ * validateBotAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N')
+ * // returns { valid: true }
  */
 export function validateBotAddress(botAddress) {
   if (!botAddress) {

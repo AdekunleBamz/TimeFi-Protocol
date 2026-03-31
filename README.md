@@ -170,27 +170,27 @@ FEE_BPS: 50 (0.5%)
 - **Testnet**: `https://stacks-node-api.testnet.stacks.co`
 
 ### ⚙️ Deployment Settings
-  - **Clarinet Settings**: [settings/Clarinet.toml](settings/Clarinet.toml)
-  - **Mainnet Plan**: [deployments/default.mainnet-plan.yaml](deployments/default.mainnet-plan.yaml)
-  - **Testnet Plan**: [deployments/default.testnet-plan.yaml](deployments/default.testnet-plan.yaml)
-  
-  ## 🗳️ Governance
- 
- TimeFi Protocol is governed by its community. Future proposals will be handled via the on-chain governance module.
- 
- ## 👥 Community
- 
- - **Discord**: [Join our Discord](https://discord.gg/timefi)
- - **Twitter**: [@TimeFiProtocol](https://twitter.com/TimeFiProtocol)
- - **GitHub**: [AdekunleBamz](https://github.com/AdekunleBamz)
- 
- ## 🪐 Ecosystem
- 
- - **Mainnet Explorer**: [View on Stacks Explorer](https://explorer.hiro.so/?chain=mainnet)
- - **Testnet Explorer**: [View on Stacks Explorer](https://explorer.hiro.so/?chain=testnet)
- - **Console.xyz**: [Community discussions and governance](https://console.xyz)
- 
- ## ❓ FAQ
+- **Clarinet Settings**: [settings/Clarinet.toml](settings/Clarinet.toml)
+- **Mainnet Plan**: [deployments/default.mainnet-plan.yaml](deployments/default.mainnet-plan.yaml)
+- **Testnet Plan**: [deployments/default.testnet-plan.yaml](deployments/default.testnet-plan.yaml)
+
+## 🗳️ Governance
+
+TimeFi Protocol is governed by its community. Future proposals will be handled via the on-chain governance module.
+
+## 👥 Community
+
+- **Discord**: [Join our Discord](https://discord.gg/timefi)
+- **Twitter**: [@TimeFiProtocol](https://twitter.com/TimeFiProtocol)
+- **GitHub**: [AdekunleBamz](https://github.com/AdekunleBamz)
+
+## 🪐 Ecosystem
+
+- **Mainnet Explorer**: [View on Stacks Explorer](https://explorer.hiro.so/?chain=mainnet)
+- **Testnet Explorer**: [View on Stacks Explorer](https://explorer.hiro.so/?chain=testnet)
+- **Console.xyz**: [Community discussions and governance](https://console.xyz)
+
+## ❓ FAQ
  
  **Q: What is microSTX?**
  A: It is the smallest unit of STX. 1 STX = 1,000,000 microSTX.

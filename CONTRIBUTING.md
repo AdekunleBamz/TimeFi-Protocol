@@ -5,6 +5,7 @@ Thank you for your interest in contributing to TimeFi Protocol!
 ## Development Setup
 
 ### Prerequisites
+
 - Node.js 18+
 - Clarinet CLI installed
 - Git
@@ -39,6 +40,7 @@ The project consists of multiple components. Please refer to their respective RE
 ## Making Changes
 
 ### Branch Naming
+
 - `feat/` - New features
 - `fix/` - Bug fixes
 - `docs/` - Documentation
@@ -46,7 +48,9 @@ The project consists of multiple components. Please refer to their respective RE
 - `chore/` - Maintenance
 
 ### Commit Messages
+
 Follow conventional commits:
+
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `docs:` - Documentation
@@ -54,6 +58,7 @@ Follow conventional commits:
 - `chore:` - Maintenance
 
 ### Pull Requests
+
 1. Create a feature branch from `main`
 2. Make your changes
 3. Run tests locally
@@ -63,6 +68,7 @@ Follow conventional commits:
 ## Contract Development
 
 ### Running Clarinet
+
 ```bash
 # Check contract syntax
 clarinet check
@@ -75,17 +81,21 @@ clarinet devnet start
 ```
 
 ### Testing Guidelines
+
 - Write tests for all new functions
 - Test both success and error cases
 - Test boundary conditions
 
 ## Code Style
+
 - Use clear, descriptive names
 - Add comments for complex logic
 - Keep functions focused and small
 
 ## Questions?
+
 Open an issue for questions or discussion.
 
 ## Contact
+
 For direct questions, reach out to **adekunlebamz** on GitHub.

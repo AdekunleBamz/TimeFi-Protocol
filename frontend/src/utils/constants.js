@@ -4,14 +4,7 @@
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT } from '../config/contracts';
 
-// Network configuration
-export const NETWORK = {
-  MAINNET: 'mainnet',
-  TESTNET: 'testnet',
-  DEVNET: 'devnet',
-};
-
-<<<<<<< HEAD
+// Current active network from environment
 export const CURRENT_NETWORK = (
   String(import.meta.env.VITE_NETWORK || NETWORK.MAINNET).trim().toLowerCase() === NETWORK.TESTNET
     ? NETWORK.TESTNET

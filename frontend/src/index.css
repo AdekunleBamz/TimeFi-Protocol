@@ -1,3 +1,16 @@
+/**
+ * TimeFi Protocol - Global Styles
+ *
+ * Design system tokens, reset styles, and base component styles.
+ * Uses CSS custom properties for theming and responsive design.
+ *
+ * @author adekunlebamz
+ * @module styles/global
+ */
+
+/* ========================================
+   CSS RESET
+   ======================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,7 +21,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ========================================
+   DESIGN TOKENS
+   Colors, shadows, radii for consistent UI
+   ======================================== */
 :root {
+  /* Background colors */
   --app-bg: #07111f;
   --panel-bg: rgba(8, 18, 31, 0.78);
   --panel-bg-strong: rgba(11, 24, 39, 0.92);
@@ -50,6 +68,10 @@ html {
 }
 
 
+/* ========================================
+   BASE STYLES
+   Typography, backgrounds, and root layout
+   ======================================== */
 body {
 
   font-family: 'Manrope', 'Segoe UI', sans-serif;
@@ -83,6 +105,10 @@ body::before {
   flex-direction: column;
 }
 
+/* ========================================
+   ACCESSIBILITY
+   Skip link and focus styles
+   ======================================== */
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -119,6 +145,10 @@ textarea:focus-visible {
   box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.2);
 }
 
+/* ========================================
+   SCROLLBAR STYLES
+   Custom scrollbar for webkit and Firefox
+   ======================================== */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -294,6 +324,10 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.03);
 }
 
+/* ========================================
+   RESPONSIVE DESIGN
+   Mobile-first breakpoints and accessibility
+   ======================================== */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

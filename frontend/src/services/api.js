@@ -132,12 +132,13 @@ function normalizeTransaction(tx) {
 }
 
 /**
- * Call a read-only contract function
- * @param {string} contractName - Contract name
- * @param {string} functionName - Function name
- * @param {Array} functionArgs - Function arguments as Clarity Values
- * @param {string} senderAddress - Sender address for simulation
- * @returns {Promise<any>} Function result
+ * API Service - HTTP client for TimeFi backend API.
+ *
+ * Provides a centralized fetch wrapper with automatic base URL handling,
+ * request/response interception, and error normalization.
+ *
+ * @module services/api
+ * @author adekunlebamz
  */
 export async function callReadOnly(contractName, functionName, functionArgs = [], senderAddress) {
   const result = await callReadOnlyFunction({

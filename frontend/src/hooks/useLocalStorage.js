@@ -11,6 +11,7 @@ import { useState, useEffect, useCallback } from 'react';
  * @returns {[any, Function]} Tuple of [storedValue, setValue]
  * @returns {any} storedValue - Current stored value or initialValue
  * @returns {Function} setValue - Setter that updates state and localStorage
+ * @throws {Error} When localStorage is not available and no fallback is provided
  * @example
  * const [theme, setTheme] = useLocalStorage('theme', 'dark');
  * @example

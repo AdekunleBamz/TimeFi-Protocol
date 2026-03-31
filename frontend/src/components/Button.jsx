@@ -2,12 +2,26 @@ import React, { useState } from 'react';
 import './Button.css';
 
 /**
- * Reusable Button component with ripple effect
- * @param {string} variant - 'primary', 'secondary', 'danger', 'ghost' (default: 'primary')
- * @param {string} size - 'sm', 'md', 'lg' (default: 'md')
- * @param {boolean} loading - Shows spinner when true
- * @param {boolean} fullWidth - Takes full container width
- * @param {boolean} disabled - Disables the button
+ * Reusable Button component with ripple effect.
+ *
+ * Supports multiple variants, sizes, and states including loading and disabled.
+ * Features a Material Design-style ripple animation on click.
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Button content
+ * @param {string} [props.variant='primary'] - Button variant: 'primary', 'secondary', 'danger', 'ghost'
+ * @param {string} [props.size='md'] - Button size: 'sm', 'md', 'lg'
+ * @param {boolean} [props.loading=false] - Shows loading spinner when true
+ * @param {boolean} [props.fullWidth=false] - Button takes full container width when true
+ * @param {boolean} [props.disabled=false] - Disables button interaction when true
+ * @param {string} [props.type='button'] - HTML button type attribute
+ * @param {Function} [props.onClick] - Click handler
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Button element
+ * @example
+ * <Button variant="primary" size="lg" onClick={handleSubmit}>
+ *   Submit
+ * </Button>
  */
 export function Button({
   children,

@@ -14,7 +14,7 @@ Thank you for your interest in contributing to TimeFi Protocol!
 1. Fork the repository
 2. Clone your fork:
    ```bash
-   git clone https://github.com/AdeekunleeBamz/TimeFi-Protocol.git
+   git clone https://github.com/AdekunleBamz/TimeFi-Protocol.git
    cd TimeFi-Protocol
    ```
 
@@ -86,3 +86,6 @@ clarinet devnet start
 
 ## Questions?
 Open an issue for questions or discussion.
+
+## Contact
+For direct questions, reach out to **adekunlebamz** on GitHub.

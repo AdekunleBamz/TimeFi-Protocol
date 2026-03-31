@@ -2,11 +2,32 @@ import React, { useState, useRef, useEffect } from 'react';
 import './Select.css';
 
 /**
- * Custom Select dropdown component
- * @param {Array} options - Array of { value, label, disabled }
- * @param {string} value - Selected value
- * @param {Function} onChange - Called with selected value
- * @param {string} placeholder - Placeholder text
+ * Select - Custom dropdown select component.
+ *
+ * Provides a fully accessible custom select with keyboard navigation,
+ * proper ARIA attributes, and support for disabled options.
+ *
+ * @param {Object} props - Component props
+ * @param {Array<{ value: string, label: string, disabled?: boolean }>} [props.options=[]] - Dropdown options
+ * @param {string} [props.value] - Currently selected value
+ * @param {Function} [props.onChange] - Callback when selection changes
+ * @param {string} [props.placeholder='Select an option'] - Placeholder text when no selection
+ * @param {string} [props.label] - Label displayed above the select
+ * @param {string} [props.error] - Error message displayed below the select
+ * @param {boolean} [props.disabled=false] - Disables the select when true
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Custom select element with role="combobox"
+ * @example
+ * <Select
+ *   options={[
+ *     { value: '1h', label: '1 Hour' },
+ *     { value: '24h', label: '24 Hours' },
+ *     { value: '7d', label: '7 Days', disabled: true },
+ *   ]}
+ *   value={selectedPeriod}
+ *   onChange={setSelectedPeriod}
+ *   label="Lock Period"
+ * />
  */
 export function Select({
   options = [],

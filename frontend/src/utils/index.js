@@ -1,6 +1,17 @@
 /**
- * Utils exports index
- * Centralized exports for all utility functions
+ * Utils Index - Centralized exports for all TimeFi utility functions.
+ *
+ * Provides a single import point for formatting, validation,
+ * accessibility, and constant utilities used throughout the application.
+ *
+ * @module utils
+ * @example
+ * // Import specific utilities
+ * import { formatSTX, validateAddress, Keys } from './utils';
+ *
+ * // Or import everything
+ * import * as utils from './utils';
+ * utils.formatSTX(1000000); // "1.00"
  */
 
 // Formatting

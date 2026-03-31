@@ -4,7 +4,22 @@ import { useWallet } from '../context/WalletContext';
 import { createVault as createVaultTx, withdraw as withdrawTx, emergencyWithdraw as emergencyWithdrawTx, claimRewards as claimRewardsTx } from '../services/transactions';
 
 /**
- * Custom hook for interacting with TimeFi vault contract (Transactions)
+ * useContract - Hook for interacting with TimeFi vault smart contracts.
+ *
+ * Provides methods for creating vaults, withdrawing funds, and managing
+ * bot approvals. Handles wallet connection checks and transaction state.
+ *
+ * @returns {Object} Contract interaction methods and state
+ * @returns {Function} returns.createVault - Create a new time-locked vault
+ * @returns {Function} returns.withdraw - Withdraw from an unlocked vault
+ * @returns {Function} returns.emergencyWithdraw - Emergency withdrawal
+ * @returns {Function} returns.claimRewards - Claim pending rewards
+ * @returns {Function} returns.approveBot - Generate bot approval transaction
+ * @returns {boolean} returns.loading - Whether a transaction is in progress
+ * @returns {string|null} returns.error - Last error message if any
+ * @example
+ * const { createVault, withdraw, loading, error } = useContract();
+ * await createVault(100, 3600, { onFinish: (txId) => console.log(txId) });
  */
 export function useContract() {
   const { address } = useWallet();

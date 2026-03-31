@@ -8,11 +8,21 @@ const ACTIVE_NETWORK =
     ? 'testnet'
     : 'mainnet';
 
-
 /**
- * Transaction list component
- * @param {Array} transactions - Array of transaction objects
- * @param {boolean} loading - Show loading state
+ * TransactionList - List view for blockchain transaction history.
+ *
+ * Displays a chronological list of vault-related transactions including
+ * deposits, withdrawals, rewards claims, and emergency actions.
+ *
+ * @param {Object} props - Component props
+ * @param {Array<Object>} [props.transactions=[]] - Array of transaction objects
+ * @param {boolean} [props.loading=false] - Shows loading skeletons when true
+ * @returns {JSX.Element} Transaction list container
+ * @example
+ * <TransactionList
+ *   transactions={userTransactions}
+ *   loading={isLoading}
+ * />
  */
 export function TransactionList({ transactions = [], loading = false }) {
   if (loading) {
@@ -43,7 +53,10 @@ export function TransactionList({ transactions = [], loading = false }) {
 }
 
 /**
- * Single transaction item
+ * TransactionItem - Individual transaction row display.
+ * @param {Object} props - Component props
+ * @param {Object} props.transaction - Transaction data object
+ * @returns {JSX.Element} Transaction item element
  */
 function TransactionItem({ transaction }) {
   const { type, amount, timestamp, status, txId, vaultId } = transaction;
@@ -116,7 +129,8 @@ function TransactionItem({ transaction }) {
 }
 
 /**
- * Transaction skeleton for loading
+ * TransactionSkeleton - Loading placeholder for transaction items.
+ * @returns {JSX.Element} Skeleton element
  */
 function TransactionSkeleton() {
   return (

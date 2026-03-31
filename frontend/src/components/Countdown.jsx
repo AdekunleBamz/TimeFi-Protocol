@@ -2,10 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Countdown.css';
 
 /**
- * Countdown timer component
- * @param {number} seconds - Total seconds to count down
- * @param {Function} onComplete - Called when countdown reaches 0
- * @param {string} variant - 'default', 'compact', 'large'
+ * Countdown - Timer component that displays remaining time.
+ *
+ * Supports multiple display variants and calls a callback when
+ * the countdown reaches zero. Useful for lock period displays.
+ *
+ * @param {Object} props - Component props
+ * @param {number} [props.seconds=0] - Total seconds to count down from
+ * @param {Function} [props.onComplete] - Callback when countdown reaches 0
+ * @param {string} [props.variant='default'] - Display style: 'default', 'compact', 'large'
+ * @param {boolean} [props.showLabels=true] - Show time unit labels (Days, Hours, etc.)
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Countdown timer element
+ * @example
+ * <Countdown seconds={86400} onComplete={() => console.log('Unlocked!')} variant="large" />
  */
 export function Countdown({
   seconds,
@@ -97,6 +107,11 @@ export function Countdown({
   );
 }
 
+/**
+ * parseTime - Convert total seconds into days, hours, minutes, and seconds.
+ * @param {number} totalSeconds - Total seconds to parse
+ * @returns {{ days: number, hours: number, minutes: number, secs: number }} Time components
+ */
 function parseTime(totalSeconds) {
   const safeSeconds = Math.max(0, Math.floor(totalSeconds || 0));
   const days = Math.floor(safeSeconds / 86400);
@@ -107,6 +122,11 @@ function parseTime(totalSeconds) {
   return { days, hours, minutes, secs };
 }
 
+/**
+ * padZero - Format a number with leading zero if less than 10.
+ * @param {number} num - Number to format
+ * @returns {string} Two-digit string representation
+ */
 function padZero(num) {
   return num.toString().padStart(2, '0');
 }

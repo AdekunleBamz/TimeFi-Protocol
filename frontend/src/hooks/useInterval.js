@@ -8,6 +8,7 @@ import { useEffect, useRef } from 'react';
  *
  * @param {Function} callback - Function to execute on each interval tick
  * @param {number|null} delay - Interval delay in milliseconds, or null to pause
+ * @see {@link https://overreacted.io/making-setinterval-declarative-with-react-hooks} for implementation details
  * @example
  * useInterval(() => {
  *   setCount(count + 1);

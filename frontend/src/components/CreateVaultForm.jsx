@@ -9,7 +9,24 @@ import { useToast } from './Toast';
 import './CreateVaultForm.css';
 
 /**
- * Form for creating new time-locked vaults
+ * CreateVaultForm - Form for creating new time-locked vaults.
+ *
+ * Handles amount input, lock period selection, validation, and
+ * transaction submission. Shows real-time preview of vault details
+ * including expected rewards and unlock timing.
+ *
+ * @param {Object} props - Component props
+ * @param {Function} [props.onSuccess] - Callback when vault is created successfully
+ * @param {Function} [props.onClose] - Callback to close the form
+ * @returns {JSX.Element} Vault creation form element
+ * @example
+ * <CreateVaultForm
+ *   onSuccess={(txId) => {
+ *     console.log('Vault created:', txId);
+ *     refreshVaults();
+ *   }}
+ *   onClose={() => setShowForm(false)}
+ * />
  */
 export function CreateVaultForm({ onSuccess, onClose }) {
   const { balance, isConnected } = useWallet();

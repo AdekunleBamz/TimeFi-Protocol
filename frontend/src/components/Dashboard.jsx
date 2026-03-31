@@ -14,7 +14,16 @@ import './Dashboard.css';
 
 
 /**
- * Main dashboard page component
+ * Dashboard - Main landing page for TimeFi protocol.
+ *
+ * Displays protocol-wide statistics (TVL, vault count, block height),
+ * user vault management with search/sort, and vault creation form.
+ * Serves as the primary entry point for both connected and guest users.
+ *
+ * @returns {JSX.Element} Dashboard page element
+ * @example
+ * // Used as main route
+ * <Route path="/" element={<Dashboard />} />
  */
 export function Dashboard() {
   const { address, balance, isConnected, connect } = useWallet();

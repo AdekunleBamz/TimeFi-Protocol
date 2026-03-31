@@ -1,9 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 
 /**
- * Hook for persisting state to localStorage
- * @param {string} key - Storage key
- * @param {any} initialValue - Default value
+ * useLocalStorage - Hook for persisting state to localStorage.
+ *
+ * Provides a stateful value that persists across page reloads
+ * and syncs across browser tabs via the storage event.
+ *
+ * @param {string} key - localStorage key for storing the value
+ * @param {any} initialValue - Default value when no stored value exists
+ * @returns {[any, Function]} Tuple of [storedValue, setValue]
+ * @returns {any} storedValue - Current stored value or initialValue
+ * @returns {Function} setValue - Setter that updates state and localStorage
+ * @example
+ * const [theme, setTheme] = useLocalStorage('theme', 'dark');
+ * @example
+ * const [user, setUser] = useLocalStorage('user', null);
  */
 export function useLocalStorage(key, initialValue) {
     // Get from local storage then parse stored json or return initialValue

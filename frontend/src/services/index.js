@@ -1,6 +1,17 @@
 /**
- * Services exports index
- * Centralized exports for all service modules
+ * Services Index - Centralized exports for all TimeFi service modules.
+ *
+ * Provides a single import point for API calls, transaction building,
+ * and storage operations used throughout the application.
+ *
+ * @module services
+ * @example
+ * // Import specific services
+ * import { api, transactions, storage } from './services';
+ *
+ * // Or import everything
+ * import * as services from './services';
+ * const balance = await services.api.getAccountBalance(address);
  */
 
 // API

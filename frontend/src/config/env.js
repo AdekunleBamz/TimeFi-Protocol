@@ -1,11 +1,37 @@
 /**
- * Environment configuration
- * Centralized access to environment variables with defaults
+ * Environment Configuration - Centralized env var access.
+ *
+ * Provides typed, validated access to all environment variables
+ * with sensible defaults for each network (mainnet, testnet, devnet).
+ *
+ * @module config/env
+ * @author adekunlebamz
+ * @example
+ * import { env } from './config/env';
+ *
+ * // Access network
+ * console.log(env.network); // 'mainnet' | 'testnet' | 'devnet'
+ *
+ * // Get contract ID
+ * const vaultId = env.getContractId('vault');
+ *
+ * // Explorer URLs
+ * const txUrl = env.getExplorerTxUrl('0x123...');
  */
 
+/**
+ * normalizeNetwork - Normalize network string to lowercase.
+ * @param {string} value - Raw network value
+ * @returns {string} Normalized network name
+ */
 const normalizeNetwork = (value) => String(value || '').trim().toLowerCase();
 const SUPPORTED_NETWORKS = ['mainnet', 'testnet', 'devnet'];
 export { SUPPORTED_NETWORKS };
+/**
+ * parseBoolean - Parse string to boolean.
+ * @param {string} value - String value to parse
+ * @returns {boolean} Parsed boolean
+ */
 const parseBoolean = (value) => String(value || '').trim().toLowerCase() === 'true';
 const configuredNetwork = normalizeNetwork(import.meta.env.VITE_NETWORK) || 'mainnet';
 

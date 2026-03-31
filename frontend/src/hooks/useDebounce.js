@@ -9,6 +9,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
  * @param {any} value - Value to debounce
  * @param {number} [delay=300] - Debounce delay in milliseconds
  * @returns {any} Debounced value that updates after delay
+ * @see {@link https://github.com/AdekunleBamz/TimeFi-Protocol} for usage examples
  * @example
  * const [search, setSearch] = useState('');
  * const debouncedSearch = useDebounce(search, 500);

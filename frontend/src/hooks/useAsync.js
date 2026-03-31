@@ -11,7 +11,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
  * @param {boolean} [options.immediate=false] - Execute immediately on mount
  * @param {Function} [options.onSuccess] - Callback on successful execution
  * @param {Function} [options.onError] - Callback on error
- * @returns {Object} Async state and controls
+ * @returns {{ execute: Function, data: any, loading: boolean, error: Error|null, reset: Function }} Async state and controls
  * @returns {Function} returns.execute - Function to trigger the async operation
  * @returns {any} returns.data - Result data from the async operation
  * @returns {boolean} returns.loading - Loading state indicator

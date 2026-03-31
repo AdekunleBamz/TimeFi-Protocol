@@ -2,10 +2,18 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import './Toast.css';
 
+// Create context for toast notifications
 const ToastContext = createContext(null);
 
 /**
- * Toast provider component
+ * ToastProvider - Context provider for toast notifications.
+ *
+ * Wraps the application to provide toast notification functionality
+ * to all child components via the useToast hook.
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components
+ * @returns {JSX.Element} Toast provider wrapper
  */
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
@@ -51,7 +59,11 @@ export function ToastProvider({ children }) {
 }
 
 /**
- * Toast container - renders all active toasts
+ * ToastContainer - Portal container that renders all active toasts.
+ * @param {Object} props - Component props
+ * @param {Array} props.toasts - Array of active toast objects
+ * @param {Function} props.onRemove - Callback to remove a toast by id
+ * @returns {JSX.Element|null} Portal with toast items
  */
 function ToastContainer({ toasts, onRemove }) {
   if (typeof document === 'undefined') return null;
@@ -67,7 +79,11 @@ function ToastContainer({ toasts, onRemove }) {
 }
 
 /**
- * Individual toast item
+ * ToastItem - Individual toast notification element.
+ * @param {Object} props - Component props
+ * @param {Object} props.toast - Toast data object with id, message, variant, etc.
+ * @param {Function} props.onRemove - Callback to remove this toast
+ * @returns {JSX.Element} Toast notification element
  */
 function ToastItem({ toast, onRemove }) {
   const { id, message, variant, title, action } = toast;
@@ -109,8 +125,22 @@ function ToastItem({ toast, onRemove }) {
 }
 
 /**
- * Hook to use toast notifications
- * @returns {Object} Toast functions
+ * useToast - Hook for accessing toast notification functions.
+ *
+ * Provides a convenient interface for displaying toast notifications
+ * with predefined variants (success, error, warning, info).
+ *
+ * @returns {Object} Toast API with methods:
+ *   - toast(message, options) - Display default toast
+ *   - toast.success(message, options) - Display success toast
+ *   - toast.error(message, options) - Display error toast
+ *   - toast.warning(message, options) - Display warning toast
+ *   - toast.info(message, options) - Display info toast
+ * @throws {Error} If not used within ToastProvider
+ * @example
+ * const { toast } = useToast();
+ * toast.success('Vault created successfully!');
+ * toast.error('Transaction failed');
  */
 export function useToast() {
   const context = useContext(ToastContext);

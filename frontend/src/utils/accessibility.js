@@ -1,10 +1,23 @@
 /**
- * Accessibility utilities for TimeFi frontend
+ * Accessibility Utilities - A11y helpers for TimeFi frontend.
+ *
+ * Provides tools for screen reader announcements, keyboard navigation,
+ * focus management, and WCAG compliance throughout the application.
+ *
+ * @module utils/accessibility
  */
 
 /**
- * Screen reader only styles (visually hidden but accessible)
- * Use with className="sr-only"
+ * srOnlyStyles - CSS styles for visually hiding content while keeping it accessible.
+ *
+ * Apply these styles to elements that should be visible only to screen readers.
+ * This follows the WCAG technique for hiding content visually while exposing it
+ * to assistive technologies.
+ *
+ * @type {React.CSSProperties}
+ * @example
+ * // In CSS: .sr-only { position: absolute; width: 1px; ... }
+ * // Or use inline: <span style={srOnlyStyles}>Screen reader text</span>
  */
 export const srOnlyStyles = {
   position: 'absolute',
@@ -19,9 +32,17 @@ export const srOnlyStyles = {
 };
 
 /**
- * Announce message to screen readers
- * @param {string} message - Message to announce
- * @param {string} priority - 'polite' | 'assertive'
+ * announceToScreenReader - Dynamically announce a message to screen readers.
+ *
+ * Creates a temporary live region that screen readers will announce.
+ * Useful for announcing dynamic content changes, form validation results,
+ * or transaction status updates.
+ *
+ * @param {string} message - Message text to announce
+ * @param {string} [priority='polite'] - 'polite' for normal announcements, 'assertive' for urgent
+ * @example
+ * announceToScreenReader('Vault created successfully!');
+ * announceToScreenReader('Error: Insufficient balance', 'assertive');
  */
 export function announceToScreenReader(message, priority = 'polite') {
   const element = document.createElement('div');
@@ -44,9 +65,17 @@ export function announceToScreenReader(message, priority = 'polite') {
 }
 
 /**
- * Generate unique ID for accessibility attributes
- * @param {string} prefix - ID prefix
- * @returns {string} Unique ID
+ * generateId - Generate a unique ID for accessibility attributes.
+ *
+ * Creates sequential IDs useful for linking labels to inputs,
+ * describing elements, or creating unique ARIA attribute values.
+ *
+ * @param {string} [prefix='timefi'] - Prefix for the generated ID
+ * @returns {string} Unique ID string (e.g., "timefi-1", "timefi-2")
+ * @example
+ * const labelId = generateId('modal'); // "modal-1"
+ * <div id={labelId}>Label text</div>
+ * <button aria-labelledby={labelId}>Action</button>
  */
 let idCounter = 0;
 export function generateId(prefix = 'timefi') {
@@ -54,7 +83,22 @@ export function generateId(prefix = 'timefi') {
 }
 
 /**
- * Key codes for keyboard navigation
+ * Keys - Standardized keyboard key constants for navigation handlers.
+ *
+ * Use these constants instead of magic strings when handling
+ * keyboard events for consistent cross-browser behavior.
+ *
+ * @type {Object.<string, string>}
+ * @property {string} Enter - Enter key
+ * @property {string} Space - Spacebar
+ * @property {string} Escape - Escape key
+ * @property {string} ArrowUp - Up arrow key
+ * @property {string} ArrowDown - Down arrow key
+ * @property {string} ArrowLeft - Left arrow key
+ * @property {string} ArrowRight - Right arrow key
+ * @property {string} Home - Home key
+ * @property {string} End - End key
+ * @property {string} Tab - Tab key
  */
 export const Keys = {
   Enter: 'Enter',
@@ -70,20 +114,37 @@ export const Keys = {
 };
 
 /**
- * Check if keyboard event is an activation key (Enter or Space)
- * @param {KeyboardEvent} event
- * @returns {boolean}
+ * isActivationKey - Check if a keyboard event is an activation key.
+ *
+ * Use this to make custom interactive elements accessible via
+ * both Enter and Space keys, matching native button behavior.
+ *
+ * @param {KeyboardEvent} event - Keyboard event to check
+ * @returns {boolean} True if the key is Enter or Space
+ * @example
+ * <div onKeyDown={(e) => isActivationKey(e) && handleClick()}>
+ *   Custom button
+ * </div>
  */
 export function isActivationKey(event) {
   return event.key === Keys.Enter || event.key === Keys.Space;
 }
 
 /**
- * Handle keyboard navigation for list items
- * @param {KeyboardEvent} event
- * @param {HTMLElement[]} items - List of focusable items
- * @param {number} currentIndex - Current focused item index
- * @returns {number} New index to focus
+ * handleListNavigation - Handle arrow key navigation within a list.
+ *
+ * Implements standard listbox navigation patterns: arrow keys move
+ * focus, Home/End jump to start/end. Call this in your keyDown handler.
+ *
+ * @param {KeyboardEvent} event - Keyboard event
+ * @param {HTMLElement[]} items - Array of focusable list item elements
+ * @param {number} currentIndex - Index of currently focused item
+ * @returns {number} New index to focus (unchanged if no navigation key)
+ * @example
+ * const handleKeyDown = (e) => {
+ *   const newIndex = handleListNavigation(e, items, currentIndex);
+ *   if (newIndex !== currentIndex) setCurrentIndex(newIndex);
+ * };
  */
 export function handleListNavigation(event, items, currentIndex) {
   const { key } = event;
@@ -116,9 +177,16 @@ export function handleListNavigation(event, items, currentIndex) {
 }
 
 /**
- * Get focusable elements within a container
- * @param {HTMLElement} container
- * @returns {HTMLElement[]}
+ * getFocusableElements - Query all focusable elements within a container.
+ *
+ * Returns elements that are naturally focusable (buttons, links, inputs)
+ * plus elements with a valid tabindex. Excludes disabled and hidden elements.
+ *
+ * @param {HTMLElement} container - Parent element to search within
+ * @returns {HTMLElement[]} Array of focusable DOM elements
+ * @example
+ * const focusable = getFocusableElements(modalRef.current);
+ * focusable[0]?.focus(); // Focus first element
  */
 export function getFocusableElements(container) {
   const selector = [
@@ -134,9 +202,18 @@ export function getFocusableElements(container) {
 }
 
 /**
- * Trap focus within a container (for modals)
- * @param {HTMLElement} container
- * @param {KeyboardEvent} event
+ * trapFocus - Implement focus trapping for modals and dialogs.
+ *
+ * When called on a Tab key event, cycles focus between the first
+ * and last focusable elements within the container. Use in modal
+ * keyDown handlers to comply with WCAG focus trapping requirements.
+ *
+ * @param {HTMLElement} container - Element to trap focus within
+ * @param {KeyboardEvent} event - Keyboard event (should be Tab key)
+ * @example
+ * <div onKeyDown={(e) => trapFocus(modalRef.current, e)}>
+ *   {/* Modal content *}/{' '}
+ * </div>
  */
 export function trapFocus(container, event) {
   if (event.key !== Keys.Tab) return;

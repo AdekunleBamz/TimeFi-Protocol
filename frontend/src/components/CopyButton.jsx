@@ -1,3 +1,9 @@
+/**
+ * CopyButton Component - Click-to-copy functionality.
+ *
+ * @module components/CopyButton
+ * @author adekunlebamz
+ */
 import React, { useState, useCallback } from 'react';
 import './CopyButton.css';
 

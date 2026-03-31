@@ -1,0 +1,57 @@
+# EditorConfig helps maintain consistent coding styles across different editors
+# https://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+indent_size = tab
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+
+# JSON files
+[*.json]
+indent_size = 2
+
+# Clarity smart contracts
+[*.clar]
+indent_size = 2
+
+# Root package.json
+[package.json]
+indent_size = 2
+
+# Makefile
+[Makefile]
+indent_style = tab
+
+# Shell scripts
+[*.{sh,bash}]
+indent_size = 2
+
+# TOML files
+[*.toml]
+indent_size = 2
+
+# CSS files
+[*.css]
+indent_size = 2
+
+# JavaScript/TypeScript files
+[*.{js,jsx,ts,tsx}]
+indent_size = 2
+
+# HTML files
+[*.html]
+indent_size = 2

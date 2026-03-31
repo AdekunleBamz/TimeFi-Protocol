@@ -1,3 +1,10 @@
+/**
+ * Modal Component - Accessible modal dialog with backdrop and focus trapping.
+ *
+ * @module components/Modal
+ * @author adekunlebamz
+ */
+
 import React, { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import './Modal.css';

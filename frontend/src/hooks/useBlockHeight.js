@@ -7,7 +7,16 @@ const ACTIVE_NETWORK =
         : 'testnet';
 
 /**
- * Hook for fetching current Stacks block height
+ * useBlockHeight - Fetch and poll current Stacks blockchain height.
+ *
+ * Provides real-time block height updates by polling the Hiro API
+ * every 60 seconds. Used for lock timing calculations and display.
+ *
+ * @returns {{ blockHeight: number|null, loading: boolean, error: string|null, refetch: Function }}
+ * @example
+ * const { blockHeight, loading, error } = useBlockHeight();
+ * if (loading) return <Spinner />;
+ * return <div>Current block: #{blockHeight}</div>;
  */
 export function useBlockHeight() {
     const [blockHeight, setBlockHeight] = useState(null);

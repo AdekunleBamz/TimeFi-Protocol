@@ -1,4 +1,10 @@
 
+/**
+ * TimeFi Protocol - Vitest Configuration
+ *
+ * Configured for use with Clarinet SDK and Simnet testing.
+ * @author adekunlebamz
+ */
 import { defineConfig } from "vitest/config";
 import {
   vitestSetupFilePath,

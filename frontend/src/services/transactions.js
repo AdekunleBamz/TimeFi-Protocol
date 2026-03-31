@@ -9,17 +9,30 @@ import { openContractCall } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
 
+// Determine network from environment variable
 const NETWORK = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
+
+// Create appropriate Stacks network instance
 const STACKS_NETWORK = NETWORK === 'mainnet'
   ? new StacksMainnet()
   : new StacksTestnet();
 
+/**
+ * logTxEvent - Debug logging for transaction events.
+ * Only logs when VITE_ENABLE_DEBUG is set to 'true'.
+ * @param {...any} args - Arguments to log
+ */
 function logTxEvent(...args) {
   if (import.meta.env.VITE_ENABLE_DEBUG === 'true') {
     console.log(...args);
   }
 }
 
+/**
+ * assertVaultId - Validate that vaultId is provided.
+ * @param {number|undefined|null} vaultId - Vault ID to validate
+ * @throws {Error} If vaultId is missing
+ */
 function assertVaultId(vaultId) {
   if (vaultId === undefined || vaultId === null) {
     throw new Error('vaultId is required');
@@ -208,6 +221,14 @@ export function estimateFee(functionName) {
   return fees[functionName] ?? 3000;
 }
 
+/**
+ * Transaction Service - Build and submit Stacks blockchain transactions.
+ *
+ * Provides functions for interacting with TimeFi smart contracts including
+ * vault creation, withdrawals, rewards claiming, and governance voting.
+ *
+ * @module services/transactions
+ */
 export default {
   createVault,
   withdraw,

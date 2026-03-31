@@ -9,6 +9,16 @@ import { openContractCall } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
 
+/**
+ * Transaction Service - Build and submit Stacks blockchain transactions.
+ *
+ * Provides functions for interacting with TimeFi smart contracts including
+ * vault creation, withdrawals, rewards claiming, and governance voting.
+ *
+ * @module services/transactions
+ * @author adekunlebamz
+ */
+
 // Determine network from environment variable
 const NETWORK = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
 

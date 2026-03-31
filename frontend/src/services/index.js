@@ -5,6 +5,7 @@
  * and storage operations used throughout the application.
  *
  * @module services
+ * @author adekunlebamz
  * @example
  * // Import specific services
  * import { api, transactions, storage } from './services';

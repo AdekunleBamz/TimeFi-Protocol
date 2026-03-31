@@ -5,7 +5,22 @@ import './ErrorBoundary.css';
 const isDevelopment = import.meta.env.DEV;
 
 /**
- * Error Boundary component to catch and handle React errors
+ * ErrorBoundary - React error boundary component for catching and handling errors.
+ *
+ * Catches JavaScript errors anywhere in the component tree, logs them,
+ * and displays a fallback UI instead of crashing the entire application.
+ *
+ * @class
+ * @extends React.Component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components to wrap
+ * @param {React.ReactNode} [props.fallback] - Custom fallback UI
+ * @param {boolean} [props.minimal=false] - Use minimal error UI
+ * @param {Function} [props.onError] - Error callback handler
+ * @example
+ * <ErrorBoundary fallback={<CustomError />}>
+ *   <MyComponent />
+ * </ErrorBoundary>
  */
 export class ErrorBoundary extends Component {
   constructor(props) {
@@ -104,7 +119,15 @@ export class ErrorBoundary extends Component {
 }
 
 /**
- * HOC to wrap components with error boundary
+ * withErrorBoundary - Higher-order component for wrapping with ErrorBoundary.
+ *
+ * Provides a convenient way to add error boundary protection to any component.
+ *
+ * @param {React.ComponentType} Component - Component to wrap
+ * @param {Object} [errorBoundaryProps={}] - Props to pass to ErrorBoundary
+ * @returns {React.FunctionComponent} Wrapped component with error boundary
+ * @example
+ * const ProtectedComponent = withErrorBoundary(MyComponent, { minimal: true });
  */
 export function withErrorBoundary(Component, errorBoundaryProps = {}) {
   return function WrappedComponent(props) {

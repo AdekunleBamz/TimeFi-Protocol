@@ -1,3 +1,10 @@
+/**
+ * Input Component - Reusable input with validation icons and accessibility support.
+ *
+ * @module components/Input
+ * @author adekunlebamz
+ */
+
 import React, { forwardRef, useId } from 'react';
 import './Input.css';
 

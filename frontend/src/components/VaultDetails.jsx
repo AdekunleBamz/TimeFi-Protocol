@@ -20,7 +20,16 @@ const ACTIVE_NETWORK =
     : 'mainnet';
 
 /**
- * Vault details page component
+ * VaultDetails - Full page view for individual vault details.
+ *
+ * Displays comprehensive vault information including balance, lock progress,
+ * timing details, and available actions (withdraw, claim rewards, emergency).
+ * Handles both owner and read-only views.
+ *
+ * @returns {JSX.Element} Vault details page element
+ * @example
+ * // Used in Router
+ * <Route path="/vault/:id" element={<VaultDetails />} />
  */
 export function VaultDetails() {
   const { id } = useParams();
@@ -406,7 +415,8 @@ export function VaultDetails() {
 }
 
 /**
- * Skeleton loading state
+ * VaultDetailsSkeleton - Loading placeholder for vault details page.
+ * @returns {JSX.Element} Skeleton layout
  */
 function VaultDetailsSkeleton() {
   return (
@@ -438,7 +448,9 @@ function VaultDetailsSkeleton() {
 }
 
 /**
- * Get badge variant from status
+ * getStatusVariant - Map vault status to Badge component variant.
+ * @param {string} status - Vault status string
+ * @returns {string} Badge variant ('success', 'warning', 'danger', 'default')
  */
 function getStatusVariant(status) {
   const variants = {
@@ -450,6 +462,11 @@ function getStatusVariant(status) {
   return variants[status] || 'default';
 }
 
+/**
+ * normalizeVault - Normalize vault data from various API response formats.
+ * @param {Object} vault - Raw vault data from contract read
+ * @returns {Object|null} Normalized vault object with consistent property names
+ */
 function normalizeVault(vault) {
   if (!vault) return null;
 
@@ -466,6 +483,13 @@ function normalizeVault(vault) {
   };
 }
 
+/**
+ * formatCreatedDisplay - Format vault creation timestamp for display.
+ * Handles various timestamp formats (milliseconds, seconds, block height).
+ * @param {number} createdAt - Creation timestamp
+ * @param {number} createdHeight - Block height at creation
+ * @returns {string} Formatted display string
+ */
 function formatCreatedDisplay(createdAt, createdHeight) {
   if (createdAt > 1_000_000_000_000) {
     return formatRelativeTime(createdAt);

@@ -1,3 +1,13 @@
+/**
+ * App Router - Main application routing configuration.
+ *
+ * Defines all application routes with lazy-loaded components
+ * for optimal performance and code splitting.
+ *
+ * @module Router
+ * @author adekunlebamz
+ */
+
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';

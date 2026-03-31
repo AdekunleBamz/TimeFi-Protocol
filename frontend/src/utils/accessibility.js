@@ -1,10 +1,11 @@
 /**
- * Accessibility Utilities - A11y helpers for TimeFi frontend.
+ * Accessibility Utilities - ARIA helpers and focus management.
  *
- * Provides tools for screen reader announcements, keyboard navigation,
- * focus management, and WCAG compliance throughout the application.
+ * Provides functions for managing keyboard navigation, focus trapping,
+ * and ARIA attributes to ensure the application is accessible.
  *
  * @module utils/accessibility
+ * @author adekunlebamz
  */
 
 /**

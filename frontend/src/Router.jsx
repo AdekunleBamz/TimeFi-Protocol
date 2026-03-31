@@ -9,7 +9,8 @@ const VaultDetails = lazy(() => import('./components/VaultDetails'));
 const NotFound = lazy(() => import('./components/NotFound'));
 
 /**
- * Page loading fallback
+ * PageLoader - Suspense fallback component for lazy-loaded routes.
+ * @returns {JSX.Element} Loading skeleton layout
  */
 function PageLoader() {
   return (
@@ -32,6 +33,10 @@ function PageLoader() {
   );
 }
 
+/**
+ * ScrollManager - Scroll to top on route change (except hash navigation).
+ * @returns {null} No visual output
+ */
 function ScrollManager() {
   const location = useLocation();
 
@@ -44,7 +49,17 @@ function ScrollManager() {
 }
 
 /**
- * App router configuration
+ * AppRouter - Main application router with lazy-loaded pages.
+ *
+ * Configures React Router with code-split pages, scroll management,
+ * skip link accessibility, and 404 fallback handling.
+ *
+ * @returns {JSX.Element} Router configuration element
+ * @example
+ * // Used in main.jsx
+ * ReactDOM.createRoot(document.getElementById('root')).render(
+ *   <AppRouter />
+ * );
  */
 export function AppRouter() {
   return (

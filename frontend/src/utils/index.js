@@ -5,6 +5,7 @@
  * accessibility, and constant utilities used throughout the application.
  *
  * @module utils
+ * @author adekunlebamz
  * @example
  * // Import specific utilities
  * import { formatSTX, validateAddress, Keys } from './utils';

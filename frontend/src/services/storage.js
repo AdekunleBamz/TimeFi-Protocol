@@ -5,6 +5,7 @@
  * in-memory fallback when localStorage is unavailable, and namespaced keys.
  *
  * @module services/storage
+ * @author adekunlebamz
  */
 
 const STORAGE_PREFIX = 'timefi_';

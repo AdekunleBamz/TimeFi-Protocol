@@ -1,14 +1,18 @@
 /**
- * Storage service for persistent data management
- * Provides type-safe access to localStorage with fallbacks
+ * Storage Service - Persistent data management with localStorage fallback.
+ *
+ * Provides a safe, type-aware storage API with automatic JSON serialization,
+ * in-memory fallback when localStorage is unavailable, and namespaced keys.
+ *
+ * @module services/storage
  */
 
 const STORAGE_PREFIX = 'timefi_';
 let storageAvailableCache = null;
 
 /**
- * Check if localStorage is available
- * @returns {boolean}
+ * isStorageAvailable - Check if localStorage is available in the current environment.
+ * @returns {boolean} True if localStorage is accessible, false otherwise
  */
 function isStorageAvailable() {
   if (storageAvailableCache !== null) {
@@ -27,15 +31,26 @@ function isStorageAvailable() {
   }
 }
 
+/**
+ * resetStorageAvailabilityCache - Reset the cached storage availability check.
+ * Useful for testing or when storage permissions may have changed.
+ */
 export function resetStorageAvailabilityCache() {
   storageAvailableCache = null;
 }
 
 /**
- * In-memory fallback storage
+ * memoryStorage - In-memory fallback when localStorage is unavailable.
+ * @type {Map<string, any>}
  */
 const memoryStorage = new Map();
 
+/**
+ * safeJsonParse - Safely parse JSON with a default fallback.
+ * @param {string} value - JSON string to parse
+ * @param {any} [defaultValue=null] - Value to return on parse failure
+ * @returns {any} Parsed value or default
+ */
 function safeJsonParse(value, defaultValue = null) {
   try {
     return JSON.parse(value);
@@ -44,6 +59,12 @@ function safeJsonParse(value, defaultValue = null) {
   }
 }
 
+/**
+ * normalizeKey - Add storage prefix to key and validate.
+ * @param {string} key - Raw storage key
+ * @returns {string} Prefixed key
+ * @throws {Error} If key is empty or not a string
+ */
 function normalizeKey(key) {
   if (typeof key !== 'string' || key.length === 0) {
     throw new Error('storage key must be a non-empty string');
@@ -52,9 +73,9 @@ function normalizeKey(key) {
 }
 
 /**
- * Get item from storage
- * @param {string} key - Storage key
- * @param {any} defaultValue - Default value if not found
+ * getItem - Retrieve a value from storage.
+ * @param {string} key - Storage key (without prefix)
+ * @param {any} [defaultValue=null] - Value to return if key not found
  * @returns {any} Stored value or default
  */
 export function getItem(key, defaultValue = null) {
@@ -73,9 +94,9 @@ export function getItem(key, defaultValue = null) {
 }
 
 /**
- * Set item in storage
- * @param {string} key - Storage key
- * @param {any} value - Value to store
+ * setItem - Store a value in storage.
+ * @param {string} key - Storage key (without prefix)
+ * @param {any} value - Value to store (will be JSON serialized)
  */
 export function setItem(key, value) {
   const prefixedKey = normalizeKey(key);
@@ -93,8 +114,8 @@ export function setItem(key, value) {
 }
 
 /**
- * Remove item from storage
- * @param {string} key - Storage key
+ * removeItem - Remove an item from storage.
+ * @param {string} key - Storage key (without prefix)
  */
 export function removeItem(key) {
   const prefixedKey = normalizeKey(key);
@@ -110,7 +131,8 @@ export function removeItem(key) {
 }
 
 /**
- * Clear all TimeFi storage items
+ * clearAll - Remove all TimeFi-prefixed items from storage.
+ * Also clears the in-memory fallback storage.
  */
 export function clearAll() {
   try {
@@ -128,7 +150,8 @@ export function clearAll() {
 }
 
 /**
- * Storage keys used in the application
+ * StorageKeys - Standardized storage key constants for the application.
+ * Use these to ensure consistent key naming across the codebase.
  */
 export const StorageKeys = {
   THEME: 'theme',
@@ -142,7 +165,8 @@ export const StorageKeys = {
 };
 
 /**
- * Session storage utilities (cleared on tab close)
+ * session - Session storage utilities with automatic JSON serialization.
+ * Data stored here is cleared when the browser tab is closed.
  */
 export const session = {
   get(key, defaultValue = null) {

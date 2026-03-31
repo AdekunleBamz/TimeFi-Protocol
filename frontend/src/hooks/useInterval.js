@@ -1,9 +1,17 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Hook that sets up an interval that properly cleans up
- * @param {Function} callback - Function to call on each interval
- * @param {number|null} delay - Interval in ms, or null to pause
+ * useInterval - Hook for setting up intervals with proper cleanup.
+ *
+ * Provides a declarative way to use setInterval that works well
+ * with React's component lifecycle and handles cleanup automatically.
+ *
+ * @param {Function} callback - Function to execute on each interval tick
+ * @param {number|null} delay - Interval delay in milliseconds, or null to pause
+ * @example
+ * useInterval(() => {
+ *   setCount(count + 1);
+ * }, 1000);
  */
 export function useInterval(callback, delay) {
   const savedCallback = useRef(callback);
@@ -29,9 +37,17 @@ export function useInterval(callback, delay) {
 }
 
 /**
- * Hook that sets up a timeout that properly cleans up
- * @param {Function} callback - Function to call after timeout
- * @param {number|null} delay - Timeout in ms, or null to cancel
+ * useTimeout - Hook for setting up timeouts with proper cleanup.
+ *
+ * Provides a declarative way to use setTimeout that works well
+ * with React's component lifecycle and handles cleanup automatically.
+ *
+ * @param {Function} callback - Function to execute after the delay
+ * @param {number|null} delay - Timeout delay in milliseconds, or null to cancel
+ * @example
+ * useTimeout(() => {
+ *   setShowMessage(false);
+ * }, 5000);
  */
 export function useTimeout(callback, delay) {
   const savedCallback = useRef(callback);
@@ -54,10 +70,24 @@ export function useTimeout(callback, delay) {
 }
 
 /**
- * Hook for polling with automatic retry on error
- * @param {Function} fetcher - Async function to poll
- * @param {number} interval - Polling interval in ms
- * @param {Object} options - Configuration options
+ * usePolling - Hook for polling data with automatic retry on error.
+ *
+ * Combines useInterval with error handling and retry logic
+ * for robust data polling scenarios.
+ *
+ * @param {Function} fetcher - Async function to call on each poll
+ * @param {number} interval - Polling interval in milliseconds
+ * @param {Object} [options={}] - Configuration options
+ * @param {boolean} [options.enabled=true] - Enable/disable polling
+ * @param {Function} [options.onSuccess] - Callback on successful fetch
+ * @param {Function} [options.onError] - Callback on fetch error
+ * @param {boolean} [options.retryOnError=true] - Retry on errors
+ * @param {number} [options.maxRetries=3] - Maximum retry attempts
+ * @example
+ * usePolling(fetchVaultData, 30000, {
+ *   onSuccess: (data) => setVaults(data),
+ *   onError: (err) => setError(err.message),
+ * });
  */
 export function usePolling(fetcher, interval, options = {}) {
   const {

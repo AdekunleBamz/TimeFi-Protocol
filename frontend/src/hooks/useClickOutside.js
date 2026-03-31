@@ -1,10 +1,20 @@
 import { useEffect, useRef, useCallback } from 'react';
 
 /**
- * Hook to detect clicks outside of a referenced element
- * @param {Function} handler - Callback when click outside is detected
- * @param {Object} options - Configuration options
- * @returns {Object} Ref to attach to the element
+ * useClickOutside - Hook for detecting clicks outside a referenced element.
+ *
+ * Useful for closing dropdowns, modals, or popovers when clicking outside.
+ * Supports excluding additional elements and custom event types.
+ *
+ * @param {Function} handler - Callback invoked when click outside is detected
+ * @param {Object} [options={}] - Configuration options
+ * @param {boolean} [options.enabled=true] - Enable/disable the click detection
+ * @param {string} [options.eventType='mousedown'] - Event type to listen for
+ * @param {Array<React.RefObject>} [options.excludeRefs=[]] - Refs to exclude from detection
+ * @returns {React.RefObject} Ref to attach to the element to monitor
+ * @example
+ * const ref = useClickOutside(() => setIsOpen(false));
+ * return <div ref={ref}>...</div>;
  */
 export function useClickOutside(handler, options = {}) {
   const {
@@ -57,9 +67,14 @@ export function useClickOutside(handler, options = {}) {
 }
 
 /**
- * Hook to detect escape key press
- * @param {Function} handler - Callback when escape is pressed
- * @param {boolean} enabled - Whether the handler is active
+ * useEscapeKey - Hook for detecting Escape key presses.
+ *
+ * Useful for closing modals or dismissing UI elements with the Escape key.
+ *
+ * @param {Function} handler - Callback invoked when Escape is pressed
+ * @param {boolean} [enabled=true] - Enable/disable the key detection
+ * @example
+ * useEscapeKey(() => closeModal());
  */
 export function useEscapeKey(handler, enabled = true) {
   const handlerRef = useRef(handler);
@@ -83,10 +98,21 @@ export function useEscapeKey(handler, enabled = true) {
 }
 
 /**
- * Combined hook for click outside and escape key
- * @param {Function} handler - Callback when dismissed
- * @param {Object} options - Configuration options
- * @returns {Object} Ref to attach to the element
+ * useDismiss - Combined hook for click outside and escape key dismissal.
+ *
+ * Provides a convenient way to dismiss UI elements with either
+ * an outside click or the Escape key.
+ *
+ * @param {Function} handler - Callback invoked when dismissed
+ * @param {Object} [options={}] - Configuration options
+ * @param {boolean} [options.enabled=true] - Enable/disable dismissal
+ * @param {boolean} [options.escapeKey=true] - Enable Escape key dismissal
+ * @param {string} [options.eventType='mousedown'] - Event type for click detection
+ * @param {Array<React.RefObject>} [options.excludeRefs=[]] - Refs to exclude
+ * @returns {React.RefObject} Ref to attach to the element to monitor
+ * @example
+ * const ref = useDismiss(() => setIsOpen(false));
+ * return <div ref={ref}>...</div>;
  */
 export function useDismiss(handler, options = {}) {
   const { enabled = true, escapeKey = true, ...clickOutsideOptions } = options;
@@ -98,9 +124,16 @@ export function useDismiss(handler, options = {}) {
 }
 
 /**
- * Hook to focus trap within an element
- * @param {boolean} active - Whether the focus trap is active
- * @returns {Object} Ref to attach to the container element
+ * useFocusTrap - Hook for trapping focus within an element.
+ *
+ * Implements accessible focus trapping for modals and dialogs.
+ * Tab cycles through focusable elements, wrapping at boundaries.
+ *
+ * @param {boolean} [active=true] - Whether the focus trap is active
+ * @returns {React.RefObject} Ref to attach to the container element
+ * @example
+ * const ref = useFocusTrap(isModalOpen);
+ * return <div ref={ref}>...</div>;
  */
 export function useFocusTrap(active = true) {
   const ref = useRef(null);

@@ -4,6 +4,15 @@ import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../utils/constants';
 
+/**
+ * WalletContext - React Context for wallet connection state management.
+ *
+ * Provides wallet connection, disconnection, address, balance, and
+ * network information to all child components. Uses localStorage
+ * for session persistence across page reloads.
+ *
+ * @type {React.Context<Object|null>}
+ */
 const WalletContext = createContext(null);
 
 const appDetails = {
@@ -11,6 +20,20 @@ const appDetails = {
   icon: '/logo.svg',
 };
 
+/**
+ * WalletProvider - React Context provider for wallet state.
+ *
+ * Manages Stacks wallet connection via @stacks/connect, tracks
+ * balance via Hiro API polling, and persists session to localStorage.
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components
+ * @returns {JSX.Element} Wallet context provider
+ * @example
+ * <WalletProvider>
+ *   <App />
+ * </WalletProvider>
+ */
 export function WalletProvider({ children }) {
   const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.WALLET_SESSION, null);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -92,6 +115,17 @@ export function WalletProvider({ children }) {
   );
 }
 
+/**
+ * useWallet - Hook to access wallet context.
+ *
+ * Provides wallet connection state, address, balance, and
+ * connect/disconnect functions to any component in the tree.
+ *
+ * @returns {{ isConnected: boolean, isConnecting: boolean, address: string|null, balance: number, connect: Function, disconnect: Function, network: Object }}
+ * @throws {Error} If used outside of WalletProvider
+ * @example
+ * const { isConnected, address, balance, connect } = useWallet();
+ */
 export function useWallet() {
   const context = useContext(WalletContext);
   if (!context) {

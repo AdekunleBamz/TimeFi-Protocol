@@ -4,17 +4,33 @@ import { Button } from './Button';
 import './ConfirmModal.css';
 
 /**
- * Reusable Confirmation Modal
+ * ConfirmModal - Reusable confirmation dialog with customizable actions.
+ *
+ * Displays a modal dialog that requires explicit user confirmation
+ * before proceeding with an action. Supports loading states and
+ * different visual variants for various confirmation types.
+ *
  * @param {Object} props - Component props
- * @param {boolean} props.isOpen - Whether modal is visible
- * @param {Function} props.onClose - Call on close request
- * @param {Function} props.onConfirm - Call on confirmation
- * @param {string} props.title - Modal heading
- * @param {string} props.description - Modal body text
- * @param {string} props.confirmText - Label for confirm button
- * @param {string} props.cancelText - Label for cancel button
- * @param {string} props.variant - 'primary' or 'danger'
- * @param {boolean} props.loading - Shows loading state on confirm button
+ * @param {boolean} props.isOpen - Controls modal visibility
+ * @param {Function} props.onClose - Callback when modal is dismissed
+ * @param {Function} props.onConfirm - Callback when confirm button is clicked
+ * @param {string} [props.title='Are you sure?'] - Modal heading text
+ * @param {string} [props.description] - Supporting description text
+ * @param {string} [props.confirmText='Confirm'] - Label for confirm button
+ * @param {string} [props.cancelText='Cancel'] - Label for cancel button
+ * @param {string} [props.variant='primary'] - Button variant: 'primary' or 'danger'
+ * @param {boolean} [props.loading=false] - Shows loading state on confirm button
+ * @returns {JSX.Element|null} Modal dialog or null if not open
+ * @example
+ * <ConfirmModal
+ *   isOpen={showDeleteModal}
+ *   onClose={() => setShowDeleteModal(false)}
+ *   onConfirm={handleDelete}
+ *   title="Delete Vault?"
+ *   description="This action cannot be undone."
+ *   confirmText="Delete"
+ *   variant="danger"
+ * />
  */
 export function ConfirmModal({
   isOpen,

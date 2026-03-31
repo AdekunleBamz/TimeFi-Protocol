@@ -191,45 +191,45 @@ TimeFi Protocol is governed by its community. Future proposals will be handled v
 - **Console.xyz**: [Community discussions and governance](https://console.xyz)
 
 ## ❓ FAQ
- 
- **Q: What is microSTX?**
- A: It is the smallest unit of STX. 1 STX = 1,000,000 microSTX.
- 
- **Q: What is the minimum lock period?**
- A: The minimum lock period is 3,600 seconds (1 hour).
- 
- ## 🗺️ Roadmap 2026
- 
- - **Q1 2026**: Mobile Wallet Support & SDK v2
- - **Q2 2026**: Multi-sig Vaults & Fee Sharing
- 
- - **Q3 2026**: L2 Integrations (Starknet/Arbitrum) & L3 Hyperchains
- - **Q4 2026**: Decentralized Frontend & DAO Governance
- 
- ## 📖 Operations Docs
- 
- - Mainnet testing and funding flows: [MAINNET_TESTING.md](docs/MAINNET_TESTING.md)
- - Technical Specification: [TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md)
- 
- ## 📦 Package Metadata
- - **Name**: `timefi-sdk`
- - **Version**: `0.1.0`
- - **Architecture**: ES Modules
- - **License**: MIT
- 
- ## 🤝 Acknowledgments
- 
- - **Stacks Foundation**: For the Clarity 4 development tools.
- - **Hiro Systems**: For the Stacks/Transactions library.
- 
- ## 👤 Contributors
- 
- - **adekunlebamz**: Lead Developer & Maintainer
- 
- ## 📄 License
- 
- - [Security Policy](SECURITY.md)
- - [Code of Conduct](CODE_OF_CONDUCT.md)
+
+**Q: What is microSTX?**
+A: It is the smallest unit of STX. 1 STX = 1,000,000 microSTX.
+
+**Q: What is the minimum lock period?**
+A: The minimum lock period is 3,600 seconds (1 hour).
+
+## 🗺️ Roadmap 2026
+
+- **Q1 2026**: Mobile Wallet Support & SDK v2
+- **Q2 2026**: Multi-sig Vaults & Fee Sharing
+- **Q3 2026**: L2 Integrations (Starknet/Arbitrum) & L3 Hyperchains
+- **Q4 2026**: Decentralized Frontend & DAO Governance
+
+## 📖 Operations Docs
+
+- Mainnet testing and funding flows: [MAINNET_TESTING.md](docs/MAINNET_TESTING.md)
+- Technical Specification: [TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md)
+
+## 📦 Package Metadata
+
+- **Name**: `timefi-sdk`
+- **Version**: `0.1.0`
+- **Architecture**: ES Modules
+- **License**: MIT
+
+## 🤝 Acknowledgments
+
+- **Stacks Foundation**: For the Clarity 4 development tools.
+- **Hiro Systems**: For the Stacks/Transactions library.
+
+## 👤 Contributors
+
+- **adekunlebamz**: Lead Developer & Maintainer
+
+## 📄 License
+
+- [Security Policy](SECURITY.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
  
  MIT License - Copyright (c) 2026 TimeFi Protocol Team
  

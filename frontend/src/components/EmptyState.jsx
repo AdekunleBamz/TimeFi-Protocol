@@ -2,12 +2,28 @@ import React from 'react';
 import './EmptyState.css';
 
 /**
- * Empty state placeholder component
- * @param {ReactNode} icon - Icon element
- * @param {string} title - Main heading
- * @param {string} description - Supporting text
- * @param {ReactNode} action - CTA button/link
- * @param {ReactNode} secondaryAction - Optional secondary CTA
+ * EmptyState - Placeholder component for empty list or data views.
+ *
+ * Displays a centered message with icon, title, description, and optional
+ * action buttons when no data is available.
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} [props.icon] - Visual icon element
+ * @param {string} [props.eyebrow] - Small label above the title
+ * @param {string} [props.title] - Main heading text
+ * @param {string} [props.description] - Supporting description text
+ * @param {string} [props.note] - Additional note or tip
+ * @param {React.ReactNode} [props.action] - Primary call-to-action element
+ * @param {React.ReactNode} [props.secondaryAction] - Secondary action element
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Empty state container element
+ * @example
+ * <EmptyState
+ *   icon={<SearchIcon />}
+ *   title="No results found"
+ *   description="Try adjusting your search terms"
+ *   action={<Button onClick={onReset}>Reset Filters</Button>}
+ * />
  */
 export function EmptyState({
   icon,
@@ -50,7 +66,10 @@ export function EmptyState({
 }
 
 /**
- * Pre-configured empty state for no vaults
+ * NoVaultsEmptyState - Pre-configured empty state for when user has no vaults.
+ * @param {Object} props - Component props
+ * @param {Function} [props.onCreateVault] - Callback to trigger vault creation
+ * @returns {JSX.Element} Empty state with vault creation prompt
  */
 export function NoVaultsEmptyState({ onCreateVault }) {
   return (
@@ -78,7 +97,8 @@ export function NoVaultsEmptyState({ onCreateVault }) {
 
 
 /**
- * Pre-configured empty state for no transactions
+ * NoTransactionsEmptyState - Pre-configured empty state for empty transaction history.
+ * @returns {JSX.Element} Empty state with transaction info message
  */
 export function NoTransactionsEmptyState() {
   return (
@@ -92,7 +112,10 @@ export function NoTransactionsEmptyState() {
   );
 }
 
-// Icons
+/**
+ * VaultIcon - SVG icon for vault representation.
+ * @returns {JSX.Element} Vault icon SVG
+ */
 function VaultIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2">
@@ -104,6 +127,10 @@ function VaultIcon() {
   );
 }
 
+/**
+ * TransactionIcon - SVG icon for transaction representation.
+ * @returns {JSX.Element} Transaction icon SVG
+ */
 function TransactionIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2">

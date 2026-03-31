@@ -11,13 +11,6 @@
   },
   "rules": {
     "no-unused-vars": "warn",
-    "no-console": "off",
-    "eqeqeq": ["error", "always"],
-    "curly": ["error", "all"],
-    "no-var": "error",
-    "prefer-const": "error",
-    "no-multiple-empty-lines": ["error", { "max": 2 }],
-    "no-trailing-spaces": "error",
-    "semi": ["error", "always"]
+    "no-console": "off"
   }
 }

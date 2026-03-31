@@ -2,11 +2,21 @@ import React from 'react';
 import './Skeleton.css';
 
 /**
- * Skeleton loading placeholder
- * @param {string} variant - 'text', 'circular', 'rectangular'
- * @param {number|string} width - Width value
- * @param {number|string} height - Height value
- * @param {boolean} animated - Enable shimmer animation
+ * Skeleton loading placeholder component.
+ *
+ * Displays a placeholder while content is loading. Supports multiple
+ * variants and optional shimmer animation for better perceived performance.
+ *
+ * @param {Object} props - Component props
+ * @param {string} [props.variant='text'] - Skeleton type: 'text', 'circular', 'rectangular'
+ * @param {number|string} [props.width] - Width in pixels or CSS value
+ * @param {number|string} [props.height] - Height in pixels or CSS value
+ * @param {boolean} [props.animated=true] - Enable shimmer animation
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @param {Object} [props.style={}] - Inline styles
+ * @returns {JSX.Element} Skeleton placeholder div element
+ * @example
+ * <Skeleton variant="rectangular" width={200} height={100} />
  */
 export function Skeleton({
   variant = 'text',
@@ -33,7 +43,11 @@ export function Skeleton({
 }
 
 /**
- * Skeleton for text lines
+ * SkeletonText - Multiple skeleton lines for text content.
+ * @param {Object} props - Component props
+ * @param {number} [props.lines=3] - Number of text lines to simulate
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Container with skeleton text lines
  */
 export function SkeletonText({ lines = 3, className = '' }) {
   return (
@@ -50,7 +64,11 @@ export function SkeletonText({ lines = 3, className = '' }) {
 }
 
 /**
- * Skeleton for avatar/profile images
+ * SkeletonAvatar - Circular skeleton placeholder for avatar images.
+ * @param {Object} props - Component props
+ * @param {number} [props.size=48] - Diameter in pixels
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Circular skeleton element
  */
 export function SkeletonAvatar({ size = 48, className = '' }) {
   return (
@@ -64,7 +82,10 @@ export function SkeletonAvatar({ size = 48, className = '' }) {
 }
 
 /**
- * Skeleton for cards
+ * SkeletonCard - Pre-composed skeleton for card layouts.
+ * @param {Object} props - Component props
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Complete card skeleton with image and text areas
  */
 export function SkeletonCard({ className = '' }) {
   return (
@@ -81,7 +102,10 @@ export function SkeletonCard({ className = '' }) {
 }
 
 /**
- * Skeleton for vault cards
+ * SkeletonVaultCard - Pre-composed skeleton for vault card layouts.
+ * @param {Object} props - Component props
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Complete vault card skeleton with header and stats
  */
 export function SkeletonVaultCard({ className = '' }) {
   return (

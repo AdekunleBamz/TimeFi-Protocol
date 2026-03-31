@@ -8,7 +8,13 @@ import { STACKS_NETWORK, CONTRACT_ADDRESS, CONTRACT_NAMES } from '../utils/const
 import { env } from '../config/env';
 
 /**
- * Base API configuration
+ * API Service - Hiro API and read-only contract queries.
+ *
+ * Provides low-level access to Stacks blockchain data via the Hiro API
+ * and read-only Clarity function calls. Used by hooks and higher-level
+ * services for data fetching.
+ *
+ * @module services/api
  */
 const HIRO_API_URL = env.hiroApiUrl || STACKS_NETWORK?.coreApiUrl || 'https://api.mainnet.hiro.so';
 
@@ -18,7 +24,11 @@ function safeParseInt(value, fallback = 0) {
 }
 
 /**
- * Fetch wrapper with error handling
+ * fetchAPI - Internal fetch wrapper with standardized error handling.
+ * @param {string} endpoint - API endpoint path
+ * @param {Object} [options={}] - Fetch options
+ * @returns {Promise<Object>} Parsed JSON response
+ * @throws {Error} On non-OK HTTP response
  */
 async function fetchAPI(endpoint, options = {}) {
   const url = `${HIRO_API_URL}${endpoint}`;
@@ -99,7 +109,9 @@ export async function getTransaction(txId) {
 }
 
 /**
- * Normalize transaction data
+ * normalizeTransaction - Transform Hiro API transaction format to app format.
+ * @param {Object} tx - Raw transaction from Hiro API
+ * @returns {Object} Normalized transaction object
  */
 function normalizeTransaction(tx) {
   return {

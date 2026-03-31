@@ -1,6 +1,6 @@
 # 🕰️ TimeFi Protocol
 
-A time-locked vault protocol built on the Stacks blockchain using Clarity 4 features.
+A time-locked vault protocol built on the Stacks blockchain using Clarity smart contract features.
 
 [![npm version](https://img.shields.io/npm/v/timefi-sdk.svg?style=flat-square)](https://www.npmjs.com/package/timefi-sdk)
 [![npm downloads](https://img.shields.io/npm/dm/timefi-sdk.svg?style=flat-square)](https://www.npmjs.com/package/timefi-sdk)

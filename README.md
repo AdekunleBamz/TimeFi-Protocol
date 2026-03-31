@@ -181,6 +181,7 @@ FEE_BPS: 50 (0.5%)
  
  - **Discord**: [Join our Discord](https://discord.gg/timefi)
  - **Twitter**: [@TimeFiProtocol](https://twitter.com/TimeFiProtocol)
+ - **GitHub**: [AdekunleBamz](https://github.com/AdekunleBamz)
  
  ## 🪐 Ecosystem
  
@@ -222,7 +223,7 @@ FEE_BPS: 50 (0.5%)
  
  ## 👤 Contributors
  
- - **AdekunleBamz**: Lead Developer
+ - **adekunlebamz**: Lead Developer & Maintainer
  
  ## 📄 License
  

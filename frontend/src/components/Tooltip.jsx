@@ -1,3 +1,9 @@
+/**
+ * Tooltip Component - Contextual information on hover.
+ *
+ * @module components/Tooltip
+ * @author adekunlebamz
+ */
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import './Tooltip.css';

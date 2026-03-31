@@ -9,6 +9,7 @@
  *
  * @module main
  * @author adekunlebamz
+ * @see {@link https://timefi.io} for protocol documentation
  */
 import React from 'react';
 import ReactDOM from 'react-dom/client';

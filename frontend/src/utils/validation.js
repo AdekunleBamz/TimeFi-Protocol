@@ -90,7 +90,7 @@ export function validateVaultId(id) {
   if (!Number.isInteger(numId)) {
     return { valid: false, error: 'Vault ID must be a whole number' };
   }
-  if (!isPositiveInteger(numId)) {
+  if (!isValidVaultId(numId)) {
     return { valid: false, error: 'Vault ID must be a positive number' };
   }
   if (numId > Number.MAX_SAFE_INTEGER) {

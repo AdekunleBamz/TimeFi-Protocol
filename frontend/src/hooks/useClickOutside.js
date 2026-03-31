@@ -11,7 +11,8 @@ import { useEffect, useRef, useCallback } from 'react';
  * @param {boolean} [options.enabled=true] - Enable/disable the click detection
  * @param {string} [options.eventType='mousedown'] - Event type to listen for
  * @param {Array<React.RefObject>} [options.excludeRefs=[]] - Refs to exclude from detection
- * @returns {React.RefObject} Ref to attach to the element to monitor
+ * @returns {React.RefObject<HTMLDivElement>} Ref to attach to the element to monitor
+ * @see {@link https://github.com/AdekunleBamz/TimeFi-Protocol} for usage examples
  * @example
  * const ref = useClickOutside(() => setIsOpen(false));
  * return <div ref={ref}>...</div>;

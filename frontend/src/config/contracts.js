@@ -1,10 +1,11 @@
 /**
- * Contract Configuration - TimeFi smart contract settings.
+ * Contract Configuration - Stacks smart contract addresses and names.
  *
- * Re-exports core contract constants from timefi-sdk and defines
- * frontend-specific configuration values.
+ * Provides centralized configuration for all smart contract interactions,
+ * including contract addresses, names, and network-specific settings.
  *
  * @module config/contracts
+ * @author adekunlebamz
  */
 
 /**

@@ -1,3 +1,13 @@
+/**
+ * Wallet Context - Stacks wallet connection state management.
+ *
+ * Provides wallet connection, disconnection, and balance tracking
+ * throughout the application using Stacks Connect.
+ *
+ * @module context/WalletContext
+ * @author adekunlebamz
+ */
+
 import { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
 import { showConnect, disconnect } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';

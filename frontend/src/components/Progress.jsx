@@ -2,13 +2,22 @@ import React from 'react';
 import './Progress.css';
 
 /**
- * Progress bar component
- * @param {number} value - Current value (0-100)
- * @param {number} max - Maximum value (default: 100)
- * @param {string} size - 'sm', 'md', 'lg' (default: 'md')
- * @param {string} variant - 'default', 'success', 'warning', 'danger'
- * @param {boolean} showLabel - Show percentage label
- * @param {boolean} animated - Animate the bar
+ * Progress bar component for visualizing completion percentage.
+ *
+ * Supports multiple sizes, variants, and optional animation.
+ * Includes proper ARIA attributes for accessibility.
+ *
+ * @param {Object} props - Component props
+ * @param {number} [props.value=0] - Current progress value (0-100)
+ * @param {number} [props.max=100] - Maximum value for calculation
+ * @param {string} [props.size='md'] - Bar size: 'sm', 'md', 'lg'
+ * @param {string} [props.variant='default'] - Color variant: 'default', 'success', 'warning', 'danger'
+ * @param {boolean} [props.showLabel=false] - Display percentage label inside bar
+ * @param {boolean} [props.animated=false] - Enable progress bar animation
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Progress bar element with role="progressbar"
+ * @example
+ * <Progress value={75} variant="success" showLabel animated />
  */
 export function Progress({
   value = 0,
@@ -40,12 +49,20 @@ export function Progress({
 }
 
 /**
- * Circular progress indicator
+ * CircularProgress - Circular progress indicator using SVG.
+ *
+ * Displays progress as a circular ring with optional percentage label.
+ * Useful for dashboards and compact progress displays.
+ *
  * @param {Object} props - Component props
- * @param {number} props.value - Current value (0-100)
- * @param {number} props.size - Size in pixels (default: 60)
- * @param {number} props.strokeWidth - Stroke width (default: 6)
- * @param {boolean} props.showLabel - Show percentage label
+ * @param {number} [props.value=0] - Current progress value (0-100)
+ * @param {number} [props.size=60] - Diameter in pixels
+ * @param {number} [props.strokeWidth=6] - Ring stroke width in pixels
+ * @param {boolean} [props.showLabel=false] - Display percentage label in center
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Circular progress SVG element
+ * @example
+ * <CircularProgress value={60} size={80} showLabel />
  */
 export function CircularProgress({
   value = 0,

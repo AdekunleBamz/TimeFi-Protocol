@@ -2,13 +2,30 @@ import React from 'react';
 import './StatsCard.css';
 
 /**
- * StatsCard component for displaying key metrics
- * @param {string} label - Metric name
- * @param {string|number} value - Main value
- * @param {string} subValue - Secondary value (e.g., USD equivalent)
- * @param {number} change - Percentage change
- * @param {ReactNode} icon - Icon element
- * @param {boolean} loading - Shows skeleton when true
+ * StatsCard - Metric display card for dashboard statistics.
+ *
+ * Shows a labeled value with optional sub-value, percentage change
+ * indicator, icon, and refresh button. Includes loading state.
+ *
+ * @param {Object} props - Component props
+ * @param {string} props.label - Metric name/label
+ * @param {string|number} props.value - Primary value to display
+ * @param {string} [props.subValue] - Secondary value (e.g., USD equivalent)
+ * @param {number} [props.change] - Percentage change (positive or negative)
+ * @param {React.ReactNode} [props.icon] - Icon element for visual context
+ * @param {boolean} [props.loading=false] - Shows skeleton placeholder when true
+ * @param {Function} [props.onRefresh] - Callback for refresh button click
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Stats card element
+ * @example
+ * <StatsCard
+ *   label="Total Value Locked"
+ *   value="1,234.56 STX"
+ *   subValue="$1,500.00"
+ *   change={5.2}
+ *   icon={<VaultIcon />}
+ *   onRefresh={fetchTVL}
+ * />
  */
 export function StatsCard({
   label,

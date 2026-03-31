@@ -5,7 +5,19 @@ import { CopyButton } from './CopyButton';
 import './Header.css';
 
 /**
- * Main application header with wallet connection
+ * Header - Main application header with navigation and wallet connection.
+ *
+ * Displays the TimeFi branding, main navigation links, current page label,
+ * wallet connection status, and balance information. Includes responsive
+ * mobile menu with proper accessibility attributes.
+ *
+ * @returns {JSX.Element} Application header element
+ * @example
+ * // Used in main App layout
+ * <div className="app">
+ *   <Header />
+ *   <main>...</main>
+ * </div>
  */
 export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();

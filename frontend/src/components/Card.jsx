@@ -2,10 +2,18 @@ import React from 'react';
 import './Card.css';
 
 /**
- * Card container component
- * @param {boolean} hoverable - Add hover effect
- * @param {boolean} clickable - Make entire card clickable
- * @param {string} variant - 'default', 'elevated', 'outlined'
+ * Card container component for grouping related content.
+ *
+ * Supports multiple variants and interactive states for flexible layouts.
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Card content
+ * @param {boolean} [props.hoverable=false] - Adds hover elevation effect
+ * @param {boolean} [props.clickable=false] - Makes card interactive with button behavior
+ * @param {string} [props.variant='default'] - Card style: 'default', 'elevated', 'outlined'
+ * @param {Function} [props.onClick] - Click handler (activates when clickable=true)
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Card container element
  */
 export function Card({
   children,

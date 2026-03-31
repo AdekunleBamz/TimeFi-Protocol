@@ -3,10 +3,22 @@ import { createPortal } from 'react-dom';
 import './Tooltip.css';
 
 /**
- * Tooltip component
- * @param {string} content - Tooltip text
- * @param {string} position - 'top', 'bottom', 'left', 'right' (default: 'top')
- * @param {number} delay - Show delay in ms (default: 200)
+ * Tooltip component for displaying contextual information on hover/focus.
+ *
+ * Positions itself relative to the trigger element and supports
+ * keyboard accessibility with proper ARIA attributes.
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Trigger element
+ * @param {string} props.content - Tooltip text content
+ * @param {string} [props.position='top'] - Position: 'top', 'bottom', 'left', 'right'
+ * @param {number} [props.delay=200] - Show delay in milliseconds
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Tooltip wrapper element
+ * @example
+ * <Tooltip content="Click to save changes">
+ *   <Button>Save</Button>
+ * </Tooltip>
  */
 export function Tooltip({
   children,
@@ -77,6 +89,12 @@ export function Tooltip({
   );
 }
 
+/**
+ * Calculate tooltip position based on trigger element and desired position.
+ * @param {DOMRect} rect - Trigger element's bounding client rect
+ * @param {string} position - Desired position: 'top', 'bottom', 'left', 'right'
+ * @returns {{ x: number, y: number }} Coordinates for tooltip placement
+ */
 function calculatePosition(rect, position) {
   const offset = 8;
   const margin = 12;

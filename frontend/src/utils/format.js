@@ -1,10 +1,11 @@
 /**
- * Formatting Utilities - Display formatting for TimeFi data.
+ * Format Utilities - Common formatting functions for display values.
  *
- * Re-exports common formatters from timefi-sdk and provides
- * app-specific formatting functions for blockchain data.
+ * Provides consistent formatting for STX amounts, addresses, timestamps,
+ * and other values displayed throughout the application.
  *
  * @module utils/format
+ * @author adekunlebamz
  */
 
 /**

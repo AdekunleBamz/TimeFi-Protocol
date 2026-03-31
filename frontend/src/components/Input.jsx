@@ -1,12 +1,20 @@
 import React, { forwardRef, useId } from 'react';
 import './Input.css';
 
+/**
+ * CheckIcon component for validation success state.
+ * @returns {JSX.Element} SVG checkmark icon
+ */
 const CheckIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="20 6 9 17 4 12" />
   </svg>
 );
 
+/**
+ * ErrorIcon component for validation error state.
+ * @returns {JSX.Element} SVG error icon
+ */
 const ErrorIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" />
@@ -16,14 +24,37 @@ const ErrorIcon = () => (
 );
 
 /**
- * Reusable Input component with validation icons
- * @param {string} label - Label text
- * @param {string} error - Error message
- * @param {boolean} isValid - Marks input as valid (shows success icon)
- * @param {string} hint - Helper text
- * @param {string} size - 'sm', 'md', 'lg' (default: 'md')
- * @param {ReactNode} leftIcon - Icon on the left
- * @param {ReactNode} rightIcon - Icon on the right
+ * Reusable Input component with validation icons and accessibility support.
+ *
+ * Features built-in validation state indicators, optional icons, and full
+ * ARIA attribute support for screen readers.
+ *
+ * @param {Object} props - Component props
+ * @param {string} [props.label] - Label text displayed above the input
+ * @param {string} [props.error] - Error message displayed below input when invalid
+ * @param {boolean} [props.isValid] - Shows success icon when true
+ * @param {string} [props.hint] - Helper text displayed below input
+ * @param {string} [props.size='md'] - Input size: 'sm', 'md', 'lg'
+ * @param {ReactNode} [props.leftIcon] - Icon displayed on the left side
+ * @param {ReactNode} [props.rightIcon] - Icon displayed on the right side
+ * @param {string} [props.type='text'] - HTML input type attribute
+ * @param {string} [props.placeholder] - Placeholder text
+ * @param {string} [props.value] - Controlled input value
+ * @param {Function} [props.onChange] - Change handler
+ * @param {boolean} [props.disabled=false] - Disables input when true
+ * @param {boolean} [props.required=false] - Marks input as required
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @param {string} [props.id] - Custom id (auto-generated if not provided)
+ * @param {React.Ref} ref - Forwarded ref to the input element
+ * @returns {JSX.Element} Input element with label and validation
+ * @example
+ * <Input
+ *   label="Email"
+ *   type="email"
+ *   placeholder="user@example.com"
+ *   error={errors.email}
+ *   isValid={!errors.email}
+ * />
  */
 export const Input = forwardRef(({
   label,

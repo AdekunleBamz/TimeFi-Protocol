@@ -1,12 +1,13 @@
 import { LOCK_PERIODS, MIN_DEPOSIT, MAX_DEPOSIT } from '../config/contracts';
 
 /**
- * Validation Utilities - Form and data validation for TimeFi operations.
+ * Validation Utilities - Input validation and sanitization functions.
  *
- * Provides comprehensive validation for addresses, amounts, lock periods,
- * and complete form validation for vault creation and withdrawals.
+ * Provides validation for addresses, amounts, vault IDs, and other
+ * user inputs to ensure data integrity before contract interactions.
  *
  * @module utils/validation
+ * @author adekunlebamz
  */
 
 /**

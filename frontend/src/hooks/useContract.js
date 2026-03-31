@@ -9,7 +9,7 @@ import { createVault as createVaultTx, withdraw as withdrawTx, emergencyWithdraw
  * Provides methods for creating vaults, withdrawing funds, and managing
  * bot approvals. Handles wallet connection checks and transaction state.
  *
- * @returns {Object} Contract interaction methods and state
+ * @returns {{ createVault: Function, withdraw: Function, emergencyWithdraw: Function, claimRewards: Function, approveBot: Function, loading: boolean, error: string|null }} Contract interaction methods and state
  * @returns {Function} returns.createVault - Create a new time-locked vault
  * @returns {Function} returns.withdraw - Withdraw from an unlocked vault
  * @returns {Function} returns.emergencyWithdraw - Emergency withdrawal

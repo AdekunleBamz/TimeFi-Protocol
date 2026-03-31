@@ -1,3 +1,13 @@
+/**
+ * Header - Application header with navigation and wallet controls.
+ *
+ * Provides consistent navigation, wallet connection status,
+ * and branding across all pages.
+ *
+ * @module components/Header
+ * @author adekunlebamz
+ */
+
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';

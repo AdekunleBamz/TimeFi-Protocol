@@ -150,7 +150,7 @@ const tvl = await client.getTVL();
 ### 🔢 Protocol Constants
 
 ```clarity
- MIN_DEPOSIT: 10,000 microSTX (0.01 STX)
+MIN_DEPOSIT: 10,000 microSTX (0.01 STX)
 MIN_LOCK: 3,600 seconds (1 hour)
 MAX_LOCK: 31,536,000 seconds (1 year)
 FEE_BPS: 50 (0.5%)

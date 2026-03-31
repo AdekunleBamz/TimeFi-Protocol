@@ -2,11 +2,23 @@ import React from 'react';
 import './Badge.css';
 
 /**
- * Badge component for status indicators
- * @param {string} variant - 'default', 'success', 'warning', 'danger', 'info'
- * @param {string} size - 'sm', 'md' (default: 'md')
- * @param {boolean} dot - Show dot indicator only
- * @param {boolean} pulse - Animate with pulse effect
+ * Badge component for displaying status indicators and labels.
+ *
+ * Supports multiple variants, sizes, and visual effects including
+ * dot indicators and pulse animations.
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Badge text content (ignored when dot=true)
+ * @param {string} [props.variant='default'] - Badge color: 'default', 'success', 'warning', 'danger', 'info'
+ * @param {string} [props.size='md'] - Badge size: 'sm', 'md'
+ * @param {boolean} [props.dot=false] - Renders as a dot indicator only
+ * @param {boolean} [props.pulse=false] - Adds pulse animation effect
+ * @param {boolean} [props.leadingDot=false] - Shows a colored dot before the text
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Badge span element
+ * @example
+ * <Badge variant="success" pulse>Active</Badge>
+ * <Badge dot variant="warning" />
  */
 export function Badge({
   children,
@@ -39,9 +51,17 @@ export function Badge({
 }
 
 /**
- * Status badge with predefined states
+ * StatusBadge - Pre-configured badge for common vault status states.
+ *
+ * Maps status values to appropriate visual styling with colors,
+ * labels, and animations that match the status meaning.
+ *
  * @param {Object} props - Component props
- * @param {string} props.status - 'active', 'locked', 'unlocked', 'withdrawn', 'pending', 'error'
+ * @param {string} props.status - Vault status: 'active', 'locked', 'unlocked', 'withdrawn', 'pending', 'error'
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Styled badge element
+ * @example
+ * <StatusBadge status="locked" />
  */
 export function StatusBadge({ status, className = '' }) {
 

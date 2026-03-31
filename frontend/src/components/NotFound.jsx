@@ -4,7 +4,15 @@ import { Button } from './Button';
 import './NotFound.css';
 
 /**
- * 404 Not Found page
+ * NotFound - 404 error page component.
+ *
+ * Displays when a user navigates to a non-existent route.
+ * Provides navigation shortcuts to help users recover quickly.
+ *
+ * @returns {JSX.Element} 404 page with navigation options
+ * @example
+ * // Used in Router as catch-all route
+ * <Route path="*" element={<NotFound />} />
  */
 export function NotFound() {
   const location = useLocation();

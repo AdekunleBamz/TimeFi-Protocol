@@ -2,12 +2,21 @@ import React from 'react';
 import './Avatar.css';
 
 /**
- * Avatar component for user/wallet display
- * @param {string} src - Image source URL
- * @param {string} alt - Alt text
- * @param {string} address - Stacks address (for gradient generation)
- * @param {string} size - 'xs', 'sm', 'md', 'lg', 'xl' (default: 'md')
- * @param {string} status - 'online', 'offline', 'away' (optional)
+ * Avatar - User/wallet profile image component.
+ *
+ * Displays an image with fallback to initials or gradient background.
+ * Supports status indicators and multiple sizes.
+ *
+ * @param {Object} props - Component props
+ * @param {string} [props.src] - Image source URL
+ * @param {string} [props.alt] - Alt text for accessibility
+ * @param {string} [props.address] - Stacks address for gradient generation
+ * @param {string} [props.size='md'] - Avatar size: 'xs', 'sm', 'md', 'lg', 'xl'
+ * @param {string} [props.status] - Status indicator: 'online', 'offline', 'away'
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Avatar element with image or fallback
+ * @example
+ * <Avatar address="SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N" status="online" />
  */
 export function Avatar({
   src,
@@ -52,11 +61,24 @@ export function Avatar({
 }
 
 /**
- * Avatar group for multiple avatars
+ * AvatarGroup - Display multiple avatars with overflow indicator.
+ *
+ * Shows a limited number of avatars with a "+N" indicator for remaining.
+ * Useful for displaying group members or multiple participants.
+ *
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - List of Avatar components
- * @param {number} props.max - Max avatars to display (default: 4)
- * @param {string} props.size - Size of avatars (default: 'md')
+ * @param {number} [props.max=4] - Maximum avatars to display
+ * @param {string} [props.size='md'] - Size for all avatars
+ * @param {string} [props.className=''] - Additional CSS class names
+ * @returns {JSX.Element} Avatar group with overflow indicator
+ * @example
+ * <AvatarGroup max={3} size="sm">
+ *   <Avatar address="SP3F...G6N" />
+ *   <Avatar address="ST1K...2P" />
+ *   <Avatar address="SP9M...4R" />
+ *   <Avatar address="ST7L...8Q" />
+ * </AvatarGroup>
  */
 export function AvatarGroup({ children, max = 4, size = 'md', className = '' }) {
   const avatars = React.Children.toArray(children);
@@ -81,10 +103,10 @@ export function AvatarGroup({ children, max = 4, size = 'md', className = '' }) 
   );
 }
 
-/** 
- * Generate initials from name
- * @param {string} name 
- * @returns {string} 
+/**
+ * getInitials - Extract first two initials from a name string.
+ * @param {string} name - Full name or display name
+ * @returns {string} Up to 2 uppercase initials
  */
 function getInitials(name) {
 
@@ -96,10 +118,14 @@ function getInitials(name) {
     .slice(0, 2);
 }
 
-/** 
- * Generate gradient from address 
- * @param {string} address 
- * @returns {string} 
+/**
+ * generateGradient - Create a deterministic gradient from an address hash.
+ *
+ * Uses a simple hash function to generate consistent HSL colors
+ * from any Stacks address string.
+ *
+ * @param {string} address - Stacks address string
+ * @returns {string} CSS linear-gradient value
  */
 function generateGradient(address) {
 

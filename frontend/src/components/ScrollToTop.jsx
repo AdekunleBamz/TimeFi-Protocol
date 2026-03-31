@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './ScrollToTop.css';
 
 /**
- * Scroll to top button component
+ * ScrollToTop - Floating button that scrolls page to top.
+ *
+ * Appears after user scrolls down 300px and provides smooth
+ * scroll animation back to the top of the page.
+ *
+ * @returns {JSX.Element} Scroll to top button (visible when scrolled)
+ * @example
+ * // Add to main layout
+ * <ScrollToTop />
  */
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);

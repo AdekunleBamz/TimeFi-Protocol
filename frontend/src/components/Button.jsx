@@ -1,3 +1,10 @@
+/**
+ * Button Component - Reusable button with ripple effect and multiple variants.
+ *
+ * @module components/Button
+ * @author adekunlebamz
+ */
+
 import React, { useState } from 'react';
 import './Button.css';
 

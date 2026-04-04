@@ -5,7 +5,7 @@ This guide documents how to run the mainnet stress and coverage scripts safely.
 ## Prerequisites
 
 - Node.js 18+
-- A funded mainnet wallet in `tests/wallets.json` position `wallets[0]`
+- A funded mainnet wallet in `test/wallets.json` position `wallets[0]`
 - `@stacks/transactions` and `@stacks/network` installed via `npm ci`
 
 ## Scripts Covered
@@ -85,4 +85,4 @@ This affects local assertions and does not automatically imply a mainnet regress
 ## Preflight Sanity Checks
 
 - Confirm wallet 1 nonce can be fetched before funding starts.
-- Confirm each recipient address is unique in `tests/wallets.json`.
+- Confirm each recipient address is unique in `test/wallets.json`.

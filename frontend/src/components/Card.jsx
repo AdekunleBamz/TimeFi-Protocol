@@ -1,3 +1,10 @@
+/**
+ * Card Component - Reusable card container with optional header and footer.
+ *
+ * @module components/Card
+ * @author adekunlebamz
+ */
+
 import React from 'react';
 import './Card.css';
 

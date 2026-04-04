@@ -6,8 +6,10 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "check": "clarinet check",
-    "console": "clarinet console",
+    "contracts:check": "clarinet check",
+    "contracts:console": "clarinet console",
+    "check": "npm run contracts:check",
+    "console": "npm run contracts:console",
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
     "sdk:build": "npm --prefix sdk run build",

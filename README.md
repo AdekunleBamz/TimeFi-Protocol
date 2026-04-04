@@ -69,10 +69,13 @@ For detailed contribution guidelines, please see [CONTRIBUTING.md](CONTRIBUTING.
 npm ci
 
 # Check contracts
-clarinet check
+npm run contracts:check
 
 # Validate with project script
 npm run check
+
+# Open Clarinet console
+npm run contracts:console
 
 # Run tests
 npm run test

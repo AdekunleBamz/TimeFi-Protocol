@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: amount 200 is the first non-zero fee threshold.
 
 describe("Fee Boundary 0004", () => {
   it("calculate-fee should return 1 at amount 200", () => {

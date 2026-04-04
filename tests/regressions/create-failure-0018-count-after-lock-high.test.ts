@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: high lock-period rejection must preserve counters.
 
 describe("Create Failure 0018", () => {
   it("should keep vault count at 0 after high lock validation failure", () => {

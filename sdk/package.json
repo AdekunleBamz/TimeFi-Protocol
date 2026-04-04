@@ -31,7 +31,7 @@
         "defi",
         "time-lock"
     ],
-    "author": "AdeekunleeBamz",
+    "author": "AdekunleBamz",
     "license": "MIT",
     "dependencies": {
         "@stacks/network": "^6.13.0",

@@ -1,3 +1,9 @@
+/**
+ * Select Component - Dropdown selection input.
+ *
+ * @module components/Select
+ * @author adekunlebamz
+ */
 import React, { useState, useRef, useEffect } from 'react';
 import './Select.css';
 

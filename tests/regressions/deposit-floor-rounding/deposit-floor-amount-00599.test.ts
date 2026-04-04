@@ -3,6 +3,8 @@ import { Cl } from "@stacks/transactions";
 
 import { VAULT_CONTRACT_NAME, wallet1 } from "../shared";
 
+// Regression guard: floor rounding remains stable at amount 0599.
+
 describe("Deposit Floor Rounding 599", () => {
   it("calculate-deposit-after-fee should return net amount for 599", () => {
     const result = simnet.callReadOnlyFn(VAULT_CONTRACT_NAME, "calculate-deposit-after-fee", [Cl.uint(599)], wallet1);

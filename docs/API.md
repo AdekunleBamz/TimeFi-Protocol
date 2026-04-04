@@ -192,6 +192,7 @@ Check if vault can be withdrawn (active and past unlock).
 **Returns:** `(response bool uint)`
 
 Read-only check only; it does not move funds.
+Treat it as a preflight hint, not a final guarantee for subsequent write calls.
 
 ---
 

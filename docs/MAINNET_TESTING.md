@@ -88,3 +88,4 @@ This affects local assertions and does not automatically imply a mainnet regress
 
 - Confirm wallet 1 nonce can be fetched before funding starts.
 - Confirm each recipient address is unique in `test/wallets.json`.
+- Re-check wallet 1 nonce after funding completes before starting the full-test loop.

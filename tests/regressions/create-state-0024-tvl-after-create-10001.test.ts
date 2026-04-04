@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: TVL accounting remains correct after create at 10,001.
 
 describe("Create State 0024", () => {
   it("should record TVL 9951 after creating a vault with amount 10001", () => {

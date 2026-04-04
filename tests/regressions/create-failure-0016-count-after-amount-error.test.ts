@@ -3,6 +3,7 @@ import { Cl } from "@stacks/transactions";
 
 const wallet1 = simnet.getAccounts().get("wallet_1")!;
 const CONTRACT_NAME = "timefi-vault";
+// Regression guard: failed create must not increment vault count.
 
 describe("Create Failure 0016", () => {
   it("should keep vault count at 0 after amount validation failure", () => {

@@ -47,6 +47,8 @@ npm ci
 npm run dev
 ```
 
+From the repository root, `npm run frontend:dev` provides the same local dev entrypoint.
+
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Build

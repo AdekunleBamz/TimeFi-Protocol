@@ -1,3 +1,9 @@
+/**
+ * ErrorBoundary Component - Error handling wrapper for React components.
+ *
+ * @module components/ErrorBoundary
+ * @author adekunlebamz
+ */
 import React, { Component } from 'react';
 import { Button } from './Button';
 import './ErrorBoundary.css';

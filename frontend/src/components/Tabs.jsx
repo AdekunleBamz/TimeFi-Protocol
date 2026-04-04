@@ -1,3 +1,9 @@
+/**
+ * Tabs Component - Tabbed navigation interface.
+ *
+ * @module components/Tabs
+ * @author adekunlebamz
+ */
 import React, { useState, createContext, useContext, useId } from 'react';
 import './Tabs.css';
 

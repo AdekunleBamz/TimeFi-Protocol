@@ -127,6 +127,8 @@ VITE_ENABLE_TESTNET=false
 VITE_ENABLE_DEBUG=false
 ```
 
+When `VITE_NETWORK` changes, update `VITE_HIRO_API_URL` and `VITE_EXPLORER_URL` in the same edit.
+
 ## Contributing
 
 1. Fork the repository

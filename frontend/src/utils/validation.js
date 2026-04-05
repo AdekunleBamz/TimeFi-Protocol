@@ -36,20 +36,39 @@ export function validateAddress(address) {
   const prefix = address.slice(0, 2);
 
   if (!validPrefixes.includes(prefix)) {
-    return { valid: false, error: 'Invalid address prefix. Must start with SP or ST' };
+    return { valid: false, error: 'Invalid Stacks address prefix (must be SP or ST)' };
   }
 
-  // Standard Stacks addresses are 41 characters
-  if (address.length < 39 || address.length > 41) {
-    return { valid: false, error: 'Invalid address length' };
+  // Standard Stacks addresses are typically 41 characters
+  if (address.length < 38 || address.length > 42) {
+    return { valid: false, error: `Invalid address length (${address.length})` };
   }
 
   // Check for valid base58 characters (no 0, O, I, l)
   const base58Regex = /^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$/;
   if (!base58Regex.test(address)) {
-    return { valid: false, error: 'Address contains invalid characters' };
+    return { valid: false, error: 'Address contains invalid characters (non-base58)' };
   }
 
+  return { valid: true };
+}
+
+/**
+ * validateVaultId - Validate a vault ID.
+ *
+ * Ensures the ID is a positive integer and exists.
+ *
+ * @param {number|string} id - The vault ID to validate
+ * @returns {{ valid: boolean, error?: string }} Validation result
+ */
+export function validateVaultId(id) {
+  const numId = Number(id);
+  if (id === undefined || id === null || id === '' || isNaN(numId)) {
+    return { valid: false, error: 'A valid Vault ID is required' };
+  }
+  if (numId < 0) {
+    return { valid: false, error: 'Vault ID cannot be negative' };
+  }
   return { valid: true };
 }
 

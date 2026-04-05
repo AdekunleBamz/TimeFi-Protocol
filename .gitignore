@@ -43,3 +43,6 @@ settings/
 *.swo
 *.sublime-project
 *.sublime-workspace
+
+# Test data (contains sensitive wallet info)
+test/

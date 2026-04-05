@@ -50,6 +50,33 @@ function assertVaultId(vaultId) {
 }
 
 /**
+ * getContractCallDefaultOptions - Internal helper to get shared transaction options.
+ * @param {string} contractName - Name of the target contract
+ * @param {string} functionName - Name of the Clarity function
+ * @param {any[]} functionArgs - Arguments for the function call
+ * @param {Function} onFinish - Callback on finish
+ * @param {Function} onCancel - Callback on cancel
+ * @private
+ */
+function getContractCallDefaultOptions(contractName, functionName, functionArgs, onFinish, onCancel) {
+  return {
+    network: STACKS_NETWORK,
+    contractAddress: CONTRACT_ADDRESS,
+    contractName,
+    functionName,
+    functionArgs,
+    onFinish: (data) => {
+      logTxEvent(`${functionName} transaction:`, data.txId);
+      onFinish?.(data);
+    },
+    onCancel: () => {
+      logTxEvent(`${functionName} cancelled`);
+      onCancel?.();
+    },
+  };
+}
+
+/**
  * Build and submit a create-vault transaction
  * @param {Object} params - Transaction parameters
  * @param {number} params.amount - Amount to lock in microSTX
@@ -68,24 +95,9 @@ export async function createVault({ amount, lockDuration, senderAddress, onFinis
   ];
 
   await openContractCall({
-    network: STACKS_NETWORK,
-    contractAddress: CONTRACT_ADDRESS,
-    contractName: CONTRACT_NAMES.VAULT,
-    functionName: 'create-vault',
-    functionArgs: [
-      uintCV(amount),
-      uintCV(lockDuration),
-    ],
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'create-vault', [uintCV(amount), uintCV(lockDuration)], onFinish, onCancel),
     postConditions,
     postConditionMode: PostConditionMode.Deny,
-    onFinish: (data) => {
-      logTxEvent('Create vault transaction:', data.txId);
-      onFinish?.(data);
-    },
-    onCancel: () => {
-      logTxEvent('Create vault cancelled');
-      onCancel?.();
-    },
   });
 }
 
@@ -100,20 +112,8 @@ export async function withdraw({ vaultId, onFinish, onCancel }) {
   assertVaultId(vaultId);
 
   await openContractCall({
-    network: STACKS_NETWORK,
-    contractAddress: CONTRACT_ADDRESS,
-    contractName: CONTRACT_NAMES.VAULT,
-    functionName: 'request-withdraw',
-    functionArgs: [uintCV(vaultId)],
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'request-withdraw', [uintCV(vaultId)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Allow,
-    onFinish: (data) => {
-      logTxEvent('Withdraw transaction:', data.txId);
-      onFinish?.(data);
-    },
-    onCancel: () => {
-      logTxEvent('Withdraw cancelled');
-      onCancel?.();
-    },
   });
 }
 
@@ -128,20 +128,8 @@ export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
   assertVaultId(vaultId);
 
   await openContractCall({
-    network: STACKS_NETWORK,
-    contractAddress: CONTRACT_ADDRESS,
-    contractName: CONTRACT_NAMES.EMERGENCY,
-    functionName: 'request-emergency-withdraw',
-    functionArgs: [uintCV(vaultId)],
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.EMERGENCY, 'request-emergency-withdraw', [uintCV(vaultId)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Allow,
-    onFinish: (data) => {
-      logTxEvent('Emergency withdraw transaction:', data.txId);
-      onFinish?.(data);
-    },
-    onCancel: () => {
-      logTxEvent('Emergency withdraw cancelled');
-      onCancel?.();
-    },
   });
 }
 
@@ -156,20 +144,8 @@ export async function claimRewards({ vaultId, onFinish, onCancel }) {
   assertVaultId(vaultId);
 
   await openContractCall({
-    network: STACKS_NETWORK,
-    contractAddress: CONTRACT_ADDRESS,
-    contractName: CONTRACT_NAMES.REWARDS,
-    functionName: 'request-claim-rewards',
-    functionArgs: [uintCV(vaultId)],
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.REWARDS, 'request-claim-rewards', [uintCV(vaultId)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Allow,
-    onFinish: (data) => {
-      logTxEvent('Claim rewards transaction:', data.txId);
-      onFinish?.(data);
-    },
-    onCancel: () => {
-      logTxEvent('Claim rewards cancelled');
-      onCancel?.();
-    },
   });
 }
 
@@ -192,24 +168,8 @@ export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel })
   }
 
   await openContractCall({
-    network: STACKS_NETWORK,
-    contractAddress: CONTRACT_ADDRESS,
-    contractName: CONTRACT_NAMES.GOVERNANCE,
-    functionName: 'cast-vote',
-    functionArgs: [
-      uintCV(proposalId),
-      uintCV(vaultId),
-      boolCV(Boolean(inFavor)),
-    ],
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.GOVERNANCE, 'cast-vote', [uintCV(proposalId), uintCV(vaultId), boolCV(Boolean(inFavor))], onFinish, onCancel),
     postConditionMode: PostConditionMode.Deny,
-    onFinish: (data) => {
-      logTxEvent('Vote transaction:', data.txId);
-      onFinish?.(data);
-    },
-    onCancel: () => {
-      logTxEvent('Vote cancelled');
-      onCancel?.();
-    },
   });
 }
 
@@ -233,11 +193,6 @@ export function estimateFee(functionName) {
 
 /**
  * Transaction Service - Build and submit Stacks blockchain transactions.
- *
- * Provides functions for interacting with TimeFi smart contracts including
- * vault creation, withdrawals, rewards claiming, and governance voting.
- *
- * @module services/transactions
  */
 export default {
   createVault,

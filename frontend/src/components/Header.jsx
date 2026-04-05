@@ -199,7 +199,12 @@ export function Header() {
               </div>
             </div>
           ) : (
-            <button className="header-connect" onClick={connect} disabled={isConnecting}>
+            <button 
+              className="header-connect" 
+              onClick={connect} 
+              disabled={isConnecting}
+              aria-label={isConnecting ? 'Connecting to wallet' : 'Connect Stacks wallet'}
+            >
               {isConnecting ? 'Connecting...' : 'Connect Wallet'}
             </button>
           )}

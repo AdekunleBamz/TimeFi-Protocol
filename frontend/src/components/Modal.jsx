@@ -30,6 +30,8 @@ import './Modal.css';
  *   <p>Are you sure you want to proceed?</p>
  * </Modal>
  */
+import PropTypes from 'prop-types';
+
 export function Modal({ 
   isOpen, 
   onClose, 
@@ -95,5 +97,16 @@ export function Modal({
     document.body
   );
 }
+
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  closeOnOverlay: PropTypes.bool,
+  showCloseButton: PropTypes.bool,
+  footer: PropTypes.node
+};
 
 export default Modal;

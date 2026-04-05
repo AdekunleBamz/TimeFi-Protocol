@@ -1,0 +1,855 @@
+#!/usr/bin/env node
+
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import process from 'node:process';
+import readline from 'node:readline/promises';
+
+import { createNetwork } from '@stacks/network';
+import {
+  broadcastTransaction,
+  fetchFeeEstimateTransfer,
+  getAddressFromPrivateKey,
+  makeSTXTokenTransfer,
+  validateStacksAddress,
+} from '@stacks/transactions';
+
+const DESTINATION_ADDRESS = 'SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT';
+const DEFAULT_NETWORK = 'mainnet';
+const DEFAULT_WALLET_FILE = 'test/wallets.json';
+const DEFAULT_DUST_THRESHOLD = 1_000n;
+const DELAY_BETWEEN_TX_MS = 3_000;
+const ACCOUNT_FETCH_MAX_ATTEMPTS = 4;
+const DEFAULT_WALLET_FILE_CANDIDATES = [
+  'test/wallets.json',
+  'tests/wallets.json',
+  'wallets.json',
+];
+
+function printUsage() {
+  console.log(`
+Usage:
+  node ./concolidate-stx [options]
+
+Options:
+  --wallet-file <path>   Wallet JSON file (default: test/wallets.json)
+  --wallet-index <n>     Sweep one wallet by zero-based index from the wallet file
+  --sender-key <hex>     Hex private key for the test wallet
+  --network <name>       mainnet or testnet (default: mainnet)
+  --api-url <url>        Override Hiro/API base URL
+  --fee <microstx>       Override transfer fee in microSTX
+  --keep <microstx>      Keep this amount behind in the sender wallet
+  --dust-threshold <n>   Skip wallets whose net send amount is <= this value
+  --memo <text>          Optional transfer memo (max 34 bytes)
+  --dry-run              Show what would be sent without broadcasting
+  --yes                  Skip confirmation prompt
+  --help, -h             Show this help
+
+Environment fallbacks:
+  TEST_WALLET_PRIVATE_KEY, WALLET_PRIVATE_KEY
+  WALLET_FILE, WALLETS_FILE
+  WALLET_INDEX
+  NETWORK
+  HIRO_API_URL, STACKS_API_URL
+  FEE
+  KEEP_AMOUNT
+  DUST_THRESHOLD
+  MEMO
+
+Notes:
+  - The destination address is fixed to ${DESTINATION_ADDRESS}
+  - If you use a wallet file without --wallet-index, the script sweeps every
+    wallet in that file.
+  - Wallet indexes are zero-based, so index 0 is the first wallet.
+  - Broadcasts wait 3 seconds between wallets.
+`.trim());
+}
+
+async function pathExists(targetPath) {
+  try {
+    await fs.access(targetPath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function resolveWalletFilePath(walletFile) {
+  const requestedWalletFile =
+    walletFile || process.env.WALLET_FILE || process.env.WALLETS_FILE || DEFAULT_WALLET_FILE;
+
+  const requestedPath = path.resolve(requestedWalletFile);
+  if (await pathExists(requestedPath)) {
+    return requestedPath;
+  }
+
+  const normalizedRequested = requestedWalletFile.replace(/\\/g, '/');
+  const fallbackCandidates = new Set(DEFAULT_WALLET_FILE_CANDIDATES);
+  const shouldTryFallbacks = !walletFile || fallbackCandidates.has(normalizedRequested);
+
+  if (shouldTryFallbacks) {
+    for (const candidate of fallbackCandidates) {
+      const candidatePath = path.resolve(candidate);
+      if (await pathExists(candidatePath)) {
+        if (candidatePath !== requestedPath) {
+          console.warn(`Wallet file not found at ${requestedPath}. Using ${candidatePath} instead.`);
+        }
+        return candidatePath;
+      }
+    }
+  }
+
+  throw new Error(
+    `Wallet file not found at ${requestedPath}. Provide --sender-key or create the wallet file.`
+  );
+}
+
+function parseArgs(argv) {
+  const args = {
+    dryRun: false,
+    yes: false,
+  };
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+
+    if (arg === '--help' || arg === '-h') {
+      args.help = true;
+      continue;
+    }
+
+    if (arg === '--dry-run') {
+      args.dryRun = true;
+      continue;
+    }
+
+    if (arg === '--yes') {
+      args.yes = true;
+      continue;
+    }
+
+    if (arg.startsWith('--wallet-file=')) {
+      args.walletFile = arg.slice('--wallet-file='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--wallet-index=')) {
+      args.walletIndex = arg.slice('--wallet-index='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--sender-key=')) {
+      args.senderKey = arg.slice('--sender-key='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--network=')) {
+      args.network = arg.slice('--network='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--api-url=')) {
+      args.apiUrl = arg.slice('--api-url='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--fee=')) {
+      args.fee = arg.slice('--fee='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--keep=')) {
+      args.keep = arg.slice('--keep='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--dust-threshold=')) {
+      args.dustThreshold = arg.slice('--dust-threshold='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--memo=')) {
+      args.memo = arg.slice('--memo='.length);
+      continue;
+    }
+
+    const next = argv[index + 1];
+
+    if (arg === '--wallet-file' || arg === '--wallet-index' || arg === '--sender-key'
+      || arg === '--network' || arg === '--api-url' || arg === '--fee'
+      || arg === '--keep' || arg === '--dust-threshold' || arg === '--memo') {
+      if (next == null || next.startsWith('--')) {
+        throw new Error(`Missing value for ${arg}`);
+      }
+
+      const key = arg.replace(/^--/, '').replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+      args[key] = next;
+      index += 1;
+      continue;
+    }
+
+    throw new Error(`Unknown argument: ${arg}`);
+  }
+
+  return args;
+}
+
+function normalizeNetworkName(value) {
+  const network = String(value || DEFAULT_NETWORK).trim().toLowerCase();
+
+  if (network !== 'mainnet' && network !== 'testnet') {
+    throw new Error(`Unsupported network "${value}". Use "mainnet" or "testnet".`);
+  }
+
+  return network;
+}
+
+function normalizeApiUrl(value) {
+  if (!value) return undefined;
+  return String(value).trim().replace(/\/+$/, '');
+}
+
+function normalizePrivateKey(value) {
+  const privateKey = String(value || '').trim().replace(/^0x/i, '');
+
+  if (!/^[0-9a-f]+$/i.test(privateKey)) {
+    throw new Error('Sender private key must be a hex string.');
+  }
+
+  if (privateKey.length !== 64 && privateKey.length !== 66) {
+    throw new Error(
+      'Sender private key must be 64 hex chars (uncompressed) or 66 hex chars (compressed).'
+    );
+  }
+
+  return privateKey;
+}
+
+function parseBigIntValue(value, label) {
+  if (value == null || value === '') return undefined;
+
+  const normalized = String(value).trim();
+
+  if (!/^\d+$/.test(normalized)) {
+    throw new Error(`${label} must be an integer number of microSTX.`);
+  }
+
+  return BigInt(normalized);
+}
+
+function parseWalletIndex(value) {
+  if (value == null || value === '') return undefined;
+
+  const index = Number.parseInt(String(value), 10);
+
+  if (!Number.isInteger(index) || index < 0) {
+    throw new Error('Wallet index must be a non-negative integer.');
+  }
+
+  return index;
+}
+
+function formatMicroStx(value) {
+  const negative = value < 0n;
+  const absolute = negative ? value * -1n : value;
+  const whole = absolute / 1_000_000n;
+  const fraction = absolute % 1_000_000n;
+  const fractionText = fraction.toString().padStart(6, '0').replace(/0+$/, '');
+  const stxText = fractionText ? `${whole}.${fractionText}` : `${whole}`;
+
+  return `${negative ? '-' : ''}${stxText} STX (${value} microSTX)`;
+}
+
+function getNetworkAddressPrefixes(network) {
+  return network === 'mainnet' ? ['SP', 'SM'] : ['ST', 'SN'];
+}
+
+function assertAddressForNetwork(address, network, label) {
+  if (!validateStacksAddress(address)) {
+    throw new Error(`${label} is not a valid Stacks address: ${address}`);
+  }
+
+  const prefixes = getNetworkAddressPrefixes(network);
+
+  if (!prefixes.some(prefix => address.startsWith(prefix))) {
+    throw new Error(`${label} does not match the selected ${network} network: ${address}`);
+  }
+}
+
+function extractWalletList(parsed) {
+  if (Array.isArray(parsed)) return parsed;
+  if (Array.isArray(parsed?.wallets)) return parsed.wallets;
+  if (Array.isArray(parsed?.accounts)) return parsed.accounts;
+
+  if (parsed?.wallets && typeof parsed.wallets === 'object') {
+    return Object.values(parsed.wallets);
+  }
+
+  if (parsed?.accounts && typeof parsed.accounts === 'object') {
+    return Object.values(parsed.accounts);
+  }
+
+  throw new Error('Wallet file must be an array or contain a wallets/accounts collection.');
+}
+
+function extractWalletPrivateKey(entry) {
+  if (typeof entry === 'string') return entry;
+  if (!entry || typeof entry !== 'object') return undefined;
+
+  return entry.privateKey
+    ?? entry.private_key
+    ?? entry.senderKey
+    ?? entry.sender_key
+    ?? entry.secretKey
+    ?? entry.secret_key;
+}
+
+function extractWalletAddress(entry) {
+  if (!entry || typeof entry !== 'object') return undefined;
+
+  return entry.address
+    ?? entry.stxAddress
+    ?? entry.stx_address
+    ?? entry.walletAddress
+    ?? entry.wallet_address;
+}
+
+function buildSenderFromWalletEntry({
+  walletEntry,
+  walletIndex,
+  selectedWalletFile,
+  network,
+  networkName,
+}) {
+  const walletPrivateKey = extractWalletPrivateKey(walletEntry);
+
+  if (!walletPrivateKey) {
+    throw new Error(
+      `Wallet at index ${walletIndex} in ${selectedWalletFile} does not include a private key field.`
+    );
+  }
+
+  const normalizedKey = normalizePrivateKey(walletPrivateKey);
+  const senderAddress = getAddressFromPrivateKey(normalizedKey, network);
+  const recordedAddress = extractWalletAddress(walletEntry);
+
+  if (recordedAddress) {
+    assertAddressForNetwork(recordedAddress, networkName, 'Recorded wallet address');
+
+    if (recordedAddress !== senderAddress) {
+      throw new Error(
+        `Wallet file address mismatch at index ${walletIndex}. Derived ${senderAddress} but file has ${recordedAddress}.`
+      );
+    }
+  }
+
+  return {
+    senderKey: normalizedKey,
+    senderAddress,
+    sourceDescription: `${selectedWalletFile} [index ${walletIndex}]`,
+    walletIndex,
+    walletId: typeof walletEntry?.id === 'number' ? walletEntry.id : undefined,
+    walletRole: typeof walletEntry?.role === 'string' ? walletEntry.role : undefined,
+  };
+}
+
+async function loadSenderTargets({ senderKey, walletFile, walletIndex, network, networkName }) {
+  const envSenderKey = process.env.TEST_WALLET_PRIVATE_KEY || process.env.WALLET_PRIVATE_KEY;
+  const envWalletIndex = parseWalletIndex(process.env.WALLET_INDEX);
+
+  if (senderKey || envSenderKey) {
+    const normalizedKey = normalizePrivateKey(senderKey || envSenderKey);
+    const senderAddress = getAddressFromPrivateKey(normalizedKey, network);
+
+    return [{
+      senderKey: normalizedKey,
+      senderAddress,
+      sourceDescription: senderKey ? 'CLI --sender-key' : 'environment private key',
+    }];
+  }
+
+  const selectedWalletFile = await resolveWalletFilePath(walletFile);
+
+  let rawFile;
+  try {
+    rawFile = await fs.readFile(selectedWalletFile, 'utf8');
+  } catch (error) {
+    throw new Error(`Unable to read wallet file at ${selectedWalletFile}.`);
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(rawFile);
+  } catch (error) {
+    throw new Error(`Wallet file is not valid JSON: ${selectedWalletFile}`);
+  }
+
+  const wallets = extractWalletList(parsed);
+
+  if (wallets.length === 0) {
+    throw new Error(`Wallet file does not contain any wallets: ${selectedWalletFile}`);
+  }
+
+  const selectedIndexes = walletIndex != null || envWalletIndex != null
+    ? [walletIndex ?? envWalletIndex]
+    : wallets.map((_, index) => index);
+
+  return selectedIndexes.map(selectedIndex => {
+    const walletEntry = wallets[selectedIndex];
+
+    if (walletEntry == null) {
+      throw new Error(
+        `Wallet index ${selectedIndex} is out of range for ${selectedWalletFile} (found ${wallets.length} wallet(s)).`
+      );
+    }
+
+    return buildSenderFromWalletEntry({
+      walletEntry,
+      walletIndex: selectedIndex,
+      selectedWalletFile,
+      network,
+      networkName,
+    });
+  });
+}
+
+function computeSpendableBalance(snapshot) {
+  const balance = BigInt(snapshot.balance ?? '0');
+  const locked = BigInt(snapshot.locked ?? '0');
+  const pendingInbound = BigInt(snapshot.pending_balance_inbound ?? '0');
+  const pendingOutbound = BigInt(snapshot.pending_balance_outbound ?? '0');
+  const estimatedBalance = BigInt(snapshot.estimated_balance ?? snapshot.balance ?? '0');
+  const confirmedSpendable = balance > locked ? balance - locked : 0n;
+  const pendingAdjusted = confirmedSpendable + pendingInbound - pendingOutbound;
+  const pendingSafeSpendable = pendingAdjusted > 0n ? pendingAdjusted : 0n;
+
+  return estimatedBalance < pendingSafeSpendable ? estimatedBalance : pendingSafeSpendable;
+}
+
+function buildNetwork({ networkName, apiUrl }) {
+  if (apiUrl) {
+    return createNetwork({
+      network: networkName,
+      client: {
+        baseUrl: apiUrl,
+      },
+    });
+  }
+
+  return createNetwork(networkName);
+}
+
+function delay(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
+
+function getRetryDelayMs(response, attempt) {
+  const retryAfterHeader = response.headers.get('retry-after');
+
+  if (retryAfterHeader && /^\d+$/.test(retryAfterHeader.trim())) {
+    return Number.parseInt(retryAfterHeader, 10) * 1000;
+  }
+
+  return attempt * 1000;
+}
+
+async function estimateTransferFee({ senderKey, recipient, nonce, memo, network }) {
+  const draftTransaction = await makeSTXTokenTransfer({
+    senderKey,
+    recipient,
+    amount: 1n,
+    fee: 0n,
+    nonce,
+    memo,
+    network,
+  });
+
+  return fetchFeeEstimateTransfer({
+    transaction: draftTransaction,
+    network,
+  });
+}
+
+function describeSender(sender) {
+  const labels = [];
+
+  if (sender.walletId != null) {
+    labels.push(`id ${sender.walletId}`);
+  }
+
+  if (sender.walletIndex != null) {
+    labels.push(`index ${sender.walletIndex}`);
+  }
+
+  if (sender.walletRole) {
+    labels.push(sender.walletRole);
+  }
+
+  return labels.length > 0 ? labels.join(' | ') : sender.sourceDescription;
+}
+
+async function fetchAccountState({ address, apiBaseUrl }) {
+  const endpoint = `${apiBaseUrl}/v2/accounts/${address}?proof=0`;
+
+  for (let attempt = 1; attempt <= ACCOUNT_FETCH_MAX_ATTEMPTS; attempt += 1) {
+    const response = await fetch(endpoint);
+
+    if (response.ok) {
+      const account = await response.json();
+
+      return {
+        balance: account.balance ?? '0x0',
+        locked: account.locked ?? '0x0',
+        pending_balance_inbound: '0',
+        pending_balance_outbound: '0',
+        nonce: BigInt(account.nonce ?? 0),
+      };
+    }
+
+    const body = await response.text().catch(() => '');
+
+    if (response.status === 429 && attempt < ACCOUNT_FETCH_MAX_ATTEMPTS) {
+      const retryDelayMs = getRetryDelayMs(response, attempt);
+      console.log(
+        `Rate limited while fetching ${address}. Retrying in ${Math.ceil(retryDelayMs / 1000)} second(s)...`
+      );
+      await delay(retryDelayMs);
+      continue;
+    }
+
+    throw new Error(
+      `Failed to fetch account state for ${address}. Response ${response.status}: ${body || response.statusText}`
+    );
+  }
+
+  throw new Error(`Failed to fetch account state for ${address}.`);
+}
+
+async function prepareSweep({
+  sender,
+  apiBaseUrl,
+  feeOverride,
+  keepAmount,
+  dustThreshold,
+  memo,
+  network,
+}) {
+  const snapshot = await fetchAccountState({
+    address: sender.senderAddress,
+    apiBaseUrl,
+  });
+  const nonce = snapshot.nonce;
+
+  const spendableBalance = computeSpendableBalance(snapshot);
+  const fee = feeOverride ?? await estimateTransferFee({
+    senderKey: sender.senderKey,
+    recipient: DESTINATION_ADDRESS,
+    nonce,
+    memo,
+    network,
+  });
+
+  if (fee < 0n) {
+    throw new Error('Fee cannot be negative.');
+  }
+
+  if (keepAmount < 0n) {
+    throw new Error('Keep amount cannot be negative.');
+  }
+
+  const amount = spendableBalance - fee - keepAmount;
+  const isBelowDust = amount > 0n && amount <= dustThreshold;
+
+  return {
+    ...sender,
+    snapshot,
+    nonce,
+    spendableBalance,
+    fee,
+    amount,
+    dustThreshold,
+    status: amount > 0n && !isBelowDust ? 'ready' : 'skipped',
+    reason: amount <= 0n
+      ? `Nothing to send after fee and keep amount (${formatMicroStx(amount)}).`
+      : `Dust balance skipped because net send amount ${formatMicroStx(amount)} is at or below the dust threshold ${formatMicroStx(dustThreshold)}.`,
+  };
+}
+
+function logPreparedSweep(prepared) {
+  console.log('');
+  console.log(`Wallet:            ${describeSender(prepared)}`);
+  console.log(`Source:            ${prepared.sourceDescription}`);
+  console.log(`Sender address:    ${prepared.senderAddress}`);
+
+  if (prepared.status === 'failed') {
+    console.log('Status:            failed');
+    console.log(`Reason:            ${prepared.error}`);
+    return;
+  }
+
+  console.log(`Nonce:             ${prepared.nonce}`);
+  console.log(`On-chain balance:  ${formatMicroStx(BigInt(prepared.snapshot.balance ?? '0'))}`);
+  console.log(`Locked balance:    ${formatMicroStx(BigInt(prepared.snapshot.locked ?? '0'))}`);
+  console.log(`Pending inbound:   ${formatMicroStx(BigInt(prepared.snapshot.pending_balance_inbound ?? '0'))}`);
+  console.log(`Pending outbound:  ${formatMicroStx(BigInt(prepared.snapshot.pending_balance_outbound ?? '0'))}`);
+  console.log(`Spendable balance: ${formatMicroStx(prepared.spendableBalance)}`);
+  console.log(`Fee:               ${formatMicroStx(prepared.fee)}`);
+  console.log(`Transfer amount:   ${formatMicroStx(prepared.amount)}`);
+
+  if (prepared.status === 'skipped') {
+    console.log('Status:            skipped');
+    console.log(`Reason:            ${prepared.reason}`);
+    return;
+  }
+
+  console.log('Status:            ready');
+}
+
+function summarizePreparedSweeps(preparedSweeps) {
+  const ready = preparedSweeps.filter(prepared => prepared.status === 'ready');
+  const skipped = preparedSweeps.filter(prepared => prepared.status === 'skipped');
+  const failed = preparedSweeps.filter(prepared => prepared.status === 'failed');
+  const dustThreshold = preparedSweeps.find(prepared => prepared.dustThreshold != null)?.dustThreshold
+    ?? DEFAULT_DUST_THRESHOLD;
+
+  return {
+    totalWallets: preparedSweeps.length,
+    readyCount: ready.length,
+    skippedCount: skipped.length,
+    failedCount: failed.length,
+    totalAmount: ready.reduce((sum, prepared) => sum + prepared.amount, 0n),
+    totalFees: ready.reduce((sum, prepared) => sum + prepared.fee, 0n),
+    dustThreshold,
+  };
+}
+
+async function confirmSweep({ summary, recipient, keepAmount, networkName }) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  try {
+    const answer = await rl.question(
+      [
+        'About to sweep STX from multiple wallets:',
+        `  network: ${networkName}`,
+        `  to:                ${recipient}`,
+        `  wallets to sweep:  ${summary.readyCount}`,
+        `  wallets skipped:   ${summary.skippedCount}`,
+        `  wallets failed:    ${summary.failedCount}`,
+        `  total amount:      ${formatMicroStx(summary.totalAmount)}`,
+        `  total fees:        ${formatMicroStx(summary.totalFees)}`,
+        `  keep per wallet:   ${formatMicroStx(keepAmount)}`,
+        `  dust threshold:    ${formatMicroStx(summary.dustThreshold)}`,
+        `  delay per tx:      ${DELAY_BETWEEN_TX_MS / 1000} seconds`,
+        'Type "yes" to continue: ',
+      ].join('\n')
+    );
+
+    return answer.trim().toLowerCase() === 'yes';
+  } finally {
+    rl.close();
+  }
+}
+
+async function main() {
+  const args = parseArgs(process.argv.slice(2));
+
+  if (args.help) {
+    printUsage();
+    return;
+  }
+
+  const networkName = normalizeNetworkName(args.network || process.env.NETWORK || DEFAULT_NETWORK);
+  const apiUrl = normalizeApiUrl(args.apiUrl || process.env.HIRO_API_URL || process.env.STACKS_API_URL);
+  const feeOverride = parseBigIntValue(args.fee || process.env.FEE, 'Fee');
+  const keepAmount = parseBigIntValue(args.keep || process.env.KEEP_AMOUNT, 'Keep amount') ?? 0n;
+  const dustThreshold = parseBigIntValue(
+    args.dustThreshold || process.env.DUST_THRESHOLD,
+    'Dust threshold'
+  ) ?? DEFAULT_DUST_THRESHOLD;
+  const memo = String(args.memo ?? process.env.MEMO ?? '').trim();
+
+  if (Buffer.byteLength(memo, 'utf8') > 34) {
+    throw new Error('Memo must be 34 bytes or less.');
+  }
+
+  if (dustThreshold < 0n) {
+    throw new Error('Dust threshold cannot be negative.');
+  }
+
+  const network = buildNetwork({ networkName, apiUrl });
+  const apiBaseUrl = apiUrl || network.client.baseUrl;
+
+  assertAddressForNetwork(DESTINATION_ADDRESS, networkName, 'Destination address');
+
+  const senders = await loadSenderTargets({
+    senderKey: args.senderKey,
+    walletFile: args.walletFile,
+    walletIndex: parseWalletIndex(args.walletIndex),
+    network,
+    networkName,
+  });
+
+  console.log(`Network:           ${networkName}`);
+  console.log(`API URL:           ${apiBaseUrl}`);
+  console.log(`Destination:       ${DESTINATION_ADDRESS}`);
+  console.log(`Keep amount:       ${formatMicroStx(keepAmount)}`);
+  console.log(`Dust threshold:    ${formatMicroStx(dustThreshold)}`);
+  console.log(`Delay per tx:      ${DELAY_BETWEEN_TX_MS / 1000} seconds`);
+  console.log(`Wallets loaded:    ${senders.length}`);
+
+  const preparedSweeps = [];
+
+  for (const sender of senders) {
+    if (sender.senderAddress === DESTINATION_ADDRESS) {
+      preparedSweeps.push({
+        ...sender,
+        status: 'failed',
+        error: 'Sender wallet already matches the destination address.',
+      });
+      logPreparedSweep(preparedSweeps.at(-1));
+      continue;
+    }
+
+    try {
+      const preparedSweep = await prepareSweep({
+        sender,
+        apiBaseUrl,
+        feeOverride,
+        keepAmount,
+        dustThreshold,
+        memo,
+        network,
+      });
+
+      preparedSweeps.push(preparedSweep);
+      logPreparedSweep(preparedSweep);
+    } catch (error) {
+      const failedSweep = {
+        ...sender,
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error),
+      };
+
+      preparedSweeps.push(failedSweep);
+      logPreparedSweep(failedSweep);
+    }
+  }
+
+  const summary = summarizePreparedSweeps(preparedSweeps);
+  const readySweeps = preparedSweeps.filter(prepared => prepared.status === 'ready');
+
+  console.log('');
+  console.log('Summary:');
+  console.log(`Ready wallets:     ${summary.readyCount}`);
+  console.log(`Skipped wallets:   ${summary.skippedCount}`);
+  console.log(`Failed wallets:    ${summary.failedCount}`);
+  console.log(`Total amount:      ${formatMicroStx(summary.totalAmount)}`);
+  console.log(`Total fees:        ${formatMicroStx(summary.totalFees)}`);
+
+  if (readySweeps.length === 0) {
+    console.log('No wallets have sweepable STX. Nothing was broadcast.');
+    return;
+  }
+
+  if (args.dryRun) {
+    console.log('Dry run enabled. No transactions were broadcast.');
+    return;
+  }
+
+  if (!args.yes) {
+    const confirmed = await confirmSweep({
+      summary,
+      recipient: DESTINATION_ADDRESS,
+      keepAmount,
+      networkName,
+    });
+
+    if (!confirmed) {
+      console.log('Transfer cancelled.');
+      return;
+    }
+  }
+
+  const broadcastResults = [];
+
+  for (const [index, prepared] of readySweeps.entries()) {
+    if (index > 0) {
+      console.log('');
+      console.log(`Waiting:           ${DELAY_BETWEEN_TX_MS / 1000} seconds before next transaction...`);
+      await delay(DELAY_BETWEEN_TX_MS);
+    }
+
+    console.log('');
+    console.log(`Broadcasting:      ${describeSender(prepared)}`);
+    console.log(`From:              ${prepared.senderAddress}`);
+    console.log(`Amount:            ${formatMicroStx(prepared.amount)}`);
+
+    try {
+      const transaction = await makeSTXTokenTransfer({
+        senderKey: prepared.senderKey,
+        recipient: DESTINATION_ADDRESS,
+        amount: prepared.amount,
+        fee: prepared.fee,
+        nonce: prepared.nonce,
+        memo,
+        network,
+      });
+
+      const result = await broadcastTransaction({
+        transaction,
+        network,
+      });
+
+      if ('txid' in result && !('error' in result)) {
+        console.log(`Broadcast succeeded. TXID: ${result.txid}`);
+        console.log(`Explorer:          https://explorer.hiro.so/txid/${result.txid}?chain=${networkName}`);
+        broadcastResults.push({
+          ...prepared,
+          status: 'success',
+          txid: result.txid,
+        });
+        continue;
+      }
+
+      const reasonDetails = result.reason_data
+        ? ` - ${JSON.stringify(result.reason_data)}`
+        : '';
+
+      throw new Error(`Broadcast failed: ${result.reason}${reasonDetails}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.log(`Broadcast failed:  ${message}`);
+      broadcastResults.push({
+        ...prepared,
+        status: 'failed',
+        error: message,
+      });
+    }
+  }
+
+  const succeeded = broadcastResults.filter(result => result.status === 'success');
+  const failedBroadcasts = broadcastResults.filter(result => result.status === 'failed');
+  const totalSent = succeeded.reduce((sum, result) => sum + result.amount, 0n);
+  const totalBroadcastFees = succeeded.reduce((sum, result) => sum + result.fee, 0n);
+
+  console.log('');
+  console.log('Broadcast summary:');
+  console.log(`Successful txs:    ${succeeded.length}`);
+  console.log(`Failed txs:        ${failedBroadcasts.length}`);
+  console.log(`Total sent:        ${formatMicroStx(totalSent)}`);
+  console.log(`Total fees spent:  ${formatMicroStx(totalBroadcastFees)}`);
+
+  if (failedBroadcasts.length > 0) {
+    process.exitCode = 1;
+  }
+}
+
+main().catch(error => {
+  console.error(error instanceof Error ? error.message : String(error));
+  process.exitCode = 1;
+});

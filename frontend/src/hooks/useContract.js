@@ -27,11 +27,18 @@ export function useContract() {
   const [lastError, setLastError] = useState(null);
 
   const getErrorMessage = useCallback((error) => {
-    if (error instanceof Error && error.message) {
+    // Log the error for internal debugging
+    console.error('[Contract Error]:', error);
+
+    if (error instanceof Error) {
+      // Handle Stacks-specific error patterns if present in the message
+      if (error.message.includes('User denied transaction')) {
+        return 'Transaction was cancelled in your wallet';
+      }
       return error.message;
     }
 
-    return String(error || 'Unexpected transaction error');
+    return String(error || 'An unexpected error occurred during the transaction');
   }, []);
 
   const ensureConnected = useCallback(() => {

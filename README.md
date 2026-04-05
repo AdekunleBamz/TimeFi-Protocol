@@ -26,7 +26,6 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity smart 
 [![Coverage Status](https://img.shields.io/coveralls/github/AdekunleBamz/TimeFi-Protocol?style=flat-square)](https://coveralls.io/github/AdekunleBamz/TimeFi-Protocol)
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen?style=flat-square)](docs/API.md)
 [![GitHub Forks](https://img.shields.io/github/forks/AdekunleBamz/TimeFi-Protocol?style=social)](https://github.com/AdekunleBamz/TimeFi-Protocol)
-[![Style: Conventional Commits](https://img.shields.io/badge/style-conventional%20commits-brightgreen.svg?style=flat-square)](https://conventionalcommits.org)
 
 ## 🏗️ Project Structure
 
@@ -187,7 +186,7 @@ FEE_BPS: 50 (0.5%)
 - **Testnet**: `https://stacks-node-api.testnet.stacks.co`
 
 ### ⚙️ Deployment Settings
-- **Clarinet Settings**: [settings/Clarinet.toml](settings/Clarinet.toml)
+- **Clarinet Settings**: [Clarinet.toml](Clarinet.toml)
 - **Mainnet Plan**: [deployments/default.mainnet-plan.yaml](deployments/default.mainnet-plan.yaml)
 - **Testnet Plan**: [deployments/default.testnet-plan.yaml](deployments/default.testnet-plan.yaml)
 

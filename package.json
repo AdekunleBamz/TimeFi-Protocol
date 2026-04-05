@@ -5,6 +5,10 @@
   "description": "TimeFi Protocol - Time-locked vaults for disciplined savings on Stacks blockchain.",
   "type": "module",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdekunleBamz/TimeFi-Protocol.git"
+  },
   "scripts": {
     "contracts:check": "clarinet check",
     "contracts:console": "clarinet console",
@@ -15,7 +19,9 @@
     "sdk:build": "npm --prefix sdk run build",
     "test": "vitest run",
     "test:report": "vitest run --coverage --costs",
-    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
+    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "adekunlebamz <bams.kunle@gmail.com>",
   "engines": {

@@ -16,7 +16,7 @@ import './VaultCard.css';
  * @example
  * <VaultCard vaultId={12345} />
  */
-export function VaultCard({ vaultId }) {
+export const VaultCard = React.memo(function VaultCard({ vaultId }) {
   const [vault, setVault] = useState(null);
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [canWithdrawNow, setCanWithdrawNow] = useState(false);
@@ -151,6 +151,6 @@ export function VaultCard({ vaultId }) {
       </div>
     </div>
   );
-}
+});
 
 export default VaultCard;

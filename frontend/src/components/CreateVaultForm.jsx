@@ -57,11 +57,13 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   const walletLeftAfterLock = Math.max(balanceInSTX - parsedAmount - feeReserveSTX, 0);
   const submitHint = !isConnected
     ? 'Connect a wallet to start'
-    : !amount
-      ? 'Enter an amount to continue'
-      : !lockPeriod
-        ? 'Choose a lock period'
-        : 'Transaction opens in your wallet';
+    : loading
+      ? 'Confirm the transaction in your wallet extension'
+      : !amount
+        ? 'Enter an amount to continue'
+        : !lockPeriod
+          ? 'Choose a lock period'
+          : 'Transaction opens in your wallet';
 
   const handleSubmit = async (e) => {
     e.preventDefault();

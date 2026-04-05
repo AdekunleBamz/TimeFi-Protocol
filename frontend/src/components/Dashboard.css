@@ -1,20 +1,14 @@
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-}
-
-/* Hero Section */
-.dashboard-hero {
-  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 1.5rem;
 }
 
 @keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -23,8 +17,8 @@
 
 .dashboard-hero {
   text-align: center;
-  padding: 6rem 2rem;
-  margin-bottom: 4rem;
+  padding: 4.5rem 1.5rem;
+  margin-bottom: 3rem;
   background:
     radial-gradient(circle at 18% 12%, rgba(86, 204, 242, 0.15), transparent 24%),
     radial-gradient(circle at 82% 18%, rgba(255, 159, 67, 0.15), transparent 22%),
@@ -34,6 +28,7 @@
   border-radius: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dashboard-hero-eyebrow {

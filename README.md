@@ -186,7 +186,7 @@ FEE_BPS: 50 (0.5%)
 - **Testnet**: `https://stacks-node-api.testnet.stacks.co`
 
 ### ⚙️ Deployment Settings
-- **Clarinet Settings**: [settings/Clarinet.toml](settings/Clarinet.toml)
+- **Clarinet Settings**: [Clarinet.toml](Clarinet.toml)
 - **Mainnet Plan**: [deployments/default.mainnet-plan.yaml](deployments/default.mainnet-plan.yaml)
 - **Testnet Plan**: [deployments/default.testnet-plan.yaml](deployments/default.testnet-plan.yaml)
 

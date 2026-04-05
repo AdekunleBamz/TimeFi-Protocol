@@ -20,8 +20,11 @@ coverage/
 
 # OS X
 .DS_Store
+.DS_Store?
+._*
 .AppleDouble
 .LSOverride
+Thumbs.db
 
 # Node
 node_modules/
@@ -35,6 +38,7 @@ settings/
 .env.local
 .env*.local
 .env*.production
+.env.production
 
 # IDE
 .vscode/
@@ -43,6 +47,14 @@ settings/
 *.swo
 *.sublime-project
 *.sublime-workspace
+
+# Backup files
+*.bak
+*.tmp
+*.temp
+*~
+*.pem
+*.key
 
 # Test data (contains sensitive wallet info)
 test/

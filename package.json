@@ -15,13 +15,19 @@
     "sdk:build": "npm --prefix sdk run build",
     "test": "vitest run",
     "test:report": "vitest run --coverage --costs",
-    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
+    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "adekunlebamz <bams.kunle@gmail.com>",
   "engines": {
     "node": ">=18.0.0"
   },
   "license": "ISC",
+  "homepage": "https://timefi-protocol.vercel.app",
+  "bugs": {
+    "url": "https://github.com/AdekunleBamz/TimeFi-Protocol/issues"
+  },
   "dependencies": {
     "@stacks/clarinet-sdk": "^3.9.0",
     "@stacks/transactions": "^7.2.0",

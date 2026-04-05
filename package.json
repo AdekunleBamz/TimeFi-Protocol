@@ -5,6 +5,10 @@
   "description": "TimeFi Protocol - Time-locked vaults for disciplined savings on Stacks blockchain.",
   "type": "module",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdekunleBamz/TimeFi-Protocol.git"
+  },
   "scripts": {
     "contracts:check": "clarinet check",
     "contracts:console": "clarinet console",

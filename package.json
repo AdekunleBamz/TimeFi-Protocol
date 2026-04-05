@@ -24,6 +24,10 @@
     "node": ">=18.0.0"
   },
   "license": "ISC",
+  "homepage": "https://timefi-protocol.vercel.app",
+  "bugs": {
+    "url": "https://github.com/AdekunleBamz/TimeFi-Protocol/issues"
+  },
   "dependencies": {
     "@stacks/clarinet-sdk": "^3.9.0",
     "@stacks/transactions": "^7.2.0",

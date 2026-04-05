@@ -33,8 +33,12 @@
 
 .select:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.select:focus-visible {
+  outline: none;
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.35);
 }
 
 .select-open {

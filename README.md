@@ -26,7 +26,6 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity smart 
 [![Coverage Status](https://img.shields.io/coveralls/github/AdekunleBamz/TimeFi-Protocol?style=flat-square)](https://coveralls.io/github/AdekunleBamz/TimeFi-Protocol)
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen?style=flat-square)](docs/API.md)
 [![GitHub Forks](https://img.shields.io/github/forks/AdekunleBamz/TimeFi-Protocol?style=social)](https://github.com/AdekunleBamz/TimeFi-Protocol)
-[![Style: Conventional Commits](https://img.shields.io/badge/style-conventional%20commits-brightgreen.svg?style=flat-square)](https://conventionalcommits.org)
 
 ## 🏗️ Project Structure
 

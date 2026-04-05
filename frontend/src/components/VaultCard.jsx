@@ -38,7 +38,6 @@ export function VaultCard({ vaultId }) {
       setLastUpdated(new Date());
       setError(null);
     } catch (err) {
-      console.error('Failed to fetch vault data:', err);
       setError('Unable to load vault');
     }
   };

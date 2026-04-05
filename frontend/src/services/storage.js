@@ -89,7 +89,6 @@ export function getItem(key, defaultValue = null) {
     }
     return memoryStorage.get(prefixedKey) ?? defaultValue;
   } catch (error) {
-    console.warn('Storage getItem error:', error);
     return defaultValue;
   }
 }
@@ -109,7 +108,6 @@ export function setItem(key, value) {
       memoryStorage.set(prefixedKey, value);
     }
   } catch (error) {
-    console.warn('Storage setItem error:', error);
     memoryStorage.set(prefixedKey, value);
   }
 }
@@ -127,7 +125,7 @@ export function removeItem(key) {
     }
     memoryStorage.delete(prefixedKey);
   } catch (error) {
-    console.warn('Storage removeItem error:', error);
+    // Ignore error
   }
 }
 
@@ -146,7 +144,7 @@ export function clearAll() {
     }
     memoryStorage.clear();
   } catch (error) {
-    console.warn('Storage clearAll error:', error);
+    // Ignore error
   }
 }
 
@@ -183,7 +181,7 @@ export const session = {
     try {
       sessionStorage.setItem(normalizeKey(key), JSON.stringify(value));
     } catch (error) {
-      console.warn('Session storage error:', error);
+      // Ignore
     }
   },
   

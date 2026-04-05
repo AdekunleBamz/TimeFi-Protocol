@@ -29,7 +29,6 @@
             maximumFractionDigits: 6
         });
     } catch (e) {
-        console.error('Error formatting STX:', e);
         return '0.000000';
     }
 };

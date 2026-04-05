@@ -40,6 +40,14 @@ TimeFi-Protocol/
  - 📂 `tests/` — Contract testing suite
  - 📂 `docs/` — Additional documentation
 
+## 🏛️ Architecture Overview
+
+The TimeFi Protocol is designed as a modular system for security and scalability:
+
+- **Smart Contracts (Clarity 4)**: Core logic managing vault states and time-locks on Stacks.
+- **Protocol SDK (JS/TS)**: Abstraction layer simplifying contract interactions and CV conversions.
+- **Web Dashboard (React)**: Professional UI for vault management and protocol monitoring.
+
 ## 🌟 Features
 
 ### 🔒 Smart Contract Features

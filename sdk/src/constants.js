@@ -43,12 +43,25 @@ export const RESPONSE_TYPES = {
 };
 
 /**
- * Minimum deposit amount allowed in microSTX.
+ * Approximate Stacks block time in seconds (10 minutes).
  * @constant {number}
  */
-export const MIN_DEPOSIT = 0.01;
+export const STACKS_BLOCK_TIME = 600;
+
 /**
- * Maximum deposit amount allowed in microSTX (1,000,000 STX).
+ * Conversion factor for STX to microSTX.
  * @constant {number}
  */
-export const MAX_DEPOSIT = 1000000;
+export const MICROSTX_IN_STX = 1_000_000;
+
+/**
+ * Minimum deposit amount allowed (1 STX).
+ * @constant {number}
+ */
+export const MIN_DEPOSIT = 1 * MICROSTX_IN_STX;
+
+/**
+ * Maximum deposit amount allowed (1,000,000 STX).
+ * @constant {number}
+ */
+export const MAX_DEPOSIT = 1_000_000 * MICROSTX_IN_STX;

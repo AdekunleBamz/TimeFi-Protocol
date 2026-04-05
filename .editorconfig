@@ -55,3 +55,7 @@ indent_size = 2
 # HTML files
 [*.html]
 indent_size = 2
+
+# Environment files
+[.env*]
+indent_size = 2

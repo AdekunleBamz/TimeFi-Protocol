@@ -35,6 +35,7 @@ settings/
 .env.local
 .env*.local
 .env*.production
+.env.production
 
 # IDE
 .vscode/
@@ -43,6 +44,11 @@ settings/
 *.swo
 *.sublime-project
 *.sublime-workspace
+
+# Backup files
+*.bak
+*.tmp
+*~
 
 # Test data (contains sensitive wallet info)
 test/

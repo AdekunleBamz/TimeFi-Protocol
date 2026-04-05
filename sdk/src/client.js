@@ -37,6 +37,8 @@ const ClarityResponseType = {
      * Initializes a new TimeFiClient.
      * @param {'mainnet' | 'testnet'} [selectedNetwork='mainnet'] - The Stacks network to target.
      * @throws {Error} If selectedNetwork is invalid.
+     * @example
+     * const client = new TimeFiClient('mainnet');
      */
     constructor(selectedNetwork = 'mainnet') {
         if (!['mainnet', 'testnet'].includes(selectedNetwork)) {
@@ -84,6 +86,8 @@ const ClarityResponseType = {
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<Object>} The vault details.
      * @throws {Error} If vault ID is missing or invalid.
+     * @example
+     * const vault = await client.getVault(1);
      */
      async getVault(id) {
         this.#validateVaultId(id);

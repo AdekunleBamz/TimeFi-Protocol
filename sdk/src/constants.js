@@ -68,8 +68,13 @@ export const LOCK_PERIODS = {
 };
 
 /**
- * API response type constants.
+ * Clarity response type identifiers for contract call results.
+ *
+ * Used to determine if a contract call returned an OK or ERR response.
+ *
  * @constant {Object}
+ * @property {number} OK - Success response type identifier (7)
+ * @property {number} ERR - Error response type identifier (8)
  */
 export const RESPONSE_TYPES = {
     OK: 7,
@@ -77,25 +82,53 @@ export const RESPONSE_TYPES = {
 };
 
 /**
- * Approximate Stacks block time in seconds (10 minutes).
+ * Average time between Stacks mainnet blocks in seconds.
+ *
+ * This is an approximation used for time-lock calculations.
+ * Actual block times may vary based on network conditions.
+ *
  * @constant {number}
+ * @example
+ * const blocksInDay = 86400 / STACKS_BLOCK_TIME;
+ * console.log(`Blocks per day: ${blocksInDay}`); // ~144
  */
 export const STACKS_BLOCK_TIME = 600;
 
 /**
- * Conversion factor for STX to microSTX.
+ * Number of microSTX in one STX token.
+ *
+ * STX uses 6 decimal places, similar to satoshis for Bitcoin.
+ * All on-chain amounts are represented in microSTX.
+ *
  * @constant {number}
+ * @example
+ * const microStx = 1.5 * MICROSTX_IN_STX;
+ * console.log(microStx); // 1500000
  */
 export const MICROSTX_IN_STX = 1_000_000;
 
 /**
- * Minimum deposit amount allowed (1 STX).
+ * Minimum deposit amount required to create a vault.
+ *
+ * Calculated as 1 STX converted to microSTX.
+ * Deposits below this amount will be rejected by the contract.
+ *
  * @constant {number}
+ * @example
+ * console.log(MIN_DEPOSIT);
+ * // 1000000 (1 STX in microSTX)
  */
 export const MIN_DEPOSIT = 1 * MICROSTX_IN_STX;
 
 /**
- * Maximum deposit amount allowed (1,000,000 STX).
+ * Maximum deposit amount allowed for a single vault.
+ *
+ * Calculated as 1,000,000 STX converted to microSTX.
+ * Deposits above this amount will be rejected by the contract.
+ *
  * @constant {number}
+ * @example
+ * console.log(MAX_DEPOSIT);
+ * // 1000000000000 (1M STX in microSTX)
  */
 export const MAX_DEPOSIT = 1_000_000 * MICROSTX_IN_STX;

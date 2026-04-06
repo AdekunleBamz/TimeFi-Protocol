@@ -306,8 +306,16 @@ export async function getUserVaults(address) {
 }
 
 /**
- * Get total vault count
- * @returns {Promise<number>} Total number of vaults
+ * getVaultCount - Fetch the total number of vaults created.
+ *
+ * Queries the TimeFi smart contract to retrieve the total count
+ * of vaults that have been created on the protocol.
+ *
+ * @returns {Promise<number>} Total number of vaults created
+ * @throws {Error} On contract call errors
+ * @example
+ * const count = await getVaultCount();
+ * console.log(`Total vaults: ${count}`);
  */
 export async function getVaultCount() {
   const result = await callReadOnly(

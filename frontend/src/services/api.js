@@ -172,13 +172,17 @@ function normalizeTransaction(tx) {
 }
 
 /**
- * API Service - HTTP client for TimeFi backend API.
+ * callReadOnly - Execute read-only Clarity function calls.
  *
- * Provides a centralized fetch wrapper with automatic base URL handling,
- * request/response interception, and error normalization.
+ * Provides a standardized interface for calling read-only functions
+ * on TimeFi smart contracts via the Stacks blockchain.
  *
- * @module services/api
- * @author adekunlebamz
+ * @param {string} contractName - Name of the contract to call
+ * @param {string} functionName - Name of the read-only function to execute
+ * @param {Array} [functionArgs=[]] - Arguments to pass to the function
+ * @param {string} [senderAddress] - Address to simulate the call from
+ * @returns {Promise<Object>} Parsed result from the Clarity function
+ * @throws {Error} On network errors or invalid contract calls
  */
 export async function callReadOnly(contractName, functionName, functionArgs = [], senderAddress) {
   const result = await callReadOnlyFunction({

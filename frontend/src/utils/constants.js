@@ -180,6 +180,11 @@ export const MINIMUM_LOCK_BLOCKS = lockPeriods.length ? Math.min(...lockPeriods)
  */
 export const MAXIMUM_LOCK_BLOCKS = lockPeriods.length ? Math.max(...lockPeriods) : 0;
 
+/**
+ * STACKS_NETWORK - Configured Stacks network instance.
+ * Initialized based on the active network environment.
+ * @type {StacksMainnet | StacksTestnet}
+ */
 export const STACKS_NETWORK = ACTIVE_NETWORK === NETWORK.MAINNET
   ? new StacksMainnet()
   : new StacksTestnet();

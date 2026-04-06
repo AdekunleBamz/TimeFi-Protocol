@@ -11,8 +11,13 @@ import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT } from '../config/contracts';
 
 /**
- * Network environment identifiers
+ * Network environment identifiers.
+ *
+ * Defines the supported network types for the TimeFi Protocol.
+ *
  * @enum {string}
+ * @property {string} MAINNET - Stacks mainnet network
+ * @property {string} TESTNET - Stacks testnet network
  */
 const NETWORK = {
   MAINNET: 'mainnet',

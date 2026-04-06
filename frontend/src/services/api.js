@@ -16,6 +16,13 @@ import { env } from '../config/env';
  *
  * @module services/api
  */
+/**
+ * HIRO_API_URL - Base URL for Hiro API requests.
+ *
+ * Determined from environment configuration with fallback to
+ * the configured network's core API URL or mainnet default.
+ * @type {string}
+ */
 const HIRO_API_URL = env.hiroApiUrl || STACKS_NETWORK?.coreApiUrl || 'https://api.mainnet.hiro.so';
 
 /**

@@ -279,9 +279,17 @@ export async function getVaultDetails(vaultId) {
 }
 
 /**
- * Get user vaults
- * @param {string} address - User address
- * @returns {Promise<Array>} User's vault IDs
+ * getUserVaults - Fetch all vault IDs owned by an address.
+ *
+ * Queries the TimeFi smart contract to retrieve a list of vault IDs
+ * associated with a specific wallet address.
+ *
+ * @param {string} address - Stacks wallet address to query
+ * @returns {Promise<Array<number>>} Array of vault IDs owned by the address
+ * @throws {Error} On contract call errors
+ * @example
+ * const vaultIds = await getUserVaults('SP...');
+ * console.log(`User has ${vaultIds.length} vaults`);
  */
 export async function getUserVaults(address) {
   const result = await callReadOnly(

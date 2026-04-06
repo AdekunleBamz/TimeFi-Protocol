@@ -33,6 +33,10 @@ export const CURRENT_NETWORK = (
     ? NETWORK.TESTNET
     : NETWORK.MAINNET
 );
+/**
+ * ACTIVE_NETWORK - Alias for CURRENT_NETWORK used internally.
+ * @type {string}
+ */
 const ACTIVE_NETWORK = CURRENT_NETWORK;
 
 /**

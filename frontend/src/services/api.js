@@ -125,10 +125,22 @@ export async function getAccountBalance(address) {
 }
 
 /**
- * Get account transactions
- * @param {string} address - Stacks address
- * @param {Object} options - Pagination options
- * @returns {Promise<Object>} Transactions list
+ * getAccountTransactions - Fetch transaction history for an address.
+ *
+ * Retrieves paginated transaction history from the Hiro API,
+ * normalized to a consistent format for display in the UI.
+ *
+ * @param {string} address - Stacks wallet address to query
+ * @param {Object} [options={}] - Pagination and filtering options
+ * @param {number} [options.limit=20] - Number of transactions to fetch (1-50)
+ * @param {number} [options.offset=0] - Number of transactions to skip
+ * @returns {Promise<Object>} Paginated transaction list
+ * @property {Array} transactions - Array of normalized transaction objects
+ * @property {number} total - Total number of transactions for this address
+ * @property {boolean} hasMore - Whether more transactions are available
+ * @throws {Error} If the API request fails
+ * @example
+ * const { transactions, hasMore } = await getAccountTransactions('SP...', { limit: 10 });
  */
 export async function getAccountTransactions(address, options = {}) {
   const { limit = 20, offset = 0 } = options;

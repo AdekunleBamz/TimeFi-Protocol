@@ -23,8 +23,18 @@
 export const CONTRACT_ADDRESS = 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9';
 
 /**
- * Object containing contract name identifiers used in the protocol.
+ * Contract name identifiers for all TimeFi Protocol contracts.
+ *
+ * Each contract serves a specific function within the protocol ecosystem.
+ *
  * @constant {Object}
+ * @property {string} VAULT - Main vault contract for time-locked deposits
+ * @property {string} REWARDS - Rewards distribution contract
+ * @property {string} GOVERNANCE - Protocol governance and voting contract
+ * @property {string} EMERGENCY - Emergency pause and recovery contract
+ * @example
+ * console.log(CONTRACT_NAMES.VAULT);
+ * // 'timefi-vault-v1'
  */
 export const CONTRACT_NAMES = {
     VAULT: 'timefi-vault-v1',

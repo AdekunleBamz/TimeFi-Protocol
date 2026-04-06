@@ -157,10 +157,27 @@ export const LINKS = {
   EXPLORER: 'https://explorer.hiro.so',
 };
 
+/**
+ * lockPeriods - Derived array of valid lock period block counts.
+ * Extracted from LOCK_PERIODS configuration, filtered for valid numbers.
+ * @type {number[]}
+ */
 const lockPeriods = Object.values(LOCK_PERIODS || {})
   .map((period) => Number(period?.blocks))
   .filter((value) => Number.isFinite(value) && value > 0);
+
+/**
+ * MINIMUM_LOCK_BLOCKS - Minimum lock period in blocks.
+ * Derived from configured lock periods, defaults to 0 if none.
+ * @type {number}
+ */
 export const MINIMUM_LOCK_BLOCKS = lockPeriods.length ? Math.min(...lockPeriods) : 0;
+
+/**
+ * MAXIMUM_LOCK_BLOCKS - Maximum lock period in blocks.
+ * Derived from configured lock periods, defaults to 0 if none.
+ * @type {number}
+ */
 export const MAXIMUM_LOCK_BLOCKS = lockPeriods.length ? Math.max(...lockPeriods) : 0;
 
 export const STACKS_NETWORK = ACTIVE_NETWORK === NETWORK.MAINNET

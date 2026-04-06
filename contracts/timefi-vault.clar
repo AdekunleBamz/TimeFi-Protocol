@@ -55,6 +55,7 @@
       (begin
         (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
         (map-set approved-bots h true)
+        (print {event: "bot-approved", bot: bot})
         (ok true)
       )
     hash-err ERR_BOT))
@@ -208,6 +209,11 @@
 (define-read-only (is-vault-owner (id uint) (owner principal))
   (match (map-get? vaults id)
     vault (ok (is-eq (get owner vault) owner))
+    ERR_NOT_FOUND))
+
+(define-read-only (get-vault-owner (id uint))
+  (match (map-get? vaults id)
+    vault (ok (get owner vault))
     ERR_NOT_FOUND))
 
 ;; -------------------------------------------------------

@@ -44,8 +44,20 @@ export const CONTRACT_NAMES = {
 };
 
 /**
- * Protocol lock period constants in seconds.
+ * Standard lock period options available for vault creation.
+ *
+ * Lock periods are defined in seconds and represent the minimum
+ * time funds must remain locked in a vault before withdrawal.
+ *
  * @constant {Object}
+ * @property {number} MONTH_1 - 30 days (2,592,000 seconds)
+ * @property {number} MONTH_3 - 90 days (7,776,000 seconds)
+ * @property {number} MONTH_6 - 180 days (15,552,000 seconds)
+ * @property {number} MONTH_9 - 270 days (23,328,000 seconds)
+ * @property {number} YEAR_1 - 365 days (31,536,000 seconds)
+ * @example
+ * console.log(LOCK_PERIODS.MONTH_1);
+ * // 2592000 (30 days in seconds)
  */
 export const LOCK_PERIODS = {
     MONTH_1: 2592000,

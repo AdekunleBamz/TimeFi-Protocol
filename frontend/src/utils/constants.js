@@ -48,6 +48,11 @@ export const BLOCK_TIME = {
   TESTNET: 120, // ~2 minutes
   DEVNET: 30,   // ~30 seconds
 };
+/**
+ * BLOCK_TIME_SECONDS - Default block time in seconds (mainnet).
+ * Used as the fallback for time calculations.
+ * @type {number}
+ */
 export const BLOCK_TIME_SECONDS = BLOCK_TIME.MAINNET;
 
 /**

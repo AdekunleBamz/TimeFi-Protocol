@@ -1,6 +1,24 @@
 /**
- * Hooks exports index
- * Centralized exports for all custom hooks
+ * TimeFi Custom Hooks - Centralized exports for all custom React hooks.
+ *
+ * This module provides a single import point for all reusable hooks
+ * used throughout the TimeFi Protocol frontend application.
+ *
+ * Hooks are organized by category:
+ * - Data fetching: useReadOnly, useContract, useAsync, useBlockHeight
+ * - State management: useLocalStorage, usePrevious, useDebounce
+ * - Timing: useInterval, useTimeout, usePolling
+ * - UI utilities: useMediaQuery, useClickOutside, useFocusTrap
+ *
+ * @module hooks
+ * @author adekunlebamz
+ * @example
+ * // Import specific hooks
+ * import { useReadOnly, useBlockHeight, useLocalStorage } from './hooks';
+ *
+ * // Or import everything
+ * import * as hooks from './hooks';
+ * const { data } = hooks.useReadOnly('get-vault', [uintCV(1)]);
  */
 
 // Data fetching

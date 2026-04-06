@@ -130,8 +130,21 @@ export async function getTransaction(txId) {
 
 /**
  * normalizeTransaction - Transform Hiro API transaction format to app format.
- * @param {Object} tx - Raw transaction from Hiro API
- * @returns {Object} Normalized transaction object
+ *
+ * Converts raw transaction data from the Hiro API into a standardized
+ * format used throughout the application for consistent display and processing.
+ *
+ * @param {Object} tx - Raw transaction object from Hiro API
+ * @returns {Object} Normalized transaction with standardized fields
+ * @property {string} txId - Transaction ID
+ * @property {string} type - Transaction type (contract_call, token_transfer, etc.)
+ * @property {string} status - Transaction status (success, pending, failed)
+ * @property {string} sender - Sender address
+ * @property {number} fee - Transaction fee in microSTX
+ * @property {number} nonce - Transaction nonce
+ * @property {number} blockHeight - Block height where transaction was included
+ * @property {number} blockTime - Block timestamp in milliseconds
+ * @property {Object|null} contractCall - Contract call details if applicable
  */
 function normalizeTransaction(tx) {
   return {

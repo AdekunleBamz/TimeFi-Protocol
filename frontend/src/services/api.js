@@ -158,9 +158,17 @@ export async function getAccountTransactions(address, options = {}) {
 }
 
 /**
- * Get transaction by ID
- * @param {string} txId - Transaction ID
- * @returns {Promise<Object>} Transaction details
+ * getTransaction - Fetch details for a specific transaction.
+ *
+ * Retrieves full transaction details from the Hiro API by transaction ID,
+ * normalized to the standard transaction format used throughout the app.
+ *
+ * @param {string} txId - Transaction ID (hex string, with or without 0x prefix)
+ * @returns {Promise<Object>} Normalized transaction details
+ * @throws {Error} If the transaction is not found or API request fails
+ * @example
+ * const tx = await getTransaction('0x1234...abcd');
+ * console.log(`Transaction status: ${tx.status}`);
  */
 export async function getTransaction(txId) {
   const data = await fetchAPI(`/extended/v1/tx/${txId}`);

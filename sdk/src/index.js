@@ -1,22 +1,31 @@
 "use strict";
 
 /**
- * TimeFi SDK
- * Core library for interacting with TimeFi Protocol
+ * TimeFi SDK - Core library for interacting with TimeFi Protocol
+ *
+ * Provides a comprehensive JavaScript/TypeScript interface for interacting
+ * with the TimeFi Protocol on the Stacks blockchain. Includes client methods
+ * for vault operations, formatting utilities, and protocol constants.
+ *
+ * @module timefi-sdk
+ * @example
+ * import { TimeFiClient, formatSTX, CONTRACT_ADDRESS } from 'timefi-sdk';
+ *
+ * const client = new TimeFiClient('mainnet');
+ * const vault = await client.getVault(1);
+ * console.log(formatSTX(vault.amount));
  */
 
+// Protocol constants and configuration
 export * from './constants.js';
-/**
- * Formatting utilities for STX, addresses, and dates.
- */
+
+// Formatting utilities for STX, addresses, numbers, and dates
 export * from './format.js';
-/**
- * TimeFi SDK
- * Main entry point for the TimeFi Protocol JavaScript/TypeScript SDK.
- */
+
+// Main client class for protocol interactions
 export { TimeFiClient } from './client.js';
 
-// Re-export Stacks utilities for convenience
+// Re-export commonly used Stacks utilities for convenience
 export {
     uintCV,
     principalCV,

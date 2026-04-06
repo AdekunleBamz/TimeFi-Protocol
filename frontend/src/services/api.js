@@ -98,9 +98,21 @@ export async function getBlockHeight() {
 }
 
 /**
- * Get account STX balance
- * @param {string} address - Stacks address
- * @returns {Promise<Object>} Account balance info
+ * getAccountBalance - Fetch STX balance information for an address.
+ *
+ * Retrieves comprehensive balance data including liquid balance,
+ * locked balance, and total sent/received amounts from the Hiro API.
+ *
+ * @param {string} address - Stacks wallet address to query
+ * @returns {Promise<Object>} Account balance information
+ * @property {number} balance - Liquid STX balance in microSTX
+ * @property {number} locked - Locked STX balance in microSTX
+ * @property {number} totalSent - Total STX sent from this address
+ * @property {number} totalReceived - Total STX received by this address
+ * @throws {Error} If the API request fails
+ * @example
+ * const { balance, locked } = await getAccountBalance('SP...');
+ * console.log(`Balance: ${balance} microSTX`);
  */
 export async function getAccountBalance(address) {
   const data = await fetchAPI(`/extended/v1/address/${address}/stx`);

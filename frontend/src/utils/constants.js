@@ -83,6 +83,11 @@ export const STX = {
   MILLI: 1000,
   UNIT: 1_000_000,
 };
+/**
+ * MINIMUM_DEPOSIT - Minimum vault deposit amount in microSTX.
+ * Calculated from the contract's MIN_DEPOSIT constant.
+ * @type {number}
+ */
 export const MINIMUM_DEPOSIT = Math.floor(Number(MIN_DEPOSIT || 0) * STX.UNIT);
 
 /**

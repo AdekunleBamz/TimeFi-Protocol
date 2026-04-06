@@ -238,9 +238,23 @@ export async function callReadOnly(contractName, functionName, functionArgs = []
 }
 
 /**
- * Get vault details
- * @param {number} vaultId - Vault ID
- * @returns {Promise<Object>} Vault details
+ * getVaultDetails - Fetch detailed information for a specific vault.
+ *
+ * Retrieves vault data from the TimeFi smart contract via read-only
+ * function call, including owner, amount, unlock height, and status.
+ *
+ * @param {number} vaultId - Unique vault identifier
+ * @returns {Promise<Object|null>} Vault details or null if not found
+ * @property {number} id - Vault ID
+ * @property {string} owner - Vault owner's Stacks address
+ * @property {number} amount - Deposited amount in microSTX
+ * @property {number} unlockHeight - Block height when vault unlocks
+ * @property {boolean} withdrawn - Whether the vault has been withdrawn
+ * @property {boolean} emergencyUnlocked - Whether emergency unlock was triggered
+ * @throws {Error} On contract call errors
+ * @example
+ * const vault = await getVaultDetails(1);
+ * if (vault) console.log(`Owner: ${vault.owner}`);
  */
 export async function getVaultDetails(vaultId) {
   const result = await callReadOnly(

@@ -18,6 +18,20 @@ import { env } from '../config/env';
  */
 const HIRO_API_URL = env.hiroApiUrl || STACKS_NETWORK?.coreApiUrl || 'https://api.mainnet.hiro.so';
 
+/**
+ * safeParseInt - Safely parse integer values with fallback.
+ *
+ * Handles various input types and provides a default value
+ * when parsing fails or input is invalid.
+ *
+ * @param {string|number|undefined|null} value - Value to parse as integer
+ * @param {number} [fallback=0] - Default value if parsing fails
+ * @returns {number} Parsed integer or fallback value
+ * @example
+ * safeParseInt('123') // returns 123
+ * safeParseInt('abc', 42) // returns 42
+ * safeParseInt(null, 10) // returns 10
+ */
 function safeParseInt(value, fallback = 0) {
   const parsed = Number.parseInt(value, 10);
   return Number.isNaN(parsed) ? fallback : parsed;

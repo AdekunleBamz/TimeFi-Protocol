@@ -328,9 +328,17 @@ export async function getVaultCount() {
 }
 
 /**
- * Get pending rewards for a vault
- * @param {number} vaultId - Vault ID
- * @returns {Promise<number>} Pending rewards in microSTX
+ * getPendingRewards - Fetch pending reward amount for a vault.
+ *
+ * Queries the rewards contract to retrieve the amount of rewards
+ * that have accumulated and are available for claiming.
+ *
+ * @param {number} vaultId - Vault identifier to check rewards for
+ * @returns {Promise<number>} Pending rewards amount in microSTX
+ * @throws {Error} On contract call errors
+ * @example
+ * const rewards = await getPendingRewards(1);
+ * console.log(`Pending rewards: ${rewards} microSTX`);
  */
 export async function getPendingRewards(vaultId) {
   const result = await callReadOnly(

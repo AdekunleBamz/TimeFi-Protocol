@@ -81,8 +81,16 @@ async function fetchAPI(endpoint, options = {}) {
 }
 
 /**
- * Get current block height
- * @returns {Promise<number>} Current block height
+ * getBlockHeight - Fetch the current Stacks blockchain height.
+ *
+ * Retrieves the most recent block height from the Hiro API,
+ * used for time-lock calculations and UI display.
+ *
+ * @returns {Promise<number>} Current block height as an integer
+ * @throws {Error} If the API request fails
+ * @example
+ * const height = await getBlockHeight();
+ * console.log(`Current block: ${height}`);
  */
 export async function getBlockHeight() {
   const data = await fetchAPI('/extended/v1/block?limit=1');

@@ -29,11 +29,16 @@ export {
 
 /**
  * formatBlockHeight - Format blockchain block height for display.
- * @param {number|string|undefined|null} height - Block height value
- * @returns {string} Formatted block height or '--' if invalid
+ *
+ * Converts block height values to locale-formatted strings with
+ * proper handling of edge cases and invalid inputs.
+ *
+ * @param {number|string|undefined|null} height - Block height value to format
+ * @returns {string} Formatted block height with thousands separators or '--' if invalid
  * @example
  * formatBlockHeight(123456) // returns "123,456"
  * formatBlockHeight(null) // returns "--"
+ * formatBlockHeight('') // returns "--"
  */
 export const formatBlockHeight = (height) => {
     if (height === undefined || height === null || height === '') return '--';

@@ -1,12 +1,24 @@
 "use strict";
 
 /**
- * Protocol Constants
+ * TimeFi Protocol Constants
+ *
+ * Centralized configuration values and constants used throughout
+ * the TimeFi SDK for interacting with the protocol on Stacks.
+ *
+ * @module constants
  */
 
 /**
- * The deployed contract address for the TimeFi Protocol.
+ * The deployed contract address for the TimeFi Protocol on mainnet.
+ *
+ * This address is used as the primary contract interface for all
+ * protocol interactions including vault operations and queries.
+ *
  * @constant {string}
+ * @example
+ * console.log(CONTRACT_ADDRESS);
+ * // 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9'
  */
 export const CONTRACT_ADDRESS = 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9';
 

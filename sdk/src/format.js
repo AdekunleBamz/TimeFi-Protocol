@@ -1,8 +1,13 @@
 "use strict";
 
 /**
- * Formatting Utilities
- * Standard formatting for STX, addresses, numbers, and dates
+ * TimeFi Formatting Utilities
+ *
+ * Provides standardized formatting functions for STX amounts,
+ * Stacks addresses, numbers, percentages, and dates throughout
+ * the TimeFi SDK and applications.
+ *
+ * @module format
  */
 
 /**

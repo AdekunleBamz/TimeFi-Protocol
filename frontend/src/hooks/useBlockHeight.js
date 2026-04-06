@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 
+/**
+ * ACTIVE_NETWORK - Current network configuration from environment.
+ * Determines which Stacks network API to query for block data.
+ * @type {string}
+ */
 const ACTIVE_NETWORK =
     String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'mainnet'
         ? 'mainnet'

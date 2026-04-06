@@ -39,10 +39,16 @@ function safeParseInt(value, fallback = 0) {
 
 /**
  * fetchAPI - Internal fetch wrapper with standardized error handling.
- * @param {string} endpoint - API endpoint path
- * @param {Object} [options={}] - Fetch options
- * @returns {Promise<Object>} Parsed JSON response
- * @throws {Error} On non-OK HTTP response
+ *
+ * Provides a consistent interface for making API requests to the Hiro API
+ * with automatic error handling and response parsing.
+ *
+ * @param {string} endpoint - API endpoint path (will be appended to base URL)
+ * @param {Object} [options={}] - Fetch options (method, headers, body, etc.)
+ * @returns {Promise<Object>} Parsed JSON response data
+ * @throws {Error} On non-OK HTTP response or network error
+ * @example
+ * const data = await fetchAPI('/extended/v1/block?limit=1');
  */
 async function fetchAPI(endpoint, options = {}) {
   const url = `${HIRO_API_URL}${endpoint}`;

@@ -2,11 +2,20 @@ import { useState, useCallback, useMemo } from 'react';
 import { TimeFiClient, uintCV, principalCV } from 'timefi-sdk';
 import { useFetch } from './useAsync';
 
-// Shared client instance
+/**
+ * ACTIVE_NETWORK - Current network configuration from environment.
+ * @type {string}
+ */
 const ACTIVE_NETWORK =
   String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'mainnet'
     ? 'mainnet'
     : 'testnet';
+
+/**
+ * client - Singleton TimeFiClient instance for contract interactions.
+ * Initialized once to maintain connection efficiency.
+ * @type {TimeFiClient}
+ */
 const client = new TimeFiClient(ACTIVE_NETWORK);
 
 /**

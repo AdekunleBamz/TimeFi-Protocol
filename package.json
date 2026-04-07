@@ -1,4 +1,3 @@
-
 {
   "name": "timefi-protocol",
   "version": "1.0.0",
@@ -17,7 +16,8 @@
     "test:report": "vitest run --coverage --costs",
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky"
   },
   "author": "adekunlebamz <bams.kunle@gmail.com>",
   "engines": {
@@ -33,8 +33,11 @@
     "@stacks/transactions": "^7.2.0",
     "@types/node": "^24.4.0",
     "chokidar-cli": "^3.0.0",
+    "timefi-sdk": "^0.1.0",
     "vitest": "^4.0.7",
-    "vitest-environment-clarinet": "^3.0.0",
-    "timefi-sdk": "^0.1.0"
+    "vitest-environment-clarinet": "^3.0.0"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
 }

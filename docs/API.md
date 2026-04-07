@@ -16,16 +16,29 @@ Create a new time-locked vault with STX deposit.
 ```
 
 **Parameters:**
-- `amount` - Amount of STX to deposit (minimum 10,000 microSTX)
-- `lock-secs` - Lock duration in seconds (3,600 to 31,536,000)
+- `amount` - Amount of STX to deposit in microSTX (minimum 10,000 microSTX = 0.01 STX)
+- `lock-secs` - Lock duration in seconds (minimum 3,600 = 1 hour, maximum 31,536,000 = 1 year)
 
-Amounts are provided in microSTX, so UI conversions should happen before contract submission.
+**Examples:**
+```javascript
+// Deposit 100 STX for 30 days
+const amountMicroStx = 100 * 1_000_000; // 100,000,000 microSTX
+const lockDuration = 30 * 24 * 60 * 60; // 2,592,000 seconds
+await createVault(amountMicroStx, lockDuration);
 
-**Returns:** `(response uint uint)` - Vault ID on success
+// Deposit 1000 STX for 1 year
+const amountMicroStx = 1000 * 1_000_000; // 1,000,000,000 microSTX
+const lockDuration = 365 * 24 * 60 * 60; // 31,536,000 seconds
+await createVault(amountMicroStx, lockDuration);
+```
+
+**Returns:** `(response uint uint)` - Vault ID on success, error code on failure
 
 **Events:** Emits `{event: "create", id, owner, amount, unlock}`
 
 **Transfer behavior:** principal-after-fee goes to deployer custodian, fee goes to `treasury`.
+
+**Fee Calculation:** 0.5% of deposit amount (FEE_BPS = 50 basis points)
 
 ---
 

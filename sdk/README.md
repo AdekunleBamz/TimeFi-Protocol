@@ -38,6 +38,18 @@ From the repository root, use `npm run sdk:build` for SDK build validation befor
 
 ## 🛠️ Quick Start
 
+### Initialize Client
+
+```javascript
+import { TimeFiClient } from 'timefi-sdk';
+
+// For Mainnet
+const mainnetClient = new TimeFiClient('mainnet');
+
+// For Testnet
+const testnetClient = new TimeFiClient('testnet');
+```
+
 ### Fetch Protocol Stats
 
 ```javascript
@@ -49,15 +61,51 @@ const client = new TimeFiClient('mainnet');
 // Get Total Value Locked
 const tvl = await client.getTVL();
 console.log(`Current TVL: ${formatSTX(tvl)} STX`);
+
+// Get Vault Count
+const vaultCount = await client.getVaultCount();
+console.log(`Total Vaults: ${vaultCount}`);
 ```
 
-### Format a Stacks Address
+### Query Vault Details
 
 ```javascript
-import { formatAddress } from 'timefi-sdk';
+import { TimeFiClient, formatSTX } from 'timefi-sdk';
 
-const shortAddress = formatAddress('SP3...XYZ123');
-console.log(shortAddress); // SP3...Z123
+const client = new TimeFiClient('mainnet');
+
+// Get specific vault details
+const vault = await client.getVault(1);
+console.log(`Vault Owner: ${vault.owner}`);
+console.log(`Vault Amount: ${formatSTX(vault.amount)} STX`);
+
+// Check if vault can be withdrawn
+const canWithdraw = await client.canWithdraw(1);
+console.log(`Can Withdraw: ${canWithdraw}`);
+
+// Get time remaining until unlock
+const timeRemaining = await client.getTimeRemaining(1);
+console.log(`Time Remaining: ${timeRemaining} seconds`);
+```
+
+### Format Utilities
+
+```javascript
+import { formatSTX, formatAddress, formatNumber, formatPercent } from 'timefi-sdk';
+
+// Format STX amounts
+const stxAmount = formatSTX(1500000); // '1.5'
+console.log(`${stxAmount} STX`);
+
+// Truncate addresses
+const shortAddress = formatAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N');
+console.log(shortAddress); // 'SP3F...GG6N'
+
+// Format numbers
+const formatted = formatNumber(1234567.89); // '1,234,567.89'
+
+// Format percentages
+const percent = formatPercent(5.25); // '5.25%'
 ```
 
 ## 📖 Documentation

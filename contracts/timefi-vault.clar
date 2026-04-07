@@ -36,7 +36,9 @@
 (define-constant DEPLOYER tx-sender)
 
 ;; -------------------------------------------------------
-;; HELPER: check if sender is an approved bot
+;; HELPER: Check if sender is an approved bot
+;; Uses contract-hash? to verify if principal is a contract
+;; and checks against approved-bots mapping
 ;; -------------------------------------------------------
 
 (define-read-only (is-bot (sender principal))
@@ -47,6 +49,8 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: APPROVE BOT
+;; Admin-only function to approve a contract as automated trading bot
+;; Only deployer can approve bots for security
 ;; -------------------------------------------------------
 
 (define-public (approve-bot (bot principal))
@@ -61,6 +65,8 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: CREATE VAULT
+;; Creates time-locked vault with STX deposit
+;; Charges 0.5% fee (FEE_BPS) split between deployer and treasury
 ;; -------------------------------------------------------
 
 (define-public (create-vault (amount uint) (lock-secs uint))

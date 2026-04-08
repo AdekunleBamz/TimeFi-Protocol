@@ -92,7 +92,7 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
  * @throws {Error} If date cannot be parsed.
  */
  export function formatDate(dateToFormat) {
-    if (!dateToFormat) return '--';
+    if (dateToFormat === undefined || dateToFormat === null || dateToFormat === '') return '--';
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
     return new Intl.DateTimeFormat('en-US', {
@@ -109,7 +109,7 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
  * @throws {Error} If date cannot be parsed.
  */
  export function formatRelativeTime(dateToFormat) {
-    if (!dateToFormat) return '--';
+    if (dateToFormat === undefined || dateToFormat === null || dateToFormat === '') return '--';
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
     

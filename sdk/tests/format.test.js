@@ -144,6 +144,10 @@ describe('Format Utilities', () => {
       expect(formatDate(timestamp)).toContain('2024');
     });
 
+    it('should accept unix epoch timestamps', () => {
+      expect(formatDate(0)).toContain('1970');
+    });
+
     it('should format ISO date strings', () => {
       expect(formatDate('2024-01-15')).toContain('2024');
     });
@@ -182,6 +186,10 @@ describe('Format Utilities', () => {
       const now = new Date();
       const past = new Date(now.getTime() - 172800000); // 2 days ago
       expect(formatRelativeTime(past)).toContain('day');
+    });
+
+    it('should accept unix epoch timestamps', () => {
+      expect(formatRelativeTime(0)).toContain('ago');
     });
 
     it('should handle null and undefined', () => {

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { principalCV } from 'timefi-sdk';
+import { principalCV } from '@stacks/transactions';
 import { useWallet } from '../context/WalletContext';
 import { createVault as createVaultTx, withdraw as withdrawTx, emergencyWithdraw as emergencyWithdrawTx, claimRewards as claimRewardsTx } from '../services/transactions';
 

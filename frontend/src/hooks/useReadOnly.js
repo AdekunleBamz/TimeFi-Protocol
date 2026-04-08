@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
-import { TimeFiClient, uintCV, principalCV } from 'timefi-sdk';
+import { principalCV, uintCV } from '@stacks/transactions';
+import { TimeFiClient } from 'timefi-sdk';
 import { useFetch } from './useAsync';
 
 /**

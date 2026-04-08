@@ -60,7 +60,7 @@ describe('Format Utilities', () => {
 
     it('should handle custom prefix and suffix lengths', () => {
       const address = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N';
-      expect(formatAddress(address, 6, 3)).toBe('SP3FK...G6N');
+      expect(formatAddress(address, 6, 3)).toBe('SP3FKN...G6N');
     });
 
     it('should return full address if too short to truncate', () => {

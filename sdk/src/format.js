@@ -48,8 +48,8 @@
  */
 export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4) => {
     if (!stacksAddress) return '';
-    if (stacksAddress.length <= prefixLength + suffixLength) return stacksAddress;
-    return `${stacksAddress.slice(0, prefixLength + 2)}...${stacksAddress.slice(-suffixLength)}`;
+    if (stacksAddress.length <= prefixLength + suffixLength + 3) return stacksAddress;
+    return `${stacksAddress.slice(0, prefixLength)}...${stacksAddress.slice(-suffixLength)}`;
 };
 
 /**

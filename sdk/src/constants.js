@@ -110,15 +110,15 @@ export const MICROSTX_IN_STX = 1_000_000;
 /**
  * Minimum deposit amount required to create a vault.
  *
- * Calculated as 1 STX converted to microSTX.
+ * Calculated as the live contract minimum of 10,000 microSTX.
  * Deposits below this amount will be rejected by the contract.
  *
  * @constant {number}
  * @example
  * console.log(MIN_DEPOSIT);
- * // 1000000 (1 STX in microSTX)
+ * // 10000 (0.01 STX in microSTX)
  */
-export const MIN_DEPOSIT = 1 * MICROSTX_IN_STX;
+export const MIN_DEPOSIT = 10_000;
 
 /**
  * Maximum deposit amount allowed for a single vault.

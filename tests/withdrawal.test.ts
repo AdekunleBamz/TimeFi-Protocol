@@ -73,9 +73,9 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(result.result).toBeOk(Cl.bool(true));
   });
 
-  it("should keep vault active when withdrawal aborts with u4", () => {
-    createUnlockedVault(wallet1);
-    simnet.callPublicFn(CONTRACT_NAME, "withdraw", [Cl.uint(1)], wallet1);
+  it("should keep vault active after a withdrawal request", () => {
+    createMatureVault(wallet1);
+    simnet.callPublicFn(CONTRACT_NAME, "request-withdraw", [Cl.uint(1)], wallet1);
 
     const status = simnet.callReadOnlyFn(
       CONTRACT_NAME,
@@ -87,9 +87,9 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(status.result).toBeOk(Cl.bool(true));
   });
 
-  it("should keep can-withdraw true after aborted withdrawal", () => {
-    createUnlockedVault(wallet1);
-    simnet.callPublicFn(CONTRACT_NAME, "withdraw", [Cl.uint(1)], wallet1);
+  it("should keep can-withdraw true after a withdrawal request", () => {
+    createMatureVault(wallet1);
+    simnet.callPublicFn(CONTRACT_NAME, "request-withdraw", [Cl.uint(1)], wallet1);
 
     const canWithdraw = simnet.callReadOnlyFn(
       CONTRACT_NAME,
@@ -101,19 +101,19 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(canWithdraw.result).toBeOk(Cl.bool(true));
   });
 
-  it("should keep total value locked unchanged when withdrawal aborts", () => {
+  it("should keep total value locked unchanged after a withdrawal request", () => {
     const amount = 1_000_000;
     const expectedFee = (amount * 50) / 10000;
 
     simnet.callPublicFn(
       CONTRACT_NAME,
       "create-vault",
-      [Cl.uint(amount), Cl.uint(3600)],
+      [Cl.uint(amount), Cl.uint(6)],
       wallet1
     );
-    simnet.mineEmptyBlocks(4000);
+    simnet.mineEmptyBlocks(10);
 
-    simnet.callPublicFn(CONTRACT_NAME, "withdraw", [Cl.uint(1)], wallet1);
+    simnet.callPublicFn(CONTRACT_NAME, "request-withdraw", [Cl.uint(1)], wallet1);
 
     const tvl = simnet.callReadOnlyFn(CONTRACT_NAME, "get-tvl", [], wallet1);
     expect(tvl.result).toBeOk(Cl.uint(amount - expectedFee));

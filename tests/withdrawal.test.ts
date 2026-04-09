@@ -171,17 +171,18 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(status.result).toBeOk(Cl.bool(true));
   });
 
-  it("should keep both vaults active when first withdrawal aborts", () => {
-    simnet.callPublicFn(CONTRACT_NAME, "create-vault", [Cl.uint(100_000), Cl.uint(3600)], wallet1);
-    simnet.callPublicFn(CONTRACT_NAME, "create-vault", [Cl.uint(100_000), Cl.uint(3600)], wallet1);
-    simnet.mineEmptyBlocks(4000);
+  it("should mark the processed vault inactive and keep the second vault active", () => {
+    simnet.callPublicFn(CONTRACT_NAME, "create-vault", [Cl.uint(100_000), Cl.uint(6)], wallet1);
+    simnet.callPublicFn(CONTRACT_NAME, "create-vault", [Cl.uint(100_000), Cl.uint(6)], wallet1);
+    simnet.mineEmptyBlocks(10);
+    simnet.callPublicFn(CONTRACT_NAME, "request-withdraw", [Cl.uint(1)], wallet1);
 
-    simnet.callPublicFn(CONTRACT_NAME, "withdraw", [Cl.uint(1)], wallet1);
+    simnet.callPublicFn(CONTRACT_NAME, "process-withdraw", [Cl.uint(1)], deployer);
 
     const vault1 = simnet.callReadOnlyFn(CONTRACT_NAME, "is-active", [Cl.uint(1)], wallet1);
     const vault2 = simnet.callReadOnlyFn(CONTRACT_NAME, "is-active", [Cl.uint(2)], wallet1);
 
-    expect(vault1.result).toBeOk(Cl.bool(true));
+    expect(vault1.result).toBeOk(Cl.bool(false));
     expect(vault2.result).toBeOk(Cl.bool(true));
   });
 

@@ -190,8 +190,8 @@ const ClarityResponseType = {
      * @throws {Error} If vault ID is missing or invalid.
      */
       async getUnlockBlock(id) {
-        await this.#validateVaultId(id);
-        return this.callReadOnly('get-unlock-block', [uintCV(id)]);
+        const vault = await this.getVault(id);
+        return vault['unlock-time'];
     }
  
     /**
@@ -241,8 +241,8 @@ const ClarityResponseType = {
      * @throws {Error} If vault ID is missing or invalid.
      */
       async getCreatedAt(id) {
-        await this.#validateVaultId(id);
-        return this.callReadOnly('get-created-at', [uintCV(id)]);
+        const vault = await this.getVault(id);
+        return vault['lock-time'];
     }
  
     /**

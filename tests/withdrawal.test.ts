@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { Cl } from "@stacks/transactions";
 
 const accounts = simnet.getAccounts();
+const deployer = accounts.get("deployer")!;
 const wallet1 = accounts.get("wallet_1")!;
 const wallet2 = accounts.get("wallet_2")!;
 
@@ -122,22 +123,22 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(totalFees.result).toBeOk(Cl.uint(expectedFee));
   });
 
-  it("should reject a second withdrawal attempt on same vault", () => {
-    createUnlockedVault(wallet1);
-    simnet.callPublicFn(CONTRACT_NAME, "withdraw", [Cl.uint(1)], wallet1);
+  it("should allow deployer to process a requested withdrawal", () => {
+    createMatureVault(wallet1);
+    simnet.callPublicFn(CONTRACT_NAME, "request-withdraw", [Cl.uint(1)], wallet1);
 
-    const secondAttempt = simnet.callPublicFn(
+    const processed = simnet.callPublicFn(
       CONTRACT_NAME,
-      "withdraw",
+      "process-withdraw",
       [Cl.uint(1)],
-      wallet1
+      deployer
     );
 
-    expect(secondAttempt.result.type).toBe("err");
+    expect(processed.result).toBeOk(Cl.bool(true));
   });
 
   it("should return true for can-withdraw once lock has matured", () => {
-    createUnlockedVault(wallet1);
+    createMatureVault(wallet1);
 
     const result = simnet.callReadOnlyFn(
       CONTRACT_NAME,
@@ -149,12 +150,13 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(result.result).toBeOk(Cl.bool(true));
   });
 
-  it("should keep vault active when unauthorized withdrawal is attempted", () => {
-    createUnlockedVault(wallet1);
+  it("should reject non-deployer process-withdraw", () => {
+    createMatureVault(wallet1);
+    simnet.callPublicFn(CONTRACT_NAME, "request-withdraw", [Cl.uint(1)], wallet1);
 
     const unauthorized = simnet.callPublicFn(
       CONTRACT_NAME,
-      "withdraw",
+      "process-withdraw",
       [Cl.uint(1)],
       wallet2
     );

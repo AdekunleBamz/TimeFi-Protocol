@@ -72,11 +72,17 @@ describe("TimeFi Vault - Admin Functions", () => {
         wallet1
       );
 
-      // Non-contract principals are rejected before deployer check.
-      expect(result.result).toBeErr(Cl.uint(106));
+      expect(result.result).toBeErr(Cl.uint(100));
     });
 
-    it("should return ERR_BOT for non-contract principal", () => {
+    it("should allow deployer to revoke an approved principal", () => {
+      simnet.callPublicFn(
+        CONTRACT_NAME,
+        "approve-bot",
+        [Cl.principal(wallet1)],
+        deployer
+      );
+
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "revoke-bot",
@@ -84,7 +90,16 @@ describe("TimeFi Vault - Admin Functions", () => {
         deployer
       );
 
-      expect(result.result).toBeErr(Cl.uint(106)); // ERR_BOT
+      expect(result.result).toBeOk(Cl.bool(true));
+
+      const status = simnet.callReadOnlyFn(
+        CONTRACT_NAME,
+        "is-bot",
+        [Cl.principal(wallet1)],
+        deployer
+      );
+
+      expect(status.result).toStrictEqual(Cl.bool(false));
     });
   });
 });

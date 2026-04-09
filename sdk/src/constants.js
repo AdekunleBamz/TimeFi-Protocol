@@ -46,25 +46,25 @@ export const CONTRACT_NAMES = {
 /**
  * Standard lock period options available for vault creation.
  *
- * Lock periods are defined in seconds and represent the minimum
- * time funds must remain locked in a vault before withdrawal.
+ * Lock periods are defined in blocks to match the live vault contract.
+ * With ~10 minute Stacks blocks, these map closely to the named durations.
  *
  * @constant {Object}
- * @property {number} MONTH_1 - 30 days (2,592,000 seconds)
- * @property {number} MONTH_3 - 90 days (7,776,000 seconds)
- * @property {number} MONTH_6 - 180 days (15,552,000 seconds)
- * @property {number} MONTH_9 - 270 days (23,328,000 seconds)
- * @property {number} YEAR_1 - 365 days (31,536,000 seconds)
+ * @property {number} MONTH_1 - 30 days (4,320 blocks)
+ * @property {number} MONTH_3 - 90 days (12,960 blocks)
+ * @property {number} MONTH_6 - 180 days (25,920 blocks)
+ * @property {number} MONTH_9 - 270 days (38,880 blocks)
+ * @property {number} YEAR_1 - 365 days (52,560 blocks)
  * @example
  * console.log(LOCK_PERIODS.MONTH_1);
- * // 2592000 (30 days in seconds)
+ * // 4320 (30 days in blocks)
  */
 export const LOCK_PERIODS = {
-    MONTH_1: 2592000,
-    MONTH_3: 7776000,
-    MONTH_6: 15552000,
-    MONTH_9: 23328000,
-    YEAR_1: 31536000,
+    MONTH_1: 4320,
+    MONTH_3: 12960,
+    MONTH_6: 25920,
+    MONTH_9: 38880,
+    YEAR_1: 52560,
 };
 
 /**

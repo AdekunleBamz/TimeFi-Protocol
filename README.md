@@ -159,12 +159,14 @@ const tvl = await client.getTVL();
 | `create-vault` | `(amount uint) (lock-secs uint)` | Create a new time-locked vault |
 | `withdraw` | `(id uint)` | Withdraw from an unlocked vault |
 | `approve-bot` | `(bot principal)` | Approve a trading bot contract |
+| `revoke-bot` | `(bot principal)` | Revoke a trading bot contract |
 
 ### 🔍 Read-Only Contract Functions
 
 | Function | Parameters | Description |
 |----------|------------|-------------|
 | `get-vault` | `(id uint)` | Get vault details |
+| `get-vault-owner` | `(id uint)` | Get vault owner principal |
 | `is-active` | `(id uint)` | Check if vault is active |
 | `get-time-remaining` | `(id uint)` | Get seconds to unlock |
 | `can-withdraw` | `(id uint)` | Check withdrawal readiness |

@@ -8,11 +8,11 @@ const wallet2 = accounts.get("wallet_2")!;
 
 const CONTRACT_NAME = "timefi-vault";
 
-function createVault(amount = 100_000, lockSecs = 3600) {
+function createVault(amount = 100_000, lockBlocks = 3600) {
   return simnet.callPublicFn(
     CONTRACT_NAME,
     "create-vault",
-    [Cl.uint(amount), Cl.uint(lockSecs)],
+    [Cl.uint(amount), Cl.uint(lockBlocks)],
     wallet1
   );
 }
@@ -81,14 +81,14 @@ describe("TimeFi Vault - Read-Only Coverage", () => {
     expect(result.result).toStrictEqual(Cl.uint(10_000));
   });
 
-  it("should expose min lock constant", () => {
+  it("should expose min lock constant in blocks", () => {
     const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-min-lock", [], wallet1);
-    expect(result.result).toStrictEqual(Cl.uint(3_600));
+    expect(result.result).toStrictEqual(Cl.uint(6));
   });
 
-  it("should expose max lock constant", () => {
+  it("should expose max lock constant in blocks", () => {
     const result = simnet.callReadOnlyFn(CONTRACT_NAME, "get-max-lock", [], wallet1);
-    expect(result.result).toStrictEqual(Cl.uint(31_536_000));
+    expect(result.result).toStrictEqual(Cl.uint(52_560));
   });
 
   it("should expose fee basis points constant", () => {

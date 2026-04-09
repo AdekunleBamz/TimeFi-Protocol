@@ -53,13 +53,14 @@ The TimeFi Protocol is designed as a modular system for security and scalability
 
 ### 🔒 Smart Contract Features
 - **Create Vaults** - Deposit STX with time-lock
-- **Withdraw** - Claim funds after lock period
-- **Bot Approval** - Approve automated trading bots via `contract-hash?`
+- **Withdraw Requests** - Queue withdrawals once the lock has matured
+- **Custodian Processing** - Let the deployer process mature withdrawal payouts
+- **Bot Approval** - Approve automated bot principals directly
 - **Fee Collection** - 0.5% fee on deposits
 
 ### 📜 Clarity 4 Functions Used
-- `get-stacks-block-info?` - For block-time based unlock calculation
-- `contract-hash?` - For bot verification
+- `tenure-height` - For block-based lock timing
+- `stx-transfer?` - For deposit and withdrawal settlement
 
 ## 🚀 Getting Started
 
@@ -156,9 +157,10 @@ const tvl = await client.getTVL();
 
 | Function | Parameters | Description |
 |----------|------------|-------------|
-| `create-vault` | `(amount uint) (lock-secs uint)` | Create a new time-locked vault |
-| `withdraw` | `(id uint)` | Withdraw from an unlocked vault |
-| `approve-bot` | `(bot principal)` | Approve a trading bot contract |
+| `create-vault` | `(amount uint) (lock-blocks uint)` | Create a new time-locked vault |
+| `request-withdraw` | `(id uint)` | Queue a withdrawal after maturity |
+| `process-withdraw` | `(id uint)` | Settle a mature withdrawal as deployer |
+| `approve-bot` | `(bot principal)` | Approve a bot principal |
 
 ### 🔍 Read-Only Contract Functions
 
@@ -166,7 +168,7 @@ const tvl = await client.getTVL();
 |----------|------------|-------------|
 | `get-vault` | `(id uint)` | Get vault details |
 | `is-active` | `(id uint)` | Check if vault is active |
-| `get-time-remaining` | `(id uint)` | Get seconds to unlock |
+| `get-time-remaining` | `(id uint)` | Get blocks remaining to unlock |
 | `can-withdraw` | `(id uint)` | Check withdrawal readiness |
 | `is-bot` | `(sender principal)` | Check if sender is approved bot |
 
@@ -176,8 +178,8 @@ const tvl = await client.getTVL();
 
 ```clarity
 MIN_DEPOSIT: 10,000 microSTX (0.01 STX)
-MIN_LOCK: 3,600 seconds (1 hour)
-MAX_LOCK: 31,536,000 seconds (1 year)
+MIN_LOCK: 6 blocks (~1 hour)
+MAX_LOCK: 52,560 blocks (~1 year)
 FEE_BPS: 50 (0.5%)
 ```
 
@@ -221,7 +223,7 @@ TimeFi Protocol is governed by its community. Future proposals will be handled v
 A: It is the smallest unit of STX. 1 STX = 1,000,000 microSTX.
 
 **Q: What is the minimum lock period?**
-A: The minimum lock period is 3,600 seconds (1 hour).
+A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
 
 ## 🗺️ Roadmap 2026
 

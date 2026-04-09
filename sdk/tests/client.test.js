@@ -30,4 +30,11 @@ describe('TimeFiClient vault helpers', () => {
 
     await expect(client.getCreatedAt(1)).resolves.toBe(6);
   });
+
+  it('computes the vault duration from the vault timing fields', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVault = async () => ({ 'unlock-time': 52_560, 'lock-time': 6 });
+
+    await expect(client.getVaultDuration(1)).resolves.toBe(52_554);
+  });
 });

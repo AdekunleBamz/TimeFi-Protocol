@@ -220,8 +220,8 @@ const ClarityResponseType = {
      * @throws {Error} If vault ID is missing or invalid.
      */
       async getVaultDuration(id) {
-        await this.#validateVaultId(id);
-        return this.callReadOnly('get-vault-duration', [uintCV(id)]);
+        const vault = await this.getVault(id);
+        return vault['unlock-time'] - vault['lock-time'];
     }
  
     /**

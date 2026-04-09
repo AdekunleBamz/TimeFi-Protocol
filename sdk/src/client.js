@@ -263,7 +263,8 @@ const ClarityResponseType = {
      */
      async isExpired(id) {
         this.#validateVaultId(id);
-        return this.callReadOnly('is-expired', [uintCV(id)]);
+        const timeRemaining = await this.getTimeRemaining(id);
+        return timeRemaining === 0;
     }
  
     /**
@@ -273,13 +274,13 @@ const ClarityResponseType = {
      * @throws {Error} If vault ID is missing or invalid.
      */
      async getVaultStatus(id) {
-        const [active, expired] = await Promise.all([
+        const [active, timeRemaining] = await Promise.all([
             this.isActive(id),
-            this.isExpired(id)
+            this.getTimeRemaining(id)
         ]);
  
-        if (active && !expired) return 'Active';
-        if (expired) return 'Expired';
+        if (active && timeRemaining > 0) return 'Active';
+        if (timeRemaining === 0) return 'Expired';
         return 'Unknown';
     }
  

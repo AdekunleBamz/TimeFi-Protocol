@@ -37,4 +37,27 @@ describe('TimeFiClient vault helpers', () => {
 
     await expect(client.getVaultDuration(1)).resolves.toBe(52_554);
   });
+
+  it('treats zero time remaining as expired', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getTimeRemaining = async () => 0;
+
+    await expect(client.isExpired(1)).resolves.toBe(true);
+  });
+
+  it('reports active status while time remains', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.isActive = async () => true;
+    client.getTimeRemaining = async () => 24;
+
+    await expect(client.getVaultStatus(1)).resolves.toBe('Active');
+  });
+
+  it('reports expired status when no time remains', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.isActive = async () => true;
+    client.getTimeRemaining = async () => 0;
+
+    await expect(client.getVaultStatus(1)).resolves.toBe('Expired');
+  });
 });

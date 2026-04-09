@@ -7,21 +7,21 @@ const wallet2 = accounts.get("wallet_2")!;
 
 const CONTRACT_NAME = "timefi-vault";
 
-function createUnlockedVault(owner = wallet1) {
+function createMatureVault(owner = wallet1) {
   simnet.callPublicFn(
     CONTRACT_NAME,
     "create-vault",
-    [Cl.uint(100_000), Cl.uint(3600)],
+    [Cl.uint(100_000), Cl.uint(6)],
     owner
   );
-  simnet.mineEmptyBlocks(4000);
+  simnet.mineEmptyBlocks(10);
 }
 
 describe("TimeFi Vault - Withdrawal", () => {
   it("should return ERR_NOT_FOUND for unknown vault id", () => {
     const result = simnet.callPublicFn(
       CONTRACT_NAME,
-      "withdraw",
+      "request-withdraw",
       [Cl.uint(9999)],
       wallet1
     );
@@ -33,13 +33,13 @@ describe("TimeFi Vault - Withdrawal", () => {
     simnet.callPublicFn(
       CONTRACT_NAME,
       "create-vault",
-      [Cl.uint(100_000), Cl.uint(3600)],
+      [Cl.uint(100_000), Cl.uint(6)],
       wallet1
     );
 
     const result = simnet.callPublicFn(
       CONTRACT_NAME,
-      "withdraw",
+      "request-withdraw",
       [Cl.uint(1)],
       wallet1
     );
@@ -48,11 +48,11 @@ describe("TimeFi Vault - Withdrawal", () => {
   });
 
   it("should return ERR_UNAUTHORIZED for non-owner", () => {
-    createUnlockedVault(wallet1);
+    createMatureVault(wallet1);
 
     const result = simnet.callPublicFn(
       CONTRACT_NAME,
-      "withdraw",
+      "request-withdraw",
       [Cl.uint(1)],
       wallet2
     );
@@ -60,17 +60,17 @@ describe("TimeFi Vault - Withdrawal", () => {
     expect(result.result).toBeErr(Cl.uint(100));
   });
 
-  it("should return u4 when matured withdrawal hits chain-time lookup bug", () => {
-    createUnlockedVault(wallet1);
+  it("should allow the owner to request withdrawal after maturity", () => {
+    createMatureVault(wallet1);
 
     const result = simnet.callPublicFn(
       CONTRACT_NAME,
-      "withdraw",
+      "request-withdraw",
       [Cl.uint(1)],
       wallet1
     );
 
-    expect(result.result).toBeErr(Cl.uint(4));
+    expect(result.result).toBeOk(Cl.bool(true));
   });
 
   it("should keep vault active when withdrawal aborts with u4", () => {

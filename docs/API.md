@@ -12,23 +12,23 @@ Admin-only functions in this list enforce deployer authorization checks.
 Create a new time-locked vault with STX deposit.
 
 ```clarity
-(create-vault (amount uint) (lock-secs uint))
+(create-vault (amount uint) (lock-blocks uint))
 ```
 
 **Parameters:**
 - `amount` - Amount of STX to deposit in microSTX (minimum 10,000 microSTX = 0.01 STX)
-- `lock-secs` - Lock duration in seconds (minimum 3,600 = 1 hour, maximum 31,536,000 = 1 year)
+- `lock-blocks` - Lock duration in Stacks blocks (minimum 6, maximum 52,560)
 
 **Examples:**
 ```javascript
-// Deposit 100 STX for 30 days
+// Deposit 100 STX for ~30 days
 const amountMicroStx = 100 * 1_000_000; // 100,000,000 microSTX
-const lockDuration = 30 * 24 * 60 * 60; // 2,592,000 seconds
+const lockDuration = 4_320; // ~30 days in blocks
 await createVault(amountMicroStx, lockDuration);
 
-// Deposit 1000 STX for 1 year
+// Deposit 1000 STX for ~1 year
 const amountMicroStx = 1000 * 1_000_000; // 1,000,000,000 microSTX
-const lockDuration = 365 * 24 * 60 * 60; // 31,536,000 seconds
+const lockDuration = 52_560; // ~1 year in blocks
 await createVault(amountMicroStx, lockDuration);
 ```
 
@@ -170,7 +170,7 @@ Get total number of vaults created.
 ---
 
 ### `get-time-remaining`
-Get seconds remaining until vault unlock.
+Get blocks remaining until vault unlock.
 
 ```clarity
 (get-time-remaining (id uint))
@@ -178,7 +178,7 @@ Get seconds remaining until vault unlock.
 
 **Returns:** `(response uint uint)` - 0 if already unlocked
 
-Computed from block-time data, so local clock time is only approximate.
+Computed from chain height, so any calendar estimate is only approximate.
 
 ---
 
@@ -240,8 +240,8 @@ In this contract variant, non-contract principals resolve to `false`.
 | Function | Returns |
 |----------|---------|
 | `get-min-deposit` | `u10000` (0.01 STX) |
-| `get-min-lock` | `u3600` (1 hour) |
-| `get-max-lock` | `u31536000` (1 year) |
+| `get-min-lock` | `u6` (~1 hour) |
+| `get-max-lock` | `u52560` (~1 year) |
 | `get-fee-bps` | `u50` (0.5%) |
 
 ---

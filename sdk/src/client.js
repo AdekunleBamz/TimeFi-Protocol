@@ -129,9 +129,9 @@ const ClarityResponseType = {
      * @returns {Promise<string>} The owner's Stacks address.
      * @throws {Error} If vault ID is missing or invalid.
      */
-      async getVaultOwner(id) {
-        await this.#validateVaultId(id);
-        return this.callReadOnly('get-vault-owner', [uintCV(id)]);
+     async getVaultOwner(id) {
+        const vault = await this.getVault(id);
+        return vault.owner;
     }
  
     /**
@@ -169,8 +169,8 @@ const ClarityResponseType = {
      * @throws {Error} If vault ID is missing or invalid.
      */
       async getVaultAmount(id) {
-        await this.#validateVaultId(id);
-        return this.callReadOnly('get-vault-amount', [uintCV(id)]);
+        const vault = await this.getVault(id);
+        return vault.amount;
     }
  
     /**

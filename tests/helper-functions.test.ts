@@ -21,13 +21,13 @@ describe("TimeFi Vault - Helper Functions", () => {
 
     it("should track accumulated fees", () => {
       const amount = 1_000_000;
-      const lockSecs = 3600;
+      const lockBlocks = 3600;
       const expectedFee = (amount * 50) / 10000;
 
       simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(amount), Cl.uint(lockSecs)],
+        [Cl.uint(amount), Cl.uint(lockBlocks)],
         wallet1
       );
 
@@ -93,24 +93,24 @@ describe("TimeFi Vault - Helper Functions", () => {
       expect(result.result).toStrictEqual(Cl.uint(10000));
     });
 
-    it("get-min-lock should return 3600", () => {
+    it("get-min-lock should return 6 blocks", () => {
       const result = simnet.callReadOnlyFn(
         CONTRACT_NAME,
         "get-min-lock",
         [],
         wallet1
       );
-      expect(result.result).toStrictEqual(Cl.uint(3600));
+      expect(result.result).toStrictEqual(Cl.uint(6));
     });
 
-    it("get-max-lock should return 31536000", () => {
+    it("get-max-lock should return 52560 blocks", () => {
       const result = simnet.callReadOnlyFn(
         CONTRACT_NAME,
         "get-max-lock",
         [],
         wallet1
       );
-      expect(result.result).toStrictEqual(Cl.uint(31536000));
+      expect(result.result).toStrictEqual(Cl.uint(52560));
     });
 
     it("get-fee-bps should return 50", () => {

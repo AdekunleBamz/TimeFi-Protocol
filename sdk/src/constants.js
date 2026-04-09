@@ -34,10 +34,10 @@ export const CONTRACT_ADDRESS = 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9';
  * @property {string} EMERGENCY - Emergency pause and recovery contract
  * @example
  * console.log(CONTRACT_NAMES.VAULT);
- * // 'timefi-vault-v1'
+ * // 'timefi-vault-v-A2'
  */
 export const CONTRACT_NAMES = {
-    VAULT: 'timefi-vault-v1',
+    VAULT: 'timefi-vault-v-A2',
     REWARDS: 'timefi-rewards-v-A2',
     GOVERNANCE: 'timefi-governance-v-A2',
     EMERGENCY: 'timefi-emergency-v-A2',

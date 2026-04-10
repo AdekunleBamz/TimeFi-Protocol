@@ -67,10 +67,15 @@ function safeJsonParse(value, defaultValue = null) {
  * @throws {Error} If key is empty or not a string
  */
 function normalizeKey(key) {
-  if (typeof key !== 'string' || key.length === 0) {
+  if (typeof key !== 'string') {
     throw new Error('storage key must be a non-empty string');
   }
-  return STORAGE_PREFIX + key;
+
+  const normalizedKey = key.trim();
+  if (normalizedKey.length === 0) {
+    throw new Error('storage key must be a non-empty string');
+  }
+  return STORAGE_PREFIX + normalizedKey;
 }
 
 /**

@@ -69,15 +69,15 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
 }
 
 /**
- * Formats a decimal value as a percentage string.
- * @param {number|string} val - The decimal value (e.g., 0.05).
+ * Formats a percentage-point value as a percentage string.
+ * @param {number|string} val - Percentage points (e.g., 5.25).
  * @param {number} [decimals=2] - Number of decimal places to include.
  * @returns {string} Formatted percentage string.
  * @throws {Error} If decimalValue cannot be converted to a number.
  */
 export function formatPercent(valueToFormat, fractionDigits = 2) {
     const parsedNumber = Number(valueToFormat);
-    if (isNaN(parsedNumber)) throw new Error('Invalid percentage value');
+    if (!Number.isFinite(parsedNumber)) throw new Error('Invalid percentage value');
     return new Intl.NumberFormat('en-US', {
         style: 'percent',
         minimumFractionDigits: fractionDigits,

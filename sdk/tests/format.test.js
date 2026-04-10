@@ -129,6 +129,7 @@ describe('Format Utilities', () => {
     it('should throw on invalid inputs', () => {
       expect(() => formatPercent('invalid')).toThrow('Invalid percentage value');
       expect(() => formatPercent(NaN)).toThrow('Invalid percentage value');
+      expect(() => formatPercent(Infinity)).toThrow('Invalid percentage value');
     });
   });
 

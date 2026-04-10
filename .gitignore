@@ -20,8 +20,11 @@ coverage/
 
 # OS X
 .DS_Store
+.DS_Store?
+._*
 .AppleDouble
 .LSOverride
+Thumbs.db
 
 # Node
 node_modules/
@@ -48,7 +51,10 @@ settings/
 # Backup files
 *.bak
 *.tmp
+*.temp
 *~
+*.pem
+*.key
 
 # Test data (contains sensitive wallet info)
 test/

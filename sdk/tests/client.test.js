@@ -119,4 +119,11 @@ describe('TimeFiClient vault helpers', () => {
     expect(() => client.getCreateVaultOptions(0, 6)).toThrow('Amount must be greater than 0 STX');
     expect(() => client.getCreateVaultOptions('not-a-number', 6)).toThrow('Amount must be greater than 0 STX');
   });
+
+  it('rejects invalid lock duration values in create options', () => {
+    const client = new TimeFiClient('mainnet');
+    expect(() => client.getCreateVaultOptions(1, 0)).toThrow('Lock duration must be a positive integer');
+    expect(() => client.getCreateVaultOptions(1, -1)).toThrow('Lock duration must be a positive integer');
+    expect(() => client.getCreateVaultOptions(1, 1.5)).toThrow('Lock duration must be a positive integer');
+  });
 });

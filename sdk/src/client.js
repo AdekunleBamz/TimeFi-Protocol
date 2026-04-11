@@ -724,12 +724,12 @@ const ClarityResponseType = {
      */
       getCreateVaultOptions(amountSTX, lockDurationBlocks) {
         const amountMicroStx = this.#toMicroStx(amountSTX);
-        if (!lockDurationBlocks || lockDurationBlocks <= 0) throw new Error('Lock duration must be greater than 0 blocks');
+        const normalizedLockDuration = this.#validatePositiveInteger(lockDurationBlocks, 'Lock duration');
         return {
             contractAddress: this.#contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
             functionName: 'create-vault',
-            functionArgs: [uintCV(amountMicroStx), uintCV(lockDurationBlocks)],
+            functionArgs: [uintCV(amountMicroStx), uintCV(normalizedLockDuration)],
             network: this.#network,
             anchorMode: AnchorMode.Any,
             postConditionMode: PostConditionMode.Deny,
@@ -855,5 +855,26 @@ const ClarityResponseType = {
         }
 
         return microStx;
+    }
+
+    /**
+     * Validates a positive integer-like value.
+     * @param {number|string|BigInt} value - Value to validate.
+     * @param {string} label - Field label used in errors.
+     * @returns {number|BigInt} Normalized numeric value.
+     * @private
+     */
+    #validatePositiveInteger(value, label) {
+        if (typeof value === 'bigint') {
+            if (value <= 0n) throw new Error(`${label} must be a positive integer`);
+            return value;
+        }
+
+        const parsedValue = Number(value);
+        if (!Number.isSafeInteger(parsedValue) || parsedValue <= 0) {
+            throw new Error(`${label} must be a positive integer`);
+        }
+
+        return parsedValue;
     }
 }

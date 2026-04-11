@@ -12,7 +12,7 @@ import {
     AnchorMode,
     PostConditionMode
 } from '@stacks/transactions';
-import { CONTRACT_ADDRESS, CONTRACT_NAMES } from './constants.js';
+import { CONTRACT_ADDRESS, CONTRACT_NAMES, MICROSTX_IN_STX } from './constants.js';
 
 /**
  * Clarity conversion response types used by @stacks/transactions.
@@ -723,13 +723,13 @@ const ClarityResponseType = {
      * @throws {Error} If amountSTX or lockDurationBlocks is invalid.
      */
       getCreateVaultOptions(amountSTX, lockDurationBlocks) {
-        if (!amountSTX || amountSTX <= 0) throw new Error('Amount must be greater than 0 STX');
+        const amountMicroStx = this.#toMicroStx(amountSTX);
         if (!lockDurationBlocks || lockDurationBlocks <= 0) throw new Error('Lock duration must be greater than 0 blocks');
         return {
             contractAddress: this.#contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
             functionName: 'create-vault',
-            functionArgs: [uintCV(amountSTX * 1_000_000), uintCV(lockDurationBlocks)],
+            functionArgs: [uintCV(amountMicroStx), uintCV(lockDurationBlocks)],
             network: this.#network,
             anchorMode: AnchorMode.Any,
             postConditionMode: PostConditionMode.Deny,
@@ -835,5 +835,25 @@ const ClarityResponseType = {
             throw new Error(`${label} is required`);
         }
         return value.trim();
+    }
+
+    /**
+     * Converts an STX amount to microSTX for contract-safe uint values.
+     * @param {number|string} amountSTX - Amount in STX.
+     * @returns {number} Amount in microSTX.
+     * @private
+     */
+    #toMicroStx(amountSTX) {
+        const parsedAmount = Number(amountSTX);
+        if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+            throw new Error('Amount must be greater than 0 STX');
+        }
+
+        const microStx = Math.round(parsedAmount * MICROSTX_IN_STX);
+        if (!Number.isSafeInteger(microStx) || microStx <= 0) {
+            throw new Error('Amount must be a valid STX value');
+        }
+
+        return microStx;
     }
 }

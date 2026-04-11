@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { cvToValue } from '@stacks/transactions';
 
 import { TimeFiClient } from '../src/client.js';
 
@@ -105,5 +106,17 @@ describe('TimeFiClient vault helpers', () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVaultsByOwner('   ')).rejects.toThrow('Owner address is required');
     await expect(client.getVaultIdByOwnerIndex('', 0)).rejects.toThrow('Owner address is required');
+  });
+
+  it('converts decimal STX amounts to microSTX for create options', () => {
+    const client = new TimeFiClient('mainnet');
+    const options = client.getCreateVaultOptions(0.010001, 6);
+    expect(cvToValue(options.functionArgs[0])).toBe(10001n);
+  });
+
+  it('rejects invalid STX amount values in create options', () => {
+    const client = new TimeFiClient('mainnet');
+    expect(() => client.getCreateVaultOptions(0, 6)).toThrow('Amount must be greater than 0 STX');
+    expect(() => client.getCreateVaultOptions('not-a-number', 6)).toThrow('Amount must be greater than 0 STX');
   });
 });

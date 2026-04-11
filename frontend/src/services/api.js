@@ -271,8 +271,8 @@ export async function getVaultDetails(vaultId) {
   return {
     id: vaultId,
     owner: vault.owner.value,
-    amount: parseInt(vault.amount.value, 10),
-    unlockHeight: parseInt(vault['unlock-height'].value, 10),
+    amount: safeParseInt(vault.amount.value),
+    unlockHeight: safeParseInt(vault['unlock-height'].value),
     withdrawn: vault.withdrawn.value,
     emergencyUnlocked: vault['emergency-unlocked']?.value || false,
   };
@@ -302,7 +302,7 @@ export async function getUserVaults(address) {
     return [];
   }
   
-  return result.value.map(v => parseInt(v.value, 10));
+  return result.value.map(v => safeParseInt(v.value));
 }
 
 /**

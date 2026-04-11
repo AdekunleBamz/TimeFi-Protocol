@@ -60,4 +60,21 @@ describe('TimeFiClient vault helpers', () => {
 
     await expect(client.getVaultStatus(1)).resolves.toBe('Expired');
   });
+
+  it('rejects missing vault ids early', async () => {
+    const client = new TimeFiClient('mainnet');
+    await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');
+  });
+
+  it('rejects non-positive vault ids', async () => {
+    const client = new TimeFiClient('mainnet');
+    await expect(client.getVault(0)).rejects.toThrow('Vault ID must be a positive integer');
+    await expect(client.getVault(-4)).rejects.toThrow('Vault ID must be a positive integer');
+  });
+
+  it('rejects non-integer vault ids', async () => {
+    const client = new TimeFiClient('mainnet');
+    await expect(client.getVault(1.2)).rejects.toThrow('Vault ID must be a positive integer');
+    await expect(client.getVault('abc')).rejects.toThrow('Vault ID must be a positive integer');
+  });
 });

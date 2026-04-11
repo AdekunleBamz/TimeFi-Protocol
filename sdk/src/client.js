@@ -767,5 +767,27 @@ const ClarityResponseType = {
         if (id === undefined || id === null) {
             throw new Error('Vault ID is required');
         }
+
+        if (typeof id === 'bigint') {
+            if (id <= 0n) throw new Error('Vault ID must be a positive integer');
+            return;
+        }
+
+        if (typeof id === 'number') {
+            if (!Number.isInteger(id) || id <= 0) {
+                throw new Error('Vault ID must be a positive integer');
+            }
+            return;
+        }
+
+        if (typeof id === 'string') {
+            const normalized = id.trim();
+            if (!/^\d+$/.test(normalized) || BigInt(normalized) <= 0n) {
+                throw new Error('Vault ID must be a positive integer');
+            }
+            return;
+        }
+
+        throw new Error('Vault ID must be a positive integer');
     }
 }

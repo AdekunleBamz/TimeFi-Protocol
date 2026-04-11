@@ -103,8 +103,8 @@ npm run test
 # Run tests with coverage + costs
 npm run test:report
 
-# Run frontend tests from root
-npm run frontend:test
+# Run frontend lint checks from root
+npm --prefix frontend run lint
 
 # Start devnet
 clarinet devnet start

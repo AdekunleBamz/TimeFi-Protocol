@@ -17,7 +17,6 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity smart 
 [![Testing: Vitest](https://img.shields.io/badge/testing-vitest-blue.svg)](https://vitest.dev)
 [![Maintenance: Active](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/AdekunleBamz/TimeFi-Protocol/graphs/commit-activity)
 [![Security Policy](https://img.shields.io/badge/security-policy-brightgreen.svg)](SECURITY.md)
-[![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-contributor%20covenant-ff69b4.svg)](CODE_OF_CONDUCT.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Twitter](https://img.shields.io/twitter/follow/TimeFiProtocol?style=social)](https://twitter.com/TimeFiProtocol)
 [![Discord](https://img.shields.io/discord/1234567890?label=discord&logo=discord&style=social)](https://discord.gg/timefi)
@@ -34,8 +33,6 @@ TimeFi-Protocol/
  - 📂 `contracts/` — Clarity smart contracts
  - 📂 `frontend/` — React-based web dashboard
  - 📂 `sdk/` — JavaScript/TypeScript SDK
- - 📂 `deployments/` — Clarinet deployment plans
- - 📂 `settings/` — Network configuration
  - 📂 `tests/regressions/` — Regression and edge-case suites
  - 📂 `tests/` — Contract testing suite
  - 📂 `docs/` — Additional documentation
@@ -185,7 +182,6 @@ FEE_BPS: 50 (0.5%)
 
 ## 🧱 Infrastructure
 
-- Mainnet testing and funding flows: `docs/MAINNET_TESTING.md`
 - **Audit Status**: [Internal Audit v1.0] (Pending External Review)
 - **Security Bounty**: Bug bounty program coming Q2 2026.
 - **Emergency Pause**: Protocol can be paused by multisig in case of critical vulnerability.
@@ -197,9 +193,7 @@ FEE_BPS: 50 (0.5%)
 - **Testnet**: `https://stacks-node-api.testnet.stacks.co`
 
 ### ⚙️ Deployment Settings
-- **Clarinet Settings**: [settings/Clarinet.toml](settings/Clarinet.toml)
-- **Mainnet Plan**: [deployments/default.mainnet-plan.yaml](deployments/default.mainnet-plan.yaml)
-- **Testnet Plan**: [deployments/default.testnet-plan.yaml](deployments/default.testnet-plan.yaml)
+- **Clarinet Settings**: [Clarinet.toml](Clarinet.toml)
 
 ## 🗳️ Governance
 
@@ -234,8 +228,7 @@ A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
 
 ## 📖 Operations Docs
 
-- Mainnet testing and funding flows: [MAINNET_TESTING.md](docs/MAINNET_TESTING.md)
-- Technical Specification: [TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md)
+- API reference: [API.md](docs/API.md)
 
 ## 📦 Package Metadata
 
@@ -256,7 +249,6 @@ A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
 ## 📄 License
 
 - [Security Policy](SECURITY.md)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
 
 MIT License - Copyright (c) 2026 TimeFi Protocol Team
 

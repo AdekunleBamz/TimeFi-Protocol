@@ -50,6 +50,18 @@ function assertVaultId(vaultId) {
 }
 
 /**
+ * assertPositiveInteger - Validate numeric inputs for tx parameters.
+ * @param {number|undefined|null} value - Value to validate
+ * @param {string} fieldName - Parameter name for error messages
+ * @throws {Error} If value is not a positive integer
+ */
+function assertPositiveInteger(value, fieldName) {
+  if (!Number.isInteger(value) || value <= 0) {
+    throw new Error(`${fieldName} must be a positive integer`);
+  }
+}
+
+/**
  * getContractCallDefaultOptions - Internal helper to get shared transaction options.
  * @param {string} contractName - Name of the target contract
  * @param {string} functionName - Name of the Clarity function
@@ -86,6 +98,9 @@ function getContractCallDefaultOptions(contractName, functionName, functionArgs,
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function createVault({ amount, lockDuration, senderAddress, onFinish, onCancel }) {
+  assertPositiveInteger(amount, 'amount');
+  assertPositiveInteger(lockDuration, 'lockDuration');
+
   const postConditions = [
     makeStandardSTXPostCondition(
       senderAddress,

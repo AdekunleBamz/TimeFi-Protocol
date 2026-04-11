@@ -77,4 +77,21 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVault(1.2)).rejects.toThrow('Vault ID must be a positive integer');
     await expect(client.getVault('abc')).rejects.toThrow('Vault ID must be a positive integer');
   });
+
+  it('rejects missing index when reading vault by index', async () => {
+    const client = new TimeFiClient('mainnet');
+    await expect(client.getVaultIdByIndex(undefined)).rejects.toThrow('Index is required');
+  });
+
+  it('rejects invalid index when reading vault by index', async () => {
+    const client = new TimeFiClient('mainnet');
+    await expect(client.getVaultIdByIndex(-1)).rejects.toThrow('Index must be a non-negative integer');
+    await expect(client.getVaultIdByIndex(1.5)).rejects.toThrow('Index must be a non-negative integer');
+    await expect(client.getVaultIdByIndex('abc')).rejects.toThrow('Index must be a non-negative integer');
+  });
+
+  it('rejects invalid owner index when reading vault by owner index', async () => {
+    const client = new TimeFiClient('mainnet');
+    await expect(client.getVaultIdByOwnerIndex('SP123', -1)).rejects.toThrow('Index must be a non-negative integer');
+  });
 });

@@ -530,9 +530,7 @@ const ClarityResponseType = {
      * @throws {Error} If index is missing or invalid.
      */
      async getVaultIdByIndex(index) {
-        if (index === undefined || index === null) {
-            throw new Error('Index is required');
-        }
+        this.#validateNonNegativeInteger(index, 'Index');
         return this.callReadOnly('get-vault-id-by-index', [uintCV(index)]);
     }
  
@@ -545,7 +543,7 @@ const ClarityResponseType = {
      */
      async getVaultIdByOwnerIndex(owner, index) {
         if (!owner) throw new Error('Owner address is required');
-        if (index === undefined || index === null) throw new Error('Index is required');
+        this.#validateNonNegativeInteger(index, 'Index');
         return this.callReadOnly('get-vault-id-by-owner-index', [principalCV(owner), uintCV(index)]);
     }
  
@@ -789,5 +787,39 @@ const ClarityResponseType = {
         }
 
         throw new Error('Vault ID must be a positive integer');
+    }
+
+    /**
+     * Internal helper to validate non-negative integer-like values.
+     * @param {number|string|BigInt} value - Value to validate.
+     * @param {string} label - Field name used in error messages.
+     * @private
+     */
+    #validateNonNegativeInteger(value, label) {
+        if (value === undefined || value === null) {
+            throw new Error(`${label} is required`);
+        }
+
+        if (typeof value === 'bigint') {
+            if (value < 0n) throw new Error(`${label} must be a non-negative integer`);
+            return;
+        }
+
+        if (typeof value === 'number') {
+            if (!Number.isInteger(value) || value < 0) {
+                throw new Error(`${label} must be a non-negative integer`);
+            }
+            return;
+        }
+
+        if (typeof value === 'string') {
+            const normalized = value.trim();
+            if (!/^\d+$/.test(normalized) || BigInt(normalized) < 0n) {
+                throw new Error(`${label} must be a non-negative integer`);
+            }
+            return;
+        }
+
+        throw new Error(`${label} must be a non-negative integer`);
     }
 }

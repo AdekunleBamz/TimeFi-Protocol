@@ -200,8 +200,8 @@ function normalizeTransaction(tx) {
     status: tx.tx_status,
     sender: tx.sender_address,
     fee: safeParseInt(tx.fee_rate),
-    nonce: tx.nonce,
-    blockHeight: tx.block_height,
+    nonce: safeParseInt(tx.nonce),
+    blockHeight: safeParseInt(tx.block_height),
     blockTime: safeParseInt(tx.block_time) * 1000,
     contractCall: tx.contract_call ? {
       contractId: tx.contract_call.contract_id,

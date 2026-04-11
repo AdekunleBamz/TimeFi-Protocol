@@ -542,9 +542,9 @@ const ClarityResponseType = {
      * @throws {Error} If owner or index is missing.
      */
      async getVaultIdByOwnerIndex(owner, index) {
-        if (!owner) throw new Error('Owner address is required');
+        const ownerAddress = this.#validateRequiredString(owner, 'Owner address');
         this.#validateNonNegativeInteger(index, 'Index');
-        return this.callReadOnly('get-vault-id-by-owner-index', [principalCV(owner), uintCV(index)]);
+        return this.callReadOnly('get-vault-id-by-owner-index', [principalCV(ownerAddress), uintCV(index)]);
     }
  
     /**
@@ -554,8 +554,8 @@ const ClarityResponseType = {
      * @throws {Error} If address is missing.
      */
       async getNonce(address) {
-        if (!address) throw new Error('Address is required');
-        return this.callReadOnly('get-nonce', [principalCV(address)]);
+        const account = this.#validateRequiredString(address, 'Address');
+        return this.callReadOnly('get-nonce', [principalCV(account)]);
     }
  
     /**
@@ -587,8 +587,8 @@ const ClarityResponseType = {
      * @throws {Error} If address is missing.
      */
       async getSTXBalance(address) {
-        if (!address) throw new Error('Address is required');
-        return this.callReadOnly('get-stx-balance', [principalCV(address)]);
+        const account = this.#validateRequiredString(address, 'Address');
+        return this.callReadOnly('get-stx-balance', [principalCV(account)]);
     }
  
     /**
@@ -624,11 +624,11 @@ const ClarityResponseType = {
      * @throws {Error} If owner address is missing.
      */
       async getVaultsByOwner(owner) {
-        if (!owner) throw new Error('Owner address is required');
-        const count = await this.getVaultsByOwnerCount(owner);
+        const ownerAddress = this.#validateRequiredString(owner, 'Owner address');
+        const count = await this.getVaultsByOwnerCount(ownerAddress);
         const tasks = [];
         for (let i = 0; i < count; i++) {
-            tasks.push(this.getVaultIdByOwnerIndex(owner, i));
+            tasks.push(this.getVaultIdByOwnerIndex(ownerAddress, i));
         }
         return Promise.all(tasks);
     }
@@ -640,8 +640,8 @@ const ClarityResponseType = {
      * @throws {Error} If owner address is missing.
      */
      async getVaultsByOwnerCount(owner) {
-        if (!owner) throw new Error('Owner address is required');
-        return this.callReadOnly('get-vault-count-by-owner', [principalCV(owner)]);
+        const ownerAddress = this.#validateRequiredString(owner, 'Owner address');
+        return this.callReadOnly('get-vault-count-by-owner', [principalCV(ownerAddress)]);
     }
  
     /**
@@ -821,5 +821,19 @@ const ClarityResponseType = {
         }
 
         throw new Error(`${label} must be a non-negative integer`);
+    }
+
+    /**
+     * Internal helper to validate required string values.
+     * @param {string} value - Value to validate.
+     * @param {string} label - Field name used in error messages.
+     * @returns {string} Trimmed string value.
+     * @private
+     */
+    #validateRequiredString(value, label) {
+        if (typeof value !== 'string' || value.trim() === '') {
+            throw new Error(`${label} is required`);
+        }
+        return value.trim();
     }
 }

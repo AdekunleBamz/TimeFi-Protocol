@@ -94,4 +94,16 @@ describe('TimeFiClient vault helpers', () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVaultIdByOwnerIndex('SP123', -1)).rejects.toThrow('Index must be a non-negative integer');
   });
+
+  it('rejects blank account addresses', async () => {
+    const client = new TimeFiClient('mainnet');
+    await expect(client.getNonce('   ')).rejects.toThrow('Address is required');
+    await expect(client.getSTXBalance('')).rejects.toThrow('Address is required');
+  });
+
+  it('rejects blank owner addresses', async () => {
+    const client = new TimeFiClient('mainnet');
+    await expect(client.getVaultsByOwner('   ')).rejects.toThrow('Owner address is required');
+    await expect(client.getVaultIdByOwnerIndex('', 0)).rejects.toThrow('Owner address is required');
+  });
 });

@@ -101,7 +101,13 @@ npm run test
 npm run test:report
 
 # Run frontend lint checks from root
-npm --prefix frontend run lint
+npm run frontend:lint
+
+# Run SDK tests from root
+npm run sdk:test
+
+# Run a local pre-push verification bundle
+npm run verify:local
 
 # Start devnet
 clarinet devnet start
@@ -111,6 +117,16 @@ npm run frontend:dev
 
 # Build SDK package
 npm run sdk:build
+```
+
+### ✅ Local Verification Checklist
+
+Before opening a PR or pushing to `main`, run:
+
+```bash
+npm run contracts:check
+npm run sdk:test
+npm run frontend:lint
 ```
 
 ### 💻 Frontend Dashboard

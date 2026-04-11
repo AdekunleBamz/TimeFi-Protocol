@@ -178,10 +178,12 @@ export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel })
   if (proposalId === undefined || proposalId === null) {
     throw new Error('proposalId is required to cast a governance vote');
   }
+  assertPositiveInteger(proposalId, 'proposalId');
 
   if (vaultId === undefined || vaultId === null) {
     throw new Error('vaultId is required to cast a governance vote');
   }
+  assertPositiveInteger(vaultId, 'vaultId');
 
   await openContractCall({
     ...getContractCallDefaultOptions(CONTRACT_NAMES.GOVERNANCE, 'cast-vote', [uintCV(proposalId), uintCV(vaultId), boolCV(Boolean(inFavor))], onFinish, onCancel),

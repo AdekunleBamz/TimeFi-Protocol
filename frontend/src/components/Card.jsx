@@ -68,10 +68,10 @@ export function Card({
  * @param {React.ReactNode} props.children - Header content
  * @param {React.ReactNode} props.action - Optional action button/link
  */
-export function CardHeader({ children, className = '', action }) {
+export function CardHeader({ children, className = '', action, ...props }) {
 
   return (
-    <div className={`card-header ${className}`}>
+    <div className={`card-header ${className}`} {...props}>
       <div className="card-header-content">{children}</div>
       {action && <div className="card-header-action">{action}</div>}
     </div>

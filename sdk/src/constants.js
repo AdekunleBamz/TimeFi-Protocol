@@ -36,12 +36,12 @@ export const CONTRACT_ADDRESS = 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9';
  * console.log(CONTRACT_NAMES.VAULT);
  * // 'timefi-vault-v-A2'
  */
-export const CONTRACT_NAMES = {
+export const CONTRACT_NAMES = Object.freeze({
     VAULT: 'timefi-vault-v-A2',
     REWARDS: 'timefi-rewards-v-A2',
     GOVERNANCE: 'timefi-governance-v-A2',
     EMERGENCY: 'timefi-emergency-v-A2',
-};
+});
 
 /**
  * Standard lock period options available for vault creation.

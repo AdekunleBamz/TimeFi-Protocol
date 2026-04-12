@@ -44,6 +44,7 @@ export function Avatar({
           src={src} 
           alt={alt || 'Avatar'} 
           className="avatar-image"
+          loading="lazy"
           onError={(e) => {
             e.target.style.display = 'none';
             e.target.nextSibling.style.display = 'flex';

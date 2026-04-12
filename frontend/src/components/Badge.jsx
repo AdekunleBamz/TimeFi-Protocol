@@ -45,7 +45,7 @@ export function Badge({
   ].filter(Boolean).join(' ');
 
   if (dot) {
-    return <span className={classes} />;
+    return <span className={classes} aria-hidden="true" />;
   }
 
   return (

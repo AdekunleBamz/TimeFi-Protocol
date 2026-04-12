@@ -98,7 +98,7 @@ export function Alert({
   const displayIcon = icon !== undefined ? icon : defaultIcons[variant];
 
   return (
-    <div className={`alert alert-${variant} ${className}`} role="alert" {...props}>
+    <div className={`alert alert-${variant} ${className}`} role="alert" aria-live="polite" {...props}>
       {displayIcon && <span className="alert-icon" aria-hidden="true">{displayIcon}</span>}
       
       <div className="alert-content">

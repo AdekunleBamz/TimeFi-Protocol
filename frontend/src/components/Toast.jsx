@@ -32,7 +32,7 @@ export function ToastProvider({ children }) {
       ...toast,
     };
 
-    setToasts((prev) => [...prev, newToast]);
+    setToasts((prev) => [...prev, newToast].slice(-5));
 
     if (newToast.duration > 0) {
       setTimeout(() => {

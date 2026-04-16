@@ -208,6 +208,21 @@ export async function approveBot({ botAddress, onFinish, onCancel }) {
 }
 
 /**
+ * Build and submit a revoke-bot transaction
+ * @param {Object} params - Transaction parameters
+ * @param {string} params.botAddress - Principal address to revoke
+ * @param {Function} params.onFinish - Callback on transaction completion
+ * @param {Function} params.onCancel - Callback on user cancel
+ */
+export async function revokeBot({ botAddress, onFinish, onCancel }) {
+  if (!botAddress) throw new Error('botAddress is required');
+  await openContractCall({
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'revoke-bot', [principalCV(botAddress)], onFinish, onCancel),
+    postConditionMode: PostConditionMode.Deny,
+  });
+}
+
+/**
  * Estimate transaction fee
  * @param {string} functionName - Contract function name
  * @returns {number} Estimated fee in microSTX
@@ -237,5 +252,6 @@ export default {
   claimRewards,
   vote,
   approveBot,
+  revokeBot,
   estimateFee,
 };

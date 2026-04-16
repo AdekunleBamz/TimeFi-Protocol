@@ -66,7 +66,7 @@ export class ErrorBoundary extends Component {
         return (
           <div className="error-boundary-minimal">
             <p>Something went wrong</p>
-            <button onClick={this.handleRetry}>Try again</button>
+            <button type="button" onClick={this.handleRetry}>Try again</button>
           </div>
         );
       }

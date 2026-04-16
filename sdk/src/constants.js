@@ -166,3 +166,17 @@ export const MIN_LOCK_BLOCKS = 6;
  * @constant {number}
  */
 export const MAX_LOCK_BLOCKS = 52560;
+
+/**
+ * Human-readable labels for supported Stacks network identifiers.
+ *
+ * @constant {Object}
+ * @property {string} mainnet - Label for mainnet
+ * @property {string} testnet - Label for testnet
+ * @property {string} devnet  - Label for local devnet
+ */
+export const STACKS_NETWORK_NAMES = Object.freeze({
+    mainnet: 'Mainnet',
+    testnet: 'Testnet',
+    devnet: 'Devnet',
+});

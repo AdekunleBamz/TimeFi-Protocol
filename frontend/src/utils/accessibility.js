@@ -46,9 +46,10 @@ export const srOnlyStyles = {
  * announceToScreenReader('Error: Insufficient balance', 'assertive');
  */
 export function announceToScreenReader(message, priority = 'polite') {
+  const validPriority = priority === 'assertive' ? 'assertive' : 'polite';
   const element = document.createElement('div');
   element.setAttribute('role', 'status');
-  element.setAttribute('aria-live', priority);
+  element.setAttribute('aria-live', validPriority);
   element.setAttribute('aria-atomic', 'true');
   Object.assign(element.style, srOnlyStyles);
   

@@ -18,7 +18,7 @@ export function NotFound() {
   const location = useLocation();
 
   return (
-    <div className="not-found">
+    <main className="not-found">
       <div className="not-found-content">
         <div className="not-found-illustration" aria-hidden="true">
           <div className="vault-outline">
@@ -44,7 +44,7 @@ export function NotFound() {
         </div>
         <span className="not-found-help">If this keeps happening, check the URL for typos.</span>
       </div>
-    </div>
+    </main>
   );
 }
 

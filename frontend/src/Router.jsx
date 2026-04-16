@@ -12,6 +12,7 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Skeleton } from './components/Skeleton';
+import { ScrollToTop } from './components/ScrollToTop';
 
 // Lazy load pages for code splitting
 const Dashboard = lazy(() => import('./components/Dashboard'));

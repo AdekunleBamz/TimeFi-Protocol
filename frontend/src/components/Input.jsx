@@ -110,6 +110,7 @@ export const Input = forwardRef(({
           id={inputId}
           className={inputClasses}
           aria-invalid={!!error}
+          aria-required={props.required || undefined}
           aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
           {...props}
         />

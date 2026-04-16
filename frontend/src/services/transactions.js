@@ -1,6 +1,7 @@
 import {
   uintCV,
   boolCV,
+  principalCV,
   PostConditionMode,
   FungibleConditionCode,
   makeStandardSTXPostCondition,
@@ -192,6 +193,21 @@ export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel })
 }
 
 /**
+ * Build and submit an approve-bot transaction
+ * @param {Object} params - Transaction parameters
+ * @param {string} params.botAddress - Principal address to approve
+ * @param {Function} params.onFinish - Callback on transaction completion
+ * @param {Function} params.onCancel - Callback on user cancel
+ */
+export async function approveBot({ botAddress, onFinish, onCancel }) {
+  if (!botAddress) throw new Error('botAddress is required');
+  await openContractCall({
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'approve-bot', [principalCV(botAddress)], onFinish, onCancel),
+    postConditionMode: PostConditionMode.Deny,
+  });
+}
+
+/**
  * Estimate transaction fee
  * @param {string} functionName - Contract function name
  * @returns {number} Estimated fee in microSTX
@@ -218,5 +234,6 @@ export default {
   emergencyWithdraw,
   claimRewards,
   vote,
+  approveBot,
   estimateFee,
 };

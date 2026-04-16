@@ -118,6 +118,23 @@ export function setItem(key, value) {
 }
 
 /**
+ * hasItem - Check if a key exists in storage.
+ * @param {string} key - Storage key (without prefix)
+ * @returns {boolean} True if the key exists
+ */
+export function hasItem(key) {
+  const prefixedKey = normalizeKey(key);
+  try {
+    if (isStorageAvailable()) {
+      return window.localStorage.getItem(prefixedKey) !== null;
+    }
+    return memoryStorage.has(prefixedKey);
+  } catch {
+    return false;
+  }
+}
+
+/**
  * removeItem - Remove an item from storage.
  * @param {string} key - Storage key (without prefix)
  */

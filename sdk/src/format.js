@@ -147,3 +147,10 @@ export function formatBlocksToTime(blocks, blockTimeSecs = 600) {
     }
     return `${days} day${days === 1 ? '' : 's'}`;
 }
+
+/**
+ * Alias for formatSTX — accepts microSTX and returns a human-readable STX string.
+ * @param {number|BigInt|string|Object} microStx - Amount in microSTX.
+ * @returns {string} Formatted STX string.
+ */
+export const formatMicroSTX = formatSTX;

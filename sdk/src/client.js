@@ -1,8 +1,8 @@
 "use strict";
 
- import {
+import {
     StacksMainnet,
-    StacksTestnet 
+    StacksTestnet
 } from '@stacks/network';
 import {
     callReadOnlyFunction,

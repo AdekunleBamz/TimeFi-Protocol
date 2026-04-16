@@ -59,10 +59,19 @@ function getProtocolConfig() {
   return config;
 }
 
+/**
+ * Get the list of supported Stacks networks.
+ * @returns {string[]} Array of supported network identifiers
+ */
+function getSupportedNetworks() {
+  return ['mainnet', 'testnet', 'devnet'];
+}
+
 export {
   initializeProtocol,
   getProtocolVersion,
   getProtocolConfig,
+  getSupportedNetworks,
   config,
   PROTOCOL_VERSION
 };
@@ -71,6 +80,7 @@ export default {
   initializeProtocol,
   getProtocolVersion,
   getProtocolConfig,
+  getSupportedNetworks,
   config,
   PROTOCOL_VERSION
 };

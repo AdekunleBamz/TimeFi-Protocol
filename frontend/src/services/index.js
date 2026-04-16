@@ -46,6 +46,7 @@ export {
   getItem,
   setItem,
   removeItem,
+  hasItem,
   clearAll,
   StorageKeys,
   session,

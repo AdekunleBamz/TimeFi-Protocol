@@ -22,15 +22,9 @@ export {
     CONTRACT_NAMES,
     LOCK_PERIODS,
     MIN_DEPOSIT,
-    MAX_DEPOSIT
+    MAX_DEPOSIT,
+    FEE_BPS
 } from 'timefi-sdk';
-
-/**
- * FEE_BPS - Protocol fee in basis points.
- * 1 basis point = 0.01%, so 50 bps = 0.5%
- * @type {number}
- */
-export const FEE_BPS = 50;
 
 export default {
     FEE_BPS,

@@ -126,3 +126,24 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
     const daysDiff = Math.floor(hoursDiff / 24);
     return rtf.format(daysDiff, 'day');
 }
+
+/**
+ * Converts a block count into a human-readable duration string.
+ * @param {number} blocks - Number of Stacks blocks.
+ * @param {number} [blockTimeSecs=600] - Seconds per block (default mainnet ~10 min).
+ * @returns {string} Duration string such as '30 days' or '1 year'.
+ */
+export function formatBlocksToTime(blocks, blockTimeSecs = 600) {
+    if (!blocks || blocks <= 0) return '0 days';
+    const totalSeconds = blocks * blockTimeSecs;
+    const days = Math.round(totalSeconds / 86400);
+    if (days >= 365) {
+        const years = (days / 365).toFixed(1).replace(/\.0$/, '');
+        return `${years} year${years === '1' ? '' : 's'}`;
+    }
+    if (days >= 30) {
+        const months = Math.round(days / 30);
+        return `${months} month${months === 1 ? '' : 's'}`;
+    }
+    return `${days} day${days === 1 ? '' : 's'}`;
+}

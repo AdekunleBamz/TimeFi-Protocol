@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
 import { CopyButton } from './CopyButton';
+import { env } from '../config/env';
 import './Header.css';
 
 /**
@@ -34,10 +35,7 @@ export function Header() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const activeNetwork =
-    String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'testnet'
-      ? 'testnet'
-      : 'mainnet';
+  const networkLabel = env.getNetworkLabel().toUpperCase();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +45,6 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const networkLabel = activeNetwork.toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
     : location.pathname === '/404'

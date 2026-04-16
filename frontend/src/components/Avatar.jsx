@@ -61,7 +61,7 @@ export function Avatar({
       </div>
       
       {status && (
-        <span className={`avatar-status avatar-status-${status}`} title={status} />
+        <span className={`avatar-status avatar-status-${status}`} title={status} aria-label={`Status: ${status}`} />
       )}
     </div>
   );

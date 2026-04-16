@@ -7,6 +7,7 @@
 import { describe, it, expect } from 'vitest';
 import { 
   formatSTX, 
+  formatMicroSTX,
   formatAddress, 
   formatNumber, 
   formatPercent, 
@@ -16,6 +17,10 @@ import {
 
 describe('Format Utilities', () => {
   describe('formatSTX', () => {
+    it('formatMicroSTX should be an alias for formatSTX', () => {
+      expect(formatMicroSTX(1000000)).toBe(formatSTX(1000000));
+      expect(formatMicroSTX(null)).toBe(formatSTX(null));
+    });
     it('should convert microSTX to STX string', () => {
       expect(formatSTX(1000000)).toBe('1');
       expect(formatSTX(1500000)).toBe('1.5');

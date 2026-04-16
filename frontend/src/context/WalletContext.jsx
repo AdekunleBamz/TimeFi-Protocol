@@ -114,6 +114,7 @@ export function WalletProvider({ children }) {
     connect,
     disconnect: disconnectWallet,
     network,
+    networkType,
     address,
     balance,
   };

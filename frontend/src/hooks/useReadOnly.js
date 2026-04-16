@@ -66,6 +66,7 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
     // Additional methods can be proxied to callReadOnly
     getVaultCount: () => callReadOnly('get-vault-count', []),
     isVaultOwner: (vaultId, owner) => callReadOnly('is-vault-owner', [uintCV(vaultId), principalCV(owner)]),
+    isBot: (sender) => callReadOnly('is-bot', [principalCV(sender)]),
     calculateFee: (amount) => callReadOnly('calculate-fee', [uintCV(amount)]),
     callReadOnly,
   }), [callReadOnly]);

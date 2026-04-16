@@ -66,8 +66,8 @@ export function VaultCard({ vaultId }) {
 
   if (loading && !vault) {
     return (
-      <div className="vault-card loading">
-        <div className="skeleton"></div>
+      <div className="vault-card loading" aria-busy="true" aria-label="Loading vault">
+        <div className="skeleton" aria-hidden="true"></div>
       </div>
     );
   }

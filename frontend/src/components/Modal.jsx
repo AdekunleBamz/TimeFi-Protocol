@@ -5,7 +5,7 @@
  * @author adekunlebamz
  */
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useId } from 'react';
 import { createPortal } from 'react-dom';
 import './Modal.css';
 
@@ -42,6 +42,7 @@ export function Modal({
   showCloseButton = true,
   footer,
 }) {
+  const titleId = useId();
   // Handle ESC key
   const handleKeyDown = useCallback((e) => {
     if (e.key === 'Escape') {
@@ -71,10 +72,10 @@ export function Modal({
 
   return createPortal(
     <div className="modal-overlay" onClick={handleOverlayClick}>
-      <div className={`modal modal-${size}`} role="dialog" aria-modal="true">
+      <div className={`modal modal-${size}`} role="dialog" aria-modal="true" aria-labelledby={title ? titleId : undefined}>
         {(title || showCloseButton) && (
           <div className="modal-header">
-            {title && <h2 className="modal-title">{title}</h2>}
+            {title && <h2 className="modal-title" id={titleId}>{title}</h2>}
             {showCloseButton && (
               <button className="modal-close" onClick={onClose} aria-label="Close">
                 ×

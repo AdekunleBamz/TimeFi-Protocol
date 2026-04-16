@@ -74,7 +74,7 @@ export function VaultCard({ vaultId }) {
 
   if (!vault) {
     return (
-      <div className="vault-card error">
+      <div className="vault-card error" role="alert">
         <p>{error || 'Vault not found'}</p>
       </div>
     );

@@ -103,7 +103,7 @@ export function VaultCard({ vaultId }) {
           <h3>Vault #{vaultId}</h3>
           <span className="vault-subtitle">{timeStateLabel}</span>
         </div>
-        <span className={`status ${canWithdrawNow ? 'ready' : 'locked'}`}>
+        <span className={`status ${canWithdrawNow ? 'ready' : 'locked'}`} aria-label={canWithdrawNow ? 'Status: ready to withdraw' : 'Status: locked'}>
           {canWithdrawNow ? '🟢 Ready' : '🔒 Locked'}
         </span>
       </div>

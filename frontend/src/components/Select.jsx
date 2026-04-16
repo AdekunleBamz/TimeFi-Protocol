@@ -86,6 +86,12 @@ export function Select({
           setIsOpen(true);
         }
         break;
+      case 'ArrowUp':
+        e.preventDefault();
+        if (isOpen) {
+          setIsOpen(false);
+        }
+        break;
     }
   };
 

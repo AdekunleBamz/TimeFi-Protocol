@@ -106,6 +106,7 @@ function TransactionItem({ transaction }) {
             target="_blank"
             rel="noopener noreferrer"
             className="transaction-link"
+            aria-label={`View transaction ${shortTxId} on explorer (opens in new tab)`}
           >
             View on explorer
           </a>

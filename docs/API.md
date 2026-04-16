@@ -270,3 +270,9 @@ Both return response-wrapped uint values.
 | u106 | ERR_BOT | Invalid bot contract |
 
 Built-in runtime errors (for example `u4`) may appear when Clarity arithmetic/unwrap checks fail.
+
+---
+
+## Notes on `withdraw`
+
+The public function in the contract is named `request-withdraw`, not `withdraw`. The `withdraw` alias shown above is a convenience wrapper in the SDK. When calling the contract directly, use `request-withdraw`.

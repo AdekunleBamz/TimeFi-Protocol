@@ -146,6 +146,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               setErrors(prev => ({ ...prev, amount: null }));
             }}
             aria-invalid={Boolean(errors.amount)}
+            aria-describedby={errors.amount ? 'amount-error' : undefined}
             disabled={loading}
           />
           <button
@@ -191,7 +192,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
         </div>
         
         {errors.amount && (
-          <span className="form-error">{errors.amount}</span>
+          <span className="form-error" id="amount-error" role="alert">{errors.amount}</span>
         )}
       </div>
 

@@ -142,3 +142,11 @@ export const MAX_DEPOSIT = 1_000_000 * MICROSTX_IN_STX;
  * @constant {number}
  */
 export const BLOCKS_PER_DAY = Math.round(86400 / STACKS_BLOCK_TIME);
+
+/**
+ * Protocol fee in basis points (0.5%).
+ * Matches the on-chain FEE_BPS constant in the vault contract.
+ *
+ * @constant {number}
+ */
+export const FEE_BPS = 50;

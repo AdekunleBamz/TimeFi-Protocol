@@ -56,7 +56,7 @@ export function useClickOutside(handler, options = {}) {
     };
 
     document.addEventListener(eventType, listener);
-    document.addEventListener('touchstart', listener);
+    document.addEventListener('touchstart', listener, { passive: true });
 
     return () => {
       document.removeEventListener(eventType, listener);

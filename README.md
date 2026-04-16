@@ -185,6 +185,9 @@ const tvl = await client.getTVL();
 | `get-time-remaining` | `(id uint)` | Get blocks remaining to unlock |
 | `can-withdraw` | `(id uint)` | Check withdrawal readiness |
 | `is-bot` | `(sender principal)` | Check if sender is approved bot |
+| `get-tvl` | — | Get total value locked in microSTX |
+| `get-vault-count` | — | Get total number of vaults created |
+| `get-total-fees` | — | Get accumulated protocol fees |
 
 ## ⚙️ Configuration
 

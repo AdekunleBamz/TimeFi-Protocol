@@ -35,6 +35,7 @@ export function useBlockHeight() {
                 : new StacksTestnet();
 
             const response = await fetch(`${network.coreApiUrl}/extended/v1/block?limit=1`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
 
             if (data.results && data.results.length > 0) {

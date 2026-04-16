@@ -220,6 +220,8 @@ export function estimateFee(functionName) {
     'request-emergency-withdraw': 4000,
     'request-claim-rewards': 3000,
     'cast-vote': 2000,
+    'approve-bot': 2000,
+    'revoke-bot': 2000,
   });
   
   return fees[functionName] ?? 3000;

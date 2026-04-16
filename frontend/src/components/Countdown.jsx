@@ -45,7 +45,10 @@ export function Countdown({
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timer);
-          onComplete?.();
+          if (!completedRef.current) {
+            completedRef.current = true;
+            onComplete?.();
+          }
           return 0;
         }
         return prev - 1;

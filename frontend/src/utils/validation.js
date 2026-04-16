@@ -78,14 +78,14 @@ export function validateVaultId(id) {
  * Checks that the amount is a valid number, within the allowed range
  * (MIN_DEPOSIT to MAX_DEPOSIT), and doesn't exceed user's balance.
  *
- * @param {string|number} amount - Deposit amount in STX
- * @param {number} [balance] - User's available balance in STX (optional)
+ * @param {string|number} amount - Deposit amount in microSTX
+ * @param {number} [balance] - User's available balance in microSTX (optional)
  * @returns {{ valid: boolean, error?: string }} Validation result with error message if invalid
  * @example
- * validateDepositAmount(100, 500)
+ * validateDepositAmount(1000000, 500000000)
  * // returns { valid: true }
  *
- * validateDepositAmount(0, 500)
+ * validateDepositAmount(0, 500000000)
  * // returns { valid: false, error: 'Amount must be greater than 0' }
  */
 export function validateDepositAmount(amount, balance) {

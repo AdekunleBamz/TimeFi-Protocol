@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT } from '../src/constants.js';
+import { CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT, STACKS_NETWORK_NAMES } from '../src/constants.js';
 
 describe('SDK constants', () => {
   it('targets the active vault contract name', () => {
@@ -20,5 +20,11 @@ describe('SDK constants', () => {
       YEAR_1: 52560,
       YEAR_2: 105120,
     });
+  });
+
+  it('provides human-readable labels for all supported networks', () => {
+    expect(STACKS_NETWORK_NAMES.mainnet).toBe('Mainnet');
+    expect(STACKS_NETWORK_NAMES.testnet).toBe('Testnet');
+    expect(STACKS_NETWORK_NAMES.devnet).toBe('Devnet');
   });
 });

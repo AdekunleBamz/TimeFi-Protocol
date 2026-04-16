@@ -255,6 +255,7 @@ export function Dashboard() {
                       placeholder="Find by vault id"
                       value={vaultSearch}
                       onChange={(e) => setVaultSearch(e.target.value)}
+                      aria-label="Search vaults by ID"
                       onKeyDown={(event) => {
                         if (event.key === 'Escape') {
                           setVaultSearch('');

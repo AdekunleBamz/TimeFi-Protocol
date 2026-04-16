@@ -28,12 +28,15 @@ export { TimeFiClient } from './client.js';
 // Re-export commonly used Stacks utilities for convenience
 export {
     uintCV,
+    intCV,
     principalCV,
     bufferCV,
     stringAsciiCV,
     stringUtf8CV,
     noneCV,
     someCV,
+    tupleCV,
+    listCV,
     responseOkCV,
     responseErrorCV,
     AnchorMode,

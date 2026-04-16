@@ -18,6 +18,7 @@ describe('SDK constants', () => {
       MONTH_6: 25920,
       MONTH_9: 38880,
       YEAR_1: 52560,
+      YEAR_2: 105120,
     });
   });
 });

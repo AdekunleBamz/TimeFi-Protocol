@@ -77,7 +77,9 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
  */
 export function formatPercent(valueToFormat, fractionDigits = 2) {
     const parsedNumber = Number(valueToFormat);
-    if (!Number.isFinite(parsedNumber)) throw new Error('Invalid percentage value');
+    if (valueToFormat === undefined || valueToFormat === null || !Number.isFinite(parsedNumber)) {
+        throw new Error('Invalid percentage value');
+    }
     return new Intl.NumberFormat('en-US', {
         style: 'percent',
         minimumFractionDigits: fractionDigits,

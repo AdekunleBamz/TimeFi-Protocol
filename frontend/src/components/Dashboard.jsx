@@ -269,6 +269,7 @@ export function Dashboard() {
                       className="vault-control-select"
                       value={vaultSort}
                       onChange={(e) => setVaultSort(e.target.value)}
+                      aria-label="Sort vaults"
                     >
                       <option value="newest">Newest first</option>
                       <option value="oldest">Oldest first</option>

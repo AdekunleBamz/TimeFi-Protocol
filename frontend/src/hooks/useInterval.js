@@ -8,13 +8,15 @@ import { useEffect, useRef } from 'react';
  *
  * @param {Function} callback - Function to execute on each interval tick
  * @param {number|null} delay - Interval delay in milliseconds, or null to pause
+ * @param {Object} [options={}] - Configuration options
+ * @param {boolean} [options.enabled=true] - Set false to pause without passing null delay
  * @see {@link https://overreacted.io/making-setinterval-declarative-with-react-hooks} for implementation details
  * @example
  * useInterval(() => {
  *   setCount(count + 1);
  * }, 1000);
  */
-export function useInterval(callback, delay) {
+export function useInterval(callback, delay, { enabled = true } = {}) {
   const savedCallback = useRef(callback);
 
   // Remember the latest callback
@@ -24,7 +26,7 @@ export function useInterval(callback, delay) {
 
   // Set up the interval
   useEffect(() => {
-    if (delay === null) {
+    if (delay === null || !enabled) {
       return;
     }
 
@@ -34,7 +36,7 @@ export function useInterval(callback, delay) {
 
     const id = setInterval(tick, delay);
     return () => clearInterval(id);
-  }, [delay]);
+  }, [delay, enabled]);
 }
 
 /**

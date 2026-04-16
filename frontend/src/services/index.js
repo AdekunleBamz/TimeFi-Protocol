@@ -50,4 +50,5 @@ export {
   clearAll,
   StorageKeys,
   session,
+  resetStorageAvailabilityCache,
 } from './storage';

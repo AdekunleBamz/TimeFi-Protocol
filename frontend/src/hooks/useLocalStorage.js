@@ -51,8 +51,16 @@ export function useLocalStorage(key, initialValue) {
     // Sync with other tabs
     useEffect(() => {
         const handleStorageChange = (e) => {
-            if (e.key === key && e.newValue !== null) {
-                setStoredValue(JSON.parse(e.newValue));
+            if (e.key !== key) return;
+            if (e.newValue === null) {
+                // Key was removed in another tab
+                setStoredValue(initialValue instanceof Function ? initialValue() : initialValue);
+            } else {
+                try {
+                    setStoredValue(JSON.parse(e.newValue));
+                } catch {
+                    // Ignore malformed values from other tabs
+                }
             }
         };
 

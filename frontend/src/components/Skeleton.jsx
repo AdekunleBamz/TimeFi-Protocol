@@ -45,7 +45,7 @@ export function Skeleton({
     ...style,
   };
 
-  return <div className={classes} style={computedStyle} />;
+  return <div className={classes} style={computedStyle} aria-hidden="true" />;
 }
 
 /**

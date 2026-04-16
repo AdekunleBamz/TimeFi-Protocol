@@ -212,7 +212,7 @@ export function VaultDetails() {
   return (
     <div className="vault-details">
       <header className="vault-details-header">
-        <button className="back-button" onClick={() => navigate(-1)}>
+        <button type="button" className="back-button" onClick={() => navigate(-1)}>
           ← Back
         </button>
         <div className="vault-header-row">

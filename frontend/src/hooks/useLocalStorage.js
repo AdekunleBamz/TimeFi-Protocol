@@ -48,6 +48,17 @@ export function useLocalStorage(key, initialValue) {
         }
     }, [key, storedValue]);
 
+    const removeValue = useCallback(() => {
+        try {
+            setStoredValue(initialValue instanceof Function ? initialValue() : initialValue);
+            if (typeof window !== 'undefined') {
+                window.localStorage.removeItem(key);
+            }
+        } catch (error) {
+            console.warn(`Error removing localStorage key "${key}":`, error);
+        }
+    }, [key, initialValue]);
+
     // Sync with other tabs
     useEffect(() => {
         const handleStorageChange = (e) => {
@@ -68,7 +79,7 @@ export function useLocalStorage(key, initialValue) {
         return () => window.removeEventListener('storage', handleStorageChange);
     }, [key]);
 
-    return [storedValue, setValue];
+    return [storedValue, setValue, removeValue];
 }
 
 export default useLocalStorage;

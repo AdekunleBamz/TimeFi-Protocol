@@ -100,6 +100,8 @@ export const VAULT_STATUS = {
   UNLOCKED: 'unlocked',
   WITHDRAWN: 'withdrawn',
   EMERGENCY: 'emergency',
+  EXPIRED: 'expired',
+  CANCELLED: 'cancelled',
 };
 
 /**

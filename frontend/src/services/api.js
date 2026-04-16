@@ -59,25 +59,34 @@ function safeParseInt(value, fallback = 0) {
  */
 async function fetchAPI(endpoint, options = {}) {
   const url = `${HIRO_API_URL}${endpoint}`;
-  
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
+  const { timeout = 15000, ...fetchOptions } = options;
 
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
-    throw new Error(error.error || `API Error: ${response.status}`);
+  const controller = new AbortController();
+  const timerId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(url, {
+      ...fetchOptions,
+      signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        ...fetchOptions.headers,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.error || `API Error: ${response.status}`);
+    }
+
+    if (response.status === 204) {
+      return {};
+    }
+
+    return response.json();
+  } finally {
+    clearTimeout(timerId);
   }
-
-  if (response.status === 204) {
-    return {};
-  }
-
-  return response.json();
 }
 
 /**

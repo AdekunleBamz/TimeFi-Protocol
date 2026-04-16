@@ -55,6 +55,7 @@ export function Card({
       onKeyDown={clickable ? handleKeyDown : undefined}
       role={clickable ? 'button' : undefined}
       tabIndex={clickable ? 0 : undefined}
+      aria-disabled={props.disabled ? true : undefined}
       {...props}
     >
       {children}

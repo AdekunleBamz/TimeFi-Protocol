@@ -150,3 +150,19 @@ export const BLOCKS_PER_DAY = Math.round(86400 / STACKS_BLOCK_TIME);
  * @constant {number}
  */
 export const FEE_BPS = 50;
+
+/**
+ * Minimum lock duration in blocks accepted by the vault contract.
+ * Equivalent to approximately 1 hour on mainnet.
+ *
+ * @constant {number}
+ */
+export const MIN_LOCK_BLOCKS = 6;
+
+/**
+ * Maximum lock duration in blocks accepted by the vault contract.
+ * Equivalent to approximately 1 year on mainnet.
+ *
+ * @constant {number}
+ */
+export const MAX_LOCK_BLOCKS = 52560;

@@ -24,7 +24,7 @@
 // Data fetching
 export { useReadOnly } from './useReadOnly';
 export { useContract } from './useContract';
-export { useAsync } from './useAsync';
+export { useAsync, useFetch } from './useAsync';
 export { useBlockHeight } from './useBlockHeight';
 
 // State management

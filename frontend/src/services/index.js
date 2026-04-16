@@ -37,6 +37,7 @@ export {
   emergencyWithdraw,
   claimRewards,
   approveBot,
+  revokeBot,
   vote,
   estimateFee,
 } from './transactions';

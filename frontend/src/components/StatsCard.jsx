@@ -40,11 +40,11 @@ export function StatsCard({
 
   if (loading) {
     return (
-      <div className={`stats-card stats-card-loading ${className}`}>
-        <div className="stats-skeleton stats-skeleton-icon" />
+      <div className={`stats-card stats-card-loading ${className}`} aria-busy="true">
+        <div className="stats-skeleton stats-skeleton-icon" aria-hidden="true" />
         <div className="stats-content">
-          <div className="stats-skeleton stats-skeleton-label" />
-          <div className="stats-skeleton stats-skeleton-value" />
+          <div className="stats-skeleton stats-skeleton-label" aria-hidden="true" />
+          <div className="stats-skeleton stats-skeleton-value" aria-hidden="true" />
         </div>
       </div>
     );

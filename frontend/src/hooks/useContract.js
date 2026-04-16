@@ -159,12 +159,20 @@ export function useContract() {
     };
   }, []);
 
+  const revokeBot = useCallback((botAddress) => {
+    return {
+      functionName: 'revoke-bot',
+      functionArgs: [principalCV(botAddress)],
+    };
+  }, []);
+
   return {
     createVault,
     withdraw,
     emergencyWithdraw,
     claimRewards,
     approveBot,
+    revokeBot,
     loading,
     error: lastError,
   };

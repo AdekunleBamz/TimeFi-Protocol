@@ -244,6 +244,17 @@ In this contract variant, non-contract principals resolve to `false`.
 | `get-max-lock` | `u52560` (~1 year) |
 | `get-fee-bps` | `u50` (0.5%) |
 
+**SDK lock period presets (in blocks):**
+
+| Name | Blocks | Approx. duration |
+|------|--------|-----------------|
+| `MONTH_1` | 4,320 | ~30 days |
+| `MONTH_3` | 12,960 | ~90 days |
+| `MONTH_6` | 25,920 | ~180 days |
+| `MONTH_9` | 38,880 | ~270 days |
+| `YEAR_1` | 52,560 | ~1 year |
+| `YEAR_2` | 105,120 | ~2 years |
+
 ---
 
 ### Fee Calculators

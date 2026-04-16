@@ -174,6 +174,7 @@ const tvl = await client.getTVL();
 | `request-withdraw` | `(id uint)` | Queue a withdrawal after maturity |
 | `process-withdraw` | `(id uint)` | Settle a mature withdrawal as deployer |
 | `approve-bot` | `(bot principal)` | Approve a bot principal |
+| `revoke-bot` | `(bot principal)` | Remove an approved bot principal |
 
 ### 🔍 Read-Only Contract Functions
 

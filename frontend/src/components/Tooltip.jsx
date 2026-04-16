@@ -4,7 +4,7 @@
  * @module components/Tooltip
  * @author adekunlebamz
  */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { createPortal } from 'react-dom';
 import './Tooltip.css';
 
@@ -37,6 +37,7 @@ export function Tooltip({
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const triggerRef = useRef(null);
   const timeoutRef = useRef(null);
+  const tooltipId = useId();
 
   const showTooltip = () => {
     timeoutRef.current = setTimeout(() => {
@@ -72,6 +73,7 @@ export function Tooltip({
       <span
         ref={triggerRef}
         className="tooltip-trigger"
+        aria-describedby={isVisible ? tooltipId : undefined}
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
         onFocus={showTooltip}
@@ -82,6 +84,7 @@ export function Tooltip({
       
       {isVisible && createPortal(
         <div
+          id={tooltipId}
           className={`tooltip tooltip-${position} ${className}`}
           style={{ left: coords.x, top: coords.y }}
           role="tooltip"

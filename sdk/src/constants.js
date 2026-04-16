@@ -134,3 +134,11 @@ export const MIN_DEPOSIT = 10_000;
  * // 1000000000000 (1M STX in microSTX)
  */
 export const MAX_DEPOSIT = 1_000_000 * MICROSTX_IN_STX;
+
+/**
+ * Approximate number of Stacks blocks produced per day on mainnet.
+ * Based on the 600-second average block time (144 blocks per day).
+ *
+ * @constant {number}
+ */
+export const BLOCKS_PER_DAY = Math.round(86400 / STACKS_BLOCK_TIME);

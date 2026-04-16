@@ -87,10 +87,18 @@ export function Tab({ children, value, disabled = false, className = '' }) {
   const tabId = `${baseId}-${value}-tab`;
   const panelId = `${baseId}-${value}-panel`;
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (!disabled) setActiveTab(value);
+    }
+  };
+
   return (
     <button
       className={`tab ${isActive ? 'tab-active' : ''} ${className}`}
       onClick={() => !disabled && setActiveTab(value)}
+      onKeyDown={handleKeyDown}
       disabled={disabled}
       role="tab"
       id={tabId}

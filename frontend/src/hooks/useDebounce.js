@@ -47,6 +47,14 @@ export function useDebounce(value, delay = 300) {
 export function useDebouncedCallback(callback, delay = 300) {
     const timeoutRef = useRef();
 
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
+
     return useCallback((...args) => {
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);

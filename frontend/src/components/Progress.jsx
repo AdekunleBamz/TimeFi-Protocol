@@ -45,6 +45,7 @@ export function Progress({
         aria-valuenow={value}
         aria-valuemin={0}
         aria-valuemax={max}
+        aria-valuetext={`${Math.round(percentage)}%`}
       >
         {showLabel && (
           <span className="progress-label">{Math.round(percentage)}%</span>

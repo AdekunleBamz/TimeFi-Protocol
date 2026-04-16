@@ -104,6 +104,12 @@ export const env = {
   getExplorerTxUrl(txId) {
     return `${this.explorerUrl}/txid/${txId}?chain=${this.explorerChain}`;
   },
+
+  // Human-readable network label for display in the UI
+  getNetworkLabel() {
+    const labels = { mainnet: 'Mainnet', testnet: 'Testnet', devnet: 'Devnet' };
+    return labels[this.network] || this.network;
+  },
 };
 
 export default env;

@@ -36,7 +36,7 @@ export function EmptyState({
   className = '',
 }) {
   return (
-    <div className={`empty-state ${className}`}>
+    <div className={`empty-state ${className}`} aria-live="polite">
       {icon && (
         <div className="empty-state-icon">
           {icon}

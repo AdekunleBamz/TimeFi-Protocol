@@ -99,7 +99,7 @@ export function Button({
           }}
         />
       ))}
-      {loading && <span className="btn-spinner" />}
+      {loading && <span className="btn-spinner" role="status" aria-label="Loading" />}
       <span className={loading ? 'btn-text-hidden' : ''}>{children}</span>
     </button>
   );

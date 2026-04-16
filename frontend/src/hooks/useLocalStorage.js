@@ -20,14 +20,17 @@ import { useState, useEffect, useCallback } from 'react';
 export function useLocalStorage(key, initialValue) {
     // Get from local storage then parse stored json or return initialValue
     const readValue = useCallback(() => {
-        if (typeof window === 'undefined') return initialValue;
+        if (typeof window === 'undefined') {
+            return initialValue instanceof Function ? initialValue() : initialValue;
+        }
 
         try {
             const item = window.localStorage.getItem(key);
-            return item ? JSON.parse(item) : initialValue;
+            if (item !== null) return JSON.parse(item);
+            return initialValue instanceof Function ? initialValue() : initialValue;
         } catch (error) {
             console.warn(`Error reading localStorage key "${key}":`, error);
-            return initialValue;
+            return initialValue instanceof Function ? initialValue() : initialValue;
         }
     }, [initialValue, key]);
 

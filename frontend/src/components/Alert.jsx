@@ -112,9 +112,10 @@ export function Alert({
 
           {dismissible && (
             <button
+              type="button"
               className="alert-dismiss"
               onClick={onDismiss}
-              aria-label="Dismiss"
+              aria-label="Dismiss alert"
             >
               ×
             </button>

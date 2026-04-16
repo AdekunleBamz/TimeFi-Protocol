@@ -36,6 +36,7 @@ export default defineConfig({
     fileParallelism: false,
     maxWorkers: 1,
     testTimeout: 30000,
+    reporter: ['verbose'],
     setupFiles: [
       vitestSetupFilePath,
       // custom setup files can be added here

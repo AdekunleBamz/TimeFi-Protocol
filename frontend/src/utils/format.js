@@ -24,7 +24,8 @@ export {
     formatNumber,
     formatPercent,
     formatDate,
-    formatRelativeTime
+    formatRelativeTime,
+    formatBlocksToTime
 } from 'timefi-sdk';
 
 /**

@@ -205,8 +205,8 @@ FEE_BPS: 50 (0.5%)
 
 ### 🌐 Network API Endpoints
 
-- **Mainnet**: `https://stacks-node-api.mainnet.stacks.co`
-- **Testnet**: `https://stacks-node-api.testnet.stacks.co`
+- **Mainnet**: `https://api.mainnet.hiro.so`
+- **Testnet**: `https://api.testnet.hiro.so`
 
 ### ⚙️ Deployment Settings
 - **Clarinet Settings**: [Clarinet.toml](Clarinet.toml)

@@ -109,19 +109,16 @@ export const VAULT_STATUS = {
  * @type {Object.<number, string>}
  */
 export const ERROR_CODES = {
-  100: 'Owner only',
+  100: 'Unauthorized',
   101: 'Not found',
-  102: 'Already exists',
-  103: 'Unauthorized',
-  104: 'Invalid amount',
-  105: 'Invalid period',
-  106: 'Still locked',
-  107: 'Already withdrawn',
-  108: 'Insufficient balance',
-  109: 'Emergency mode active',
-  110: 'Bot not approved',
-  111: 'Cooldown active',
-  112: 'Max vaults reached',
+  102: 'Inactive vault',
+  103: 'Invalid amount',
+  104: 'Invalid lock period',
+  105: 'Already exists',
+  106: 'Bot not approved',
+  107: 'No beneficiary set',
+  108: 'Same owner',
+  109: 'Protocol paused',
 };
 
 /**

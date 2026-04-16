@@ -45,18 +45,23 @@ export function CopyButton({
         setCopied(false);
       }, timeout);
     } catch (err) {
-      // Fallback for older browsers
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      
-      setCopied(true);
-      setTimeout(() => setCopied(false), timeout);
+      // Fallback for environments where clipboard API is unavailable
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+        document.body.appendChild(textarea);
+        textarea.select();
+        // eslint-disable-next-line no-restricted-syntax
+        const success = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (!success) return;
+        setCopied(true);
+        setTimeout(() => setCopied(false), timeout);
+      } catch (_) {
+        // Copy not supported — fail silently
+      }
     }
   }, [text, timeout]);
 

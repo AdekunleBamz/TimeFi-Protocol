@@ -229,6 +229,7 @@ export function VaultDetails() {
               className="vault-header-link"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="View vault owner on Hiro Explorer (opens in new tab)"
             >
               View owner
             </a>

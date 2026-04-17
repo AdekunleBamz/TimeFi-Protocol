@@ -90,7 +90,7 @@ export const env = {
     const key = String(contractName || '').trim();
     const name = this.contracts[key] ?? key;
     if (!name) {
-      throw new Error('contractName is required');
+      throw new Error(`Unknown contract: "${contractName}"`);
     }
     return `${this.contractAddress}.${name}`;
   },

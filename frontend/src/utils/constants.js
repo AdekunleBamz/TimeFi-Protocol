@@ -62,6 +62,7 @@ export const BLOCK_TIME_SECONDS = BLOCK_TIME.MAINNET;
 export const API_ENDPOINTS = {
   MAINNET: 'https://api.mainnet.hiro.so',
   TESTNET: 'https://api.testnet.hiro.so',
+  DEVNET: 'http://localhost:3999',
 };
 
 /**

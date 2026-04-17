@@ -153,10 +153,14 @@ export function useFetch(fetcher, deps = []) {
     
     try {
       const result = await fetcher();
-      setState({ data: result, loading: false, error: null });
+      if (mountedRef.current) {
+        setState({ data: result, loading: false, error: null });
+      }
       return result;
     } catch (error) {
-      setState({ data: null, loading: false, error });
+      if (mountedRef.current) {
+        setState({ data: null, loading: false, error });
+      }
       throw error;
     }
   }, [fetcher]);

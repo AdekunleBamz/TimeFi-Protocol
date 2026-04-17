@@ -158,11 +158,10 @@ export function removeItem(key) {
 export function clearAll() {
   try {
     if (isStorageAvailable()) {
-      Object.keys(window.localStorage).forEach((key) => {
-        if (key.startsWith(STORAGE_PREFIX)) {
-          window.localStorage.removeItem(key);
-        }
-      });
+      const keysToRemove = Object.keys(window.localStorage).filter((key) =>
+        key.startsWith(STORAGE_PREFIX)
+      );
+      keysToRemove.forEach((key) => window.localStorage.removeItem(key));
     }
     memoryStorage.clear();
   } catch (error) {

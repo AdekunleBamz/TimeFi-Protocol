@@ -71,6 +71,9 @@ export function useUndoRedo(initialState) {
  * Mock for useHistory (often provided by react-router, but here as a utility)
  */
 export function useHistory() {
+    if (typeof window === 'undefined') {
+        return { push: () => {}, replace: () => {}, goBack: () => {} };
+    }
     return {
         push: (path) => window.history.pushState({}, '', path),
         replace: (path) => window.history.replaceState({}, '', path),

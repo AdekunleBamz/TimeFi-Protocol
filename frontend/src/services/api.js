@@ -124,7 +124,10 @@ export async function getBlockHeight() {
  * console.log(`Balance: ${balance} microSTX`);
  */
 export async function getAccountBalance(address) {
-  const data = await fetchAPI(`/extended/v1/address/${address}/stx`);
+  if (!address || typeof address !== 'string') {
+    throw new Error('A valid address is required');
+  }
+  const data = await fetchAPI(`/extended/v1/address/${address.trim()}/stx`);
   return {
     balance: safeParseInt(data.balance),
     locked: safeParseInt(data.locked),

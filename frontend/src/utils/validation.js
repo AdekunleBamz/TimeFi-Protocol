@@ -66,6 +66,9 @@ export function validateVaultId(id) {
   if (id === undefined || id === null || id === '' || isNaN(numId)) {
     return { valid: false, error: 'A valid Vault ID is required' };
   }
+  if (!Number.isInteger(numId)) {
+    return { valid: false, error: 'Vault ID must be a whole number' };
+  }
   if (numId < 0) {
     return { valid: false, error: 'Vault ID cannot be negative' };
   }

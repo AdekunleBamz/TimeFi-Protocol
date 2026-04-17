@@ -4,7 +4,7 @@
  * @module components/CopyButton
  * @author adekunlebamz
  */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import './CopyButton.css';
 
 /**
@@ -33,6 +33,13 @@ export function CopyButton({
   variant = 'icon', // 'icon' or 'text'
 }) {
   const [copied, setCopied] = useState(false);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const handleCopy = useCallback(async () => {
     if (!text) return;
@@ -40,8 +47,8 @@ export function CopyButton({
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      
-      setTimeout(() => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
         setCopied(false);
       }, timeout);
     } catch (err) {
@@ -58,7 +65,8 @@ export function CopyButton({
         document.body.removeChild(textarea);
         if (!success) return;
         setCopied(true);
-        setTimeout(() => setCopied(false), timeout);
+        if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => setCopied(false), timeout);
       } catch (_) {
         // Copy not supported — fail silently
       }

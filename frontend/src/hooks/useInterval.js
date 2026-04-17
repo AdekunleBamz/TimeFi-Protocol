@@ -120,6 +120,7 @@ export function usePolling(fetcher, interval, options = {}) {
         if (retryOnError && retriesRef.current < maxRetries) {
           retriesRef.current++;
         } else {
+          retriesRef.current = 0;
           onError?.(error);
         }
       }

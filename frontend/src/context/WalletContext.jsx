@@ -49,6 +49,7 @@ export function WalletProvider({ children }) {
   const [isConnecting, setIsConnecting] = useState(false);
   const [balance, setBalance] = useState(0);
   const networkType = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
+const BALANCE_POLL_INTERVAL_MS = 60_000;
 
   const network = useMemo(() => (
     networkType === 'mainnet' ? new StacksMainnet() : new StacksTestnet()
@@ -99,7 +100,7 @@ export function WalletProvider({ children }) {
     };
 
     fetchBalance();
-    const interval = setInterval(fetchBalance, 60000);
+    const interval = setInterval(fetchBalance, BALANCE_POLL_INTERVAL_MS);
 
     return () => {
       mounted = false;

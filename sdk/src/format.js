@@ -58,7 +58,7 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
  * @returns {string} Formatted number string.
  * @throws {Error} If val cannot be converted to a number.
  */
- export function formatNumber(numberToFormat, fractionDigits = 2) {
+export function formatNumber(numberToFormat, fractionDigits = 2) {
     if (numberToFormat === undefined || numberToFormat === null) return '0.00';
     const parsedNumber = Number(numberToFormat);
     if (isNaN(parsedNumber)) return '0.00';
@@ -93,7 +93,7 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
  * @returns {string} Formatted date string or '--' if invalid.
  * @throws {Error} If date cannot be parsed.
  */
- export function formatDate(dateToFormat) {
+export function formatDate(dateToFormat) {
     if (dateToFormat === undefined || dateToFormat === null || dateToFormat === '') return '--';
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
@@ -110,7 +110,7 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
  * @returns {string} Formatted relative time string.
  * @throws {Error} If date cannot be parsed.
  */
- export function formatRelativeTime(dateToFormat) {
+export function formatRelativeTime(dateToFormat) {
     if (dateToFormat === undefined || dateToFormat === null || dateToFormat === '') return '--';
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';

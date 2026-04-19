@@ -186,6 +186,9 @@ export async function getAccountTransactions(address, options = {}) {
  * console.log(`Transaction status: ${tx.status}`);
  */
 export async function getTransaction(txId) {
+  if (!txId || typeof txId !== 'string') {
+    throw new Error('A valid transaction ID is required');
+  }
   const data = await fetchAPI(`/extended/v1/tx/${txId}`);
   return normalizeTransaction(data);
 }

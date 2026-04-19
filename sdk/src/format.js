@@ -16,7 +16,7 @@
  * @returns {string} Formatted STX string.
  * @throws {Error} If microStx cannot be converted to a number.
  */
- export const formatSTX = (amountMicroStx) => {
+export const formatSTX = (amountMicroStx) => {
     if (amountMicroStx === undefined || amountMicroStx === null) return '0.000000';
     try {
         // Extract inner value if wrapped in an object

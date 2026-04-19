@@ -128,6 +128,28 @@
     ERR_NOT_FOUND))
 
 ;; -------------------------------------------------------
+;; PUBLIC: WITHDRAW (owner initiates, vault marked inactive)
+;; In the custodian model the DEPLOYER holds STX.
+;; This function validates ownership and lock expiry, then
+;; deactivates the vault so process-withdraw can release funds.
+;; -------------------------------------------------------
+
+(define-public (withdraw (id uint))
+  (let (
+    (vault (unwrap! (map-get? vaults id) ERR_NOT_FOUND))
+    (vault-amount (get amount vault))
+  )
+    (asserts! (is-eq (get owner vault) tx-sender) ERR_UNAUTHORIZED)
+    (asserts! (get active vault) ERR_INACTIVE)
+    (asserts! (>= tenure-height (get unlock-time vault)) ERR_LOCK_PERIOD)
+
+    (map-set vaults id (merge vault { amount: u0, active: false }))
+    (var-set tvl (- (var-get tvl) vault-amount))
+
+    (print { event: "withdraw", id: id, owner: tx-sender })
+    (ok true)))
+
+;; -------------------------------------------------------
 ;; PUBLIC: PROCESS WITHDRAW (deployer sends STX to owner)
 ;; -------------------------------------------------------
 

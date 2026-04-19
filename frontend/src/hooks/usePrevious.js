@@ -75,8 +75,8 @@ export function useHistory() {
         return { push: () => {}, replace: () => {}, goBack: () => {} };
     }
     return {
-        push: (path) => window.history.pushState({}, '', path),
-        replace: (path) => window.history.replaceState({}, '', path),
+        push: (path) => window.history.pushState({}, null, path),
+        replace: (path) => window.history.replaceState({}, null, path),
         goBack: () => window.history.back(),
     };
 }

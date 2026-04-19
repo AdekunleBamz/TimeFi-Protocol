@@ -60,14 +60,14 @@ export const CONTRACT_NAMES = Object.freeze({
  * console.log(LOCK_PERIODS.MONTH_1);
  * // 4320 (30 days in blocks)
  */
-export const LOCK_PERIODS = {
+export const LOCK_PERIODS = Object.freeze({
     MONTH_1: 4320,
     MONTH_3: 12960,
     MONTH_6: 25920,
     MONTH_9: 38880,
     YEAR_1: 52560,
     YEAR_2: 105120,
-};
+});
 
 /**
  * Clarity response type identifiers for contract call results.
@@ -78,10 +78,10 @@ export const LOCK_PERIODS = {
  * @property {number} OK - Success response type identifier (7)
  * @property {number} ERR - Error response type identifier (8)
  */
-export const RESPONSE_TYPES = {
+export const RESPONSE_TYPES = Object.freeze({
     OK: 7,
     ERR: 8,
-};
+});
 
 /**
  * Average time between Stacks mainnet blocks in seconds.

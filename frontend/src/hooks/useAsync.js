@@ -57,19 +57,19 @@ export function useAsync(asyncFunction, options = {}) {
 
     try {
       const result = await asyncFnRef.current(...args);
-      
+
       if (mountedRef.current) {
         setState({ data: result, loading: false, error: null });
         onSuccess?.(result);
       }
-      
+
       return result;
     } catch (error) {
       if (mountedRef.current) {
         setState({ data: null, loading: false, error });
         onError?.(error);
       }
-      
+
       throw error;
     }
   }, [onSuccess, onError]);
@@ -124,13 +124,13 @@ export function useFetch(fetcher, deps = []) {
 
   useEffect(() => {
     mountedRef.current = true;
-    
+
     const fetchData = async () => {
       setState(prev => ({ ...prev, loading: true, error: null }));
-      
+
       try {
         const result = await fetcher();
-        
+
         if (mountedRef.current) {
           setState({ data: result, loading: false, error: null });
         }
@@ -150,7 +150,7 @@ export function useFetch(fetcher, deps = []) {
 
   const refetch = useCallback(async () => {
     setState(prev => ({ ...prev, loading: true, error: null }));
-    
+
     try {
       const result = await fetcher();
       if (mountedRef.current) {

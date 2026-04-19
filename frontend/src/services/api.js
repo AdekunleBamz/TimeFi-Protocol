@@ -164,7 +164,7 @@ export async function getAccountTransactions(address, options = {}) {
   const data = await fetchAPI(
     `/extended/v1/address/${address}/transactions?limit=${safeLimit}&offset=${safeOffset}`
   );
-  
+
   return {
     transactions: (data.results || []).map(normalizeTransaction),
     total: safeParseInt(data.total),
@@ -251,7 +251,7 @@ export async function callReadOnly(contractName, functionName, functionArgs = []
     functionArgs,
     senderAddress: senderAddress || CONTRACT_ADDRESS,
   });
-  
+
   return cvToJSON(result);
 }
 
@@ -280,11 +280,11 @@ export async function getVaultDetails(vaultId) {
     'get-vault-details',
     [uintCV(vaultId)]
   );
-  
+
   if (result.type === 'none') {
     return null;
   }
-  
+
   const vault = result.value;
   return {
     id: vaultId,
@@ -315,11 +315,11 @@ export async function getUserVaults(address) {
     'get-user-vaults',
     [standardPrincipalCV(address)]
   );
-  
+
   if (result.type === 'none') {
     return [];
   }
-  
+
   return result.value.map(v => safeParseInt(v.value));
 }
 
@@ -341,7 +341,7 @@ export async function getVaultCount() {
     'get-vault-count',
     []
   );
-  
+
   return safeParseInt(result.value);
 }
 
@@ -364,7 +364,7 @@ export async function getPendingRewards(vaultId) {
     'get-pending-rewards',
     [uintCV(vaultId)]
   );
-  
+
   return safeParseInt(result.value);
 }
 

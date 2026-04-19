@@ -82,7 +82,7 @@ export function useBreakpoint() {
   const isMobile = useMediaQuery('(max-width: 639px)');
   const isTablet = useMediaQuery('(min-width: 640px) and (max-width: 1023px)');
   const isDesktop = useMediaQuery('(min-width: 1024px) and (max-width: 1279px)');
-  
+
   return useMemo(() => {
     if (isMobile) return 'mobile';
     if (isTablet) return 'tablet';

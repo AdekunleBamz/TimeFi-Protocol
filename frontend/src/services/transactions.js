@@ -228,7 +228,7 @@ export function estimateFee(functionName) {
     'approve-bot': 2000,
     'revoke-bot': 2000,
   });
-  
+
   return fees[functionName] ?? 3000;
 }
 

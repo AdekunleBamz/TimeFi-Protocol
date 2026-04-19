@@ -62,3 +62,5 @@ export { Tabs, TabList, Tab, TabPanels, TabPanel } from './Tabs';
 export { CopyButton } from './CopyButton';
 export { EmptyState } from './EmptyState';
 export { ErrorBoundary, withErrorBoundary } from './ErrorBoundary';
+export { ConfirmModal } from './ConfirmModal';
+export { ScrollToTop } from './ScrollToTop';

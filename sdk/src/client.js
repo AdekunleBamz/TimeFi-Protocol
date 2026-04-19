@@ -27,7 +27,7 @@ const ClarityResponseType = {
 /**
  * Client for interacting with the TimeFi Protocol on the Stacks blockchain.
  */
- export class TimeFiClient {
+export class TimeFiClient {
     /** @type {import('@stacks/network').StacksNetwork} @private */
     #network;
     /** @type {string} @private */
@@ -58,7 +58,7 @@ const ClarityResponseType = {
      * @returns {Promise<any>} The parsed result of the call.
      * @private
      */
-      async callReadOnly(functionName, functionArgs = [], senderAddress) {
+    async callReadOnly(functionName, functionArgs = [], senderAddress) {
         try {
             const callResult = await callReadOnlyFunction({
                 contractAddress: this.#contractAddress,
@@ -85,7 +85,7 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} The vault details.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async getVault(id) {
+    async getVault(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('get-vault', [uintCV(id)]);
     }
@@ -107,7 +107,7 @@ const ClarityResponseType = {
      * @returns {Promise<boolean>} True if withdrawal is possible.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async canWithdraw(id) {
+    async canWithdraw(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('can-withdraw', [uintCV(id)]);
     }
@@ -118,7 +118,7 @@ const ClarityResponseType = {
      * @returns {Promise<boolean>} True if the vault is active.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async isActive(id) {
+    async isActive(id) {
         this.#validateVaultId(id);
         return this.callReadOnly('is-active', [uintCV(id)]);
     }
@@ -129,7 +129,7 @@ const ClarityResponseType = {
      * @returns {Promise<string>} The owner's Stacks address.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async getVaultOwner(id) {
+    async getVaultOwner(id) {
         const vault = await this.getVault(id);
         return vault.owner;
     }
@@ -168,7 +168,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The vault balance in microSTX.
      * @throws {Error} If vault ID is missing or invalid.
      */
-      async getVaultAmount(id) {
+    async getVaultAmount(id) {
         const vault = await this.getVault(id);
         return vault.amount;
     }
@@ -189,7 +189,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The block height for unlocking.
      * @throws {Error} If vault ID is missing or invalid.
      */
-      async getUnlockBlock(id) {
+    async getUnlockBlock(id) {
         const vault = await this.getVault(id);
         return vault['unlock-time'];
     }
@@ -219,7 +219,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The lock duration in blocks.
      * @throws {Error} If vault ID is missing or invalid.
      */
-      async getVaultDuration(id) {
+    async getVaultDuration(id) {
         const vault = await this.getVault(id);
         return vault['unlock-time'] - vault['lock-time'];
     }
@@ -240,7 +240,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The creation block height.
      * @throws {Error} If vault ID is missing or invalid.
      */
-      async getCreatedAt(id) {
+    async getCreatedAt(id) {
         const vault = await this.getVault(id);
         return vault['lock-time'];
     }
@@ -261,7 +261,7 @@ const ClarityResponseType = {
      * @returns {Promise<boolean>} True if the lock period has ended.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async isExpired(id) {
+    async isExpired(id) {
         this.#validateVaultId(id);
         const timeRemaining = await this.getTimeRemaining(id);
         return timeRemaining === 0;
@@ -273,7 +273,7 @@ const ClarityResponseType = {
      * @returns {Promise<'Active'|'Expired'|'Unknown'>} The current vault status.
      * @throws {Error} If vault ID is missing or invalid.
      */
-     async getVaultStatus(id) {
+    async getVaultStatus(id) {
         const [active, timeRemaining] = await Promise.all([
             this.isActive(id),
             this.getTimeRemaining(id)
@@ -290,7 +290,7 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} Object containing owner, balance, duration, and status.
      * @throws {Error} If vault ID is missing or invalid.
      */
-      async getVaultDetails(id) {
+    async getVaultDetails(id) {
         const [owner, amount, duration, status] = await Promise.all([
             this.getVaultOwner(id),
             this.getVaultAmount(id),
@@ -337,7 +337,7 @@ const ClarityResponseType = {
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<Object>} Object containing static vault properties.
      */
-     async getVaultStaticData(id) {
+    async getVaultStaticData(id) {
         const [owner, createdAt, duration] = await Promise.all([
             this.getVaultOwner(id),
             this.getCreatedAt(id),
@@ -351,7 +351,7 @@ const ClarityResponseType = {
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<number>} Blocks since creation.
      */
-     async getVaultAge(id) {
+    async getVaultAge(id) {
         const [createdAt, currentHeight] = await Promise.all([
             this.getCreatedAt(id),
             this.getBlockHeight()
@@ -377,7 +377,7 @@ const ClarityResponseType = {
      * @param {number} lockDurationBlocks - Duration in blocks.
      * @returns {Promise<number>} The estimated APY as a percentage.
      */
-     async getVaultApy(lockDurationBlocks) {
+    async getVaultApy(lockDurationBlocks) {
         if (!lockDurationBlocks || lockDurationBlocks <= 0) throw new Error('Lock duration must be greater than 0');
         // This is a client-side calculation based on protocol rules (placeholder for now)
         // Simplified formula: (bonus_per_block * blocks_per_year) / principal
@@ -388,7 +388,7 @@ const ClarityResponseType = {
      * Retrieves the complete protocol configuration.
      * @returns {Promise<Object>} Object containing version and status.
      */
-     async getProtocolConfig() {
+    async getProtocolConfig() {
         return this.getEmergencyStatus();
     }
  
@@ -407,7 +407,7 @@ const ClarityResponseType = {
      * Retrieves aggregated protocol metrics.
      * @returns {Promise<Object>} Object containing TVL, vault count, and block height.
      */
-     async getProtocolMetrics() {
+    async getProtocolMetrics() {
         const [stats, blockHeight] = await Promise.all([
             this.getProtocolStats(),
             this.getBlockHeight()
@@ -421,7 +421,7 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} Object containing address, nonce, balance, and vault data.
      * @throws {Error} If address is missing.
      */
-      async getAccountSummary(address) {
+    async getAccountSummary(address) {
         const data = await this.getAccountData(address);
         return {
             ...data,
@@ -465,7 +465,7 @@ const ClarityResponseType = {
      * Retrieves all global protocol data.
      * @returns {Promise<Object>} Object containing metrics, metadata, and config.
      */
-     async getProtocolData() {
+    async getProtocolData() {
         const [metrics, metadata, config] = await Promise.all([
             this.getProtocolMetrics(),
             this.getContractMetadata(),
@@ -478,7 +478,7 @@ const ClarityResponseType = {
      * Retrieves a simplified summary of global protocol data.
      * @returns {Promise<Object>} Object containing metrics and essential metadata.
      */
-     async getProtocolDataSummary() {
+    async getProtocolDataSummary() {
         const [metrics, metadata] = await Promise.all([
             this.getProtocolMetrics(),
             this.getContractMetadata()
@@ -529,7 +529,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The vault ID.
      * @throws {Error} If index is missing or invalid.
      */
-     async getVaultIdByIndex(index) {
+    async getVaultIdByIndex(index) {
         this.#validateNonNegativeInteger(index, 'Index');
         return this.callReadOnly('get-vault-id-by-index', [uintCV(index)]);
     }
@@ -541,7 +541,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The vault ID.
      * @throws {Error} If owner or index is missing.
      */
-     async getVaultIdByOwnerIndex(owner, index) {
+    async getVaultIdByOwnerIndex(owner, index) {
         const ownerAddress = this.#validateRequiredString(owner, 'Owner address');
         this.#validateNonNegativeInteger(index, 'Index');
         return this.callReadOnly('get-vault-id-by-owner-index', [principalCV(ownerAddress), uintCV(index)]);
@@ -553,7 +553,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The account nonce.
      * @throws {Error} If address is missing.
      */
-      async getNonce(address) {
+    async getNonce(address) {
         const account = this.#validateRequiredString(address, 'Address');
         return this.callReadOnly('get-nonce', [principalCV(account)]);
     }
@@ -572,7 +572,7 @@ const ClarityResponseType = {
      * Retrieves global protocol statistics.
      * @returns {Promise<Object>} Object containing TVL and total vault count.
      */
-     async getProtocolStats() {
+    async getProtocolStats() {
         const [tvl, count] = await Promise.all([
             this.getTVL(),
             this.getVaultCount()
@@ -586,7 +586,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The balance in microSTX.
      * @throws {Error} If address is missing.
      */
-      async getSTXBalance(address) {
+    async getSTXBalance(address) {
         const account = this.#validateRequiredString(address, 'Address');
         return this.callReadOnly('get-stx-balance', [principalCV(account)]);
     }
@@ -605,7 +605,7 @@ const ClarityResponseType = {
      * Gets the current Stacks blockchain block height.
      * @returns {Promise<number>} The current block height.
      */
-      async getBlockHeight() {
+    async getBlockHeight() {
         return this.callReadOnly('get-block-height', []);
     }
  
@@ -623,7 +623,7 @@ const ClarityResponseType = {
      * @returns {Promise<number[]>} Array of vault IDs.
      * @throws {Error} If owner address is missing.
      */
-      async getVaultsByOwner(owner) {
+    async getVaultsByOwner(owner) {
         const ownerAddress = this.#validateRequiredString(owner, 'Owner address');
         const count = await this.getVaultsByOwnerCount(ownerAddress);
         const tasks = [];
@@ -639,7 +639,7 @@ const ClarityResponseType = {
      * @returns {Promise<number>} The vault count for the owner.
      * @throws {Error} If owner address is missing.
      */
-     async getVaultsByOwnerCount(owner) {
+    async getVaultsByOwnerCount(owner) {
         const ownerAddress = this.#validateRequiredString(owner, 'Owner address');
         return this.callReadOnly('get-vault-count-by-owner', [principalCV(ownerAddress)]);
     }
@@ -660,7 +660,7 @@ const ClarityResponseType = {
      * @returns {Promise<Object>} Object containing nonce, STX balance, and vault IDs.
      * @throws {Error} If address is missing.
      */
-     async getAccountData(address) {
+    async getAccountData(address) {
         const [nonce, balance, vaults] = await Promise.all([
             this.getNonce(address),
             this.getSTXBalance(address),
@@ -673,7 +673,7 @@ const ClarityResponseType = {
      * Checks if the TimeFi Protocol is currently in a paused state.
      * @returns {Promise<boolean>} True if the protocol is paused.
      */
-     async isPaused() {
+    async isPaused() {
         return this.callReadOnly('is-paused', []);
     }
  
@@ -681,7 +681,7 @@ const ClarityResponseType = {
      * Retrieves the semantic version of the TimeFi Protocol contract.
      * @returns {Promise<string>} The protocol version string.
      */
-     async getProtocolVersion() {
+    async getProtocolVersion() {
         return this.callReadOnly('get-protocol-version', []);
     }
  
@@ -701,7 +701,7 @@ const ClarityResponseType = {
      * Gets the current Total Value Locked (TVL) in the protocol.
      * @returns {Promise<number>} The total microSTX locked in all vaults.
      */
-     async getTVL() {
+    async getTVL() {
         return this.callReadOnly('get-tvl', []);
     }
  

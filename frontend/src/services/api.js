@@ -155,6 +155,9 @@ export async function getAccountBalance(address) {
  * const { transactions, hasMore } = await getAccountTransactions('SP...', { limit: 10 });
  */
 export async function getAccountTransactions(address, options = {}) {
+  if (!address || typeof address !== 'string') {
+    throw new Error('A valid address is required');
+  }
   const { limit = 20, offset = 0 } = options;
   const safeLimit = Math.max(1, Math.min(50, safeParseInt(limit, 20)));
   const safeOffset = Math.max(0, safeParseInt(offset, 0));

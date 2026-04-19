@@ -11,6 +11,9 @@ const ACTIVE_NETWORK =
         ? 'mainnet'
         : 'testnet';
 
+/** How often to poll for new block data (in milliseconds). */
+const BLOCK_POLL_INTERVAL_MS = 60_000;
+
 /**
  * useBlockHeight - Fetch and poll current Stacks blockchain height.
  *
@@ -53,8 +56,8 @@ export function useBlockHeight() {
     useEffect(() => {
         fetchBlockHeight();
 
-        // Poll every 60 seconds
-        const interval = setInterval(fetchBlockHeight, 60000);
+        // Poll every minute
+        const interval = setInterval(fetchBlockHeight, BLOCK_POLL_INTERVAL_MS);
         return () => clearInterval(interval);
     }, [fetchBlockHeight]);
 

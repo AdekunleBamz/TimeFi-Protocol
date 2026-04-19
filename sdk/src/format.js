@@ -27,7 +27,7 @@ export const formatSTX = (amountMicroStx) => {
         // Convert to Number safely, handles string, bigint, etc.
         const value = Number(rawValue);
         if (isNaN(value)) return '0.000000';
-        
+
         const stx = value / 1_000_000;
         return stx.toLocaleString(undefined, {
             minimumFractionDigits: 0,
@@ -114,10 +114,10 @@ export function formatRelativeTime(dateToFormat) {
     if (dateToFormat === undefined || dateToFormat === null || dateToFormat === '') return '--';
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
-    
+
     const secondsDiff = Math.floor((dateInstance - new Date()) / 1000);
     const rtf = new Intl.RelativeTimeFormat('en-US', { numeric: 'auto' });
-    
+
     if (Math.abs(secondsDiff) < 60) return rtf.format(secondsDiff, 'second');
     const minutesDiff = Math.floor(secondsDiff / 60);
     if (Math.abs(minutesDiff) < 60) return rtf.format(minutesDiff, 'minute');

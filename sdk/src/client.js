@@ -32,7 +32,7 @@ export class TimeFiClient {
     #network;
     /** @type {string} @private */
     #contractAddress;
- 
+
     /**
      * Initializes a new TimeFiClient.
      * @param {'mainnet' | 'testnet'} [selectedNetwork='mainnet'] - The Stacks network to target.
@@ -68,11 +68,11 @@ export class TimeFiClient {
                 network: this.#network,
                 senderAddress: senderAddress || this.#contractAddress,
             });
-    
+
             // Handle common Clarity response patterns (ResponseCV)
-            const isResponseCV = callResult.type === ClarityResponseType.OK || 
+            const isResponseCV = callResult.type === ClarityResponseType.OK ||
                                callResult.type === ClarityResponseType.ERR;
-    
+
             return isResponseCV ? cvToValue(callResult.value) : cvToValue(callResult);
         } catch (error) {
             throw new Error(`Failed to call read-only function "${functionName}": ${error.message}`);
@@ -111,7 +111,7 @@ export class TimeFiClient {
         this.#validateVaultId(id);
         return this.callReadOnly('can-withdraw', [uintCV(id)]);
     }
- 
+
     /**
      * Checks if a vault is currently active (funds locked).
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -122,7 +122,7 @@ export class TimeFiClient {
         this.#validateVaultId(id);
         return this.callReadOnly('is-active', [uintCV(id)]);
     }
- 
+
     /**
      * Retrieves the owner address of a specific vault.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -133,7 +133,7 @@ export class TimeFiClient {
         const vault = await this.getVault(id);
         return vault.owner;
     }
- 
+
     /**
      * Alias for getVaultStatus. Retrieves the human-readable status of a specific vault.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -161,7 +161,7 @@ export class TimeFiClient {
     async isVaultExpired(id) {
         return this.isExpired(id);
     }
- 
+
     /**
      * Retrieves the current balance (in microSTX) of a specific vault.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -172,7 +172,7 @@ export class TimeFiClient {
         const vault = await this.getVault(id);
         return vault.amount;
     }
- 
+
     /**
      * Alias for getVaultAmount. Retrieves the locked STX amount in a specific vault.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -182,7 +182,7 @@ export class TimeFiClient {
     async getVaultBalance(id) {
         return this.getVaultAmount(id);
     }
- 
+
     /**
      * Gets the specific block height at which a vault can be unlocked.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -193,7 +193,7 @@ export class TimeFiClient {
         const vault = await this.getVault(id);
         return vault['unlock-time'];
     }
- 
+
     /**
      * Alias for getUnlockBlock. Retrieves the block height at which a vault can be unlocked.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -212,7 +212,7 @@ export class TimeFiClient {
     async getVaultUnlockHeight(id) {
         return this.getUnlockBlock(id);
     }
- 
+
     /**
      * Retrieves the original lock duration (in blocks) for a specific vault.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -223,7 +223,7 @@ export class TimeFiClient {
         const vault = await this.getVault(id);
         return vault['unlock-time'] - vault['lock-time'];
     }
- 
+
     /**
      * Alias for getVaultDuration. Retrieves the lock duration (in blocks) of a vault.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -233,7 +233,7 @@ export class TimeFiClient {
     async getVaultLockPeriod(id) {
         return this.getVaultDuration(id);
     }
- 
+
     /**
      * Retrieves the block height at which a specific vault was created.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -244,7 +244,7 @@ export class TimeFiClient {
         const vault = await this.getVault(id);
         return vault['lock-time'];
     }
- 
+
     /**
      * Alias for getCreatedAt. Retrieves the block height at which a vault was created.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -254,7 +254,7 @@ export class TimeFiClient {
     async getVaultCreationBlock(id) {
         return this.getCreatedAt(id);
     }
- 
+
     /**
      * Checks if a specific vault's lock duration has expired.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -266,7 +266,7 @@ export class TimeFiClient {
         const timeRemaining = await this.getTimeRemaining(id);
         return timeRemaining === 0;
     }
- 
+
     /**
      * Returns a human-readable status for a specific vault.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -278,12 +278,12 @@ export class TimeFiClient {
             this.isActive(id),
             this.getTimeRemaining(id)
         ]);
- 
+
         if (active && timeRemaining > 0) return 'Active';
         if (timeRemaining === 0) return 'Expired';
         return 'Unknown';
     }
- 
+
     /**
      * Retrieves all core details for a specific vault in a single object.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -297,10 +297,10 @@ export class TimeFiClient {
             this.getVaultDuration(id),
             this.getVaultStatus(id)
         ]);
- 
+
         return { id, owner, amount, duration, status };
     }
- 
+
     /**
      * Retrieves all core details for a specific vault in a single object.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -314,10 +314,10 @@ export class TimeFiClient {
             this.getCreatedAt(id),
             this.getUnlockBlock(id)
         ]);
- 
+
         return { ...details, timeRemaining, createdAt, unlockBlock };
     }
- 
+
     /**
      * Retrieves an extended summary of a vault, including expiry status.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -345,7 +345,7 @@ export class TimeFiClient {
         ]);
         return { id, owner, createdAt, duration };
     }
- 
+
     /**
      * Gets the number of blocks elapsed since a vault was created.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -358,7 +358,7 @@ export class TimeFiClient {
         ]);
         return Math.max(0, currentHeight - createdAt);
     }
- 
+
     /**
      * Calculates the number of blocks remaining until a vault can be unlocked.
      * @param {number|string|BigInt} id - The unique ID of the vault.
@@ -371,7 +371,7 @@ export class TimeFiClient {
         ]);
         return Math.max(0, unlockBlock - currentHeight);
     }
- 
+
     /**
      * Estimates the Annual Percentage Yield (APY) for a hypothetical vault.
      * @param {number} lockDurationBlocks - Duration in blocks.
@@ -383,7 +383,7 @@ export class TimeFiClient {
         // Simplified formula: (bonus_per_block * blocks_per_year) / principal
         return 5.0; // Placeholder 5% APY
     }
- 
+
     /**
      * Retrieves the complete protocol configuration.
      * @returns {Promise<Object>} Object containing version and status.
@@ -391,7 +391,7 @@ export class TimeFiClient {
     async getProtocolConfig() {
         return this.getEmergencyStatus();
     }
- 
+
     /**
      * Retrieves the core contract metadata (address and name).
      * @returns {Object} Contract address and vault contract name.
@@ -402,7 +402,7 @@ export class TimeFiClient {
             name: CONTRACT_NAMES.VAULT
         };
     }
- 
+
     /**
      * Retrieves aggregated protocol metrics.
      * @returns {Promise<Object>} Object containing TVL, vault count, and block height.
@@ -414,7 +414,7 @@ export class TimeFiClient {
         ]);
         return { ...stats, blockHeight };
     }
- 
+
     /**
      * Retrieves an aggregated summary for a specific account.
      * @param {string} address - The Stacks address to query.
@@ -428,7 +428,7 @@ export class TimeFiClient {
             vaultCount: data.vaults.length
         };
     }
- 
+
     /**
      * Retrieves a high-level overview for a specific account, including protocol vitals.
      * @param {string} address - The Stacks address to query.
@@ -460,7 +460,7 @@ export class TimeFiClient {
     async getAccountBalance(address) {
         return this.getSTXBalance(address);
     }
- 
+
     /**
      * Retrieves all global protocol data.
      * @returns {Promise<Object>} Object containing metrics, metadata, and config.
@@ -473,7 +473,7 @@ export class TimeFiClient {
         ]);
         return { ...metrics, metadata, ...config };
     }
- 
+
     /**
      * Retrieves a simplified summary of global protocol data.
      * @returns {Promise<Object>} Object containing metrics and essential metadata.
@@ -485,7 +485,7 @@ export class TimeFiClient {
         ]);
         return { ...metrics, contract: metadata.address };
     }
- 
+
     /**
      * Retrieves the essential health metrics of the protocol.
      * @returns {Promise<Object>} Object containing paused status, version, and TVL.
@@ -497,7 +497,7 @@ export class TimeFiClient {
         ]);
         return { ...status, tvl };
     }
- 
+
     /**
      * Gets the total number of vaults created in the protocol.
      * @returns {Promise<number>} The total vault count.
@@ -505,7 +505,7 @@ export class TimeFiClient {
     async getVaultCount() {
         return this.callReadOnly('get-vault-count', []);
     }
- 
+
     /**
      * Alias for getVaultCount. Gets the total number of vaults created in the protocol.
      * @returns {Promise<number>} The total vault count.
@@ -513,7 +513,7 @@ export class TimeFiClient {
     async getProtocolVaultCount() {
         return this.getVaultCount();
     }
- 
+
     /**
      * Gets the ID of the most recently created vault.
      * @returns {Promise<number>} The last vault ID.
@@ -522,7 +522,7 @@ export class TimeFiClient {
         const count = await this.getVaultCount();
         return count > 0 ? count : 0;
     }
- 
+
     /**
      * Retrieves a vault ID by its global registration index.
      * @param {number|string|BigInt} index - The global index of the vault.
@@ -533,7 +533,7 @@ export class TimeFiClient {
         this.#validateNonNegativeInteger(index, 'Index');
         return this.callReadOnly('get-vault-id-by-index', [uintCV(index)]);
     }
- 
+
     /**
      * Retrieves a vault ID by its owner-specific index.
      * @param {string} owner - The Stacks address of the owner.
@@ -546,7 +546,7 @@ export class TimeFiClient {
         this.#validateNonNegativeInteger(index, 'Index');
         return this.callReadOnly('get-vault-id-by-owner-index', [principalCV(ownerAddress), uintCV(index)]);
     }
- 
+
     /**
      * Retrieves the current nonce for a specific account.
      * @param {string} address - The Stacks address to check.
@@ -557,7 +557,7 @@ export class TimeFiClient {
         const account = this.#validateRequiredString(address, 'Address');
         return this.callReadOnly('get-nonce', [principalCV(account)]);
     }
- 
+
     /**
      * Alias for getNonce. Retrieves the current nonce for a specific account.
      * @param {string} address - The Stacks address to check.
@@ -567,7 +567,7 @@ export class TimeFiClient {
     async getAccountNonce(address) {
         return this.getNonce(address);
     }
- 
+
     /**
      * Retrieves global protocol statistics.
      * @returns {Promise<Object>} Object containing TVL and total vault count.
@@ -579,7 +579,7 @@ export class TimeFiClient {
         ]);
         return { tvl, count };
     }
- 
+
     /**
      * Retrieves the liquid STX balance of a specific account.
      * @param {string} address - The Stacks address to check.
@@ -590,7 +590,7 @@ export class TimeFiClient {
         const account = this.#validateRequiredString(address, 'Address');
         return this.callReadOnly('get-stx-balance', [principalCV(account)]);
     }
- 
+
     /**
      * Alias for getSTXBalance. Retrieves the liquid STX balance of a specific account.
      * @param {string} address - The Stacks address to check.
@@ -600,7 +600,7 @@ export class TimeFiClient {
     async getAccountSTXBalance(address) {
         return this.getSTXBalance(address);
     }
- 
+
     /**
      * Gets the current Stacks blockchain block height.
      * @returns {Promise<number>} The current block height.
@@ -608,7 +608,7 @@ export class TimeFiClient {
     async getBlockHeight() {
         return this.callReadOnly('get-block-height', []);
     }
- 
+
     /**
      * Alias for getBlockHeight. Gets the current Stacks blockchain block height.
      * @returns {Promise<number>} The current block height.
@@ -616,7 +616,7 @@ export class TimeFiClient {
     async getProtocolBlockHeight() {
         return this.getBlockHeight();
     }
- 
+
     /**
      * Retrieves all vault IDs owned by a specific account.
      * @param {string} owner - The Stacks address to query.
@@ -632,7 +632,7 @@ export class TimeFiClient {
         }
         return Promise.all(tasks);
     }
- 
+
     /**
      * Gets the number of vaults owned by a specific account.
      * @param {string} owner - The Stacks address of the owner.
@@ -643,7 +643,7 @@ export class TimeFiClient {
         const ownerAddress = this.#validateRequiredString(owner, 'Owner address');
         return this.callReadOnly('get-vault-count-by-owner', [principalCV(ownerAddress)]);
     }
- 
+
     /**
      * Alias for getVaultsByOwnerCount. Gets the number of vaults owned by a specific account.
      * @param {string} address - The Stacks address of the owner.
@@ -653,7 +653,7 @@ export class TimeFiClient {
     async getAccountVaultCount(address) {
         return this.getVaultsByOwnerCount(address);
     }
- 
+
     /**
      * Retrieves all relevant blockchain data for a specific account.
      * @param {string} address - The Stacks address to query.
@@ -668,7 +668,7 @@ export class TimeFiClient {
         ]);
         return { address, nonce, balance, vaults };
     }
- 
+
     /**
      * Checks if the TimeFi Protocol is currently in a paused state.
      * @returns {Promise<boolean>} True if the protocol is paused.
@@ -676,7 +676,7 @@ export class TimeFiClient {
     async isPaused() {
         return this.callReadOnly('is-paused', []);
     }
- 
+
     /**
      * Retrieves the semantic version of the TimeFi Protocol contract.
      * @returns {Promise<string>} The protocol version string.
@@ -684,7 +684,7 @@ export class TimeFiClient {
     async getProtocolVersion() {
         return this.callReadOnly('get-protocol-version', []);
     }
- 
+
     /**
      * Retrieves the current emergency status and protocol version.
      * @returns {Promise<Object>} Object containing version and pause status.
@@ -704,7 +704,7 @@ export class TimeFiClient {
     async getTVL() {
         return this.callReadOnly('get-tvl', []);
     }
- 
+
     /**
      * Alias for getTVL. Gets the current Total Value Locked (TVL) in the protocol.
      * @returns {Promise<number>} The TVL in microSTX.
@@ -735,7 +735,7 @@ export class TimeFiClient {
             postConditionMode: PostConditionMode.Deny,
         };
     }
- 
+
      /**
      * Generates options for a request-withdraw transaction.
      * @param {number|string|BigInt} id - The unique ID of the vault to withdraw from.

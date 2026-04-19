@@ -45,9 +45,6 @@ function logTxEvent(...args) {
  * @throws {Error} If vaultId is missing
  */
 function assertVaultId(vaultId) {
-  if (vaultId === undefined || vaultId === null) {
-    throw new Error('vaultId is required');
-  }
   assertPositiveInteger(vaultId, 'vaultId');
 }
 

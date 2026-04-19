@@ -25,7 +25,7 @@ export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
 
   const addToast = useCallback((toast) => {
-    const id = Date.now() + Math.random();
+    const id = crypto.randomUUID();
     const newToast = {
       id,
       duration: 5000,

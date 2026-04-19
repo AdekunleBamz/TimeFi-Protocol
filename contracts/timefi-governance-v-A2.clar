@@ -253,6 +253,7 @@
   )
     (asserts! (or (is-eq tx-sender (get proposer proposal)) (is-eq tx-sender DEPLOYER)) ERR_UNAUTHORIZED)
     (asserts! (not (get executed proposal)) ERR_PROPOSAL_ACTIVE)
+    (asserts! (not (get cancelled proposal)) ERR_VOTING_CLOSED)
 
     (map-set proposals { id: id }
       (merge proposal { cancelled: true }))

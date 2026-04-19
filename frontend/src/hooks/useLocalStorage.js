@@ -18,6 +18,9 @@ import { useState, useEffect, useCallback } from 'react';
  * const [user, setUser] = useLocalStorage('user', null);
  */
 export function useLocalStorage(key, initialValue) {
+    if (!key || typeof key !== 'string') {
+        throw new Error('useLocalStorage: key must be a non-empty string');
+    }
     // Get from local storage then parse stored json or return initialValue
     const readValue = useCallback(() => {
         if (typeof window === 'undefined') {

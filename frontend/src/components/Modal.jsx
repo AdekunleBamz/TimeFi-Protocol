@@ -32,11 +32,11 @@ import './Modal.css';
  */
 import PropTypes from 'prop-types';
 
-export function Modal({ 
-  isOpen, 
-  onClose, 
-  title, 
-  children, 
+export function Modal({
+  isOpen,
+  onClose,
+  title,
+  children,
   size = 'md',
   closeOnOverlay = true,
   showCloseButton = true,
@@ -55,7 +55,7 @@ export function Modal({
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
     }
-    
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
@@ -83,11 +83,11 @@ export function Modal({
             )}
           </div>
         )}
-        
+
         <div className="modal-body">
           {children}
         </div>
-        
+
         {footer && (
           <div className="modal-footer">
             {footer}

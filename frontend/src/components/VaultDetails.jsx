@@ -268,7 +268,7 @@ export function VaultDetails() {
             <span className="balance-amount">{formatSTX(normalizedVault.amount)}</span>
             <span className="balance-currency">STX</span>
           </div>
-          
+
           {normalizedVault.rewards > 0 && (
             <div className="vault-rewards">
               <span className="rewards-label">Pending Rewards</span>
@@ -281,12 +281,12 @@ export function VaultDetails() {
         <section className="vault-section vault-progress">
           <h2>Lock Progress</h2>
           <Progress value={progressPercent} size="lg" showLabel />
-          
+
           <div className="progress-details">
             {vaultStatus === 'locked' && countdownSeconds !== null && (
               <>
                 <span className="progress-label">Unlocks in</span>
-                <Countdown 
+                <Countdown
                   seconds={countdownSeconds}
                   variant="compact"
                   onComplete={refetch}
@@ -327,7 +327,7 @@ export function VaultDetails() {
             <div className="info-item">
               <dt>Owner</dt>
               <dd>
-                <a 
+                <a
                   href={`https://explorer.hiro.so/address/${normalizedVault.owner}?chain=${ACTIVE_NETWORK}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -429,7 +429,7 @@ function VaultDetailsSkeleton() {
           <Skeleton width={80} height={24} />
         </div>
       </header>
-      
+
       <div className="vault-details-grid">
         <section className="vault-section">
           <Skeleton width={100} height={24} />

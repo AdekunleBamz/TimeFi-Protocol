@@ -33,7 +33,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   const { createVault, loading } = useContract();
   const { blockHeight } = useBlockHeight();
   const { toast } = useToast();
-  
+
   const [amount, setAmount] = useState('');
   const [lockPeriod, setLockPeriod] = useState(null);
   const [errors, setErrors] = useState({});
@@ -67,7 +67,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const validation = validateVaultCreation({
       amount,
       lockPeriod,
@@ -132,7 +132,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             Balance: {balanceInSTX.toLocaleString()} STX (reserving {feeReserveSTX.toFixed(3)} STX fee)
           </span>
         </label>
-        
+
         <div className="form-input-group">
           <input
             type="number"
@@ -190,7 +190,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             </button>
           ))}
         </div>
-        
+
         {errors.amount && (
           <span className="form-error" id="amount-error" role="alert">{errors.amount}</span>
         )}
@@ -198,7 +198,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
 
       <div className="form-section">
         <label className="form-label">Lock Period</label>
-        
+
         <div className="lock-period-grid">
           {lockPeriodOptions.map((option) => (
             <button
@@ -223,7 +223,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             </button>
           ))}
         </div>
-        
+
         {errors.lockPeriod && (
           <span className="form-error">{errors.lockPeriod}</span>
         )}
@@ -278,7 +278,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             Cancel
           </button>
         )}
-        
+
         <button
           type="submit"
           className="form-button form-button-primary"

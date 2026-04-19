@@ -87,21 +87,21 @@ export function Countdown({
           {showLabels && <span className="countdown-label">Days</span>}
         </div>
       )}
-      
+
       <div className="countdown-unit">
         <span className="countdown-value">{padZero(hours)}</span>
         {showLabels && <span className="countdown-label">Hours</span>}
       </div>
-      
+
       <div className="countdown-separator">:</div>
-      
+
       <div className="countdown-unit">
         <span className="countdown-value">{padZero(minutes)}</span>
         {showLabels && <span className="countdown-label">Mins</span>}
       </div>
-      
+
       <div className="countdown-separator">:</div>
-      
+
       <div className="countdown-unit">
         <span className="countdown-value">{padZero(secs)}</span>
         {showLabels && <span className="countdown-label">Secs</span>}
@@ -121,7 +121,7 @@ function parseTime(totalSeconds) {
   const hours = Math.floor((safeSeconds % 86400) / 3600);
   const minutes = Math.floor((safeSeconds % 3600) / 60);
   const secs = safeSeconds % 60;
-  
+
   return { days, hours, minutes, secs };
 }
 

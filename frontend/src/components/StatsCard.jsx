@@ -69,20 +69,20 @@ export function StatsCard({
         )}
       </div>
 
-      
+
       <div className="stats-content">
         <span className="stats-label">{label}</span>
-        
+
         <div className="stats-values">
           <span className="stats-value">{value}</span>
-          
+
           {change !== undefined && (
             <span className={`stats-change ${change >= 0 ? 'stats-change-positive' : 'stats-change-negative'}`}>
               {change >= 0 ? '↑' : '↓'} {Math.abs(change)}%
             </span>
           )}
         </div>
-        
+
         {subValue && <span className="stats-subvalue">{subValue}</span>}
       </div>
     </div>

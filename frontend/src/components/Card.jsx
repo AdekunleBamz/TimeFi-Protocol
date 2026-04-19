@@ -49,8 +49,8 @@ export function Card({
   };
 
   return (
-    <div 
-      className={classes} 
+    <div
+      className={classes}
       onClick={clickable ? onClick : undefined}
       onKeyDown={clickable ? handleKeyDown : undefined}
       role={clickable ? 'button' : undefined}

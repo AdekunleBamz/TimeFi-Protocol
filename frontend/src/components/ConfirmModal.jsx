@@ -66,8 +66,8 @@ export function ConfirmModal({
 
   return createPortal(
     <div className="modal-overlay" onClick={onClose} onKeyDown={handleKeyDown}>
-      <div 
-        className="modal-container" 
+      <div
+        className="modal-container"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -86,9 +86,9 @@ export function ConfirmModal({
           <Button variant="ghost" onClick={onClose} disabled={loading}>
             {cancelText}
           </Button>
-          <Button 
-            variant={variant} 
-            onClick={onConfirm} 
+          <Button
+            variant={variant}
+            onClick={onConfirm}
             loading={loading}
           >
             {confirmText}

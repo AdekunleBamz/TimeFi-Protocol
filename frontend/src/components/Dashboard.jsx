@@ -31,7 +31,7 @@ export function Dashboard() {
   const location = useLocation();
   const [vaultSearch, setVaultSearch] = useState('');
   const [vaultSort, setVaultSort] = useState('newest');
-  
+
   // Fetch user vaults
   const { data: vaultIds, loading: vaultsLoading } = useReadOnly(
     'get-user-vaults',
@@ -46,7 +46,7 @@ export function Dashboard() {
   // Calculate user stats
   const userStats = useMemo(() => {
     if (!vaultIds) return { totalVaults: 0, activeVaults: 0 };
-    
+
     return {
       totalVaults: vaultIds.length,
       activeVaults: vaultIds.length, // Would filter by active status

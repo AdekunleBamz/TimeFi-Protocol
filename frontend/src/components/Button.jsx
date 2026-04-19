@@ -50,7 +50,7 @@ export function Button({
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     const newRipple = {
       x,
       y,
@@ -58,7 +58,7 @@ export function Button({
     };
 
     setRipples((prev) => [...prev, newRipple]);
-    
+
     // Cleanup ripple after animation
     setTimeout(() => {
       setRipples((prev) => prev.filter((r) => r.id !== newRipple.id));

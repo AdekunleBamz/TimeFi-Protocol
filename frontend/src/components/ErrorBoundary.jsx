@@ -40,12 +40,12 @@ export class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     this.setState({ errorInfo });
-    
+
     // Log error to console in development
     if (isDevelopment) {
       console.error('Error caught by ErrorBoundary:', error, errorInfo);
     }
-    
+
     // Call optional error handler
     this.props.onError?.(error, errorInfo);
   }
@@ -93,7 +93,7 @@ export class ErrorBoundary extends Component {
                 <span>Return to the dashboard if this route is unstable.</span>
               </div>
             </div>
-            
+
             {isDevelopment && this.state.error && (
               <details className="error-boundary-details">
                 <summary>Error Details</summary>
@@ -103,7 +103,7 @@ export class ErrorBoundary extends Component {
                 )}
               </details>
             )}
-            
+
             <div className="error-boundary-actions">
               <Button variant="primary" onClick={this.handleRetry}>
                 Try Again

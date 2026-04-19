@@ -104,7 +104,7 @@ export function Select({
   return (
     <div className={`select-container ${className}`} ref={containerRef}>
       {label && <label className="select-label">{label}</label>}
-      
+
       <div
         className={`select ${isOpen ? 'select-open' : ''} ${error ? 'select-error' : ''} ${disabled ? 'select-disabled' : ''}`}
         onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -117,7 +117,7 @@ export function Select({
         <span className={selectedOption ? 'select-value' : 'select-placeholder'}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        
+
         <span className="select-arrow">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
             <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />

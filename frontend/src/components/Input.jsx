@@ -78,7 +78,7 @@ export const Input = forwardRef(({
 }, ref) => {
   const generatedId = useId();
   const inputId = id || generatedId;
-  
+
   const containerClasses = [
     'input-container',
     fullWidth && 'input-full',
@@ -101,10 +101,10 @@ export const Input = forwardRef(({
           {label}
         </label>
       )}
-      
+
       <div className="input-wrapper">
         {leftIcon && <span className="input-icon input-icon-left">{leftIcon}</span>}
-        
+
         <input
           ref={ref}
           id={inputId}
@@ -114,14 +114,14 @@ export const Input = forwardRef(({
           aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
           {...props}
         />
-        
+
         <div className="input-icon-right-group">
           {rightIcon && <span className="input-icon">{rightIcon}</span>}
           {error && <span className="input-icon input-status-error"><ErrorIcon /></span>}
           {isValid && !error && <span className="input-icon input-status-success"><CheckIcon /></span>}
         </div>
       </div>
-      
+
       {(error || hint) && (
         <div className="input-meta">
           {error && (

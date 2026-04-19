@@ -85,8 +85,8 @@ export function StatusBadge({ status, className = '' }) {
   const config = statusConfig[status] || statusConfig.active;
 
   return (
-    <Badge 
-      variant={config.variant} 
+    <Badge
+      variant={config.variant}
       pulse={config.pulse}
       leadingDot={config.leadingDot}
       className={className}

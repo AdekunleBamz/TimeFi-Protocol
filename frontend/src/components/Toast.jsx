@@ -119,9 +119,9 @@ function ToastItem({ toast, onRemove }) {
           </button>
         )}
       </div>
-      <button 
+      <button
         type="button"
-        className="toast-close" 
+        className="toast-close"
         onClick={() => onRemove(id)}
         aria-label="Dismiss notification"
       >
@@ -151,11 +151,11 @@ function ToastItem({ toast, onRemove }) {
  */
 export function useToast() {
   const context = useContext(ToastContext);
-  
+
   if (!context) {
     throw new Error('useToast must be used within a ToastProvider');
   }
-  
+
   return context;
 }
 

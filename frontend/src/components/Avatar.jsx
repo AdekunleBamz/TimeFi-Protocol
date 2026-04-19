@@ -40,9 +40,9 @@ export function Avatar({
   return (
     <div className={`avatar avatar-${size} ${className}`} title={avatarLabel}>
       {hasImage ? (
-        <img 
-          src={src} 
-          alt={alt || 'Avatar'} 
+        <img
+          src={src}
+          alt={alt || 'Avatar'}
           className="avatar-image"
           loading="lazy"
           onError={(e) => {
@@ -51,15 +51,15 @@ export function Avatar({
           }}
         />
       ) : null}
-      
-      <div 
-        className="avatar-fallback" 
+
+      <div
+        className="avatar-fallback"
         aria-label={avatarLabel}
         style={{ background: gradient, display: hasImage ? 'none' : 'flex' }}
       >
         {initials}
       </div>
-      
+
       {status && (
         <span className={`avatar-status avatar-status-${status}`} title={status} aria-label={`Status: ${status}`} />
       )}
@@ -100,7 +100,7 @@ export function AvatarGroup({ children, max = 4, size = 'md', className = '' }) 
           {React.cloneElement(avatar, { size })}
         </div>
       ))}
-      
+
       {remaining > 0 && (
         <div className={`avatar avatar-${size} avatar-overflow`}>
           <div className="avatar-fallback">+{remaining}</div>
@@ -139,10 +139,10 @@ function generateGradient(address) {
   const hash = address.split('').reduce((acc, char) => {
     return char.charCodeAt(0) + ((acc << 5) - acc);
   }, 0);
-  
+
   const h1 = Math.abs(hash % 360);
   const h2 = (h1 + 40) % 360;
-  
+
   return `linear-gradient(135deg, hsl(${h1}, 70%, 50%), hsl(${h2}, 70%, 60%))`;
 }
 

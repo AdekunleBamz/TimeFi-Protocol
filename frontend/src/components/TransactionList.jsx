@@ -77,7 +77,7 @@ function TransactionItem({ transaction }) {
       <div className={`transaction-icon transaction-icon-${config.color}`}>
         {config.icon}
       </div>
-      
+
       <div className="transaction-details">
         <div className="transaction-header">
           <span className="transaction-type">{config.label}</span>
@@ -85,7 +85,7 @@ function TransactionItem({ transaction }) {
             <span className="transaction-vault">Vault #{vaultId}</span>
           )}
         </div>
-        
+
         <div className="transaction-meta">
           <span className="transaction-time">
             {formatRelativeTime(timestamp)}
@@ -101,7 +101,7 @@ function TransactionItem({ transaction }) {
         </div>
 
         <div className="transaction-context">
-          <a 
+          <a
             href={`https://explorer.hiro.so/txid/${txId}?chain=${ACTIVE_NETWORK}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -115,7 +115,7 @@ function TransactionItem({ transaction }) {
           )}
         </div>
       </div>
-      
+
       <div className="transaction-amount">
         <span className={`transaction-value transaction-value-${type === 'deposit' ? 'negative' : 'positive'}`}>
           {type === 'deposit' ? '-' : '+'}{formatSTX(amount)} STX

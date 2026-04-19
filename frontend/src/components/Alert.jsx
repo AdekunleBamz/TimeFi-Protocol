@@ -100,7 +100,7 @@ export function Alert({
   return (
     <div className={`alert alert-${variant} ${className}`} role="alert" aria-live="polite" {...props}>
       {displayIcon && <span className="alert-icon" aria-hidden="true">{displayIcon}</span>}
-      
+
       <div className="alert-content">
         {title && <div className="alert-title">{title}</div>}
         <div className="alert-message">{children}</div>

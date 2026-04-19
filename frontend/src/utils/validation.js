@@ -200,12 +200,12 @@ export function validateWithdrawal(vault, currentHeight) {
   }
 
   const unlockHeight = vault.depositHeight + vault.lockPeriod;
-  
+ 
   if (currentHeight < unlockHeight) {
     const blocksRemaining = unlockHeight - currentHeight;
-    return { 
-      valid: false, 
-      error: `Vault locked. ${blocksRemaining.toLocaleString()} blocks remaining` 
+    return {
+      valid: false,
+      error: `Vault locked. ${blocksRemaining.toLocaleString()} blocks remaining`
     };
   }
 

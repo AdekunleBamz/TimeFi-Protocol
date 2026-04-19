@@ -86,7 +86,7 @@ function normalizeKey(key) {
  */
 export function getItem(key, defaultValue = null) {
   const prefixedKey = normalizeKey(key);
-  
+ 
   try {
     if (isStorageAvailable()) {
       const item = window.localStorage.getItem(prefixedKey);
@@ -105,7 +105,7 @@ export function getItem(key, defaultValue = null) {
  */
 export function setItem(key, value) {
   const prefixedKey = normalizeKey(key);
-  
+ 
   try {
     if (isStorageAvailable()) {
       window.localStorage.setItem(prefixedKey, JSON.stringify(value));
@@ -140,7 +140,7 @@ export function hasItem(key) {
  */
 export function removeItem(key) {
   const prefixedKey = normalizeKey(key);
-  
+ 
   try {
     if (isStorageAvailable()) {
       window.localStorage.removeItem(prefixedKey);
@@ -197,7 +197,7 @@ export const session = {
       return defaultValue;
     }
   },
-  
+ 
   set(key, value) {
     try {
       sessionStorage.setItem(normalizeKey(key), JSON.stringify(value));
@@ -205,7 +205,7 @@ export const session = {
       // Ignore
     }
   },
-  
+ 
   remove(key) {
     try {
       sessionStorage.removeItem(normalizeKey(key));

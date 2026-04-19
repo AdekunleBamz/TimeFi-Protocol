@@ -86,10 +86,10 @@ export const STX = {
 };
 /**
  * MINIMUM_DEPOSIT - Minimum vault deposit amount in microSTX.
- * Calculated from the contract's MIN_DEPOSIT constant.
+ * Mirrors the MIN_DEPOSIT constant from the contract.
  * @type {number}
  */
-export const MINIMUM_DEPOSIT = Math.floor(Number(MIN_DEPOSIT || 0) * STX.UNIT);
+export const MINIMUM_DEPOSIT = Number(MIN_DEPOSIT || 0);
 
 /**
  * VAULT_STATUS - Possible vault lifecycle states.

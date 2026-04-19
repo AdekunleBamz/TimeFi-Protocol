@@ -126,12 +126,12 @@
   (begin
     (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
     (asserts! (not (is-guardian guardian)) ERR_UNAUTHORIZED)
-    
+
     (map-set guardians { guardian: guardian }
       { active: true, added-at: tenure-height })
-    
+
     (var-set guardian-count (+ (var-get guardian-count) u1))
-    
+
     (print { event: "guardian-added", guardian: guardian })
     (ok true)))
 
@@ -143,12 +143,12 @@
   (begin
     (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
     (asserts! (is-guardian guardian) ERR_NOT_GUARDIAN)
-    
+
     (map-set guardians { guardian: guardian }
       { active: false, added-at: u0 })
-    
+
     (var-set guardian-count (- (var-get guardian-count) u1))
-    
+
     (print { event: "guardian-removed", guardian: guardian })
     (ok true)))
 
@@ -162,16 +162,16 @@
   )
     (asserts! (is-guardian tx-sender) ERR_NOT_GUARDIAN)
     (asserts! (not (var-get emergency-mode)) ERR_EMERGENCY_ACTIVE)
-    
+
     ;; Create new action
     (map-set emergency-approvals { action-id: action-id }
       { approvals: u1, executed: false })
-    
+
     (map-set guardian-approval-votes { action-id: action-id, guardian: tx-sender }
       { approved: true })
-    
+
     (var-set action-nonce action-id)
-    
+
     (print { event: "emergency-initiated", action-id: action-id, initiator: tx-sender })
     (ok action-id)))
 
@@ -189,17 +189,17 @@
     (asserts! (not (var-get emergency-mode)) ERR_EMERGENCY_ACTIVE)
     (asserts! (not (get approved has-voted)) ERR_UNAUTHORIZED)
     (asserts! (not (get executed approval-data)) ERR_ALREADY_WITHDRAWN)
-    
+
     (let (
       (new-approvals (+ (get approvals approval-data) u1))
     )
       ;; Record vote
       (map-set guardian-approval-votes { action-id: action-id, guardian: tx-sender }
         { approved: true })
-      
+
       (map-set emergency-approvals { action-id: action-id }
         { approvals: new-approvals, executed: (get executed approval-data) })
-      
+
       ;; Check threshold
       (if (>= new-approvals GUARDIAN_THRESHOLD)
         (begin
@@ -221,10 +221,10 @@
   (begin
     (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
     (asserts! (var-get emergency-mode) ERR_NO_EMERGENCY)
-    
+
     (var-set emergency-mode false)
     (var-set emergency-start u0)
-    
+
     (print { event: "emergency-deactivated" })
     (ok true)))
 
@@ -246,21 +246,21 @@
     (asserts! (get active vault-data) ERR_ALREADY_WITHDRAWN)
     (asserts! can-withdraw ERR_COOLDOWN)
     (asserts! (> amount u0) ERR_INSUFFICIENT)
-    
+
     ;; Record cooldown
     (map-set user-emergency-cooldown { user: tx-sender }
       { last-emergency: tenure-height })
-    
+
     ;; Track penalty
     (if (not (var-get emergency-mode))
       (var-set penalty-collected (+ (var-get penalty-collected) penalty))
       true)
-    
-    (print { 
-      event: "emergency-withdraw-request", 
-      vault-id: vault-id, 
-      user: tx-sender, 
-      amount: amount, 
+
+    (print {
+      event: "emergency-withdraw-request",
+      vault-id: vault-id,
+      user: tx-sender,
+      amount: amount,
       penalty: (if (var-get emergency-mode) u0 penalty),
       payout: (if (var-get emergency-mode) amount payout),
       mode: (if (var-get emergency-mode) "emergency" "penalty")
@@ -275,9 +275,9 @@
   (begin
     (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
     (asserts! (<= amount (var-get penalty-collected)) ERR_INSUFFICIENT)
-    
+
     (var-set penalty-collected (- (var-get penalty-collected) amount))
-    
+
     (print { event: "penalty-withdrawn", amount: amount, recipient: recipient })
     (ok true)))
 

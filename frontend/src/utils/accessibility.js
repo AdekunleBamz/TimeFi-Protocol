@@ -62,7 +62,9 @@ export function announceToScreenReader(message, priority = 'polite') {
   
   // Remove after announcement
   setTimeout(() => {
-    document.body.removeChild(element);
+    if (document.body.contains(element)) {
+      document.body.removeChild(element);
+    }
   }, 1000);
 }
 

@@ -307,7 +307,7 @@ export class TimeFiClient {
      * @returns {Promise<Object>} Object containing owner, balance, duration, and status.
      * @throws {Error} If vault ID is missing or invalid.
      */
-       async getVaultSummary(id) {
+    async getVaultSummary(id) {
         const [details, timeRemaining, createdAt, unlockBlock] = await Promise.all([
             this.getVaultDetails(id),
             this.getTimeRemaining(id),
@@ -502,7 +502,7 @@ export class TimeFiClient {
      * Gets the total number of vaults created in the protocol.
      * @returns {Promise<number>} The total vault count.
      */
-       async getVaultCount() {
+    async getVaultCount() {
         return this.callReadOnly('get-vault-count', []);
     }
  

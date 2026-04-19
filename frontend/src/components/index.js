@@ -59,7 +59,7 @@ export { Avatar } from './Avatar';
 export { Tabs, TabList, Tab, TabPanels, TabPanel } from './Tabs';
 
 // Utility
-export { CopyButton } from './CopyButton';
+export { CopyButton, CopyableAddress } from './CopyButton';
 export { EmptyState } from './EmptyState';
 export { ErrorBoundary, withErrorBoundary } from './ErrorBoundary';
 export { ConfirmModal } from './ConfirmModal';

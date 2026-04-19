@@ -28,10 +28,13 @@ export {
 
 // Validation
 export { 
-  isValidAddress, 
-  isValidAmount, 
-  validateVaultInput, 
-  ValidationError 
+  validateAddress, 
+  validateVaultId, 
+  validateDepositAmount,
+  validateLockPeriod,
+  validateVaultCreation,
+  validateWithdrawal,
+  validateBotAddress,
 } from './validation';
 
 // Constants

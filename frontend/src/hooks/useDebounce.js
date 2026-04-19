@@ -46,6 +46,11 @@ export function useDebounce(value, delay = 300) {
  */
 export function useDebouncedCallback(callback, delay = 300) {
     const timeoutRef = useRef();
+    const callbackRef = useRef(callback);
+
+    useEffect(() => {
+        callbackRef.current = callback;
+    }, [callback]);
 
     useEffect(() => {
         return () => {
@@ -61,9 +66,9 @@ export function useDebouncedCallback(callback, delay = 300) {
         }
 
         timeoutRef.current = setTimeout(() => {
-            callback(...args);
+            callbackRef.current(...args);
         }, delay);
-    }, [callback, delay]);
+    }, [delay]);
 }
 
 /**

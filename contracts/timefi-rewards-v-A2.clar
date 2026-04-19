@@ -14,7 +14,7 @@
 
 ;; Reward tiers (APY in basis points)
 ;; Tier 1: 30 days lock = 1% APY (100 BPS)
-;; Tier 2: 90 days lock = 3% APY (300 BPS)  
+;; Tier 2: 90 days lock = 3% APY (300 BPS)
 ;; Tier 3: 180 days lock = 6% APY (600 BPS)
 ;; Tier 4: 270 days lock = 9% APY (900 BPS)
 ;; Tier 5: 365 days lock = 12% APY (1200 BPS)
@@ -75,7 +75,7 @@
             (yearly-reward (/ (* amount apy) u10000))
             (actual-reward (/ (* yearly-reward lock-duration) u52560))
           )
-            (ok { 
+            (ok {
               vault-id: vault-id,
               tier: (get tier tier-info),
               apy: apy,
@@ -161,7 +161,7 @@
     (map-set claimed-rewards { vault-id: vault-id }
       { amount: reward-amount, claimed-at: tenure-height })
 
-    (print { 
+    (print {
       event: "rewards-claim-requested",
       vault-id: vault-id,
       claimer: tx-sender,
@@ -179,9 +179,9 @@
   (begin
     (asserts! (is-eq tx-sender DEPLOYER) ERR_UNAUTHORIZED)
     (asserts! (<= amount (var-get rewards-pool)) ERR_INSUFFICIENT_POOL)
-    
+
     (var-set rewards-pool (- (var-get rewards-pool) amount))
     (try! (stx-transfer? amount tx-sender recipient))
-    
+
     (print { event: "excess-withdrawn", amount: amount, recipient: recipient })
     (ok true)))

@@ -173,14 +173,7 @@ export async function claimRewards({ vaultId, onFinish, onCancel }) {
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel }) {
-  if (proposalId === undefined || proposalId === null) {
-    throw new Error('proposalId is required to cast a governance vote');
-  }
   assertPositiveInteger(proposalId, 'proposalId');
-
-  if (vaultId === undefined || vaultId === null) {
-    throw new Error('vaultId is required to cast a governance vote');
-  }
   assertPositiveInteger(vaultId, 'vaultId');
 
   await openContractCall({

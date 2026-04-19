@@ -88,7 +88,7 @@ export function useEscapeKey(handler, enabled = true) {
     if (!enabled) return;
 
     const listener = (event) => {
-      if (event.key === 'Escape' || event.keyCode === 27) {
+      if (event.key === 'Escape') {
         handlerRef.current(event);
       }
     };

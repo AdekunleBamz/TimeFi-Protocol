@@ -69,8 +69,8 @@ export function validateVaultId(id) {
   if (!Number.isInteger(numId)) {
     return { valid: false, error: 'Vault ID must be a whole number' };
   }
-  if (numId < 0) {
-    return { valid: false, error: 'Vault ID cannot be negative' };
+  if (numId <= 0) {
+    return { valid: false, error: 'Vault ID must be a positive number' };
   }
   return { valid: true };
 }

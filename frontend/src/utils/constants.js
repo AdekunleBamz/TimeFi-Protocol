@@ -58,6 +58,18 @@ export const BLOCK_TIME = {
 export const BLOCK_TIME_SECONDS = BLOCK_TIME.MAINNET;
 
 /**
+ * getBlockTimeForNetwork - Get block time estimate (seconds) for a network key.
+ * @param {string} network - Network name (mainnet/testnet/devnet)
+ * @returns {number} Block time in seconds
+ */
+export function getBlockTimeForNetwork(network) {
+  const normalized = String(network || '').trim().toLowerCase();
+  if (normalized === NETWORK.TESTNET) return BLOCK_TIME.TESTNET;
+  if (normalized === NETWORK.DEVNET) return BLOCK_TIME.DEVNET;
+  return BLOCK_TIME.MAINNET;
+}
+
+/**
  * API_ENDPOINTS - Hiro API endpoints for different networks.
  * @type {Object.<string, string>}
  */

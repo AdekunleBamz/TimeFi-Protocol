@@ -44,4 +44,10 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Amount must be greater than 0');
   });
+
+  it('prompts when deposit amount is blank input', () => {
+    const result = validateDepositAmount('   ');
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Please enter an amount');
+  });
 });

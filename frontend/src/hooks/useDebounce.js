@@ -16,16 +16,17 @@ import { useState, useEffect, useCallback, useRef } from 'react';
  */
 export function useDebounce(value, delay = 300) {
     const [debouncedValue, setDebouncedValue] = useState(value);
+    const resolvedDelay = typeof delay === 'number' && delay >= 0 ? delay : 300;
 
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedValue(value);
-        }, delay);
+        }, resolvedDelay);
 
         return () => {
             clearTimeout(handler);
         };
-    }, [value, delay]);
+    }, [value, resolvedDelay]);
 
     return debouncedValue;
 }

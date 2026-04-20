@@ -34,6 +34,7 @@ export function useAsync(asyncFunction, options = {}) {
     data: null,
     loading: immediate,
     error: null,
+    status: immediate ? 'loading' : 'idle',
   });
 
   const mountedRef = useRef(true);
@@ -59,14 +60,14 @@ export function useAsync(asyncFunction, options = {}) {
       const result = await asyncFnRef.current(...args);
 
       if (mountedRef.current) {
-        setState({ data: result, loading: false, error: null });
+        setState({ data: result, loading: false, error: null, status: 'success' });
         onSuccess?.(result);
       }
 
       return result;
     } catch (error) {
       if (mountedRef.current) {
-        setState({ data: null, loading: false, error });
+        setState({ data: null, loading: false, error, status: 'error' });
         onError?.(error);
       }
 
@@ -75,7 +76,7 @@ export function useAsync(asyncFunction, options = {}) {
   }, [onSuccess, onError]);
 
   const reset = useCallback(() => {
-    setState({ data: null, loading: false, error: null });
+    setState({ data: null, loading: false, error: null, status: 'idle' });
   }, []);
 
   // Execute immediately if requested

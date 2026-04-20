@@ -108,7 +108,7 @@ export function validateDepositAmount(amount, balance) {
   }
 
   if (numAmount < MIN_DEPOSIT) {
-    return { valid: false, error: `Minimum deposit is ${MIN_DEPOSIT} STX` };
+    return { valid: false, error: `Minimum deposit is ${MIN_DEPOSIT.toLocaleString()} microSTX` };
   }
 
   if (numAmount > MAX_DEPOSIT) {

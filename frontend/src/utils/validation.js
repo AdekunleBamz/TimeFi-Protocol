@@ -65,7 +65,7 @@ export function validateAddress(address) {
  */
 export function validateVaultId(id) {
   const numId = Number(id);
-  if (id === undefined || id === null || String(id).trim() === '' || isNaN(numId)) {
+  if (id === undefined || id === null || String(id).trim() === '' || !Number.isFinite(numId)) {
     return { valid: false, error: 'A valid Vault ID is required' };
   }
   if (!Number.isInteger(numId)) {

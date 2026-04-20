@@ -79,6 +79,10 @@ export function useAsync(asyncFunction, options = {}) {
     setState({ data: null, loading: false, error: null, status: 'idle' });
   }, []);
 
+  const clearError = useCallback(() => {
+    setState((prev) => ({ ...prev, error: null }));
+  }, []);
+
   // Execute immediately if requested
   useEffect(() => {
     if (immediate) {
@@ -92,6 +96,7 @@ export function useAsync(asyncFunction, options = {}) {
     loading: state.loading,
     status: state.status,
     error: state.error,
+    clearError,
     reset,
   };
 }

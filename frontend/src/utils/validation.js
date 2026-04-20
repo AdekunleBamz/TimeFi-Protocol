@@ -139,7 +139,12 @@ export function validateLockPeriod(period) {
     return { valid: false, error: 'Please select a lock period' };
   }
 
-  const validPeriod = Object.values(LOCK_PERIODS).find(p => p.blocks === period);
+  const normalizedPeriod = Number(period);
+  if (!Number.isFinite(normalizedPeriod)) {
+    return { valid: false, error: 'Invalid lock period selected' };
+  }
+
+  const validPeriod = Object.values(LOCK_PERIODS).find(p => p.blocks === normalizedPeriod);
 
   if (!validPeriod) {
     return { valid: false, error: 'Invalid lock period selected' };

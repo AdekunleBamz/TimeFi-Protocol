@@ -113,6 +113,7 @@ export function Select({
         role="combobox"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
+        aria-label={label || placeholder}
       >
         <span className={selectedOption ? 'select-value' : 'select-placeholder'}>
           {selectedOption ? selectedOption.label : placeholder}

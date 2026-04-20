@@ -20,6 +20,25 @@ function toMicroStxComparable(value) {
 }
 
 /**
+ * validateNonEmptyString - Validate that input is a non-empty string.
+ * @param {unknown} value - Value to validate
+ * @param {string} [fieldName='Value'] - Field label for error message
+ * @returns {{ valid: boolean, value?: string, error?: string }} Validation result
+ */
+export function validateNonEmptyString(value, fieldName = 'Value') {
+  if (typeof value !== 'string') {
+    return { valid: false, error: `${fieldName} is required` };
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return { valid: false, error: `${fieldName} is required` };
+  }
+
+  return { valid: true, value: trimmed };
+}
+
+/**
  * Validation Utilities - Input validation and sanitization functions.
  *
  * Provides validation for addresses, amounts, vault IDs, and other

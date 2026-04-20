@@ -65,6 +65,14 @@ export function useIsTablet() {
 }
 
 /**
+ * useIsSmallScreen - Check if viewport width is below tablet breakpoint (< 768px).
+ * @returns {boolean} Whether viewport width is less than 768px
+ */
+export function useIsSmallScreen() {
+  return useMediaQuery('(max-width: 767px)');
+}
+
+/**
  * useIsDesktop - Check if viewport is desktop size (>= 1024px).
  * @returns {boolean} Whether viewport width is at least 1024px
  */

@@ -83,4 +83,8 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Insufficient balance');
   });
+
+  it('accepts deposits within available balance', () => {
+    expect(validateDepositAmount(MIN_DEPOSIT, MIN_DEPOSIT).valid).toBe(true);
+  });
 });

@@ -141,7 +141,7 @@ export function Select({
         </ul>
       )}
 
-      {error && <span className="select-error-text">{error}</span>}
+      {error && <span className="select-error-text" role="alert">{error}</span>}
     </div>
   );
 }

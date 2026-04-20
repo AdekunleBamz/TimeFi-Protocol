@@ -108,6 +108,7 @@ export function usePolling(fetcher, interval, options = {}) {
     retryOnError = true,
     maxRetries = 3,
   } = options;
+  const resolvedMaxRetries = Number.isInteger(maxRetries) && maxRetries >= 0 ? maxRetries : 3;
 
   const retriesRef = useRef(0);
   const fetcherRef = useRef(fetcher);
@@ -125,7 +126,7 @@ export function usePolling(fetcher, interval, options = {}) {
         retriesRef.current = 0;
         onSuccess?.(result);
       } catch (error) {
-        if (retryOnError && retriesRef.current < maxRetries) {
+        if (retryOnError && retriesRef.current < resolvedMaxRetries) {
           retriesRef.current++;
         } else {
           retriesRef.current = 0;

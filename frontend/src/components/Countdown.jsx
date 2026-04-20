@@ -62,7 +62,7 @@ export function Countdown({
 
   if (timeLeft <= 0) {
     return (
-      <div className={`countdown countdown-complete ${className}`} role="status" aria-label="Vault unlocked and ready to withdraw">
+      <div className={`countdown countdown-complete ${className}`} role="status" aria-label="Vault unlocked and ready to withdraw" aria-live="polite">
         <span className="countdown-ready">Ready to withdraw!</span>
       </div>
     );

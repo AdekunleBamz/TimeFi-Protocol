@@ -80,11 +80,12 @@ export function useUndoRedo(initialState) {
  */
 export function useHistory() {
     if (typeof window === 'undefined') {
-        return { push: () => {}, replace: () => {}, goBack: () => {} };
+      return { push: () => {}, replace: () => {}, goBack: () => {}, goForward: () => {} };
     }
     return {
         push: (path) => window.history.pushState({}, null, path),
         replace: (path) => window.history.replaceState({}, null, path),
         goBack: () => window.history.back(),
+      goForward: () => window.history.forward(),
     };
 }

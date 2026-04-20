@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateDepositAmount, validateLockPeriod } from '../frontend/src/utils/validation.js';
+import { validateDepositAmount, validateLockPeriod, validateVaultId } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -10,5 +10,9 @@ describe('frontend validation helpers', () => {
 
   it('rejects infinite deposit values', () => {
     expect(validateDepositAmount(Number.POSITIVE_INFINITY).valid).toBe(false);
+  });
+
+  it('rejects infinite vault ids', () => {
+    expect(validateVaultId(Number.POSITIVE_INFINITY).valid).toBe(false);
   });
 });

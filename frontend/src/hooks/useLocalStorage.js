@@ -18,9 +18,10 @@ import { useState, useEffect, useCallback } from 'react';
  * const [user, setUser] = useLocalStorage('user', null);
  */
 export function useLocalStorage(key, initialValue) {
-    if (!key || typeof key !== 'string') {
+    if (!key || typeof key !== 'string' || !key.trim()) {
         throw new Error('useLocalStorage: key must be a non-empty string');
     }
+    const trimmedKey = key.trim();
     // Get from local storage then parse stored json or return initialValue
     const readValue = useCallback(() => {
         if (typeof window === 'undefined') {
@@ -28,14 +29,14 @@ export function useLocalStorage(key, initialValue) {
         }
 
         try {
-            const item = window.localStorage.getItem(key);
+            const item = window.localStorage.getItem(trimmedKey);
             if (item !== null) return JSON.parse(item);
             return initialValue instanceof Function ? initialValue() : initialValue;
         } catch (error) {
-            console.warn(`Error reading localStorage key "${key}":`, error);
+            console.warn(`Error reading localStorage key "${trimmedKey}":`, error);
             return initialValue instanceof Function ? initialValue() : initialValue;
         }
-    }, [initialValue, key]);
+    }, [initialValue, trimmedKey]);
 
     const [storedValue, setStoredValue] = useState(readValue);
 
@@ -44,30 +45,30 @@ export function useLocalStorage(key, initialValue) {
             setStoredValue((prev) => {
                 const valueToStore = value instanceof Function ? value(prev) : value;
                 if (typeof window !== 'undefined') {
-                    window.localStorage.setItem(key, JSON.stringify(valueToStore));
+                    window.localStorage.setItem(trimmedKey, JSON.stringify(valueToStore));
                 }
                 return valueToStore;
             });
         } catch (error) {
-            console.warn(`Error setting localStorage key "${key}":`, error);
+            console.warn(`Error setting localStorage key "${trimmedKey}":`, error);
         }
-    }, [key]);
+    }, [trimmedKey]);
 
     const removeValue = useCallback(() => {
         try {
             setStoredValue(initialValue instanceof Function ? initialValue() : initialValue);
             if (typeof window !== 'undefined') {
-                window.localStorage.removeItem(key);
+                window.localStorage.removeItem(trimmedKey);
             }
         } catch (error) {
-            console.warn(`Error removing localStorage key "${key}":`, error);
+            console.warn(`Error removing localStorage key "${trimmedKey}":`, error);
         }
-    }, [key, initialValue]);
+    }, [trimmedKey, initialValue]);
 
     // Sync with other tabs
     useEffect(() => {
         const handleStorageChange = (e) => {
-            if (e.key !== key) return;
+            if (e.key !== trimmedKey) return;
             if (e.newValue === null) {
                 // Key was removed in another tab
                 setStoredValue(initialValue instanceof Function ? initialValue() : initialValue);
@@ -82,7 +83,7 @@ export function useLocalStorage(key, initialValue) {
 
         window.addEventListener('storage', handleStorageChange);
         return () => window.removeEventListener('storage', handleStorageChange);
-    }, [key]);
+    }, [trimmedKey]);
 
     return [storedValue, setValue, removeValue];
 }

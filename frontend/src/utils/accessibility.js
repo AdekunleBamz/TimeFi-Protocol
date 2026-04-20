@@ -70,6 +70,19 @@ export function announceToScreenReader(message, priority = 'polite') {
 }
 
 /**
+ * clearScreenReaderAnnouncements - Remove temporary live regions created for announcements.
+ * Useful before route changes or tests to avoid accumulating hidden nodes.
+ */
+export function clearScreenReaderAnnouncements() {
+  const liveRegions = document.querySelectorAll('[role="status"][aria-live]');
+  liveRegions.forEach((region) => {
+    if (document.body.contains(region)) {
+      document.body.removeChild(region);
+    }
+  });
+}
+
+/**
  * generateId - Generate a unique ID for accessibility attributes.
  *
  * Creates sequential IDs useful for linking labels to inputs,
@@ -241,6 +254,7 @@ export function trapFocus(container, event) {
 export default {
   srOnlyStyles,
   announceToScreenReader,
+  clearScreenReaderAnnouncements,
   generateId,
   Keys,
   isActivationKey,

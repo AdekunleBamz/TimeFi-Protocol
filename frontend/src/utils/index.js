@@ -52,6 +52,7 @@ export {
 export {
   srOnlyStyles,
   announceToScreenReader,
+  clearScreenReaderAnnouncements,
   generateId,
   Keys,
   isActivationKey,

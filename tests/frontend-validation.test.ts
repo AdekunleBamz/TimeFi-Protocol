@@ -38,4 +38,10 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toContain('microSTX');
   });
+
+  it('returns explicit zero-amount validation feedback', () => {
+    const result = validateDepositAmount(0);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Amount must be greater than 0');
+  });
 });

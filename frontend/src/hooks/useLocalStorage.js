@@ -47,6 +47,10 @@ export function useLocalStorage(key, initialValue) {
 
     // Sync with other tabs
     useEffect(() => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
         const handleStorageChange = (e) => {
             if (e.key === key && e.newValue !== null) {
                 setStoredValue(JSON.parse(e.newValue));

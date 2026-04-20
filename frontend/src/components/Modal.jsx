@@ -72,7 +72,7 @@ export function Modal({
 
   return createPortal(
     <div className="modal-overlay" onClick={handleOverlayClick}>
-      <div className={`modal modal-${size}`} role="dialog" aria-modal="true" aria-labelledby={title ? titleId : undefined}>
+      <div className={`modal modal-${size}`} role="dialog" aria-modal="true" aria-labelledby={title ? titleId : undefined} tabIndex={-1}>
         {(title || showCloseButton) && (
           <div className="modal-header">
             {title && <h2 className="modal-title" id={titleId}>{title}</h2>}

@@ -12,7 +12,7 @@ const ACTIVE_NETWORK =
         : 'testnet';
 
 /** How often to poll for new block data (in milliseconds). */
-const BLOCK_POLL_INTERVAL_MS = 60_000;
+const BLOCK_POLL_INTERVAL_MS = 30_000;
 
 /**
  * useBlockHeight - Fetch and poll current Stacks blockchain height.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultId } from '../frontend/src/utils/validation.js';
+import { validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -108,5 +108,11 @@ describe('frontend validation helpers', () => {
     const result = validateBotAddress('BAD-ADDRESS');
     expect(result.valid).toBe(false);
     expect(result.error).toContain('prefix');
+  });
+
+  it('rejects withdrawal when vault is missing', () => {
+    const result = validateWithdrawal(null, 1000);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Vault not found');
   });
 });

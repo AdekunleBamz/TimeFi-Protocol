@@ -127,8 +127,8 @@ export const ERROR_CODES = {
  * @type {Object.<string, number>}
  */
 export const UI = {
-  TOAST_DURATION: 5000,
-  DEBOUNCE_DELAY: 300,
+  TOAST_DURATION: 4000,
+  DEBOUNCE_DELAY: 350,
   SKELETON_COUNT: 3,
   MAX_VISIBLE_VAULTS: 10,
   PAGINATION_SIZE: 20,

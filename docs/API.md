@@ -42,11 +42,11 @@ await createVault(amountMicroStx, lockDuration);
 
 ---
 
-### `withdraw`
-Withdraw funds from an unlocked vault.
+### `request-withdraw`
+Queue a withdrawal request for a matured vault.
 
 ```clarity
-(withdraw (id uint))
+(request-withdraw (id uint))
 ```
 
 **Parameters:**
@@ -54,9 +54,9 @@ Withdraw funds from an unlocked vault.
 
 **Returns:** `(response bool uint)` - true on success
 
-**Events:** Emits `{event: "withdraw", id, owner}`
+**Events:** Emits `{event: "withdraw-requested", id, owner}`
 
-> Local simnet tests may expose `u4` from chain-time lookup in edge timing scenarios.
+> This call marks the vault ready for processing; it does not transfer STX immediately.
 
 ---
 

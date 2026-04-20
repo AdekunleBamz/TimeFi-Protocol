@@ -12,8 +12,8 @@ Run `npm run check` once before mainnet scripts to catch local contract/test dri
 
 ## Scripts Covered
 
-- `test/fund-wallets.js`: pre-funds test wallets from wallet 1.
-- `test/full-test-333.js`: runs a 333 confirmed transaction flow across vault, rewards, governance, and emergency contracts.
+- `tests/fund-wallets.js`: pre-funds test wallets from wallet 1.
+- `tests/full-test-333.js`: runs a 333 confirmed transaction flow across vault, rewards, governance, and emergency contracts.
 
 Both scripts target Hiro mainnet API and the `*-v-A2` contract set by default.
 
@@ -25,13 +25,13 @@ Both scripts target Hiro mainnet API and the `*-v-A2` contract set by default.
 ## Running Full Test
 
 ```bash
-node test/full-test-333.js
+node tests/full-test-333.js
 ```
 
 ### Wallet Funding
 
 ```bash
-node test/fund-wallets.js
+node tests/fund-wallets.js
 ```
 
 Wallet ordering assumptions:
@@ -42,7 +42,7 @@ Wallet ordering assumptions:
 You can override runtime values with environment variables:
 
 ```bash
-MAX_TXS=50 GAS_FEE=1000 CREATE_AMOUNT=10000 node test/full-test-333.js
+MAX_TXS=50 GAS_FEE=1000 CREATE_AMOUNT=10000 node tests/full-test-333.js
 ```
 
 ## Funding Formula
@@ -87,5 +87,5 @@ This affects local assertions and does not automatically imply a mainnet regress
 ## Preflight Sanity Checks
 
 - Confirm wallet 1 nonce can be fetched before funding starts.
-- Confirm each recipient address is unique in `test/wallets.json`.
+- Confirm each recipient address is unique in `tests/wallets.json`.
 - Re-check wallet 1 nonce after funding completes before starting the full-test loop.

@@ -77,4 +77,10 @@ describe('frontend validation helpers', () => {
     const firstSupportedBlocks = Object.values(LOCK_PERIODS)[0].blocks;
     expect(validateLockPeriod(firstSupportedBlocks).valid).toBe(true);
   });
+
+  it('rejects deposits that exceed available balance', () => {
+    const result = validateDepositAmount(1000, 999);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Insufficient balance');
+  });
 });

@@ -109,7 +109,7 @@ export const env = {
   // Human-readable network label for display in the UI
   getNetworkLabel() {
     const labels = { mainnet: 'Mainnet', testnet: 'Testnet', devnet: 'Devnet' };
-    return labels[this.network] || this.network;
+    return labels[this.network] || 'Unknown';
   },
 };
 

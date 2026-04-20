@@ -15,4 +15,8 @@ describe('frontend validation helpers', () => {
   it('rejects infinite vault ids', () => {
     expect(validateVaultId(Number.POSITIVE_INFINITY).valid).toBe(false);
   });
+
+  it('rejects non-numeric lock period strings', () => {
+    expect(validateLockPeriod('not-a-number').valid).toBe(false);
+  });
 });

@@ -22,6 +22,7 @@ import { CONTRACT_ADDRESS, CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT } from '../
 const NETWORK = {
   MAINNET: 'mainnet',
   TESTNET: 'testnet',
+  DEVNET: 'devnet',
 };
 
 /**

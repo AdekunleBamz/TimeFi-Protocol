@@ -70,9 +70,9 @@ export const API_ENDPOINTS = {
  * @type {Object.<string, number>}
  */
 export const FEES = {
-  DEFAULT: 2000,
-  FAST: 5000,
-  SLOW: 1000,
+  DEFAULT: 2500,
+  FAST: 6000,
+  SLOW: 1200,
 };
 
 /**

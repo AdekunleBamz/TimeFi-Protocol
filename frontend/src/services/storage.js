@@ -184,6 +184,7 @@ export const StorageKeys = {
   CACHED_BLOCK_HEIGHT: 'cached_block_height',
   RECENT_TRANSACTIONS: 'recent_transactions',
   SEEN_ANNOUNCEMENTS: 'seen_announcements',
+  SEEN_TUTORIALS: 'seen_tutorials',
 };
 
 /**

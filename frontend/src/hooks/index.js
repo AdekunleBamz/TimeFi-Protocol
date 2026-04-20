@@ -36,5 +36,5 @@ export { useDebounce, useDebouncedCallback, useDebouncedValue } from './useDebou
 export { useInterval, useTimeout, usePolling } from './useInterval';
 
 // UI utilities
-export { useMediaQuery, useIsMobile, useIsTablet, useIsDesktop, useIsLargeDesktop, useBreakpoint, usePrefersDarkMode, usePrefersReducedMotion, useIsTouchDevice, useOrientation } from './useMediaQuery';
+export { useMediaQuery, useIsMobile, useIsTablet, useIsDesktop, useIsLargeDesktop, useBreakpoint, usePrefersDarkMode, usePrefersReducedMotion, useIsTouchDevice, useOrientation, useIsLandscape } from './useMediaQuery';
 export { useClickOutside, useEscapeKey, useDismiss, useFocusTrap } from './useClickOutside';

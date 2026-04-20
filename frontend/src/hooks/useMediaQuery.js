@@ -130,4 +130,12 @@ export function useOrientation() {
   return isPortrait ? 'portrait' : 'landscape';
 }
 
+/**
+ * useIsLandscape - Check if device orientation is landscape.
+ * @returns {boolean} Whether current orientation is landscape
+ */
+export function useIsLandscape() {
+  return useMediaQuery('(orientation: landscape)');
+}
+
 export default useMediaQuery;

@@ -60,6 +60,22 @@ Queue a withdrawal request for a matured vault.
 
 ---
 
+### `process-withdraw`
+Process a queued withdrawal. Admin only.
+
+```clarity
+(process-withdraw (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID that was already queued via `request-withdraw`
+
+**Returns:** `(response bool uint)`
+
+**Events:** Emits `{event: "withdraw", id, owner, amount}`
+
+---
+
 ### `approve-bot`
 Approve a contract as an automated trading bot. Admin only.
 

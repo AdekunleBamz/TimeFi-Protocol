@@ -56,7 +56,7 @@ export function useBlockHeight() {
     useEffect(() => {
         fetchBlockHeight();
 
-        // Poll every minute
+        // Poll every 30 seconds
         const interval = setInterval(fetchBlockHeight, BLOCK_POLL_INTERVAL_MS);
         return () => clearInterval(interval);
     }, [fetchBlockHeight]);

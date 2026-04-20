@@ -139,6 +139,14 @@ export function useOrientation() {
 }
 
 /**
+ * useIsPortrait - Check if device orientation is portrait.
+ * @returns {boolean} Whether current orientation is portrait
+ */
+export function useIsPortrait() {
+  return useMediaQuery('(orientation: portrait)');
+}
+
+/**
  * useIsLandscape - Check if device orientation is landscape.
  * @returns {boolean} Whether current orientation is landscape
  */

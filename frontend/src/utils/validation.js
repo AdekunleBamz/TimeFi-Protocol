@@ -209,6 +209,10 @@ export function validateWithdrawal(vault, currentHeight) {
     return { valid: false, error: 'Vault not found' };
   }
 
+  if (!Number.isFinite(currentHeight) || currentHeight < 0) {
+    return { valid: false, error: 'Invalid current block height' };
+  }
+
   if (vault.isWithdrawn) {
     return { valid: false, error: 'Vault already withdrawn' };
   }

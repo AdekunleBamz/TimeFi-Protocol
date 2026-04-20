@@ -224,7 +224,7 @@ A: The minimum lock period is 3,600 seconds (1 hour).
 ## 📖 Operations Docs
 
 - Mainnet testing and funding flows: [MAINNET_TESTING.md](docs/MAINNET_TESTING.md)
-- Technical Specification: [TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md)
+- Technical Specification: [API.md](docs/API.md)
 
 ## 📦 Package Metadata
 

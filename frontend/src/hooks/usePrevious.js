@@ -72,7 +72,15 @@ export function useUndoRedo(initialState) {
         setPointer(0);
     }, [initialState]);
 
-    return [state, { set, undo, redo, reset, canUndo: pointer > 0, canRedo: pointer < history.length - 1 }];
+    const jumpTo = useCallback((index) => {
+        const targetIndex = Number(index);
+        if (!Number.isInteger(targetIndex)) return;
+        if (targetIndex < 0 || targetIndex >= history.length) return;
+        setPointer(targetIndex);
+        setState(history[targetIndex]);
+    }, [history]);
+
+    return [state, { set, undo, redo, reset, jumpTo, canUndo: pointer > 0, canRedo: pointer < history.length - 1 }];
 }
 
 /**

@@ -14,6 +14,10 @@ import { useState, useEffect, useMemo } from 'react';
  * const prefersDark = useMediaQuery('(prefers-color-scheme: dark)');
  */
 export function useMediaQuery(query) {
+  if (!query || typeof query !== 'string') {
+    return false;
+  }
+
   const [matches, setMatches] = useState(() => {
     if (typeof window === 'undefined') return false;
     return window.matchMedia(query).matches;

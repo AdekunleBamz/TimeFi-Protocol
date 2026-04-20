@@ -65,7 +65,7 @@ export function validateAddress(address) {
  */
 export function validateVaultId(id) {
   const numId = Number(id);
-  if (id === undefined || id === null || id === '' || isNaN(numId)) {
+  if (id === undefined || id === null || String(id).trim() === '' || isNaN(numId)) {
     return { valid: false, error: 'A valid Vault ID is required' };
   }
   if (!Number.isInteger(numId)) {
@@ -73,6 +73,9 @@ export function validateVaultId(id) {
   }
   if (numId <= 0) {
     return { valid: false, error: 'Vault ID must be a positive number' };
+  }
+  if (numId > Number.MAX_SAFE_INTEGER) {
+    return { valid: false, error: 'Vault ID is out of range' };
   }
   return { valid: true };
 }

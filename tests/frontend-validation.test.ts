@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateDepositAmount, validateLockPeriod, validateVaultId } from '../frontend/src/utils/validation.js';
+import { validateAddress, validateDepositAmount, validateLockPeriod, validateVaultId } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -86,5 +86,11 @@ describe('frontend validation helpers', () => {
 
   it('accepts deposits within available balance', () => {
     expect(validateDepositAmount(MIN_DEPOSIT, MIN_DEPOSIT).valid).toBe(true);
+  });
+
+  it('rejects addresses with invalid prefix', () => {
+    const result = validateAddress('SZ3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N');
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('prefix');
   });
 });

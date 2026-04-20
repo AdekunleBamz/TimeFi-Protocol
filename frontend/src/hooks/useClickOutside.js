@@ -24,6 +24,7 @@ export function useClickOutside(handler, options = {}) {
     eventType = 'mousedown',
     excludeRefs = [],
     listenTouch = true,
+    capture = false,
   } = options;
 
   const ref = useRef(null);
@@ -62,18 +63,18 @@ export function useClickOutside(handler, options = {}) {
       handlerRef.current(event);
     };
 
-    document.addEventListener(eventType, listener);
+    document.addEventListener(eventType, listener, { capture });
     if (listenTouch) {
       document.addEventListener('touchstart', listener, { passive: true });
     }
 
     return () => {
-      document.removeEventListener(eventType, listener);
+      document.removeEventListener(eventType, listener, { capture });
       if (listenTouch) {
         document.removeEventListener('touchstart', listener);
       }
     };
-  }, [enabled, eventType, excludeRefs, listenTouch]);
+  }, [enabled, eventType, excludeRefs, listenTouch, capture]);
 
   return ref;
 }

@@ -26,27 +26,29 @@ import { LOCK_PERIODS, MIN_DEPOSIT, MAX_DEPOSIT } from '../config/contracts';
  * // returns { valid: false, error: 'Invalid address length' }
  */
 export function validateAddress(address) {
-  if (!address) {
+  if (!address || typeof address !== 'string') {
     return { valid: false, error: 'Address is required' };
   }
+
+  const trimmed = address.trim();
 
   // Mainnet addresses start with SP
   // Testnet addresses start with ST
   const validPrefixes = ['SP', 'ST'];
-  const prefix = address.slice(0, 2);
+  const prefix = trimmed.slice(0, 2);
 
   if (!validPrefixes.includes(prefix)) {
     return { valid: false, error: 'Invalid Stacks address prefix (must be SP or ST)' };
   }
 
   // Standard Stacks addresses are typically 41 characters
-  if (address.length < 38 || address.length > 42) {
-    return { valid: false, error: `Invalid address length (${address.length})` };
+  if (trimmed.length < 38 || trimmed.length > 42) {
+    return { valid: false, error: `Invalid address length (${trimmed.length})` };
   }
 
   // Check for valid base58 characters (no 0, O, I, l)
   const base58Regex = /^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$/;
-  if (!base58Regex.test(address)) {
+  if (!base58Regex.test(trimmed)) {
     return { valid: false, error: 'Address contains invalid characters (non-base58)' };
   }
 

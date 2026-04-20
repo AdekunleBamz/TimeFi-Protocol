@@ -20,6 +20,11 @@ function isStorageAvailable() {
     return storageAvailableCache;
   }
 
+  if (typeof window === 'undefined' || !window.localStorage) {
+    storageAvailableCache = false;
+    return storageAvailableCache;
+  }
+
   try {
     const testKey = '__storage_test__';
     window.localStorage.setItem(testKey, testKey);
@@ -193,6 +198,10 @@ export const StorageKeys = {
  */
 export const session = {
   get(key, defaultValue = null) {
+    if (typeof window === 'undefined' || !window.sessionStorage) {
+      return defaultValue;
+    }
+
     try {
       const item = sessionStorage.getItem(normalizeKey(key));
       return item ? safeJsonParse(item, defaultValue) : defaultValue;
@@ -202,6 +211,10 @@ export const session = {
   },
  
   set(key, value) {
+    if (typeof window === 'undefined' || !window.sessionStorage) {
+      return;
+    }
+
     try {
       sessionStorage.setItem(normalizeKey(key), JSON.stringify(value));
     } catch {
@@ -210,6 +223,10 @@ export const session = {
   },
  
   remove(key) {
+    if (typeof window === 'undefined' || !window.sessionStorage) {
+      return;
+    }
+
     try {
       sessionStorage.removeItem(normalizeKey(key));
     } catch {

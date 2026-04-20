@@ -84,9 +84,9 @@ export function CardHeader({ children, className = '', action, ...props }) {
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - Title text
  */
-export function CardTitle({ children, className = '' }) {
+export function CardTitle({ children, className = '', as: Tag = 'h3' }) {
 
-  return <h3 className={`card-title ${className}`}>{children}</h3>;
+  return <Tag className={`card-title ${className}`}>{children}</Tag>;
 }
 
 /**

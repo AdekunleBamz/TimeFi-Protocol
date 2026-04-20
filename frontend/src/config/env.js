@@ -58,7 +58,7 @@ export const env = {
   
   // App Info
   appName: (import.meta.env.VITE_APP_NAME || 'TimeFi Protocol').trim(),
-  appDescription: (import.meta.env.VITE_APP_DESCRIPTION || 'Time-locked vaults on Stacks').trim(),
+  appDescription: (import.meta.env.VITE_APP_DESCRIPTION || 'Time-locked STX vaults on Stacks').trim(),
   
   // Feature Flags
   enableTestnet: parseBoolean(import.meta.env.VITE_ENABLE_TESTNET),

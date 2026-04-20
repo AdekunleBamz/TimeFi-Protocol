@@ -26,7 +26,11 @@ export function useInterval(callback, delay, { enabled = true } = {}) {
 
   // Set up the interval
   useEffect(() => {
-    if (delay === null || !enabled) {
+    if (delay === null || delay === undefined || !enabled) {
+      return;
+    }
+
+    if (typeof delay !== 'number' || delay < 0) {
       return;
     }
 

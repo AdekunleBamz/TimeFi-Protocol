@@ -48,6 +48,7 @@ export const BLOCK_TIME = {
   MAINNET: 600, // ~10 minutes
   TESTNET: 120, // ~2 minutes
   DEVNET: 30,   // ~30 seconds
+  AVERAGE: 600, // alias for mainnet default
 };
 /**
  * BLOCK_TIME_SECONDS - Default block time in seconds (mainnet).

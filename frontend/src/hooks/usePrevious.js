@@ -64,7 +64,13 @@ export function useUndoRedo(initialState) {
         }
     }, [history, pointer]);
 
-    return [state, { set, undo, redo, canUndo: pointer > 0, canRedo: pointer < history.length - 1 }];
+    const reset = useCallback(() => {
+        setState(initialState);
+        setHistory([initialState]);
+        setPointer(0);
+    }, [initialState]);
+
+    return [state, { set, undo, redo, reset, canUndo: pointer > 0, canRedo: pointer < history.length - 1 }];
 }
 
 /**

@@ -107,6 +107,10 @@ export function validateDepositAmount(amount, balance) {
     return { valid: false, error: 'Amount must be greater than 0' };
   }
 
+  if (!Number.isInteger(numAmount)) {
+    return { valid: false, error: 'Amount must be a whole number of microSTX' };
+  }
+
   if (numAmount < MIN_DEPOSIT) {
     return { valid: false, error: `Minimum deposit is ${MIN_DEPOSIT.toLocaleString()} microSTX` };
   }

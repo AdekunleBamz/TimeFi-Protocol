@@ -91,13 +91,7 @@ npm run test
 npm run test:report
 
 # Run frontend lint checks from root
-npm run frontend:lint
-
-# Run SDK tests from root
-npm run sdk:test
-
-# Run a local pre-push verification bundle
-npm run verify:local
+npm --prefix frontend run lint
 
 # Start devnet
 clarinet devnet start

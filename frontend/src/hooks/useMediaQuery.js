@@ -17,16 +17,18 @@ export function useMediaQuery(query) {
   if (!query || typeof query !== 'string') {
     return false;
   }
+  const trimmedQuery = query.trim();
+  if (!trimmedQuery) return false;
 
   const [matches, setMatches] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return window.matchMedia(query).matches;
+    return window.matchMedia(trimmedQuery).matches;
   });
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const mediaQuery = window.matchMedia(query);
+    const mediaQuery = window.matchMedia(trimmedQuery);
     setMatches(mediaQuery.matches);
 
     const handler = (event) => {
@@ -41,7 +43,7 @@ export function useMediaQuery(query) {
     // Legacy browsers
     mediaQuery.addListener(handler);
     return () => mediaQuery.removeListener(handler);
-  }, [query]);
+  }, [trimmedQuery]);
 
   return matches;
 }

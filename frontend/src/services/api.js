@@ -103,7 +103,8 @@ async function fetchAPI(endpoint, options = {}) {
  */
 export async function getBlockHeight() {
   const data = await fetchAPI('/extended/v1/block?limit=1');
-  return safeParseInt(data.results?.[0]?.height);
+  const height = safeParseInt(data.results?.[0]?.height);
+  return height > 0 ? height : 0;
 }
 
 /**

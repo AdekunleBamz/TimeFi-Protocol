@@ -134,6 +134,7 @@ export const UI = {
   SKELETON_COUNT: 3,
   MAX_VISIBLE_VAULTS: 10,
   PAGINATION_SIZE: 20,
+  TOOLTIP_DELAY: 500,
 };
 
 /**
@@ -144,6 +145,7 @@ export const STORAGE_KEYS = {
   WALLET_SESSION: 'timefi_wallet_session',
   USER_PREFERENCES: 'timefi_preferences',
   RECENT_TRANSACTIONS: 'timefi_recent_txs',
+  NOTIFICATIONS: 'timefi_notifications',
   THEME: 'timefi_theme',
 };
 

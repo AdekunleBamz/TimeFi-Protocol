@@ -31,7 +31,7 @@ Thank you for your interest in contributing to TimeFi Protocol!
 
 5. Run tests:
    ```bash
-   npm test
+   npm run test
    ```
 
 ### Sub-project Development

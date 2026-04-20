@@ -25,4 +25,10 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toContain('microSTX');
   });
+
+  it('uses microSTX wording for maximum deposit errors', () => {
+    const result = validateDepositAmount(Number.MAX_SAFE_INTEGER);
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('microSTX');
+  });
 });

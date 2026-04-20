@@ -28,6 +28,7 @@ export {
 
 // Validation
 export { 
+  validateNonEmptyString,
   validateAddress, 
   validateVaultId, 
   validateDepositAmount,

@@ -25,7 +25,7 @@ Amounts are provided in microSTX, so UI conversions should happen before contrac
 
 **Events:** Emits `{event: "create", id, owner, amount, unlock}`
 
-**Transfer behavior:** principal-after-fee goes to deployer custodian, fee goes to `treasury`.
+**Transfer behavior:** deposit amount after fee goes to the deployer custodian, fee goes to `treasury`.
 
 **Fee Calculation:** 0.5% of deposit amount (FEE_BPS = 50 basis points)
 

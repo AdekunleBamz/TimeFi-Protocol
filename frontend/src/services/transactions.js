@@ -190,7 +190,7 @@ export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel })
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function approveBot({ botAddress, onFinish, onCancel }) {
-  if (!botAddress) throw new Error('botAddress is required');
+  if (!botAddress || typeof botAddress !== 'string' || !botAddress.trim()) throw new Error('botAddress is required');
   await openContractCall({
     ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'approve-bot', [principalCV(botAddress)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Deny,
@@ -205,7 +205,7 @@ export async function approveBot({ botAddress, onFinish, onCancel }) {
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function revokeBot({ botAddress, onFinish, onCancel }) {
-  if (!botAddress) throw new Error('botAddress is required');
+  if (!botAddress || typeof botAddress !== 'string' || !botAddress.trim()) throw new Error('botAddress is required');
   await openContractCall({
     ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'revoke-bot', [principalCV(botAddress)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Deny,

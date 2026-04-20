@@ -98,7 +98,7 @@ export function useAsync(asyncFunction, options = {}) {
     execute,
     data: state.data,
     loading: state.loading,
-    status: state.status,
+      status: state.status,
     error: state.error,
     clearError,
     setData,

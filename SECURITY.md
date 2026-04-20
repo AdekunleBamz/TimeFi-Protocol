@@ -49,3 +49,5 @@ The TimeFi Protocol implements the following security measures:
 For security concerns, please contact the maintainers privately.
 
 **Primary Contact**: adekunlebamz (GitHub)
+
+**Security Email**: bams.kunle@gmail.com

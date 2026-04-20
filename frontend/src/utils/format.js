@@ -44,6 +44,6 @@ export {
 export const formatBlockHeight = (height) => {
     if (height === undefined || height === null || height === '') return '--';
     const numericHeight = Number(height);
-    if (!Number.isFinite(numericHeight)) return '--';
-    return numericHeight.toLocaleString();
+    if (!Number.isFinite(numericHeight) || numericHeight < 0) return '--';
+    return Math.floor(numericHeight).toLocaleString();
 };

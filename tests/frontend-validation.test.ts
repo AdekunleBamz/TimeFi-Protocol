@@ -60,4 +60,10 @@ describe('frontend validation helpers', () => {
   it('accepts positive integer vault ids', () => {
     expect(validateVaultId(1).valid).toBe(true);
   });
+
+  it('rejects empty vault id input', () => {
+    const result = validateVaultId('');
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('A valid Vault ID is required');
+  });
 });

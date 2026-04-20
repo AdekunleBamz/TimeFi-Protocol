@@ -9,7 +9,9 @@ import { StacksMainnet, StacksTestnet } from '@stacks/network';
 const ACTIVE_NETWORK =
     String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'mainnet'
         ? 'mainnet'
-        : 'testnet';
+        : String(import.meta.env.VITE_NETWORK || '').trim().toLowerCase() === 'devnet'
+            ? 'devnet'
+            : 'testnet';
 
 /** How often to poll for new block data (in milliseconds). */
 const BLOCK_POLL_INTERVAL_MS = 30_000;

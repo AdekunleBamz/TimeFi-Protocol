@@ -77,7 +77,7 @@ export class ErrorBoundary extends Component {
           <div className="error-boundary-content">
             <div className="error-boundary-icon">⚠️</div>
             <h1>Something went wrong</h1>
-            <p>The interface hit an unexpected state. Your wallet and funds are not affected by this display error.</p>
+            <p>The interface hit an unexpected state. Your wallet and funds are safe — this is a display error only.</p>
 
             <div className="error-boundary-guidance">
               <div className="error-boundary-guidance-item">

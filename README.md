@@ -66,7 +66,7 @@ The TimeFi Protocol is designed as a modular system for security and scalability
 ### 📋 Prerequisites
 
 - [Clarinet](https://github.com/hirosystems/clarinet) installed
-- Node.js 18+
+- Node.js >=18.0.0
 - Access to a Stacks node API for the network you are targeting (mainnet by default)
 - Wallet/provider network should match the configured API target before running write flows
  

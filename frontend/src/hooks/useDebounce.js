@@ -74,6 +74,40 @@ export function useDebouncedCallback(callback, delay = 300) {
 }
 
 /**
+ * useDebouncedCallbackWithCancel - Debounced callback plus cancel function.
+ * @param {Function} callback - Function to debounce
+ * @param {number} [delay=300] - Debounce delay in milliseconds
+ * @returns {[Function, Function]} Tuple of [debouncedCallback, cancel]
+ */
+export function useDebouncedCallbackWithCancel(callback, delay = 300) {
+    const timeoutRef = useRef();
+    const callbackRef = useRef(callback);
+    const resolvedDelay = typeof delay === 'number' && delay >= 0 ? delay : 300;
+
+    useEffect(() => {
+        callbackRef.current = callback;
+    }, [callback]);
+
+    const cancel = useCallback(() => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = undefined;
+        }
+    }, []);
+
+    useEffect(() => cancel, [cancel]);
+
+    const debounced = useCallback((...args) => {
+        cancel();
+        timeoutRef.current = setTimeout(() => {
+            callbackRef.current(...args);
+        }, resolvedDelay);
+    }, [cancel, resolvedDelay]);
+
+    return [debounced, cancel];
+}
+
+/**
  * useDebouncedValue - Alias for useDebounce.
  * @param {any} value - Value to debounce
  * @param {number} [delay] - Debounce delay in milliseconds

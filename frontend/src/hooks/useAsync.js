@@ -83,6 +83,10 @@ export function useAsync(asyncFunction, options = {}) {
     setState((prev) => ({ ...prev, error: null }));
   }, []);
 
+  const setData = useCallback((value) => {
+    setState((prev) => ({ ...prev, data: value }));
+  }, []);
+
   // Execute immediately if requested
   useEffect(() => {
     if (immediate) {
@@ -97,6 +101,7 @@ export function useAsync(asyncFunction, options = {}) {
     status: state.status,
     error: state.error,
     clearError,
+    setData,
     reset,
   };
 }

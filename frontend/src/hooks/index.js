@@ -30,7 +30,7 @@ export { useBlockHeight } from './useBlockHeight';
 // State management
 export { useLocalStorage } from './useLocalStorage';
 export { usePrevious, useValueChange, useHasChanged, useHistory, useUndoRedo } from './usePrevious';
-export { useDebounce, useDebouncedCallback, useDebouncedValue } from './useDebounce';
+export { useDebounce, useDebouncedCallback, useDebouncedCallbackWithCancel, useDebouncedValue } from './useDebounce';
 
 // Timing
 export { useInterval, useTimeout, usePolling } from './useInterval';

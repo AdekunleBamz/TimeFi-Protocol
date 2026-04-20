@@ -39,6 +39,16 @@ export function validateNonEmptyString(value, fieldName = 'Value') {
 }
 
 /**
+ * isPositiveInteger - Check whether a value is a positive integer.
+ * @param {unknown} value - Value to test
+ * @returns {boolean} True when value is a positive integer
+ */
+export function isPositiveInteger(value) {
+  const numericValue = Number(value);
+  return Number.isInteger(numericValue) && numericValue > 0;
+}
+
+/**
  * Validation Utilities - Input validation and sanitization functions.
  *
  * Provides validation for addresses, amounts, vault IDs, and other

@@ -30,7 +30,7 @@ export function useInterval(callback, delay, { enabled = true } = {}) {
       return;
     }
 
-    if (typeof delay !== 'number' || delay < 0) {
+    if (typeof delay !== 'number' || delay < 0 || !Number.isFinite(delay)) {
       return;
     }
 

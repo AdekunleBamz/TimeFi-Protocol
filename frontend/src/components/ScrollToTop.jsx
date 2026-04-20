@@ -29,6 +29,8 @@ export function ScrollToTop() {
       top: 0,
       behavior: 'smooth',
     });
+    // Move focus to the top of the page for keyboard users
+    document.body.focus();
   };
 
   return (

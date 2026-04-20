@@ -39,13 +39,16 @@ export {
 
 // Constants
 export { 
+  NETWORK,
   CONTRACT_ADDRESS, 
   CONTRACT_NAMES, 
   STACKS_NETWORK, 
   MINIMUM_LOCK_BLOCKS, 
   MAXIMUM_LOCK_BLOCKS, 
   MINIMUM_DEPOSIT,
-  BLOCK_TIME_SECONDS 
+  BLOCK_TIME_SECONDS,
+  getBlockTimeForNetwork,
+  isKnownErrorCode,
 } from './constants';
 
 // Accessibility

@@ -115,4 +115,11 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Vault not found');
   });
+
+  it('returns remaining block count for locked withdrawals', () => {
+    const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: false };
+    const result = validateWithdrawal(vault, 105);
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('5 blocks remaining');
+  });
 });

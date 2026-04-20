@@ -17,7 +17,7 @@ A time-locked vault protocol built on the Stacks blockchain using Clarity smart 
 [![Testing: Vitest](https://img.shields.io/badge/testing-vitest-blue.svg)](https://vitest.dev)
 [![Maintenance: Active](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/AdekunleBamz/TimeFi-Protocol/graphs/commit-activity)
 [![Security Policy](https://img.shields.io/badge/security-policy-brightgreen.svg)](SECURITY.md)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com)
 [![Twitter](https://img.shields.io/twitter/follow/TimeFiProtocol?style=social)](https://twitter.com/TimeFiProtocol)
 [![GitHub stars](https://img.shields.io/github/stars/AdekunleBamz/TimeFi-Protocol?style=social)](https://github.com/AdekunleBamz/TimeFi-Protocol)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/AdekunleBamz/TimeFi-Protocol/ci.yml?branch=main&style=flat-square)](https://github.com/AdekunleBamz/TimeFi-Protocol/actions)

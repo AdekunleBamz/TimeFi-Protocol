@@ -88,7 +88,7 @@ export function getItem(key, defaultValue = null) {
       return item ? safeJsonParse(item, defaultValue) : defaultValue;
     }
     return memoryStorage.get(prefixedKey) ?? defaultValue;
-  } catch (error) {
+  } catch {
     return defaultValue;
   }
 }
@@ -107,7 +107,7 @@ export function setItem(key, value) {
     } else {
       memoryStorage.set(prefixedKey, value);
     }
-  } catch (error) {
+  } catch {
     memoryStorage.set(prefixedKey, value);
   }
 }
@@ -124,7 +124,7 @@ export function removeItem(key) {
       window.localStorage.removeItem(prefixedKey);
     }
     memoryStorage.delete(prefixedKey);
-  } catch (error) {
+  } catch {
     // Ignore error
   }
 }
@@ -143,7 +143,7 @@ export function clearAll() {
       });
     }
     memoryStorage.clear();
-  } catch (error) {
+  } catch {
     // Ignore error
   }
 }
@@ -180,7 +180,7 @@ export const session = {
   set(key, value) {
     try {
       sessionStorage.setItem(normalizeKey(key), JSON.stringify(value));
-    } catch (error) {
+    } catch {
       // Ignore
     }
   },

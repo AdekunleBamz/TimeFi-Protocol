@@ -43,7 +43,7 @@ export function useBlockHeight() {
             setError(null);
         } catch (err) {
             console.error('Failed to fetch block height:', err);
-            setError(err.message);
+            setError(err instanceof Error ? err.message : 'Failed to fetch block height');
         } finally {
             setLoading(false);
         }

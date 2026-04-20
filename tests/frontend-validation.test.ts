@@ -72,4 +72,9 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Please select a lock period');
   });
+
+  it('accepts numeric lock period values', () => {
+    const firstSupportedBlocks = Object.values(LOCK_PERIODS)[0].blocks;
+    expect(validateLockPeriod(firstSupportedBlocks).valid).toBe(true);
+  });
 });

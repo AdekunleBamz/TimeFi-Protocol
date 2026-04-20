@@ -57,6 +57,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: CALCULATE REWARDS FOR VAULT
+;; Returns (ok uint) reward amount in microSTX, or err if vault not found
 ;; -------------------------------------------------------
 
 (define-read-only (calculate-rewards (vault-id uint))

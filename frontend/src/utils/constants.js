@@ -154,6 +154,7 @@ export const STORAGE_KEYS = {
 export const LINKS = {
   DOCS: 'https://docs.timefi.io',
   GITHUB: 'https://github.com/AdekunleBamz/TimeFi-Protocol',
+  BLOG: 'https://blog.timefi.io',
   TWITTER: 'https://twitter.com/timefi_protocol',
   DISCORD: 'https://discord.gg/timefi',
   EXPLORER: 'https://explorer.hiro.so',

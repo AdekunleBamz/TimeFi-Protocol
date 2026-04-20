@@ -93,4 +93,8 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toContain('prefix');
   });
+
+  it('accepts valid stacks addresses', () => {
+    expect(validateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').valid).toBe(true);
+  });
 });

@@ -8,7 +8,7 @@ import { useState, useEffect, useCallback } from 'react';
  *
  * @param {string} key - localStorage key for storing the value
  * @param {any} initialValue - Default value when no stored value exists
- * @returns {[any, Function]} Tuple of [storedValue, setValue]
+ * @returns {[any, Function, Function]} Tuple of [storedValue, setValue, removeValue]
  * @returns {any} storedValue - Current stored value or initialValue
  * @returns {Function} setValue - Setter that updates state and localStorage
  * @throws {Error} When localStorage is not available and no fallback is provided

@@ -56,4 +56,8 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Vault ID must be a whole number');
   });
+
+  it('accepts positive integer vault ids', () => {
+    expect(validateVaultId(1).valid).toBe(true);
+  });
 });

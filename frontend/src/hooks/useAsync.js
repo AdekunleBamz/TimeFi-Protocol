@@ -172,7 +172,11 @@ export function useFetch(fetcher, deps = []) {
     }
   }, [fetcher]);
 
-  return { ...state, refetch };
+  const clearError = useCallback(() => {
+    setState((prev) => ({ ...prev, error: null }));
+  }, []);
+
+  return { ...state, refetch, clearError };
 }
 
 export default useAsync;

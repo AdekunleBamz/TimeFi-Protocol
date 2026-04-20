@@ -1,3 +1,5 @@
+import { FEE_BPS } from 'timefi-sdk';
+
 /**
  * Contract Configuration - Stacks smart contract addresses and names.
  *

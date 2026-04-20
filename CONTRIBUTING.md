@@ -63,8 +63,9 @@ Follow conventional commits:
 2. Make your changes
 3. Run tests locally
 4. Run `npm run check` from repository root
-5. Push and create a PR
-6. Wait for review
+5. Run `npm --prefix frontend run lint` when frontend files are touched
+6. Push and create a PR
+7. Wait for review
 
 ## Contract Development
 

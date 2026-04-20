@@ -139,6 +139,17 @@ export const ERROR_CODES = {
 };
 
 /**
+ * isKnownErrorCode - Check whether a numeric error code is mapped.
+ * @param {number|string} code - Contract error code
+ * @returns {boolean} True when the code has a known mapping
+ */
+export function isKnownErrorCode(code) {
+  const numericCode = Number(code);
+  if (!Number.isInteger(numericCode)) return false;
+  return Object.prototype.hasOwnProperty.call(ERROR_CODES, numericCode);
+}
+
+/**
  * UI - User interface configuration constants.
  * @type {Object.<string, number>}
  */

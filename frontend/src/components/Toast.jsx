@@ -35,9 +35,12 @@ export function ToastProvider({ children }) {
     setToasts((prev) => [...prev, newToast].slice(-5));
 
     if (newToast.duration > 0) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         removeToast(id);
       }, newToast.duration);
+
+      // store timer id on the toast object for potential early cleanup
+      newToast._timer = timer;
     }
 
     return id;

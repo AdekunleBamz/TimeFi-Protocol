@@ -93,7 +93,7 @@ export function useTimeout(callback, delay) {
  * @param {Function} [options.onSuccess] - Callback on successful fetch
  * @param {Function} [options.onError] - Callback on fetch error
  * @param {boolean} [options.retryOnError=true] - Retry on errors
- * @param {number} [options.maxRetries=3] - Maximum retry attempts
+ * @param {number} [options.maxRetries=3] - Maximum retry attempts (non-negative integer)
  * @example
  * usePolling(fetchVaultData, 30000, {
  *   onSuccess: (data) => setVaults(data),

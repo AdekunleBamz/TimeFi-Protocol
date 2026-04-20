@@ -99,6 +99,11 @@ function useResolvedTheme(theme) {
       return;
     }
 
+    if (typeof window === 'undefined' || !window.matchMedia) {
+      setResolved('light');
+      return;
+    }
+
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     setResolved(mediaQuery.matches ? 'dark' : 'light');
 

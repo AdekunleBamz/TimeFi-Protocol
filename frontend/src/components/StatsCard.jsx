@@ -77,7 +77,10 @@ export function StatsCard({
           <span className="stats-value">{value}</span>
 
           {change !== undefined && (
-            <span className={`stats-change ${change >= 0 ? 'stats-change-positive' : 'stats-change-negative'}`}>
+            <span
+              className={`stats-change ${change >= 0 ? 'stats-change-positive' : 'stats-change-negative'}`}
+              aria-label={`${change >= 0 ? 'up' : 'down'} ${Math.abs(change)} percent`}
+            >
               {change >= 0 ? '↑' : '↓'} {Math.abs(change)}%
             </span>
           )}

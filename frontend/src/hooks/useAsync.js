@@ -181,7 +181,11 @@ export function useFetch(fetcher, deps = []) {
     setState((prev) => ({ ...prev, error: null }));
   }, []);
 
-  return { ...state, refetch, clearError };
+  const setData = useCallback((value) => {
+    setState((prev) => ({ ...prev, data: value }));
+  }, []);
+
+  return { ...state, refetch, clearError, setData };
 }
 
 export default useAsync;

@@ -125,7 +125,7 @@ export const Input = forwardRef(({
       {(error || hint) && (
         <div className="input-meta">
           {error && (
-            <span id={`${inputId}-error`} className="input-error-text" role="alert" aria-live="polite">
+            <span id={`${inputId}-error`} className="input-error-text" role="alert" aria-live="assertive">
               {error}
             </span>
           )}

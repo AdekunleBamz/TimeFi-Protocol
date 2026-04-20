@@ -50,4 +50,10 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Please enter an amount');
   });
+
+  it('rejects non-integer vault ids', () => {
+    const result = validateVaultId(1.25);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Vault ID must be a whole number');
+  });
 });

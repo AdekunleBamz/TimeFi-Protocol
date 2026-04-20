@@ -19,4 +19,10 @@ describe('frontend validation helpers', () => {
   it('rejects non-numeric lock period strings', () => {
     expect(validateLockPeriod('not-a-number').valid).toBe(false);
   });
+
+  it('uses microSTX wording for minimum deposit errors', () => {
+    const result = validateDepositAmount(1);
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('microSTX');
+  });
 });

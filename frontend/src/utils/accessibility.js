@@ -84,7 +84,8 @@ export function announceToScreenReader(message, priority = 'polite') {
  */
 let idCounter = 0;
 export function generateId(prefix = 'timefi') {
-  return `${prefix}-${++idCounter}`;
+  idCounter = (idCounter + 1) % Number.MAX_SAFE_INTEGER;
+  return `${prefix}-${idCounter}`;
 }
 
 /**

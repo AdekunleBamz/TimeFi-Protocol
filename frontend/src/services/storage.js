@@ -182,6 +182,7 @@ export const StorageKeys = {
   USER_PREFERENCES: 'user_preferences',
   CACHED_VAULTS: 'cached_vaults',
   CACHED_BLOCK_HEIGHT: 'cached_block_height',
+  RECENT_TRANSACTIONS: 'recent_transactions',
 };
 
 /**

@@ -47,3 +47,15 @@ export const formatBlockHeight = (height) => {
     if (!Number.isFinite(numericHeight) || numericHeight < 0) return '--';
     return Math.floor(numericHeight).toLocaleString();
 };
+
+/**
+ * formatSignedNumber - Format numeric values with explicit sign when positive.
+ * @param {number|string} value - Number to format
+ * @returns {string} Signed number string (e.g. +12, -3, 0)
+ */
+export const formatSignedNumber = (value) => {
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return '0';
+    if (numericValue > 0) return `+${numericValue}`;
+    return `${numericValue}`;
+};

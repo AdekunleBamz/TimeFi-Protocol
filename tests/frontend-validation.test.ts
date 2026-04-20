@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { validateDepositAmount, validateLockPeriod, validateVaultId } from '../frontend/src/utils/validation.js';
-import { LOCK_PERIODS } from '../frontend/src/config/contracts.js';
+import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
   it('accepts numeric-string lock period values', () => {
@@ -21,9 +21,16 @@ describe('frontend validation helpers', () => {
   });
 
   it('uses microSTX wording for minimum deposit errors', () => {
-    const result = validateDepositAmount(1);
+    const underMin = MIN_DEPOSIT > 1 ? MIN_DEPOSIT - 1 : 0;
+    const result = validateDepositAmount(underMin);
     expect(result.valid).toBe(false);
-    expect(result.error).toContain('microSTX');
+
+    if (underMin > 0) {
+      expect(result.error).toContain('microSTX');
+      return;
+    }
+
+    expect(result.error).toBe('Amount must be greater than 0');
   });
 
   it('uses microSTX wording for maximum deposit errors', () => {

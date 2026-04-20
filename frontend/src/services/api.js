@@ -40,6 +40,7 @@ const HIRO_API_URL = env.hiroApiUrl || STACKS_NETWORK?.coreApiUrl || 'https://ap
  * safeParseInt(null, 10) // returns 10
  */
 function safeParseInt(value, fallback = 0) {
+  if (value === '' || value === null || value === undefined) return fallback;
   const parsed = Number.parseInt(value, 10);
   return Number.isNaN(parsed) ? fallback : parsed;
 }

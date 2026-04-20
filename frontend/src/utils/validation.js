@@ -99,7 +99,7 @@ export function validateVaultId(id) {
 export function validateDepositAmount(amount, balance) {
   const numAmount = Number(amount);
 
-  if (!amount || !Number.isFinite(numAmount)) {
+  if (amount === undefined || amount === null || String(amount).trim() === '' || !Number.isFinite(numAmount)) {
     return { valid: false, error: 'Please enter an amount' };
   }
 

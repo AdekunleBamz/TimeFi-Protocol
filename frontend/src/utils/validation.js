@@ -112,7 +112,7 @@ export function validateDepositAmount(amount, balance) {
   }
 
   if (numAmount > MAX_DEPOSIT) {
-    return { valid: false, error: `Maximum deposit is ${MAX_DEPOSIT.toLocaleString()} STX` };
+    return { valid: false, error: `Maximum deposit is ${MAX_DEPOSIT.toLocaleString()} microSTX` };
   }
 
   if (balance !== undefined && numAmount > balance) {

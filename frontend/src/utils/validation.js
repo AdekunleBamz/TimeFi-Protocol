@@ -1,5 +1,24 @@
 import { LOCK_PERIODS, MIN_DEPOSIT, MAX_DEPOSIT } from '../config/contracts';
 
+const MICROSTX_PER_STX = 1_000_000;
+
+function protocolUsesStxAmountUnits() {
+  return Number.isFinite(MIN_DEPOSIT) && MIN_DEPOSIT > 0 && MIN_DEPOSIT < 1;
+}
+
+function toMicroStxComparable(value) {
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue)) {
+    return NaN;
+  }
+
+  if (!protocolUsesStxAmountUnits()) {
+    return numericValue;
+  }
+
+  return numericValue * MICROSTX_PER_STX;
+}
+
 /**
  * Validation Utilities - Input validation and sanitization functions.
  *
@@ -98,28 +117,32 @@ export function validateVaultId(id) {
  */
 export function validateDepositAmount(amount, balance) {
   const numAmount = Number(amount);
+  const comparableAmount = toMicroStxComparable(amount);
+  const comparableMinDeposit = toMicroStxComparable(MIN_DEPOSIT);
+  const comparableMaxDeposit = toMicroStxComparable(MAX_DEPOSIT);
+  const comparableBalance = balance === undefined ? undefined : toMicroStxComparable(balance);
 
   if (amount === undefined || amount === null || String(amount).trim() === '' || !Number.isFinite(numAmount)) {
     return { valid: false, error: 'Please enter an amount' };
   }
 
-  if (numAmount <= 0) {
+  if (comparableAmount <= 0) {
     return { valid: false, error: 'Amount must be greater than 0' };
   }
 
-  if (!Number.isInteger(numAmount)) {
+  if (!Number.isInteger(comparableAmount)) {
     return { valid: false, error: 'Amount must be a whole number of microSTX' };
   }
 
-  if (numAmount < MIN_DEPOSIT) {
+  if (comparableAmount < comparableMinDeposit) {
     return { valid: false, error: `Minimum deposit is ${MIN_DEPOSIT.toLocaleString()} microSTX` };
   }
 
-  if (numAmount > MAX_DEPOSIT) {
+  if (comparableAmount > comparableMaxDeposit) {
     return { valid: false, error: `Maximum deposit is ${MAX_DEPOSIT.toLocaleString()} microSTX` };
   }
 
-  if (balance !== undefined && numAmount > balance) {
+  if (comparableBalance !== undefined && Number.isFinite(comparableBalance) && comparableAmount > comparableBalance) {
     return { valid: false, error: 'Insufficient balance' };
   }
 

@@ -30,6 +30,7 @@ export {
 // Validation
 export { 
   validateNonEmptyString,
+  isPositiveInteger,
   validateAddress, 
   validateVaultId, 
   validateDepositAmount,

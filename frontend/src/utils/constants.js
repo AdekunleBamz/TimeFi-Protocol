@@ -19,7 +19,7 @@ import { CONTRACT_ADDRESS, CONTRACT_NAMES, LOCK_PERIODS, MIN_DEPOSIT } from '../
  * @property {string} MAINNET - Stacks mainnet network
  * @property {string} TESTNET - Stacks testnet network
  */
-const NETWORK = {
+export const NETWORK = {
   MAINNET: 'mainnet',
   TESTNET: 'testnet',
   DEVNET: 'devnet',

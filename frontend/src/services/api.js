@@ -59,7 +59,8 @@ function safeParseInt(value, fallback = 0) {
  * const data = await fetchAPI('/extended/v1/block?limit=1');
  */
 async function fetchAPI(endpoint, options = {}) {
-  const url = `${HIRO_API_URL}${endpoint}`;
+  const trimmedEndpoint = String(endpoint || '').trim();
+  const url = `${HIRO_API_URL}${trimmedEndpoint}`;
   const { timeout = 15000, ...fetchOptions } = options;
 
   const controller = new AbortController();

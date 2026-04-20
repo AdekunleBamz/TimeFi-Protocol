@@ -10,6 +10,12 @@ If you discover a security vulnerability, please:
 4. Allow reasonable time for a fix before public disclosure
 5. Include affected network, contract name, and any relevant txid when available
 
+## Response Timeline
+
+- **Acknowledgement**: Within 48 hours of receiving a report
+- **Initial Assessment**: Within 5 business days
+- **Fix / Mitigation**: Depends on severity; critical issues prioritized
+
 ## Supported Versions
 
 | Version | Supported          |

@@ -98,6 +98,7 @@ export const MINIMUM_DEPOSIT = Number(MIN_DEPOSIT || 0);
  */
 export const VAULT_STATUS = {
   ACTIVE: 'active',
+  PENDING: 'pending',
   LOCKED: 'locked',
   UNLOCKED: 'unlocked',
   WITHDRAWN: 'withdrawn',

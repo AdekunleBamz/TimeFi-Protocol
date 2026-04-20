@@ -86,6 +86,7 @@ export function Button({
       className={classes}
       disabled={disabled || loading}
       aria-busy={loading}
+      aria-disabled={disabled || loading}
       onClick={handleClick}
       {...props}
     >

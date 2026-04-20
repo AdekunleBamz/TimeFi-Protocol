@@ -285,14 +285,12 @@ export function validateWithdrawal(vault, currentHeight) {
  * // returns { valid: true }
  */
 export function validateBotAddress(botAddress) {
-  if (!botAddress) {
-    return { valid: false, error: 'Bot address is required' };
+  const requiredCheck = validateNonEmptyString(botAddress, 'Bot address');
+  if (!requiredCheck.valid) {
+    return { valid: false, error: requiredCheck.error };
   }
 
-  const trimmed = typeof botAddress === 'string' ? botAddress.trim() : botAddress;
-  if (!trimmed) {
-    return { valid: false, error: 'Bot address is required' };
-  }
+  const trimmed = requiredCheck.value;
 
   const addressValidation = validateAddress(trimmed);
   if (!addressValidation.valid) {

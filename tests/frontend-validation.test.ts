@@ -122,4 +122,11 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toContain('5 blocks remaining');
   });
+
+  it('rejects withdrawals for already-withdrawn vaults', () => {
+    const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: true };
+    const result = validateWithdrawal(vault, 120);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Vault already withdrawn');
+  });
 });

@@ -23,7 +23,8 @@ export {
   formatDate, 
   formatBlockHeight, 
   formatNumber, 
-  formatPercent 
+  formatPercent,
+  formatSignedNumber,
 } from './format';
 
 // Validation

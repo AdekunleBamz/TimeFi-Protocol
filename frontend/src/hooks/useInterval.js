@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 /**
  * useInterval - Hook for setting up intervals with proper cleanup.
@@ -136,6 +136,14 @@ export function usePolling(fetcher, interval, options = {}) {
     },
     enabled ? interval : null
   );
+
+  const resetRetries = useCallback(() => {
+    retriesRef.current = 0;
+  }, []);
+
+  const getRetryCount = useCallback(() => retriesRef.current, []);
+
+  return { resetRetries, getRetryCount };
 }
 
 export default useInterval;

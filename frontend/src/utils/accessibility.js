@@ -153,6 +153,7 @@ export function isActivationKey(event) {
  * };
  */
 export function handleListNavigation(event, items, currentIndex) {
+  if (!items || items.length === 0) return currentIndex;
   const { key } = event;
   let newIndex = currentIndex;
   

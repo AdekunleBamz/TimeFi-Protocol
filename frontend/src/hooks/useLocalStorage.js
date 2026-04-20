@@ -67,7 +67,9 @@ export function useLocalStorage(key, initialValue) {
 
     // Sync with other tabs
     useEffect(() => {
-        if (typeof window === 'undefined') return undefined;
+        if (typeof window === 'undefined') {
+            return;
+        }
 
         const handleStorageChange = (e) => {
             if (e.key !== trimmedKey) return;

@@ -43,6 +43,11 @@ export function useClickOutside(handler, options = {}) {
         return;
       }
 
+      // Ignore if target is no longer in the document (e.g. re-renders)
+      if (!document.contains(event.target)) {
+        return;
+      }
+
       // Check if click is in any excluded refs
       const isExcluded = excludeRefs.some((excludeRef) => {
         return excludeRef.current?.contains(event.target);

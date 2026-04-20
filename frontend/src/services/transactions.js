@@ -55,7 +55,7 @@ function assertVaultId(vaultId) {
  * @throws {Error} If value is not a positive integer
  */
 function assertPositiveInteger(value, fieldName) {
-  if (!Number.isInteger(value) || value <= 0 || value > Number.MAX_SAFE_INTEGER) {
+  if (!Number.isInteger(value) || Number.isNaN(value) || value <= 0 || value > Number.MAX_SAFE_INTEGER) {
     throw new Error(`${fieldName} must be a positive integer`);
   }
 }

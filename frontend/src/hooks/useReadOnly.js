@@ -63,6 +63,7 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
     getTVL: () => client.getTVL(),
     getTimeRemaining: (vaultId) => client.getTimeRemaining(vaultId),
     canWithdraw: (vaultId) => client.canWithdraw(vaultId),
+    getTreasury: () => callReadOnly('get-treasury', []),
     // Additional methods can be proxied to callReadOnly
     getVaultCount: () => callReadOnly('get-vault-count', []),
     isVaultOwner: (vaultId, owner) => callReadOnly('is-vault-owner', [uintCV(vaultId), principalCV(owner)]),

@@ -105,7 +105,7 @@ Update the treasury address. Admin only.
 
 **Returns:** `(response bool uint)`
 
-Changing treasury affects where create-vault and top-up fees are sent.
+Changing treasury affects where create-vault fees are sent.
 
 ---
 

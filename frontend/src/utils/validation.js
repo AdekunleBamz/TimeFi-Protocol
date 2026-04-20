@@ -239,7 +239,12 @@ export function validateBotAddress(botAddress) {
     return { valid: false, error: 'Bot address is required' };
   }
 
-  const addressValidation = validateAddress(botAddress);
+  const trimmed = typeof botAddress === 'string' ? botAddress.trim() : botAddress;
+  if (!trimmed) {
+    return { valid: false, error: 'Bot address is required' };
+  }
+
+  const addressValidation = validateAddress(trimmed);
   if (!addressValidation.valid) {
     return addressValidation;
   }

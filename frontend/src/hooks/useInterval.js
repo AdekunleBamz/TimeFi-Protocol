@@ -64,7 +64,11 @@ export function useTimeout(callback, delay) {
   }, [callback]);
 
   useEffect(() => {
-    if (delay === null) {
+    if (delay === null || delay === undefined) {
+      return;
+    }
+
+    if (typeof delay !== 'number' || delay < 0) {
       return;
     }
 

@@ -54,7 +54,7 @@ export function useAsync(asyncFunction, options = {}) {
   }, []);
 
   const execute = useCallback(async (...args) => {
-    setState(prev => ({ ...prev, loading: true, error: null }));
+    setState(prev => ({ ...prev, loading: true, error: null, status: 'loading' }));
 
     try {
       const result = await asyncFnRef.current(...args);

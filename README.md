@@ -86,6 +86,7 @@ npm ci
 
 # Check contracts
 npm run contracts:check
+npm run test
 
 # Validate with project script
 npm run check

@@ -39,7 +39,7 @@ export function useClickOutside(handler, options = {}) {
       const el = ref.current;
 
       // Do nothing if clicking ref's element or descendent elements
-      if (!el || el.contains(event.target)) {
+      if (!el || !event.target || el.contains(event.target)) {
         return;
       }
 

@@ -68,7 +68,7 @@ export function useTimeout(callback, delay) {
       return;
     }
 
-    if (typeof delay !== 'number' || delay < 0) {
+    if (typeof delay !== 'number' || delay < 0 || !Number.isFinite(delay)) {
       return;
     }
 

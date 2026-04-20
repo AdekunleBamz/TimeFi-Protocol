@@ -24,7 +24,12 @@ Thank you for your interest in contributing to TimeFi Protocol!
    npm ci
    ```
 
-4. Run tests:
+4. Install ESLint locally (required for the pre-commit hook):
+   ```bash
+   npm install --save-dev eslint
+   ```
+
+5. Run tests:
    ```bash
    npm test
    ```

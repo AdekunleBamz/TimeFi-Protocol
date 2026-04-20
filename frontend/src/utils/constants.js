@@ -72,6 +72,7 @@ export const API_ENDPOINTS = {
 export const FEES = {
   DEFAULT: 2500,
   FAST: 6000,
+  NORMAL: 3500,
   SLOW: 1200,
 };
 
@@ -198,5 +199,6 @@ export { CONTRACT_ADDRESS, CONTRACT_NAMES };
 export const ANIMATION = {
   FAST: 150,
   NORMAL: 300,
+  SLOW: 500,
   SLOW: 500,
 };

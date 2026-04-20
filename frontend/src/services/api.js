@@ -76,7 +76,7 @@ async function fetchAPI(endpoint, options = {}) {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
-      throw new Error(error.error || `API Error: ${response.status}`);
+      throw new Error(error.error || error.message || `API Error: ${response.status}`);
     }
 
     if (response.status === 204) {

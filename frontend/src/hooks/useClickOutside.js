@@ -23,6 +23,7 @@ export function useClickOutside(handler, options = {}) {
     enabled = true,
     eventType = 'mousedown',
     excludeRefs = [],
+    listenTouch = true,
   } = options;
 
   const ref = useRef(null);
@@ -62,13 +63,17 @@ export function useClickOutside(handler, options = {}) {
     };
 
     document.addEventListener(eventType, listener);
-    document.addEventListener('touchstart', listener, { passive: true });
+    if (listenTouch) {
+      document.addEventListener('touchstart', listener, { passive: true });
+    }
 
     return () => {
       document.removeEventListener(eventType, listener);
-      document.removeEventListener('touchstart', listener);
+      if (listenTouch) {
+        document.removeEventListener('touchstart', listener);
+      }
     };
-  }, [enabled, eventType, excludeRefs]);
+  }, [enabled, eventType, excludeRefs, listenTouch]);
 
   return ref;
 }

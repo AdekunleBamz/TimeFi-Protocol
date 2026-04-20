@@ -157,11 +157,11 @@ export function useFetch(fetcher, deps = []) {
         setState({ data: result, loading: false, error: null });
       }
       return result;
-    } catch (error) {
+    } catch (err) {
       if (mountedRef.current) {
-        setState({ data: null, loading: false, error });
+        setState({ data: null, loading: false, error: err });
       }
-      throw error;
+      throw err;
     }
   }, [fetcher]);
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
+import { Keys } from '../utils/accessibility';
 
 /**
  * useClickOutside - Hook for detecting clicks outside a referenced element.
@@ -93,7 +94,7 @@ export function useEscapeKey(handler, enabled = true) {
     if (!enabled) return;
 
     const listener = (event) => {
-      if (event.key === 'Escape') {
+      if (event.key === Keys.Escape) {
         handlerRef.current(event);
       }
     };

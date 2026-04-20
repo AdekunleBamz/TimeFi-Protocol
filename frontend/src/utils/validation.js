@@ -34,10 +34,10 @@ export function validateAddress(address) {
 
   // Mainnet addresses start with SP
   // Testnet addresses start with ST
-  const validPrefixes = ['SP', 'ST'];
+  const validPrefixes = new Set(['SP', 'ST']);
   const prefix = trimmed.slice(0, 2);
 
-  if (!validPrefixes.includes(prefix)) {
+  if (!validPrefixes.has(prefix)) {
     return { valid: false, error: 'Invalid Stacks address prefix (must be SP or ST)' };
   }
 

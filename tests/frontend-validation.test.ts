@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateAddress, validateDepositAmount, validateLockPeriod, validateVaultId } from '../frontend/src/utils/validation.js';
+import { validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultId } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -96,5 +96,11 @@ describe('frontend validation helpers', () => {
 
   it('accepts valid stacks addresses', () => {
     expect(validateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').valid).toBe(true);
+  });
+
+  it('requires a bot address input', () => {
+    const result = validateBotAddress('');
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Bot address is required');
   });
 });

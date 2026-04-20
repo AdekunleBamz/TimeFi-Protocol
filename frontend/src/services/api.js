@@ -163,7 +163,7 @@ export async function getAccountTransactions(address, options = {}) {
   const safeLimit = Math.max(1, Math.min(50, safeParseInt(limit, 20)));
   const safeOffset = Math.max(0, safeParseInt(offset, 0));
   const data = await fetchAPI(
-    `/extended/v1/address/${address}/transactions?limit=${safeLimit}&offset=${safeOffset}`
+    `/extended/v1/address/${address.trim()}/transactions?limit=${safeLimit}&offset=${safeOffset}`
   );
 
   return {

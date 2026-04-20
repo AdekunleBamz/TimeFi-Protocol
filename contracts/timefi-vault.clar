@@ -178,6 +178,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TIME REMAINING UNTIL UNLOCK
+;; Returns u0 when already unlocked (not an error)
 ;; -------------------------------------------------------
 
 (define-read-only (get-time-remaining (id uint))

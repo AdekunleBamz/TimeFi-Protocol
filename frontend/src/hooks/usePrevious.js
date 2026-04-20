@@ -26,7 +26,9 @@ export function useValueChange(value, callback) {
     const prevValue = usePrevious(value);
     useEffect(() => {
         if (prevValue !== undefined && prevValue !== value) {
-            callback(value, prevValue);
+            if (typeof callback === 'function') {
+                callback(value, prevValue);
+            }
         }
     }, [value, prevValue, callback]);
 }

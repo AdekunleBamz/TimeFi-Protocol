@@ -89,7 +89,8 @@ export function useClickOutside(handler, options = {}) {
  * @example
  * useEscapeKey(() => closeModal());
  */
-export function useEscapeKey(handler, enabled = true) {
+export function useEscapeKey(handler, enabled = true, options = {}) {
+  const { ignoreWhenInputFocused = false } = options;
   const handlerRef = useRef(handler);
 
   useEffect(() => {
@@ -100,6 +101,13 @@ export function useEscapeKey(handler, enabled = true) {
     if (!enabled) return;
 
     const listener = (event) => {
+      if (ignoreWhenInputFocused) {
+        const activeTagName = document.activeElement?.tagName;
+        if (activeTagName === 'INPUT' || activeTagName === 'TEXTAREA' || activeTagName === 'SELECT') {
+          return;
+        }
+      }
+
       if (event.key === Keys.Escape) {
         handlerRef.current(event);
       }
@@ -107,7 +115,7 @@ export function useEscapeKey(handler, enabled = true) {
 
     document.addEventListener('keydown', listener);
     return () => document.removeEventListener('keydown', listener);
-  }, [enabled]);
+  }, [enabled, ignoreWhenInputFocused]);
 }
 
 /**

@@ -46,6 +46,7 @@ export const srOnlyStyles = {
  * announceToScreenReader('Error: Insufficient balance', 'assertive');
  */
 export function announceToScreenReader(message, priority = 'polite') {
+  if (!message || typeof message !== 'string') return;
   const validPriority = priority === 'assertive' ? 'assertive' : 'polite';
   const element = document.createElement('div');
   element.setAttribute('role', 'status');

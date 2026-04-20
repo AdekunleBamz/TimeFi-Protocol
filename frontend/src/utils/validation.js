@@ -157,7 +157,7 @@ export function validateLockPeriod(period) {
  * @param {Object} data - Form data object
  * @param {string} data.amount - Deposit amount in STX
  * @param {number} data.lockPeriod - Lock period in blocks
- * @param {number} data.balance - User's available balance in STX
+ * @param {number} data.balance - User's available balance in microSTX
  * @returns {{ valid: boolean, errors: Object.<string, string> }} Validation result with error map
  * @example
  * validateVaultCreation({ amount: 100, lockPeriod: 3600, balance: 500 })

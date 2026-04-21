@@ -54,6 +54,7 @@ describe('Format Utilities', () => {
     it('should handle invalid inputs gracefully', () => {
       expect(formatSTX('invalid')).toBe('0.000000');
       expect(formatSTX(NaN)).toBe('0.000000');
+      expect(formatSTX(Infinity)).toBe('0.000000');
     });
   });
 

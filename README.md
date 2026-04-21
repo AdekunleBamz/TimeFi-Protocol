@@ -66,7 +66,7 @@ The TimeFi Protocol is designed as a modular system for security and scalability
 - Node.js 18+ (LTS recommended)
 - npm or yarn package manager
 - Access to a Stacks node API for the network you are targeting (mainnet by default)
-- Wallet/provider network should match the configured API target before running write flows
+- Your wallet network should match the configured API target before running write flows
 
 #### Windows-Specific Setup
 

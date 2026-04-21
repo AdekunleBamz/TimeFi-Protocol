@@ -251,3 +251,5 @@ export const TIME_TOKEN_DECIMALS = 6
 export const DEFAULT_SLIPPAGE_BPS = 50
 
 export const MAX_SLIPPAGE_BPS = 500
+
+export const LOCK_EXTENSION_BLOCKS = 144

@@ -69,3 +69,5 @@ export const formatBlocksToHours = (blocks) => (Number(blocks) / 6).toFixed(1);
 export const formatBlocksToDays = (blocks) => (Number(blocks) / 144).toFixed(1);
 
 export const formatStxAmount = (stx) => Number(stx).toLocaleString() + " STX";
+
+export const formatTimestamp = (ts) => new Date(Number(ts) * 1000).toISOString();

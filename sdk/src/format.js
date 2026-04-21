@@ -25,7 +25,8 @@ export const formatSTX = (amountMicroStx) => {
             : amountMicroStx;
 
         // Convert to Number safely, handles string, bigint, etc.
-        const value = Number(rawValue);
+        const normalizedRawValue = typeof rawValue === 'string' ? rawValue.replace(/,/g, '').trim() : rawValue;
+        const value = Number(normalizedRawValue);
         if (!Number.isFinite(value)) return '0.000000';
 
         const stx = value / 1_000_000;

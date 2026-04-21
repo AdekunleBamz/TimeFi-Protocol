@@ -309,3 +309,5 @@ export function validateBotAddress(botAddress) {
 
   return { valid: true };
 }
+
+export const isValidMicroStx = (v) => Number.isInteger(Number(v)) && Number(v) >= 0;

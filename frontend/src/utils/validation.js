@@ -327,3 +327,5 @@ export const isNonEmptyString = (v) => typeof v === "string" && v.trim().length 
 export const isPositiveNumber = (v) => !isNaN(Number(v)) && Number(v) > 0;
 
 export const isValidSlippage = (v) => Number(v) >= 0 && Number(v) <= 500;
+
+export const isValidTokenAmount = (v, decimals) => !isNaN(Number(v)) && Number(v) >= 0 && String(v).split(".")[1]?.length <= decimals;

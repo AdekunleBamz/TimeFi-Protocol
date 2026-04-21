@@ -271,3 +271,5 @@ export const BLOCKS_PER_DAY = 144
 export const BLOCKS_PER_WEEK = 1008
 
 export const WALLET_CONNECT_TIMEOUT_MS = 30000
+
+export const LOCK_EXTENSION_BLOCKS = 144

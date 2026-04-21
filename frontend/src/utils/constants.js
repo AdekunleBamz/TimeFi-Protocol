@@ -265,3 +265,5 @@ export const MIN_DEPOSIT_MICRO_STX = 10000
 export const STX_DECIMALS = 6
 
 export const BLOCKS_PER_HOUR = 6
+
+export const BLOCKS_PER_DAY = 144

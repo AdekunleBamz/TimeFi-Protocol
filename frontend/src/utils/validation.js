@@ -313,3 +313,5 @@ export function validateBotAddress(botAddress) {
 export const isValidMicroStx = (v) => Number.isInteger(Number(v)) && Number(v) >= 0;
 
 export const isValidBlockCount = (v) => Number.isInteger(Number(v)) && Number(v) > 0;
+
+export const isValidBps = (v) => Number(v) >= 0 && Number(v) <= 10000;

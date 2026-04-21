@@ -75,7 +75,8 @@ export class TimeFiClient {
 
             return isResponseCV ? cvToValue(callResult.value) : cvToValue(callResult);
         } catch (error) {
-            throw new Error(`Failed to call read-only function "${functionName}": ${error.message}`);
+            const message = error instanceof Error ? error.message : String(error);
+            throw new Error(`Failed to call read-only function "${functionName}": ${message}`);
         }
     }
 

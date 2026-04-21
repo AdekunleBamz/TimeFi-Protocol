@@ -77,3 +77,5 @@ export const truncateAddress = (addr) => addr ? addr.slice(0,6) + "..." + addr.s
 export const formatLockDuration = (blocks) => blocks + " blocks (~" + (Number(blocks)/144).toFixed(0) + " days)";
 
 export const formatFeeAmount = (fee) => Number(fee).toLocaleString() + " uSTX";
+
+export const formatVaultId = (id) => "Vault #" + String(id).padStart(4,"0");

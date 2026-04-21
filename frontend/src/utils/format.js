@@ -73,3 +73,5 @@ export const formatStxAmount = (stx) => Number(stx).toLocaleString() + " STX";
 export const formatTimestamp = (ts) => new Date(Number(ts) * 1000).toISOString();
 
 export const truncateAddress = (addr) => addr ? addr.slice(0,6) + "..." + addr.slice(-4) : "";
+
+export const formatLockDuration = (blocks) => blocks + " blocks (~" + (Number(blocks)/144).toFixed(0) + " days)";

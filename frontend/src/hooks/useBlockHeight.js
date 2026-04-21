@@ -20,7 +20,7 @@ const BLOCK_POLL_INTERVAL_MS = 30_000;
  * useBlockHeight - Fetch and poll current Stacks blockchain height.
  *
  * Provides real-time block height updates by polling the Hiro API
- * every 60 seconds. Used for lock timing calculations and display.
+ * every 30 seconds. Used for lock timing calculations and display.
  *
  * @returns {{ blockHeight: number|null, loading: boolean, error: string|null, refetch: Function }}
  * @example

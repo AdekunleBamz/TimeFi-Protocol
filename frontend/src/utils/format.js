@@ -67,3 +67,5 @@ export const formatBps = (bps) => (Number(bps) / 100).toFixed(2) + "%";
 export const formatBlocksToHours = (blocks) => (Number(blocks) / 6).toFixed(1);
 
 export const formatBlocksToDays = (blocks) => (Number(blocks) / 144).toFixed(1);
+
+export const formatStxAmount = (stx) => Number(stx).toLocaleString() + " STX";

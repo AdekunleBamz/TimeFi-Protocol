@@ -48,6 +48,7 @@ export const formatSTX = (amountMicroStx) => {
  */
 export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4) => {
     if (!stacksAddress) return '';
+    if (typeof stacksAddress !== 'string') return '';
     const normalizedAddress = stacksAddress.trim();
     if (normalizedAddress.length <= prefixLength + suffixLength + 3) return normalizedAddress;
     return `${normalizedAddress.slice(0, prefixLength)}...${normalizedAddress.slice(-suffixLength)}`;

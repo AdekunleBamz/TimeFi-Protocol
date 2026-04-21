@@ -319,3 +319,5 @@ export const isValidBps = (v) => Number(v) >= 0 && Number(v) <= 10000;
 export const isValidVaultId = (v) => Number.isInteger(Number(v)) && Number(v) > 0;
 
 export const isAboveMinDeposit = (v, min) => Number(v) >= Number(min);
+
+export const isWithinLockRange = (v, mn, mx) => Number(v) >= Number(mn) && Number(v) <= Number(mx);

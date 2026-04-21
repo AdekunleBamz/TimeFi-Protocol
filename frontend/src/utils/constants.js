@@ -237,3 +237,5 @@ export const MAX_VAULT_DURATION_DAYS = 365
 export const MIN_VAULT_DURATION_DAYS = 1
 
 export const VAULT_FEE_BPS = 50
+
+export const SECONDS_PER_DAY = 86400

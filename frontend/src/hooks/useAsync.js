@@ -158,7 +158,7 @@ export function useFetch(fetcher, deps = []) {
     return () => {
       mountedRef.current = false;
     };
-  }, deps);
+  }, [fetcher, ...deps]);
 
   const refetch = useCallback(async () => {
     setState(prev => ({ ...prev, loading: true, error: null }));

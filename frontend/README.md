@@ -7,7 +7,7 @@ React-based frontend for the TimeFi Protocol time-locked vault system on Stacks.
 - **Framework**: React 18
 - **Build Tool**: Vite
 - **Blockchain**: Stacks (via @stacks/connect, @stacks/transactions)
-- **Styling**: CSS Modules with custom properties
+- **Styling**: Component CSS files with shared custom properties
 
 ## Project Structure
 

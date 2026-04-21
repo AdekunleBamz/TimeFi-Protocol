@@ -138,6 +138,7 @@ export function formatRelativeTime(dateToFormat) {
  */
 export function formatBlocksToTime(blocks, blockTimeSecs = 600) {
     if (!Number.isFinite(blockTimeSecs) || blockTimeSecs <= 0) return '0 days';
+    if (!Number.isFinite(blocks)) return '0 days';
     if (!blocks || blocks <= 0) return '0 days';
     const totalSeconds = blocks * blockTimeSecs;
     const days = Math.round(totalSeconds / 86400);

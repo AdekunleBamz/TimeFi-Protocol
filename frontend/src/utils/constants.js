@@ -233,3 +233,5 @@ export const ANIMATION = {
 };
 
 export const MAX_VAULT_DURATION_DAYS = 365
+
+export const MIN_VAULT_DURATION_DAYS = 1

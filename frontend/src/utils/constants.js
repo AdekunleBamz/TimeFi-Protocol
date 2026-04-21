@@ -231,3 +231,5 @@ export const ANIMATION = {
   NORMAL: 300,
   SLOW: 500,
 };
+
+export const MAX_VAULT_DURATION_DAYS = 365

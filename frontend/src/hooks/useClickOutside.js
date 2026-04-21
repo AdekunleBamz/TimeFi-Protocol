@@ -173,6 +173,8 @@ export function useFocusTrap(active = true) {
     ].join(', ');
 
     const focusableElements = element.querySelectorAll(focusableSelector);
+    if (focusableElements.length === 0) return;
+
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 

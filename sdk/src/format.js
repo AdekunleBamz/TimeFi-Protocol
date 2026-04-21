@@ -26,7 +26,7 @@ export const formatSTX = (amountMicroStx) => {
 
         // Convert to Number safely, handles string, bigint, etc.
         const value = Number(rawValue);
-        if (isNaN(value)) return '0.000000';
+        if (!Number.isFinite(value)) return '0.000000';
 
         const stx = value / 1_000_000;
         return stx.toLocaleString(undefined, {

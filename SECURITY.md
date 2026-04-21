@@ -34,7 +34,7 @@ The TimeFi Protocol implements the following security measures:
 ## Known Limitations
 
 - This contract has **not been audited**. Use at your own risk.
-- The protocol relies on `stacks-block-time` for time calculations
+- The protocol relies on chain height (`tenure-height`) for time calculations
 - Bot approval uses `contract-hash?` which requires contract principals
 
 ## Best Practices for Users

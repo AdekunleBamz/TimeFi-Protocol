@@ -82,6 +82,10 @@ describe('Format Utilities', () => {
       expect(formatAddress('')).toBe('');
     });
 
+    it('should return empty string for non-string inputs', () => {
+      expect(formatAddress(12345)).toBe('');
+    });
+
     it('should trim surrounding whitespace before truncating', () => {
       const address = '  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ';
       expect(formatAddress(address)).toBe('SP3F...GG6N');

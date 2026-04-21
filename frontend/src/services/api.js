@@ -60,7 +60,8 @@ function safeParseInt(value, fallback = 0) {
  */
 async function fetchAPI(endpoint, options = {}) {
   const trimmedEndpoint = String(endpoint || '').trim();
-  const url = `${HIRO_API_URL}${trimmedEndpoint}`;
+  const normalizedEndpoint = trimmedEndpoint.startsWith('/') ? trimmedEndpoint : `/${trimmedEndpoint}`;
+  const url = `${HIRO_API_URL}${normalizedEndpoint}`;
   const { timeout = 15000, ...fetchOptions } = options;
 
   const controller = new AbortController();

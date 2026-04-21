@@ -32,6 +32,8 @@ export const NETWORK = {
 export const CURRENT_NETWORK = (
   String(import.meta.env.VITE_NETWORK || NETWORK.MAINNET).trim().toLowerCase() === NETWORK.TESTNET
     ? NETWORK.TESTNET
+    : String(import.meta.env.VITE_NETWORK || NETWORK.MAINNET).trim().toLowerCase() === NETWORK.DEVNET
+      ? NETWORK.DEVNET
     : NETWORK.MAINNET
 );
 /**

@@ -245,3 +245,5 @@ export const SECONDS_PER_HOUR = 3600
 export const SECONDS_PER_WEEK = 604800
 
 export const MAX_TIME_TOKEN_SUPPLY = 21000000
+
+export const TIME_TOKEN_DECIMALS = 6

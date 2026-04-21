@@ -49,7 +49,7 @@ export function WalletProvider({ children }) {
   const [isConnecting, setIsConnecting] = useState(false);
   const [balance, setBalance] = useState(0);
   const networkType = String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase();
-const BALANCE_POLL_INTERVAL_MS = 60_000;
+  const BALANCE_POLL_INTERVAL_MS = 60_000;
 
   const network = useMemo(() => (
     networkType === 'mainnet' ? new StacksMainnet() : new StacksTestnet()
@@ -74,13 +74,13 @@ const BALANCE_POLL_INTERVAL_MS = 60_000;
         setIsConnecting(false);
       },
     });
-  }, []);
+  }, [setUserData]);
 
   const disconnectWallet = useCallback(() => {
     disconnect();
     setUserData(null);
     setBalance(0);
-  }, []);
+  }, [setUserData]);
 
   useEffect(() => {
     if (!address) return;

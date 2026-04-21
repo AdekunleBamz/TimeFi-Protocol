@@ -32,6 +32,7 @@ TimeFi-Protocol/
  - 📂 `contracts/` — Clarity smart contracts
  - 📂 `frontend/` — React-based web dashboard
  - 📂 `sdk/` — JavaScript/TypeScript SDK
+ - 📂 `deployments/` — Clarinet deployment plans
  - 📂 `tests/regressions/` — Regression and edge-case suites
  - 📂 `tests/` — Contract testing suite
  - 📂 `docs/` — Additional documentation

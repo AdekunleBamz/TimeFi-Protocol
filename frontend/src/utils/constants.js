@@ -255,3 +255,5 @@ export const MAX_SLIPPAGE_BPS = 500
 export const LOCK_EXTENSION_BLOCKS = 144
 
 export const MIN_LOCK_BLOCKS = 6
+
+export const MAX_LOCK_BLOCKS = 52560

@@ -16,3 +16,5 @@ export const daysToBlocks = (days) => Math.round(Number(days) * 144);
 export const blocksToDays = (blocks) => Number(blocks) / 144;
 
 export const clamp = (v, mn, mx) => Math.min(Math.max(Number(v), Number(mn)), Number(mx));
+
+export const bpsToPercent = (bps) => Number(bps) / 100;

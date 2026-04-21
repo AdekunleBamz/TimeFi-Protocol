@@ -52,7 +52,13 @@ export const env = {
   // API Configuration
   hiroApiUrl: (
     import.meta.env.VITE_HIRO_API_URL
-    || (resolvedNetwork === 'testnet' ? 'https://api.testnet.hiro.so' : 'https://api.mainnet.hiro.so')
+    || (
+      resolvedNetwork === 'testnet'
+        ? 'https://api.testnet.hiro.so'
+        : resolvedNetwork === 'devnet'
+          ? 'http://localhost:3999'
+          : 'https://api.mainnet.hiro.so'
+    )
   ).trim(),
   explorerUrl: (import.meta.env.VITE_EXPLORER_URL || 'https://explorer.hiro.so').trim(),
   

@@ -323,3 +323,5 @@ export const isAboveMinDeposit = (v, min) => Number(v) >= Number(min);
 export const isWithinLockRange = (v, mn, mx) => Number(v) >= Number(mn) && Number(v) <= Number(mx);
 
 export const isNonEmptyString = (v) => typeof v === "string" && v.trim().length > 0;
+
+export const isPositiveNumber = (v) => !isNaN(Number(v)) && Number(v) > 0;

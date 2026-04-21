@@ -59,3 +59,5 @@ export const formatSignedNumber = (value) => {
     if (numericValue > 0) return `+${numericValue}`;
     return `${numericValue}`;
 };
+
+export const formatMicroStx = (microStx) => (Number(microStx) / 1e6).toFixed(6);

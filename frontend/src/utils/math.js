@@ -10,3 +10,5 @@ export const calcNetAmount = (amount, bps) => Number(amount) - Math.floor(Number
 export const blocksToSeconds = (blocks) => Number(blocks) * 600;
 
 export const secondsToBlocks = (secs) => Math.ceil(Number(secs) / 600);
+
+export const daysToBlocks = (days) => Math.round(Number(days) * 144);

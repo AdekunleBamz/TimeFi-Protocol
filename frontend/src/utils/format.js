@@ -63,3 +63,5 @@ export const formatSignedNumber = (value) => {
 export const formatMicroStx = (microStx) => (Number(microStx) / 1e6).toFixed(6);
 
 export const formatBps = (bps) => (Number(bps) / 100).toFixed(2) + "%";
+
+export const formatBlocksToHours = (blocks) => (Number(blocks) / 6).toFixed(1);

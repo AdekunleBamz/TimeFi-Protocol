@@ -12,7 +12,8 @@ import {
   formatNumber, 
   formatPercent, 
   formatDate, 
-  formatRelativeTime 
+  formatRelativeTime,
+  formatBlocksToTime
 } from '../src/format.js';
 
 describe('Format Utilities', () => {
@@ -217,6 +218,12 @@ describe('Format Utilities', () => {
     it('should handle invalid dates', () => {
       expect(formatRelativeTime('invalid')).toBe('--');
       expect(formatRelativeTime(NaN)).toBe('--');
+    });
+  });
+
+  describe('formatBlocksToTime', () => {
+    it('returns zero days for invalid block-time input', () => {
+      expect(formatBlocksToTime(100, 0)).toBe('0 days');
     });
   });
 });

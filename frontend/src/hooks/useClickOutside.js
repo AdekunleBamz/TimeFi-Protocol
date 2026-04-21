@@ -102,8 +102,14 @@ export function useEscapeKey(handler, enabled = true, options = {}) {
 
     const listener = (event) => {
       if (ignoreWhenInputFocused) {
-        const activeTagName = document.activeElement?.tagName;
-        if (activeTagName === 'INPUT' || activeTagName === 'TEXTAREA' || activeTagName === 'SELECT') {
+        const activeElement = document.activeElement;
+        const activeTagName = activeElement?.tagName;
+        if (
+          activeTagName === 'INPUT'
+          || activeTagName === 'TEXTAREA'
+          || activeTagName === 'SELECT'
+          || activeElement?.isContentEditable
+        ) {
           return;
         }
       }

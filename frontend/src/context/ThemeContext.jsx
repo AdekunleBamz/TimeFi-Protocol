@@ -56,7 +56,7 @@ export function ThemeProvider({ children, defaultTheme = 'system' }) {
   // Set theme and persist
   const setTheme = useCallback((newTheme) => {
     setThemeState(newTheme);
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (typeof window !== 'undefined') {
       localStorage.setItem('timefi-theme', newTheme);
     }
   }, []);

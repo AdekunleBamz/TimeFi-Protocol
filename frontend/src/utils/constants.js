@@ -261,3 +261,5 @@ export const MAX_LOCK_BLOCKS = 52560
 export const FEE_BASIS_POINTS = 50
 
 export const MIN_DEPOSIT_MICRO_STX = 10000
+
+export const STX_DECIMALS = 6

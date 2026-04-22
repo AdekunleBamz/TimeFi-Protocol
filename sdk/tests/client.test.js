@@ -449,6 +449,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultIdByIndex('abc')).rejects.toThrow('Index must be a non-negative integer');
   });
 
+  it('routes global vault index lookups to the expected read-only function', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.callReadOnly = async (functionName) => functionName;
+
+    await expect(client.getVaultIdByIndex(0)).resolves.toBe('get-vault-id-by-index');
+  });
+
   it('rejects invalid owner index when reading vault by owner index', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVaultIdByOwnerIndex('SP123', -1)).rejects.toThrow('Index must be a non-negative integer');

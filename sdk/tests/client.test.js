@@ -76,6 +76,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.isVaultActive(3)).resolves.toBe(true);
   });
 
+  it('reads expiry state through the vault-expired alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.isExpired = async (id) => id === 5;
+
+    await expect(client.isVaultExpired(5)).resolves.toBe(true);
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

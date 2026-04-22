@@ -498,4 +498,10 @@ describe('TimeFiClient vault helpers', () => {
 
     expect(cvToValue(options.functionArgs[0])).toBe(3n);
   });
+
+  it('rejects invalid vault ids in withdraw options', () => {
+    const client = new TimeFiClient('mainnet');
+
+    expect(() => client.getWithdrawOptions(0)).toThrow('Vault ID must be a positive integer');
+  });
 });

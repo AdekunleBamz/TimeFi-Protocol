@@ -384,6 +384,20 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getAccountVaultCount('SP123')).resolves.toBe('SP123:vaults');
   });
 
+  it('combines nonce balance and vault ids in account data', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getNonce = async () => 2;
+    client.getSTXBalance = async () => 800;
+    client.getVaultsByOwner = async () => [4, 5];
+
+    await expect(client.getAccountData('SP123')).resolves.toStrictEqual({
+      address: 'SP123',
+      nonce: 2,
+      balance: 800,
+      vaults: [4, 5]
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

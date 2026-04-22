@@ -377,6 +377,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultsByOwner('SP123')).resolves.toStrictEqual([10, 11, 12]);
   });
 
+  it('reads account vault count through owner count alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVaultsByOwnerCount = async (address) => `${address}:vaults`;
+
+    await expect(client.getAccountVaultCount('SP123')).resolves.toBe('SP123:vaults');
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

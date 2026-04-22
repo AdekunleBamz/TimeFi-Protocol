@@ -484,4 +484,11 @@ describe('TimeFiClient vault helpers', () => {
     expect(() => client.getCreateVaultOptions(1, -1)).toThrow('Lock duration must be a positive integer');
     expect(() => client.getCreateVaultOptions(1, 1.5)).toThrow('Lock duration must be a positive integer');
   });
+
+  it('builds withdraw options for the request-withdraw function', () => {
+    const client = new TimeFiClient('mainnet');
+    const options = client.getWithdrawOptions(3);
+
+    expect(options.functionName).toBe('request-withdraw');
+  });
 });

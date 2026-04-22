@@ -118,6 +118,22 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.isVaultExpired(5)).resolves.toBe(true);
   });
 
+  it('combines vault fields in vault summaries', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVaultDetails = async (id) => ({ id, owner: 'SP123', amount: 500, duration: 12, status: 'Active' });
+    client.getTimeRemaining = async () => 9;
+    client.getCreatedAt = async () => 3;
+    client.getUnlockBlock = async () => 15;
+
+    await expect(client.getVaultSummary(2)).resolves.toMatchObject({
+      id: 2,
+      owner: 'SP123',
+      timeRemaining: 9,
+      createdAt: 3,
+      unlockBlock: 15
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

@@ -344,6 +344,17 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getAccountNonce('SP123')).resolves.toBe('SP123:nonce');
   });
 
+  it('combines TVL and vault count in protocol stats', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getTVL = async () => 1_500;
+    client.getVaultCount = async () => 6;
+
+    await expect(client.getProtocolStats()).resolves.toStrictEqual({
+      tvl: 1_500,
+      count: 6
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

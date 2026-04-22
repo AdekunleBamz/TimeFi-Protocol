@@ -160,6 +160,14 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('calculates vault age from current block height', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getCreatedAt = async () => 40;
+    client.getBlockHeight = async () => 55;
+
+    await expect(client.getVaultAge(1)).resolves.toBe(15);
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

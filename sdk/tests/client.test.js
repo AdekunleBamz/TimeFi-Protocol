@@ -316,6 +316,13 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('reads protocol vault count through the vault count alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVaultCount = async () => 12;
+
+    await expect(client.getProtocolVaultCount()).resolves.toBe(12);
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

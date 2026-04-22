@@ -60,6 +60,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultDuration(1)).resolves.toBe(52_554);
   });
 
+  it('reads lock period through the vault duration alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVaultDuration = async (id) => id * 10;
+
+    await expect(client.getVaultLockPeriod(6)).resolves.toBe(60);
+  });
+
   it('treats zero time remaining as expired', async () => {
     const client = new TimeFiClient('mainnet');
     client.getTimeRemaining = async () => 0;

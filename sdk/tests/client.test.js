@@ -493,6 +493,13 @@ describe('TimeFiClient vault helpers', () => {
     expect(options.contractAddress).toBe(CONTRACT_ADDRESS);
   });
 
+  it('encodes create lock duration as a uint argument', () => {
+    const client = new TimeFiClient('mainnet');
+    const options = client.getCreateVaultOptions(1, 6);
+
+    expect(cvToValue(options.functionArgs[1])).toBe(6n);
+  });
+
   it('rejects invalid STX amount values in create options', () => {
     const client = new TimeFiClient('mainnet');
     expect(() => client.getCreateVaultOptions(0, 6)).toThrow('Amount must be greater than 0 STX');

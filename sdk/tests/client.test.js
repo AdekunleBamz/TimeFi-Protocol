@@ -481,6 +481,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getNonce('SP123')).resolves.toBe('get-nonce');
   });
 
+  it('routes STX balance lookups to the expected read-only function', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.callReadOnly = async (functionName) => functionName;
+
+    await expect(client.getSTXBalance('SP123')).resolves.toBe('get-stx-balance');
+  });
+
   it('rejects blank owner addresses', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVaultsByOwner('   ')).rejects.toThrow('Owner address is required');

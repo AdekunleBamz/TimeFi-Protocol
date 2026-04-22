@@ -121,6 +121,8 @@ describe('Format Utilities', () => {
     it('should handle invalid inputs gracefully', () => {
       expect(formatNumber('invalid')).toBe('0.00');
       expect(formatNumber(NaN)).toBe('0.00');
+      expect(formatNumber(Infinity)).toBe('0.00');
+      expect(formatNumber(-Infinity)).toBe('0.00');
     });
   });
 

@@ -64,7 +64,7 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
 export function formatNumber(numberToFormat, fractionDigits = 2) {
     if (numberToFormat === undefined || numberToFormat === null) return '0.00';
     const parsedNumber = Number(numberToFormat);
-    if (isNaN(parsedNumber)) return '0.00';
+    if (!Number.isFinite(parsedNumber)) return '0.00';
     return new Intl.NumberFormat('en-US', {
         minimumFractionDigits: fractionDigits,
         maximumFractionDigits: fractionDigits

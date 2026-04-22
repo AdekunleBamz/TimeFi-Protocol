@@ -53,6 +53,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getCreatedAt(1)).resolves.toBe(6);
   });
 
+  it('reads creation block through the vault creation alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getCreatedAt = async (id) => id + 50;
+
+    await expect(client.getVaultCreationBlock(8)).resolves.toBe(58);
+  });
+
   it('computes the vault duration from the vault timing fields', async () => {
     const client = new TimeFiClient('mainnet');
     client.getVault = async () => ({ 'unlock-time': 52_560, 'lock-time': 6 });

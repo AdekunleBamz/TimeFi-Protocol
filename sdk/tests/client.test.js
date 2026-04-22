@@ -409,6 +409,13 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('reads protocol TVL through the TVL alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getTVL = async () => 42_000;
+
+    await expect(client.getProtocolTVL()).resolves.toBe(42_000);
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

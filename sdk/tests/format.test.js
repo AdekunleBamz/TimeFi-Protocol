@@ -245,5 +245,9 @@ describe('Format Utilities', () => {
     it('accepts numeric string block counts', () => {
       expect(formatBlocksToTime('144')).toBe('1 day');
     });
+
+    it('accepts numeric string block time values', () => {
+      expect(formatBlocksToTime(144, '600')).toBe('1 day');
+    });
   });
 });

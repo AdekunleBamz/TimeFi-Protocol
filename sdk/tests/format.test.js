@@ -265,5 +265,9 @@ describe('Format Utilities', () => {
     it('pluralizes year-scale block durations', () => {
       expect(formatBlocksToTime(105120)).toBe('2 years');
     });
+
+    it('formats fractional year durations', () => {
+      expect(formatBlocksToTime(78840)).toBe('1.5 years');
+    });
   });
 });

@@ -16,6 +16,10 @@ const normalizeFractionDigits = (fractionDigits, fallback = 2) => {
     return Math.min(parsedDigits, 20);
 };
 
+const normalizeDisplayNumber = (value) => (
+    typeof value === 'string' ? value.replace(/,/g, '').trim() : value
+);
+
 /**
  * Formats a microSTX value into a human-readable STX string.
  * @param {number|BigInt|string|Object} microStx - The value in microSTX.
@@ -69,9 +73,7 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
  */
 export function formatNumber(numberToFormat, fractionDigits = 2) {
     if (numberToFormat === undefined || numberToFormat === null) return '0.00';
-    const normalizedValue = typeof numberToFormat === 'string'
-        ? numberToFormat.replace(/,/g, '').trim()
-        : numberToFormat;
+    const normalizedValue = normalizeDisplayNumber(numberToFormat);
     const parsedNumber = Number(normalizedValue);
     if (!Number.isFinite(parsedNumber)) return '0.00';
     const normalizedFractionDigits = normalizeFractionDigits(fractionDigits);
@@ -89,9 +91,7 @@ export function formatNumber(numberToFormat, fractionDigits = 2) {
  * @throws {Error} If decimalValue cannot be converted to a number.
  */
 export function formatPercent(valueToFormat, fractionDigits = 2) {
-    const normalizedValue = typeof valueToFormat === 'string'
-        ? valueToFormat.replace(/,/g, '').trim()
-        : valueToFormat;
+    const normalizedValue = normalizeDisplayNumber(valueToFormat);
     const parsedNumber = Number(normalizedValue);
     if (valueToFormat === undefined || valueToFormat === null || !Number.isFinite(parsedNumber)) {
         throw new Error('Invalid percentage value');

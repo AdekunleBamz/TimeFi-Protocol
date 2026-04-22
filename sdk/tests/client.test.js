@@ -184,6 +184,14 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultRemainingBlocks(1)).resolves.toBe(30);
   });
 
+  it('clamps remaining blocks after unlock height', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getUnlockBlock = async () => 100;
+    client.getBlockHeight = async () => 120;
+
+    await expect(client.getVaultRemainingBlocks(1)).resolves.toBe(0);
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

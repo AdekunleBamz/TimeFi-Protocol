@@ -198,6 +198,12 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultApy(3600)).resolves.toBe(5);
   });
 
+  it('rejects zero lock duration in APY helper', async () => {
+    const client = new TimeFiClient('mainnet');
+
+    await expect(client.getVaultApy(0)).rejects.toThrow('Lock duration must be greater than 0');
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

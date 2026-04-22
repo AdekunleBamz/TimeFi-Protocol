@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { cvToValue } from '@stacks/transactions';
 
 import { TimeFiClient } from '../src/client.js';
+import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../src/constants.js';
 
 describe('TimeFiClient vault helpers', () => {
   it('reads the vault owner from getVault', async () => {
@@ -215,6 +216,15 @@ describe('TimeFiClient vault helpers', () => {
     client.getEmergencyStatus = async () => ({ version: '1.0.0', paused: false });
 
     await expect(client.getProtocolConfig()).resolves.toStrictEqual({ version: '1.0.0', paused: false });
+  });
+
+  it('returns active contract metadata', () => {
+    const client = new TimeFiClient('mainnet');
+
+    expect(client.getContractMetadata()).toStrictEqual({
+      address: CONTRACT_ADDRESS,
+      name: CONTRACT_NAMES.VAULT
+    });
   });
 
   it('rejects missing vault ids early', async () => {

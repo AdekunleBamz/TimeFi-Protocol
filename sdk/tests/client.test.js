@@ -323,6 +323,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getProtocolVaultCount()).resolves.toBe(12);
   });
 
+  it('returns zero as the last vault id when no vaults exist', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVaultCount = async () => 0;
+
+    await expect(client.getLastVaultId()).resolves.toBe(0);
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

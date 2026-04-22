@@ -337,6 +337,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getLastVaultId()).resolves.toBe(9);
   });
 
+  it('reads account nonce through the nonce alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getNonce = async (address) => `${address}:nonce`;
+
+    await expect(client.getAccountNonce('SP123')).resolves.toBe('SP123:nonce');
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

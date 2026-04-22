@@ -491,4 +491,11 @@ describe('TimeFiClient vault helpers', () => {
 
     expect(options.functionName).toBe('request-withdraw');
   });
+
+  it('encodes withdraw vault id as a uint argument', () => {
+    const client = new TimeFiClient('mainnet');
+    const options = client.getWithdrawOptions(3);
+
+    expect(cvToValue(options.functionArgs[0])).toBe(3n);
+  });
 });

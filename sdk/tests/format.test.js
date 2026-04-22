@@ -154,6 +154,7 @@ describe('Format Utilities', () => {
 
     it('should handle string inputs', () => {
       expect(formatPercent('5.5')).toBe('5.50%');
+      expect(formatPercent('1,234.5')).toBe('1,234.50%');
     });
 
     it('should throw on invalid inputs', () => {

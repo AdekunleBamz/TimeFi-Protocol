@@ -89,7 +89,10 @@ export function formatNumber(numberToFormat, fractionDigits = 2) {
  * @throws {Error} If decimalValue cannot be converted to a number.
  */
 export function formatPercent(valueToFormat, fractionDigits = 2) {
-    const parsedNumber = Number(valueToFormat);
+    const normalizedValue = typeof valueToFormat === 'string'
+        ? valueToFormat.replace(/,/g, '').trim()
+        : valueToFormat;
+    const parsedNumber = Number(normalizedValue);
     if (valueToFormat === undefined || valueToFormat === null || !Number.isFinite(parsedNumber)) {
         throw new Error('Invalid percentage value');
     }

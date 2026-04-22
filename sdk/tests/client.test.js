@@ -278,6 +278,20 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getAccountBalance('SP123')).resolves.toBe('SP123:500');
   });
 
+  it('combines metrics metadata and config in protocol data', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getProtocolMetrics = async () => ({ tvl: 200, count: 2 });
+    client.getContractMetadata = () => ({ address: 'SP-CONTRACT', name: 'timefi-vault' });
+    client.getProtocolConfig = async () => ({ paused: false });
+
+    await expect(client.getProtocolData()).resolves.toStrictEqual({
+      tvl: 200,
+      count: 2,
+      metadata: { address: 'SP-CONTRACT', name: 'timefi-vault' },
+      paused: false
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

@@ -18,6 +18,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultAmount(1)).resolves.toBe(99_500);
   });
 
+  it('reads vault balance through the amount alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVaultAmount = async (id) => id * 1_000;
+
+    await expect(client.getVaultBalance(9)).resolves.toBe(9_000);
+  });
+
   it('reads the unlock block from getVault', async () => {
     const client = new TimeFiClient('mainnet');
     client.getVault = async () => ({ 'unlock-time': 52_560, 'lock-time': 6 });

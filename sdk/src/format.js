@@ -10,6 +10,12 @@
  * @module format
  */
 
+const normalizeFractionDigits = (fractionDigits, fallback = 2) => {
+    const parsedDigits = Number(fractionDigits);
+    if (!Number.isInteger(parsedDigits) || parsedDigits < 0) return fallback;
+    return Math.min(parsedDigits, 20);
+};
+
 /**
  * Formats a microSTX value into a human-readable STX string.
  * @param {number|BigInt|string|Object} microStx - The value in microSTX.
@@ -68,9 +74,10 @@ export function formatNumber(numberToFormat, fractionDigits = 2) {
         : numberToFormat;
     const parsedNumber = Number(normalizedValue);
     if (!Number.isFinite(parsedNumber)) return '0.00';
+    const normalizedFractionDigits = normalizeFractionDigits(fractionDigits);
     return new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
+        minimumFractionDigits: normalizedFractionDigits,
+        maximumFractionDigits: normalizedFractionDigits
     }).format(parsedNumber);
 }
 

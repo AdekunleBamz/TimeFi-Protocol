@@ -119,6 +119,11 @@ describe('Format Utilities', () => {
       expect(formatNumber(1234.5, 4)).toBe('1,234.5000');
     });
 
+    it('should fall back when fraction digits are out of range', () => {
+      expect(formatNumber(1234.5, -1)).toBe('1,234.50');
+      expect(formatNumber(1234.5, 99)).toBe('1,234.50000000000000000000');
+    });
+
     it('should handle invalid inputs gracefully', () => {
       expect(formatNumber('invalid')).toBe('0.00');
       expect(formatNumber(NaN)).toBe('0.00');

@@ -112,6 +112,7 @@ describe('Format Utilities', () => {
 
     it('should handle string inputs', () => {
       expect(formatNumber('1234.56')).toBe('1,234.56');
+      expect(formatNumber('1,234.56')).toBe('1,234.56');
     });
 
     it('should handle custom fraction digits', () => {

@@ -63,7 +63,10 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
  */
 export function formatNumber(numberToFormat, fractionDigits = 2) {
     if (numberToFormat === undefined || numberToFormat === null) return '0.00';
-    const parsedNumber = Number(numberToFormat);
+    const normalizedValue = typeof numberToFormat === 'string'
+        ? numberToFormat.replace(/,/g, '').trim()
+        : numberToFormat;
+    const parsedNumber = Number(normalizedValue);
     if (!Number.isFinite(parsedNumber)) return '0.00';
     return new Intl.NumberFormat('en-US', {
         minimumFractionDigits: fractionDigits,

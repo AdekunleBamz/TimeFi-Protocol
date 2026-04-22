@@ -486,6 +486,13 @@ describe('TimeFiClient vault helpers', () => {
     expect(options.contractName).toBe(CONTRACT_NAMES.VAULT);
   });
 
+  it('targets the configured contract address in create options', () => {
+    const client = new TimeFiClient('mainnet');
+    const options = client.getCreateVaultOptions(1, 6);
+
+    expect(options.contractAddress).toBe(CONTRACT_ADDRESS);
+  });
+
   it('rejects invalid STX amount values in create options', () => {
     const client = new TimeFiClient('mainnet');
     expect(() => client.getCreateVaultOptions(0, 6)).toThrow('Amount must be greater than 0 STX');

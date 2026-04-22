@@ -513,6 +513,12 @@ describe('TimeFiClient vault helpers', () => {
     expect(() => client.getCreateVaultOptions('not-a-number', 6)).toThrow('Amount must be greater than 0 STX');
   });
 
+  it('rejects unsafe STX amount values in create options', () => {
+    const client = new TimeFiClient('mainnet');
+
+    expect(() => client.getCreateVaultOptions(Number.MAX_SAFE_INTEGER, 6)).toThrow('Amount must be a valid STX value');
+  });
+
   it('rejects invalid lock duration values in create options', () => {
     const client = new TimeFiClient('mainnet');
     expect(() => client.getCreateVaultOptions(1, 0)).toThrow('Lock duration must be a positive integer');

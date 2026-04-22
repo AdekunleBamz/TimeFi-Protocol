@@ -46,6 +46,7 @@ describe('Format Utilities', () => {
       expect(formatSTX('1000000')).toBe('1');
       expect(formatSTX('1500000')).toBe('1.5');
       expect(formatSTX('1,500,000')).toBe('1.5');
+      expect(formatSTX(' 1000000 ')).toBe('1');
     });
 
     it('should handle objects with value property', () => {

@@ -146,6 +146,20 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('combines immutable fields in vault static data', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVaultOwner = async () => 'SP123';
+    client.getCreatedAt = async () => 10;
+    client.getVaultDuration = async () => 90;
+
+    await expect(client.getVaultStaticData(4)).resolves.toStrictEqual({
+      id: 4,
+      owner: 'SP123',
+      createdAt: 10,
+      duration: 90
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

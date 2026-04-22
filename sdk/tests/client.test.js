@@ -461,6 +461,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultIdByOwnerIndex('SP123', -1)).rejects.toThrow('Index must be a non-negative integer');
   });
 
+  it('routes owner vault index lookups to the expected read-only function', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.callReadOnly = async (functionName) => functionName;
+
+    await expect(client.getVaultIdByOwnerIndex('SP123', 0)).resolves.toBe('get-vault-id-by-owner-index');
+  });
+
   it('rejects blank account addresses', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getNonce('   ')).rejects.toThrow('Address is required');

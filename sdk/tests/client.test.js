@@ -362,6 +362,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getAccountSTXBalance('SP123')).resolves.toBe('SP123:stx');
   });
 
+  it('reads block height through the protocol block height alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getBlockHeight = async () => 12345;
+
+    await expect(client.getProtocolBlockHeight()).resolves.toBe(12345);
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

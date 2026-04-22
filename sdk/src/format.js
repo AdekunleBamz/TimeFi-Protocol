@@ -112,6 +112,7 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
  */
 export function formatDate(dateToFormat) {
     if (dateToFormat === undefined || dateToFormat === null || dateToFormat === '') return '--';
+    if (typeof dateToFormat === 'boolean') return '--';
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
     return new Intl.DateTimeFormat('en-US', {

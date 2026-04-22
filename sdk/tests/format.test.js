@@ -192,6 +192,7 @@ describe('Format Utilities', () => {
     it('should handle invalid dates', () => {
       expect(formatDate('invalid')).toBe('--');
       expect(formatDate(NaN)).toBe('--');
+      expect(formatDate(true)).toBe('--');
     });
   });
 

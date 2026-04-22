@@ -32,6 +32,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getUnlockBlock(1)).resolves.toBe(52_560);
   });
 
+  it('reads unlock block through the vault unlock block alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getUnlockBlock = async (id) => id + 100;
+
+    await expect(client.getVaultUnlockBlock(2)).resolves.toBe(102);
+  });
+
   it('reads the creation block from getVault', async () => {
     const client = new TimeFiClient('mainnet');
     client.getVault = async () => ({ 'unlock-time': 52_560, 'lock-time': 6 });

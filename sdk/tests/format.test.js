@@ -249,5 +249,9 @@ describe('Format Utilities', () => {
     it('accepts numeric string block time values', () => {
       expect(formatBlocksToTime(144, '600')).toBe('1 day');
     });
+
+    it('formats month-scale block durations', () => {
+      expect(formatBlocksToTime(4320)).toBe('1 month');
+    });
   });
 });

@@ -398,6 +398,17 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('combines version and paused state in emergency status', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getProtocolVersion = async () => '1.0.1';
+    client.isPaused = async () => false;
+
+    await expect(client.getEmergencyStatus()).resolves.toStrictEqual({
+      version: '1.0.1',
+      paused: false
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

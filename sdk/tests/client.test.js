@@ -381,6 +381,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultsByOwner('SP123')).resolves.toStrictEqual([10, 11, 12]);
   });
 
+  it('returns an empty list when an owner has no vaults', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getVaultsByOwnerCount = async () => 0;
+
+    await expect(client.getVaultsByOwner('SP123')).resolves.toStrictEqual([]);
+  });
+
   it('reads account vault count through owner count alias', async () => {
     const client = new TimeFiClient('mainnet');
     client.getVaultsByOwnerCount = async (address) => `${address}:vaults`;

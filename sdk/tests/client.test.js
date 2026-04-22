@@ -192,6 +192,12 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultRemainingBlocks(1)).resolves.toBe(0);
   });
 
+  it('returns the placeholder APY for positive lock durations', async () => {
+    const client = new TimeFiClient('mainnet');
+
+    await expect(client.getVaultApy(3600)).resolves.toBe(5);
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

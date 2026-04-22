@@ -355,6 +355,13 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('reads account STX balance through the explicit alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getSTXBalance = async (address) => `${address}:stx`;
+
+    await expect(client.getAccountSTXBalance('SP123')).resolves.toBe('SP123:stx');
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

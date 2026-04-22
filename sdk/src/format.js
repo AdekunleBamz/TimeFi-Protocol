@@ -130,6 +130,7 @@ export function formatDate(dateToFormat) {
  */
 export function formatRelativeTime(dateToFormat) {
     if (dateToFormat === undefined || dateToFormat === null || dateToFormat === '') return '--';
+    if (typeof dateToFormat === 'boolean') return '--';
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
 

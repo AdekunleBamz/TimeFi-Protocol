@@ -233,6 +233,7 @@ describe('Format Utilities', () => {
     it('should handle invalid dates', () => {
       expect(formatRelativeTime('invalid')).toBe('--');
       expect(formatRelativeTime(NaN)).toBe('--');
+      expect(formatRelativeTime(false)).toBe('--');
     });
   });
 

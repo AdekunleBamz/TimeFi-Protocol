@@ -153,10 +153,12 @@ export function formatRelativeTime(dateToFormat) {
  * @returns {string} Duration string such as '30 days' or '1 year'.
  */
 export function formatBlocksToTime(blocks, blockTimeSecs = 600) {
-    if (!Number.isFinite(blockTimeSecs) || blockTimeSecs <= 0) return '0 days';
-    if (!Number.isFinite(blocks)) return '0 days';
-    if (!blocks || blocks <= 0) return '0 days';
-    const totalSeconds = blocks * blockTimeSecs;
+    const normalizedBlocks = Number(blocks);
+    const normalizedBlockTimeSecs = Number(blockTimeSecs);
+    if (!Number.isFinite(normalizedBlockTimeSecs) || normalizedBlockTimeSecs <= 0) return '0 days';
+    if (!Number.isFinite(normalizedBlocks)) return '0 days';
+    if (!normalizedBlocks || normalizedBlocks <= 0) return '0 days';
+    const totalSeconds = normalizedBlocks * normalizedBlockTimeSecs;
     const days = Math.round(totalSeconds / 86400);
     if (days >= 365) {
         const years = (days / 365).toFixed(1).replace(/\.0$/, '');

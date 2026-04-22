@@ -241,5 +241,9 @@ describe('Format Utilities', () => {
     it('returns zero days for invalid block-time input', () => {
       expect(formatBlocksToTime(100, 0)).toBe('0 days');
     });
+
+    it('accepts numeric string block counts', () => {
+      expect(formatBlocksToTime('144')).toBe('1 day');
+    });
   });
 });

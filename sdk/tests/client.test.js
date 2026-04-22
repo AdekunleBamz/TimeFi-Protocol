@@ -239,6 +239,16 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('adds vault count to account summaries', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getAccountData = async (address) => ({ address, nonce: 1, balance: 500, vaults: [1, 2, 3] });
+
+    await expect(client.getAccountSummary('SP123')).resolves.toMatchObject({
+      address: 'SP123',
+      vaultCount: 3
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

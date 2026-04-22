@@ -253,5 +253,9 @@ describe('Format Utilities', () => {
     it('formats month-scale block durations', () => {
       expect(formatBlocksToTime(4320)).toBe('1 month');
     });
+
+    it('formats year-scale block durations', () => {
+      expect(formatBlocksToTime(52560)).toBe('1 year');
+    });
   });
 });

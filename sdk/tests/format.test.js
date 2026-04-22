@@ -76,6 +76,10 @@ describe('Format Utilities', () => {
       expect(formatAddress(shortAddress)).toBe('SP3...GG6N');
     });
 
+    it('should not truncate at the display threshold', () => {
+      expect(formatAddress('12345678901')).toBe('12345678901');
+    });
+
     it('should handle null and undefined', () => {
       expect(formatAddress(null)).toBe('');
       expect(formatAddress(undefined)).toBe('');

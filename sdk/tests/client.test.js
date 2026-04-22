@@ -227,6 +227,18 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('combines protocol stats with block height', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getProtocolStats = async () => ({ tvl: 1_000, count: 4 });
+    client.getBlockHeight = async () => 88;
+
+    await expect(client.getProtocolMetrics()).resolves.toStrictEqual({
+      tvl: 1_000,
+      count: 4,
+      blockHeight: 88
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

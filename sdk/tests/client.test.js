@@ -5,6 +5,10 @@ import { TimeFiClient } from '../src/client.js';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../src/constants.js';
 
 describe('TimeFiClient vault helpers', () => {
+  it('rejects unsupported network names', () => {
+    expect(() => new TimeFiClient('devnet')).toThrow('Invalid network type');
+  });
+
   it('reads the vault owner from getVault', async () => {
     const client = new TimeFiClient('mainnet');
     client.getVault = async () => ({ owner: 'SP123', amount: 99_500 });

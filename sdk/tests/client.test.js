@@ -472,7 +472,7 @@ describe('TimeFiClient vault helpers', () => {
     const client = new TimeFiClient('mainnet');
     client.callReadOnly = async (functionName) => functionName;
 
-    await expect(client.getVaultIdByOwnerIndex('SP123', 0)).resolves.toBe('get-vault-id-by-owner-index');
+    await expect(client.getVaultIdByOwnerIndex(CONTRACT_ADDRESS, 0)).resolves.toBe('get-vault-id-by-owner-index');
   });
 
   it('rejects blank account addresses', async () => {
@@ -485,14 +485,14 @@ describe('TimeFiClient vault helpers', () => {
     const client = new TimeFiClient('mainnet');
     client.callReadOnly = async (functionName) => functionName;
 
-    await expect(client.getNonce('SP123')).resolves.toBe('get-nonce');
+    await expect(client.getNonce(CONTRACT_ADDRESS)).resolves.toBe('get-nonce');
   });
 
   it('routes STX balance lookups to the expected read-only function', async () => {
     const client = new TimeFiClient('mainnet');
     client.callReadOnly = async (functionName) => functionName;
 
-    await expect(client.getSTXBalance('SP123')).resolves.toBe('get-stx-balance');
+    await expect(client.getSTXBalance(CONTRACT_ADDRESS)).resolves.toBe('get-stx-balance');
   });
 
   it('rejects blank owner addresses', async () => {

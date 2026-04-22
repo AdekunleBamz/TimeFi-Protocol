@@ -210,6 +210,13 @@ describe('TimeFiClient vault helpers', () => {
     await expect(client.getVaultApy(-1)).rejects.toThrow('Lock duration must be greater than 0');
   });
 
+  it('reads protocol config from emergency status', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getEmergencyStatus = async () => ({ version: '1.0.0', paused: false });
+
+    await expect(client.getProtocolConfig()).resolves.toStrictEqual({ version: '1.0.0', paused: false });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

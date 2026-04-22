@@ -261,6 +261,16 @@ describe('TimeFiClient vault helpers', () => {
     });
   });
 
+  it('reads account vitals through the account overview alias', async () => {
+    const client = new TimeFiClient('mainnet');
+    client.getAccountOverview = async (address) => ({ address, protocol: { paused: false } });
+
+    await expect(client.getAccountVitals('SP123')).resolves.toStrictEqual({
+      address: 'SP123',
+      protocol: { paused: false }
+    });
+  });
+
   it('rejects missing vault ids early', async () => {
     const client = new TimeFiClient('mainnet');
     await expect(client.getVault(undefined)).rejects.toThrow('Vault ID is required');

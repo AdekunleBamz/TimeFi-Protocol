@@ -93,10 +93,11 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
     if (valueToFormat === undefined || valueToFormat === null || !Number.isFinite(parsedNumber)) {
         throw new Error('Invalid percentage value');
     }
+    const normalizedFractionDigits = normalizeFractionDigits(fractionDigits);
     return new Intl.NumberFormat('en-US', {
         style: 'percent',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
+        minimumFractionDigits: normalizedFractionDigits,
+        maximumFractionDigits: normalizedFractionDigits
     }).format(parsedNumber / 100);
 }
 

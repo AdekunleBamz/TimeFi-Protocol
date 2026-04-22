@@ -147,6 +147,11 @@ describe('Format Utilities', () => {
       expect(formatPercent(5.123, 3)).toBe('5.123%');
     });
 
+    it('should normalize invalid fraction digit options', () => {
+      expect(formatPercent(5.1, -2)).toBe('5.10%');
+      expect(formatPercent(5.1, 99)).toBe('5.10000000000000000000%');
+    });
+
     it('should handle string inputs', () => {
       expect(formatPercent('5.5')).toBe('5.50%');
     });

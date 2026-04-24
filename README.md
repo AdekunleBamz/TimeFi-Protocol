@@ -270,6 +270,7 @@ A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
 
 ## 📄 License
 
+- [License](LICENSE)
 - [Security Policy](SECURITY.md)
 
 MIT License - Copyright (c) 2026 TimeFi Protocol Team

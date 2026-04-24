@@ -119,4 +119,4 @@ The SDK provides the following exports:
 
 ## 📄 License
 
-MIT © [AdeekunleeBamz](https://github.com/AdeekunleeBamz)
+MIT © [AdekunleBamz](https://github.com/AdekunleBamz)

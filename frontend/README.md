@@ -87,7 +87,6 @@ npm run build
 
 | Hook | Description |
 |------|-------------|
-| `useWallet` | Wallet connection state |
 | `useContract` | Contract interactions |
 | `useReadOnly` | Read-only contract calls |
 | `useBlockHeight` | Current block tracking |

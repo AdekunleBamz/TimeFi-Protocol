@@ -74,7 +74,7 @@ For Windows developers:
 1. Install Windows Subsystem for Linux (WSL2) for optimal Clarinet experience
 2. Use Git Bash or WSL terminal for running commands
 3. Ensure Node.js is added to system PATH
-4. May need to run terminal as Administrator for global installations
+4. You may need to run terminal as Administrator for global installations
  
 ### 🛠️ Development
 

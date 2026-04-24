@@ -129,6 +129,7 @@ Before opening a PR or pushing to `main`, run:
 npm run contracts:check
 npm run sdk:test
 npm run frontend:lint
+npm run verify:local
 ```
 
 ### 💻 Frontend Dashboard

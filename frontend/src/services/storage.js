@@ -93,7 +93,7 @@ export function getItem(key, defaultValue = null) {
       return item ? safeJsonParse(item, defaultValue) : defaultValue;
     }
     return memoryStorage.get(prefixedKey) ?? defaultValue;
-  } catch (error) {
+  } catch {
     return defaultValue;
   }
 }
@@ -146,7 +146,7 @@ export function removeItem(key) {
       window.localStorage.removeItem(prefixedKey);
     }
     memoryStorage.delete(prefixedKey);
-  } catch (error) {
+  } catch {
     // Ignore error
   }
 }

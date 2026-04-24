@@ -192,7 +192,7 @@ export async function getTransaction(txId) {
   if (!txId || typeof txId !== 'string') {
     throw new Error('A valid transaction ID is required');
   }
-  const data = await fetchAPI(`/extended/v1/tx/${txId}`);
+  const data = await fetchAPI(`/extended/v1/tx/${txId.trim()}`);
   return normalizeTransaction(data);
 }
 

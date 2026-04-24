@@ -223,7 +223,6 @@ TimeFi Protocol is governed by its community. Future proposals will be handled v
 
 ## 👥 Community
 
-- **Discord**: [Join our Discord](https://discord.gg/timefi)
 - **Twitter**: [@TimeFiProtocol](https://twitter.com/TimeFiProtocol)
 - **GitHub**: [AdekunleBamz](https://github.com/AdekunleBamz)
 

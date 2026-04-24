@@ -52,7 +52,7 @@ export function useLocalStorage(key, initialValue) {
         } catch (error) {
             console.warn(`Error setting localStorage key "${trimmedKey}":`, error);
         }
-    }, [trimmedKey, initialValue]);
+    }, [trimmedKey]);
 
     const removeValue = useCallback(() => {
         try {

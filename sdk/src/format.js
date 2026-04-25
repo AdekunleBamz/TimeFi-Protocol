@@ -66,6 +66,17 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
 };
 
 /**
+ * Validates that a string is a properly formatted Stacks address.
+ * @param {string} address - The address to validate.
+ * @returns {boolean} True if address matches Stacks mainnet format (SP...).
+ */
+export function isValidStacksAddress(address) {
+    if (typeof address !== 'string') return false;
+    const normalized = address.trim();
+    return /^S[A-Z0-9]{33}$/.test(normalized);
+}
+
+/**
  * Formats a number with locale-specific separators.
  * @param {number|string} val - The numeric value to format.
  * @returns {string} Formatted number string.
@@ -94,7 +105,7 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
     const normalizedValue = normalizeDisplayNumber(valueToFormat);
     const parsedNumber = Number(normalizedValue);
     if (valueToFormat === undefined || valueToFormat === null || !Number.isFinite(parsedNumber)) {
-        throw new Error('Invalid percentage value');
+        return '0.00%';
     }
     const normalizedFractionDigits = normalizeFractionDigits(fractionDigits);
     return new Intl.NumberFormat('en-US', {
@@ -172,8 +183,32 @@ export function formatBlocksToTime(blocks, blockTimeSecs = 600) {
 }
 
 /**
+ * Converts a block count to milliseconds for timers and animations.
+ * @param {number} blocks - Number of Stacks blocks.
+ * @param {number} [blockTimeSecs=600] - Seconds per block (default mainnet ~10 min).
+ * @returns {number} Duration in milliseconds.
+ */
+export function blocksToMs(blocks, blockTimeSecs = 600) {
+    const normalizedBlocks = Number(blocks);
+    const normalizedBlockTimeSecs = Number(blockTimeSecs);
+    if (!Number.isFinite(normalizedBlocks) || !Number.isFinite(normalizedBlockTimeSecs)) return 0;
+    return normalizedBlocks * normalizedBlockTimeSecs * 1000;
+}
+
+/**
  * Alias for formatSTX — accepts microSTX and returns a human-readable STX string.
  * @param {number|BigInt|string|Object} microStx - Amount in microSTX.
  * @returns {string} Formatted STX string.
  */
 export const formatMicroSTX = formatSTX;
+
+/**
+ * Validates that a microSTX amount is within acceptable bounds.
+ * @param {number|BigInt|string} microStx - Amount in microSTX.
+ * @returns {boolean} True if amount is positive and finite.
+ */
+export function isValidSTXAmount(microStx) {
+    if (microStx === undefined || microStx === null) return false;
+    const value = typeof microStx === 'bigint' ? Number(microStx) : Number(microStx);
+    return Number.isFinite(value) && value > 0;
+}

@@ -162,10 +162,10 @@ describe('Format Utilities', () => {
       expect(formatPercent('1,234.5')).toBe('1,234.50%');
     });
 
-    it('should throw on invalid inputs', () => {
-      expect(() => formatPercent('invalid')).toThrow('Invalid percentage value');
-      expect(() => formatPercent(NaN)).toThrow('Invalid percentage value');
-      expect(() => formatPercent(Infinity)).toThrow('Invalid percentage value');
+    it('should return zero percent for invalid inputs', () => {
+      expect(formatPercent('invalid')).toBe('0.00%');
+      expect(formatPercent(NaN)).toBe('0.00%');
+      expect(formatPercent(Infinity)).toBe('0.00%');
     });
   });
 

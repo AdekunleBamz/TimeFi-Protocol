@@ -878,4 +878,28 @@ export class TimeFiClient {
 
         return parsedValue;
     }
+
+    /**
+     * Validates a microSTX amount is within reasonable bounds.
+     * Prevents overflow and negative amounts.
+     * @param {number|BigInt} microStx - Amount in microSTX units.
+     * @param {string} [label='Amount'] - Field label for error messages.
+     * @returns {number|BigInt} The validated amount.
+     * @throws {Error} If amount is invalid, negative, or exceeds safe bounds.
+     * @private
+     */
+    #validateMicroSTXAmount(microStx, label = 'Amount') {
+        const amount = typeof microStx === 'bigint' ? microStx : BigInt(microStx);
+        
+        if (amount < 0n) {
+            throw new Error(`${label} cannot be negative`);
+        }
+        
+        const MAX_SAFE_USTX = 21000000n * MICROSTX_IN_STX;
+        if (amount > MAX_SAFE_USTX) {
+            throw new Error(`${label} exceeds maximum supply`);
+        }
+        
+        return amount;
+    }
 }

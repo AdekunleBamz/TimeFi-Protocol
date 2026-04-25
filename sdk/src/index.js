@@ -19,7 +19,8 @@
 // Protocol constants and configuration
 export * from './constants.js';
 
-// Formatting utilities for STX, addresses, numbers, and dates
+// Formatting utilities for STX, addresses, numbers, dates, and validation
+// New validators: isValidStacksAddress, isValidSTXAmount, blocksToMs
 export * from './format.js';
 
 // Main client class for protocol interactions

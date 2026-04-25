@@ -168,6 +168,14 @@ export const MIN_LOCK_BLOCKS = 6;
 export const MAX_LOCK_BLOCKS = 52560;
 
 /**
+ * Default lock period in blocks (6 months).
+ * Matches LOCK_PERIODS.MONTH_6 for safe defaults.
+ *
+ * @constant {number}
+ */
+export const DEFAULT_LOCK_BLOCKS = 25920;
+
+/**
  * Human-readable labels for supported Stacks network identifiers.
  *
  * @constant {Object}

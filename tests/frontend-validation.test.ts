@@ -145,6 +145,12 @@ describe('frontend validation helpers', () => {
     expect(result.error).toBe('Address is required');
   });
 
+  it('rejects non-string address input', () => {
+    const result = validateAddress(null);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Address is required');
+  });
+
   it('requires a bot address input', () => {
     const result = validateBotAddress('');
     expect(result.valid).toBe(false);

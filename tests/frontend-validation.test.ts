@@ -20,6 +20,10 @@ describe('frontend validation helpers', () => {
     expect(validateLockPeriod('not-a-number').valid).toBe(false);
   });
 
+  it('rejects non-finite lock period values', () => {
+    expect(validateLockPeriod(Number.POSITIVE_INFINITY).valid).toBe(false);
+  });
+
   it('uses microSTX wording for minimum deposit errors', () => {
     const underMin = MIN_DEPOSIT > 1 ? MIN_DEPOSIT - 1 : 0;
     const result = validateDepositAmount(underMin);

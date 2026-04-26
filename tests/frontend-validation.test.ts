@@ -253,4 +253,10 @@ describe('frontend validation helpers', () => {
     const result = validateWithdrawal(vault, 110);
     expect(result.valid).toBe(true);
   });
+
+  it('accepts withdrawals when block height is above unlock height', () => {
+    const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: false };
+    const result = validateWithdrawal(vault, 111);
+    expect(result.valid).toBe(true);
+  });
 });

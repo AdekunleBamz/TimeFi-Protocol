@@ -91,3 +91,9 @@ export const formatDateShort = (ts) => new Date(Number(ts) * 1000).toLocaleDateS
 
 /** Formats a percentage (0-100) with one decimal place, e.g. "42.5%". */
 export const formatPct = (ratio) => `${(Number(ratio) * 100).toFixed(1)}%`;
+
+/** Formats a vault status string with the first letter capitalized. */
+export const formatVaultStatus = (status) =>
+  typeof status === 'string' && status.length > 0
+    ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
+    : '';

@@ -53,3 +53,6 @@ export const meetsMinDeposit = (amount, minDeposit) => Number(amount) >= Number(
 /** Returns true when the vault has passed its unlock block. */
 export const isUnlocked = (depositHeight, lockPeriod, currentHeight) =>
   Number(currentHeight) >= Number(depositHeight) + Number(lockPeriod);
+
+/** Converts microSTX to STX as a fixed-decimal string. */
+export const microStxToStxFixed = (v, decimals = 2) => (Number(v) / 1e6).toFixed(decimals);

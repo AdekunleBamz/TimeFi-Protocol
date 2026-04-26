@@ -115,3 +115,6 @@ export const formatDuration = (secs) => {
   if (h > 0) return `${h}h ${m}m`;
   return `${m}m ${s % 60}s`;
 };
+
+/** Returns a compact locale number string (e.g. 1,234,567). */
+export const formatNumber = (n) => Number(n).toLocaleString();

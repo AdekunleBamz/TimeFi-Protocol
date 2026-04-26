@@ -51,6 +51,12 @@ describe('frontend validation helpers', () => {
     expect(result.error).toBe('Please enter an amount');
   });
 
+  it('rejects fractional microSTX deposit values', () => {
+    const result = validateDepositAmount(1000.5);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Amount must be a whole number of microSTX');
+  });
+
   it('rejects non-integer vault ids', () => {
     const result = validateVaultId(1.25);
     expect(result.valid).toBe(false);

@@ -98,6 +98,10 @@ describe('frontend validation helpers', () => {
     expect(validateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').valid).toBe(true);
   });
 
+  it('accepts valid stacks addresses with surrounding whitespace', () => {
+    expect(validateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ').valid).toBe(true);
+  });
+
   it('requires a bot address input', () => {
     const result = validateBotAddress('');
     expect(result.valid).toBe(false);

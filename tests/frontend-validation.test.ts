@@ -120,6 +120,12 @@ describe('frontend validation helpers', () => {
     expect(result.error).toContain('base58');
   });
 
+  it('rejects addresses with invalid length', () => {
+    const result = validateAddress('SP1234');
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('length');
+  });
+
   it('accepts valid stacks addresses', () => {
     expect(validateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').valid).toBe(true);
   });

@@ -49,7 +49,7 @@ The TimeFi Protocol is designed as a modular system for security and scalability
 
 ### 🔒 Smart Contract Features
 - **Create Vaults** - Deposit STX with time-lock
-- **Withdraw Requests** - Queue withdrawals once the lock has matured
+- **Withdraw Requests** - Queue withdrawals once the lock matures
 - **Custodian Processing** - Let the deployer process mature withdrawal payouts
 - **Bot Approval** - Approve automated bot principals directly
 - **Fee Collection** - 0.5% fee on deposits

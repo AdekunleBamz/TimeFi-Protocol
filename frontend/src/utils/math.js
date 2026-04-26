@@ -49,3 +49,7 @@ export const netDeposit = (amount, feeBps) =>
 
 /** Returns true when the microSTX amount meets or exceeds the minimum deposit. */
 export const meetsMinDeposit = (amount, minDeposit) => Number(amount) >= Number(minDeposit);
+
+/** Returns true when the vault has passed its unlock block. */
+export const isUnlocked = (depositHeight, lockPeriod, currentHeight) =>
+  Number(currentHeight) >= Number(depositHeight) + Number(lockPeriod);

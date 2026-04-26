@@ -97,3 +97,7 @@ export const formatVaultStatus = (status) =>
   typeof status === 'string' && status.length > 0
     ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
     : '';
+
+/** Formats a block height and lock period as a "Block X → Block Y" range string. */
+export const formatBlockRange = (depositHeight, lockPeriod) =>
+  `Block ${Number(depositHeight).toLocaleString()} → Block ${(Number(depositHeight) + Number(lockPeriod)).toLocaleString()}`;

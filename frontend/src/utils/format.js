@@ -101,3 +101,6 @@ export const formatVaultStatus = (status) =>
 /** Formats a block height and lock period as a "Block X → Block Y" range string. */
 export const formatBlockRange = (depositHeight, lockPeriod) =>
   `Block ${Number(depositHeight).toLocaleString()} → Block ${(Number(depositHeight) + Number(lockPeriod)).toLocaleString()}`;
+
+/** Formats an error code as a string, e.g. "Error #103". */
+export const formatErrorCode = (code) => `Error #${Number(code)}`;

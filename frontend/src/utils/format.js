@@ -118,3 +118,10 @@ export const formatDuration = (secs) => {
 
 /** Returns a compact locale number string (e.g. 1,234,567). */
 export const formatNumber = (n) => Number(n).toLocaleString();
+
+/** Shortens a Stacks transaction ID to first 8 + last 4 chars. */
+export const formatTxId = (txId) => {
+  const s = String(txId || '');
+  if (s.length < 12) return s;
+  return `${s.slice(0, 8)}…${s.slice(-4)}`;
+};

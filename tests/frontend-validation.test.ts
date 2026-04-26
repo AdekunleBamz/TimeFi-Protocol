@@ -139,6 +139,12 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(true);
   });
 
+  it('rejects bot addresses that are only whitespace', () => {
+    const result = validateBotAddress('   ');
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Bot address is required');
+  });
+
   it('surfaces address format errors for bot validation', () => {
     const result = validateBotAddress('BAD-ADDRESS');
     expect(result.valid).toBe(false);

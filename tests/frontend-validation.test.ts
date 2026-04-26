@@ -227,6 +227,13 @@ describe('frontend validation helpers', () => {
     expect(result.error).toBe('Invalid current block height');
   });
 
+  it('rejects withdrawal checks when block height is a string', () => {
+    const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: false };
+    const result = validateWithdrawal(vault, '110');
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Invalid current block height');
+  });
+
   it('returns remaining block count for locked withdrawals', () => {
     const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: false };
     const result = validateWithdrawal(vault, 105);

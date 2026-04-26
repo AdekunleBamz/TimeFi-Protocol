@@ -8,6 +8,11 @@ describe('frontend validation helpers', () => {
     expect(validateLockPeriod(String(firstSupportedBlocks)).valid).toBe(true);
   });
 
+  it('accepts whitespace-padded numeric lock period values', () => {
+    const firstSupportedBlocks = Object.values(LOCK_PERIODS)[0].blocks;
+    expect(validateLockPeriod(`  ${firstSupportedBlocks}  `).valid).toBe(true);
+  });
+
   it('rejects infinite deposit values', () => {
     expect(validateDepositAmount(Number.POSITIVE_INFINITY).valid).toBe(false);
   });

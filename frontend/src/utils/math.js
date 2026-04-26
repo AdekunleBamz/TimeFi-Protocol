@@ -39,3 +39,6 @@ export const lockProgress = (depositHeight, lockPeriod, currentHeight) => {
   const elapsed = Math.min(total, Math.max(0, Number(currentHeight) - Number(depositHeight)));
   return Math.round((elapsed / total) * 100);
 };
+
+/** Converts a number of weeks to the equivalent block count (Stacks mainnet). */
+export const weeksToBlocks = (weeks) => Math.round(Number(weeks) * 1008);

@@ -178,6 +178,13 @@ describe('frontend validation helpers', () => {
     expect(result.error).toContain('5 blocks remaining');
   });
 
+  it('formats large locked-withdrawal block counts with separators', () => {
+    const vault = { depositHeight: 100, lockPeriod: 2000, isWithdrawn: false };
+    const result = validateWithdrawal(vault, 100);
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('2,000 blocks remaining');
+  });
+
   it('rejects withdrawals for already-withdrawn vaults', () => {
     const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: true };
     const result = validateWithdrawal(vault, 120);

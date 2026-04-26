@@ -85,3 +85,6 @@ export const formatStxShort = (microStx) => (Number(microStx) / 1e6).toFixed(2) 
 
 /** Formats a block count as an approximate day range string, e.g. "~30 days". */
 export const formatBlocksApprox = (blocks) => `~${Math.round(Number(blocks) / 144)} days`;
+
+/** Returns a short locale date string from a Unix timestamp in seconds. */
+export const formatDateShort = (ts) => new Date(Number(ts) * 1000).toLocaleDateString();

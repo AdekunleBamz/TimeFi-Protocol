@@ -46,3 +46,6 @@ export const weeksToBlocks = (weeks) => Math.round(Number(weeks) * 1008);
 /** Returns the net deposit after applying a basis-point fee, floored to integer. */
 export const netDeposit = (amount, feeBps) =>
   Math.floor(Number(amount) - Math.floor(Number(amount) * Number(feeBps) / 10000));
+
+/** Returns true when the microSTX amount meets or exceeds the minimum deposit. */
+export const meetsMinDeposit = (amount, minDeposit) => Number(amount) >= Number(minDeposit);

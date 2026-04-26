@@ -104,3 +104,14 @@ export const formatBlockRange = (depositHeight, lockPeriod) =>
 
 /** Formats an error code as a string, e.g. "Error #103". */
 export const formatErrorCode = (code) => `Error #${Number(code)}`;
+
+/** Returns a human-readable duration string from a number of seconds. */
+export const formatDuration = (secs) => {
+  const s = Math.floor(Math.abs(Number(secs)));
+  const d = Math.floor(s / 86400);
+  const h = Math.floor((s % 86400) / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  if (d > 0) return `${d}d ${h}h`;
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m ${s % 60}s`;
+};

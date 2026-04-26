@@ -61,6 +61,12 @@ describe('frontend validation helpers', () => {
     expect(validateVaultId(1).valid).toBe(true);
   });
 
+  it('rejects vault ids above max safe integer', () => {
+    const result = validateVaultId(Number.MAX_SAFE_INTEGER + 1);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Vault ID is out of range');
+  });
+
   it('rejects empty vault id input', () => {
     const result = validateVaultId('');
     expect(result.valid).toBe(false);

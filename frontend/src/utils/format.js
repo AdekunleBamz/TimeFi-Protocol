@@ -88,3 +88,6 @@ export const formatBlocksApprox = (blocks) => `~${Math.round(Number(blocks) / 14
 
 /** Returns a short locale date string from a Unix timestamp in seconds. */
 export const formatDateShort = (ts) => new Date(Number(ts) * 1000).toLocaleDateString();
+
+/** Formats a percentage (0-100) with one decimal place, e.g. "42.5%". */
+export const formatPct = (ratio) => `${(Number(ratio) * 100).toFixed(1)}%`;

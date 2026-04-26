@@ -28,3 +28,6 @@ export const isValidFeeBps = (bps) => Number.isInteger(Number(bps)) && Number(bp
 /** Returns the number of blocks remaining until a vault unlocks; 0 if already past. */
 export const blocksRemaining = (depositHeight, lockPeriod, currentHeight) =>
   Math.max(0, Number(depositHeight) + Number(lockPeriod) - Number(currentHeight));
+
+/** Returns the unlock block height for a vault. */
+export const unlockHeight = (depositHeight, lockPeriod) => Number(depositHeight) + Number(lockPeriod);

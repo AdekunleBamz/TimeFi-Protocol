@@ -97,6 +97,12 @@ describe('frontend validation helpers', () => {
     expect(result.error).toBe('A valid Vault ID is required');
   });
 
+  it('rejects zero vault ids', () => {
+    const result = validateVaultId(0);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Vault ID must be a positive number');
+  });
+
   it('rejects missing lock period input', () => {
     const result = validateLockPeriod(null);
     expect(result.valid).toBe(false);

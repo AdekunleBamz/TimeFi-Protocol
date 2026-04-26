@@ -60,3 +60,6 @@ export const microStxToStxFixed = (v, decimals = 2) => (Number(v) / 1e6).toFixed
 /** Returns estimated seconds remaining until a vault unlocks. */
 export const secondsRemaining = (depositHeight, lockPeriod, currentHeight, blockTimeSec = 600) =>
   Math.max(0, blocksRemaining(depositHeight, lockPeriod, currentHeight) * blockTimeSec);
+
+/** Clamps a number between lo and hi (inclusive). */
+export const clampNum = (v, lo, hi) => Math.min(Number(hi), Math.max(Number(lo), Number(v)));

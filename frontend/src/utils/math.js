@@ -18,3 +18,6 @@ export const blocksToDays = (blocks) => Number(blocks) / 144;
 export const clamp = (v, mn, mx) => Math.min(Math.max(Number(v), Number(mn)), Number(mx));
 
 export const bpsToPercent = (bps) => Number(bps) / 100;
+
+/** Returns true when blocks is a valid positive integer. */
+export const isValidBlockCount = (blocks) => Number.isInteger(Number(blocks)) && Number(blocks) > 0;

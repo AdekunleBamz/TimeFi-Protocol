@@ -56,3 +56,7 @@ export const isUnlocked = (depositHeight, lockPeriod, currentHeight) =>
 
 /** Converts microSTX to STX as a fixed-decimal string. */
 export const microStxToStxFixed = (v, decimals = 2) => (Number(v) / 1e6).toFixed(decimals);
+
+/** Returns estimated seconds remaining until a vault unlocks. */
+export const secondsRemaining = (depositHeight, lockPeriod, currentHeight, blockTimeSec = 600) =>
+  Math.max(0, blocksRemaining(depositHeight, lockPeriod, currentHeight) * blockTimeSec);

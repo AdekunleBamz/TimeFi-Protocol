@@ -55,6 +55,12 @@ describe('frontend validation helpers', () => {
     expect(result.error).toBe('Please enter an amount');
   });
 
+  it('prompts when deposit amount is null input', () => {
+    const result = validateDepositAmount(null);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Please enter an amount');
+  });
+
   it('accepts fractional deposit values in STX-amount mode', () => {
     const result = validateDepositAmount(1000.5);
     expect(result.valid).toBe(true);

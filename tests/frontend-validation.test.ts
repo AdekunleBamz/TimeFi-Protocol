@@ -145,4 +145,10 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Vault already withdrawn');
   });
+
+  it('accepts withdrawals once lock periods have elapsed', () => {
+    const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: false };
+    const result = validateWithdrawal(vault, 110);
+    expect(result.valid).toBe(true);
+  });
 });

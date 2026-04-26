@@ -79,3 +79,6 @@ export const formatLockDuration = (blocks) => blocks + " blocks (~" + (Number(bl
 export const formatFeeAmount = (fee) => Number(fee).toLocaleString() + " uSTX";
 
 export const formatVaultId = (id) => "Vault #" + String(id).padStart(4,"0");
+
+/** Formats a microSTX amount as a rounded STX string with 2 decimal places. */
+export const formatStxShort = (microStx) => (Number(microStx) / 1e6).toFixed(2) + ' STX';

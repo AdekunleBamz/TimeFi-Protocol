@@ -100,6 +100,10 @@ describe('frontend validation helpers', () => {
     expect(validateDepositAmount(MIN_DEPOSIT, MIN_DEPOSIT).valid).toBe(true);
   });
 
+  it('accepts numeric-string deposit amounts', () => {
+    expect(validateDepositAmount(String(MIN_DEPOSIT), MIN_DEPOSIT).valid).toBe(true);
+  });
+
   it('rejects addresses with invalid prefix', () => {
     const result = validateAddress('SZ3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N');
     expect(result.valid).toBe(false);

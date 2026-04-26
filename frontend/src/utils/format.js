@@ -82,3 +82,6 @@ export const formatVaultId = (id) => "Vault #" + String(id).padStart(4,"0");
 
 /** Formats a microSTX amount as a rounded STX string with 2 decimal places. */
 export const formatStxShort = (microStx) => (Number(microStx) / 1e6).toFixed(2) + ' STX';
+
+/** Formats a block count as an approximate day range string, e.g. "~30 days". */
+export const formatBlocksApprox = (blocks) => `~${Math.round(Number(blocks) / 144)} days`;

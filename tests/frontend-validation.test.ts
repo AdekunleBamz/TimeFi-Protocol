@@ -128,6 +128,12 @@ describe('frontend validation helpers', () => {
     expect(validateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ').valid).toBe(true);
   });
 
+  it('rejects empty address input', () => {
+    const result = validateAddress('');
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Address is required');
+  });
+
   it('requires a bot address input', () => {
     const result = validateBotAddress('');
     expect(result.valid).toBe(false);

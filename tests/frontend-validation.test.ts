@@ -12,6 +12,10 @@ describe('frontend validation helpers', () => {
     expect(validateDepositAmount(Number.POSITIVE_INFINITY).valid).toBe(false);
   });
 
+  it('rejects non-numeric deposit strings', () => {
+    expect(validateDepositAmount('abc').valid).toBe(false);
+  });
+
   it('rejects infinite vault ids', () => {
     expect(validateVaultId(Number.POSITIVE_INFINITY).valid).toBe(false);
   });

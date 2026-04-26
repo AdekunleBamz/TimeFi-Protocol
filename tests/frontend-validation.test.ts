@@ -201,6 +201,12 @@ describe('frontend validation helpers', () => {
     expect(result.error).toContain('prefix');
   });
 
+  it('surfaces invalid-character bot address errors', () => {
+    const result = validateBotAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG60');
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('base58');
+  });
+
   it('rejects withdrawal when vault is missing', () => {
     const result = validateWithdrawal(null, 1000);
     expect(result.valid).toBe(false);

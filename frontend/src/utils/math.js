@@ -31,3 +31,11 @@ export const blocksRemaining = (depositHeight, lockPeriod, currentHeight) =>
 
 /** Returns the unlock block height for a vault. */
 export const unlockHeight = (depositHeight, lockPeriod) => Number(depositHeight) + Number(lockPeriod);
+
+/** Returns how far along (0-100) the lock period has progressed. */
+export const lockProgress = (depositHeight, lockPeriod, currentHeight) => {
+  const total = Number(lockPeriod);
+  if (total <= 0) return 100;
+  const elapsed = Math.min(total, Math.max(0, Number(currentHeight) - Number(depositHeight)));
+  return Math.round((elapsed / total) * 100);
+};

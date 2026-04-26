@@ -94,6 +94,12 @@ describe('frontend validation helpers', () => {
     expect(result.error).toContain('prefix');
   });
 
+  it('rejects addresses with invalid base58 characters', () => {
+    const result = validateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG60');
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('base58');
+  });
+
   it('accepts valid stacks addresses', () => {
     expect(validateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').valid).toBe(true);
   });

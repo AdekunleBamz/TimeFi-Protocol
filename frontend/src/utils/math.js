@@ -63,3 +63,6 @@ export const secondsRemaining = (depositHeight, lockPeriod, currentHeight, block
 
 /** Clamps a number between lo and hi (inclusive). */
 export const clampNum = (v, lo, hi) => Math.min(Number(hi), Math.max(Number(lo), Number(v)));
+
+/** Returns true when a block height value is a non-negative integer. */
+export const isValidBlockHeight = (h) => Number.isInteger(Number(h)) && Number(h) >= 0;

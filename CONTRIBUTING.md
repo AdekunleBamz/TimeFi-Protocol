@@ -100,7 +100,7 @@ clarinet devnet start
 
 ## Questions?
 
-Open an issue for questions or discussion.
+Open an issue (or discussion thread) for questions and design feedback.
 
 ## Contact
 

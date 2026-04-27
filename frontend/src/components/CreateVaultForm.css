@@ -372,6 +372,18 @@
   margin-top: -0.4rem;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .lock-period-option,
+  .form-button {
+    transition: none;
+  }
+
+  .lock-period-option:hover:not(:disabled),
+  .form-button-primary:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
 @media (max-width: 640px) {
   .create-vault-form {
     gap: 1.25rem;
@@ -450,4 +462,3 @@
     min-height: 48px;
   }
 }
-

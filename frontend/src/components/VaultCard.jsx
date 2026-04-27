@@ -138,6 +138,7 @@ export function VaultCard({ vaultId }) {
           type="button"
           className="vault-refresh-note"
           onClick={fetchVaultData}
+          aria-label={`Refresh vault data. Last updated ${lastUpdatedLabel}`}
         >
           Updated {lastUpdatedLabel}
         </button>

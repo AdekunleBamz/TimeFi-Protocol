@@ -24,9 +24,9 @@ Thank you for your interest in contributing to TimeFi Protocol!
    npm ci
    ```
 
-4. Install ESLint locally (required for the pre-commit hook):
+4. Install frontend dependencies:
    ```bash
-   npm install --save-dev eslint
+   npm --prefix frontend ci
    ```
 
 5. Run tests:

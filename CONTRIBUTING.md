@@ -66,7 +66,7 @@ Follow conventional commits:
 
 1. Create a feature branch from `main`
 2. Make your changes
-3. Run frontend lint and tests locally
+3. Run frontend lint and tests locally (`npm run frontend:test && npm run test`)
 4. Run `npm run verify:local` from repository root
 5. Push and create a PR
 6. Wait for review

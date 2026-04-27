@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
+  min-height: 1.5rem;
   font-weight: 800;
   border-radius: 999px;
   text-transform: uppercase;

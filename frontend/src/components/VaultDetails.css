@@ -59,6 +59,7 @@
 }
 
 .vault-header-link {
+  min-height: 2.5rem;
   padding: 0.58rem 0.82rem;
   border-radius: 999px;
   border: 1px solid rgba(148, 163, 184, 0.16);

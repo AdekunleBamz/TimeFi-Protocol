@@ -47,3 +47,5 @@ For security concerns, please contact the maintainers privately.
 **Primary Contact**: adekunlebamz (GitHub)
 
 **Security Email**: bams.kunle@gmail.com
+
+Use encrypted email when sharing exploit proofs or private key material.

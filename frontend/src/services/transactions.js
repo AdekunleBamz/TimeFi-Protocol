@@ -207,8 +207,9 @@ export async function approveBot({ botAddress, onFinish, onCancel }) {
  */
 export async function revokeBot({ botAddress, onFinish, onCancel }) {
   if (!botAddress || typeof botAddress !== 'string' || !botAddress.trim()) throw new Error('botAddress is required');
+  const normalizedBotAddress = botAddress.trim();
   await openContractCall({
-    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'revoke-bot', [principalCV(botAddress)], onFinish, onCancel),
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'revoke-bot', [principalCV(normalizedBotAddress)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Deny,
   });
 }

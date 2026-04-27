@@ -244,7 +244,7 @@ A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
 
 ## 👤 Contributors
 
-- **adekunlebamz**: Lead Developer & Maintainer
+- **AdekunleBamz**: Lead Developer & Maintainer
 
 ## 📄 License
 

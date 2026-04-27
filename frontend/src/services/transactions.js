@@ -45,7 +45,7 @@ function logTxEvent(...args) {
  * @throws {Error} If vaultId is missing
  */
 function assertVaultId(vaultId) {
-  assertPositiveInteger(vaultId, 'vaultId');
+  return assertPositiveInteger(vaultId, 'vaultId');
 }
 
 /**
@@ -129,10 +129,10 @@ export async function createVault({ amount, lockDuration, senderAddress, onFinis
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function withdraw({ vaultId, onFinish, onCancel }) {
-  assertVaultId(vaultId);
+  const normalizedVaultId = assertVaultId(vaultId);
 
   await openContractCall({
-    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'request-withdraw', [uintCV(vaultId)], onFinish, onCancel),
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'request-withdraw', [uintCV(normalizedVaultId)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Allow,
   });
 }

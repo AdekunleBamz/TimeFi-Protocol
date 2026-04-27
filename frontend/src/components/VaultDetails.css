@@ -338,6 +338,16 @@
   border-radius: 4px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .back-button {
+    transition: none;
+  }
+
+  .back-button:hover {
+    transform: none;
+  }
+}
+
 .info-item a:hover {
   text-decoration: underline;
 }

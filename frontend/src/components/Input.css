@@ -203,3 +203,11 @@
     gap: 0.25rem;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .input::placeholder,
+  .input-icon {
+    transition: none;
+  }
+}

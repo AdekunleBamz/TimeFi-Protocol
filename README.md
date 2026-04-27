@@ -100,6 +100,7 @@ npm run sdk:build
 Before opening a PR or pushing to `main`, run:
 
 Ensure frontend dependencies are installed first (`npm --prefix frontend ci`).
+`npm run verify:local` runs the full suite and can take several minutes.
 
 ```bash
 npm run contracts:check

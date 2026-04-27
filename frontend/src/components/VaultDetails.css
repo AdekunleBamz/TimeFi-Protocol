@@ -122,6 +122,7 @@
 .vault-summary-chip strong {
   color: #f8fafc;
   font-size: 1.02rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .vault-status-banner {

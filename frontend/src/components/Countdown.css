@@ -104,3 +104,9 @@
     opacity: 0.7;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-ready {
+    animation: none;
+  }
+}

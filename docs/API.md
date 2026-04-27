@@ -63,6 +63,8 @@ Process a queued withdrawal. Admin only.
 
 **Events:** Emits `{event: "withdraw", id, owner, amount}`
 
+`amount` in the withdraw event is denominated in microSTX.
+
 ---
 
 ### `approve-bot`

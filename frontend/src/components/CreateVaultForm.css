@@ -148,6 +148,11 @@
   background: rgba(0, 194, 168, 0.12);
 }
 
+.form-quick-amount:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
+
 /* Max Button */
 .form-max-button {
   padding: 0 1rem;

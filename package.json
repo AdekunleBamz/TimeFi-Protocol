@@ -19,6 +19,7 @@
     "console": "npm run contracts:console",
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
+    "frontend:test": "npm --prefix frontend run lint",
     "frontend:lint": "npm --prefix frontend run lint",
     "sdk:build": "npm --prefix sdk run build",
     "sdk:test": "npm --prefix sdk run test",

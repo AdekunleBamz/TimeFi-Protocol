@@ -191,8 +191,9 @@ export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel })
  */
 export async function approveBot({ botAddress, onFinish, onCancel }) {
   if (!botAddress || typeof botAddress !== 'string' || !botAddress.trim()) throw new Error('botAddress is required');
+  const normalizedBotAddress = botAddress.trim();
   await openContractCall({
-    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'approve-bot', [principalCV(botAddress)], onFinish, onCancel),
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'approve-bot', [principalCV(normalizedBotAddress)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Deny,
   });
 }

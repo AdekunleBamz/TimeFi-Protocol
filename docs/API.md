@@ -111,6 +111,7 @@ Update the treasury address. Admin only.
 **Returns:** `(response bool uint)`
 
 Changing treasury affects where create-vault fees are sent.
+Treasury updates do not retroactively move previously collected balances.
 
 ---
 

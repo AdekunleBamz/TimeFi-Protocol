@@ -110,9 +110,8 @@ npm run verify:local
 ### 💻 Frontend Dashboard
 
 ```bash
-cd frontend
-npm ci
-npm run dev
+npm --prefix frontend ci
+npm run frontend:dev
 ```
 
 ### 📦 SDK Library

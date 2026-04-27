@@ -121,3 +121,14 @@
     width: 100%;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card-hoverable {
+    transition: none;
+  }
+
+  .card-hoverable:hover {
+    transform: none;
+  }
+}

@@ -219,7 +219,7 @@ A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
 
 - **Q1 2026**: Mobile Wallet Support & SDK v2
 - **Q2 2026**: Multi-sig Vaults & Fee Sharing
-- **Q3 2026**: L2 Integrations (Starknet/Arbitrum) & L3 Hyperchains
+- **Q3 2026**: Cross-chain integrations and L3 experimentation
 - **Q4 2026**: Decentralized Frontend & DAO Governance
 
 ## 📖 Operations Docs

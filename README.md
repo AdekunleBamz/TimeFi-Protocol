@@ -230,7 +230,7 @@ A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
 - Security policy: [SECURITY.md](SECURITY.md)
 - Code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
-## 📦 Package Metadata
+## 📦 SDK Package Metadata
 
 - **Name**: `timefi-sdk`
 - **Version**: `0.1.0`

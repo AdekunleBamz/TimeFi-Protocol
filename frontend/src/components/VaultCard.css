@@ -232,6 +232,16 @@
     text-align: center;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .vault-card {
+        transition: none;
+    }
+
+    .vault-card:hover {
+        transform: none;
+    }
+}
+
 @media (max-width: 640px) {
     .vault-card-footer-meta {
         flex-direction: column;

@@ -74,6 +74,19 @@ export function validateAddress(address) {
   return { valid: true };
 }
 
+function validateNonEmptyString(value, fieldName) {
+  if (typeof value !== 'string') {
+    return { valid: false, error: `${fieldName} is required` };
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return { valid: false, error: `${fieldName} is required` };
+  }
+
+  return { valid: true, value: trimmed };
+}
+
 /**
  * validateVaultId - Validate a vault ID.
  *

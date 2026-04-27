@@ -76,6 +76,7 @@
   font-size: 0.8125rem;
   font-weight: 600;
   color: #d5dde5;
+  overflow-wrap: anywhere;
 }
 
 .copyable-address-meta {

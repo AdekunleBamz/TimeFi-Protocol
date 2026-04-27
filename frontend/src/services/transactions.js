@@ -99,10 +99,14 @@ function getContractCallDefaultOptions(contractName, functionName, functionArgs,
 export async function createVault({ amount, lockDuration, senderAddress, onFinish, onCancel }) {
   assertPositiveInteger(amount, 'amount');
   assertPositiveInteger(lockDuration, 'lockDuration');
+  if (!senderAddress || typeof senderAddress !== 'string' || !senderAddress.trim()) {
+    throw new Error('senderAddress is required');
+  }
+  const normalizedSenderAddress = senderAddress.trim();
 
   const postConditions = [
     makeStandardSTXPostCondition(
-      senderAddress,
+      normalizedSenderAddress,
       FungibleConditionCode.Equal,
       amount
     ),

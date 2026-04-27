@@ -11,6 +11,7 @@
   flex-direction: column;
   align-items: center;
   min-width: 60px;
+  min-height: 4.5rem;
   background: linear-gradient(180deg, rgba(8, 18, 31, 0.92), rgba(14, 29, 46, 0.75));
   padding: 0.625rem;
   border-radius: 14px;

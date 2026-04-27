@@ -39,6 +39,7 @@ The TimeFi Protocol implements the following security measures:
 3. Test with small amounts first
 4. Keep your wallet keys secure
 5. Confirm wallet network and API endpoint alignment before write actions
+6. Revoke bot approvals quickly if any integration key is compromised
 
 ## Contact
 

@@ -9,6 +9,7 @@ If you discover a security vulnerability, please:
 3. Include a detailed description of the vulnerability
 4. Allow reasonable time for a fix before public disclosure
 5. Include affected network, contract name, and any relevant txid when available
+6. Share clear reproduction steps and impact assessment details
 
 ## Supported Versions
 

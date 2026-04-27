@@ -107,6 +107,15 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .select,
+  .select-arrow,
+  .select-dropdown {
+    transition: none;
+    animation: none;
+  }
+}
+
 /* Options */
 .select-option {
   padding: 0.625rem 0.75rem;

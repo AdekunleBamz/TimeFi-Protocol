@@ -55,9 +55,11 @@ function assertVaultId(vaultId) {
  * @throws {Error} If value is not a positive integer
  */
 function assertPositiveInteger(value, fieldName) {
-  if (!Number.isInteger(value) || Number.isNaN(value) || value <= 0 || value > Number.MAX_SAFE_INTEGER) {
+  const numericValue = Number(value);
+  if (!Number.isInteger(numericValue) || Number.isNaN(numericValue) || numericValue <= 0 || numericValue > Number.MAX_SAFE_INTEGER) {
     throw new Error(`${fieldName} must be a positive integer`);
   }
+  return numericValue;
 }
 
 /**
@@ -97,8 +99,8 @@ function getContractCallDefaultOptions(contractName, functionName, functionArgs,
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function createVault({ amount, lockDuration, senderAddress, onFinish, onCancel }) {
-  assertPositiveInteger(amount, 'amount');
-  assertPositiveInteger(lockDuration, 'lockDuration');
+  const normalizedAmount = assertPositiveInteger(amount, 'amount');
+  const normalizedLockDuration = assertPositiveInteger(lockDuration, 'lockDuration');
   if (!senderAddress || typeof senderAddress !== 'string' || !senderAddress.trim()) {
     throw new Error('senderAddress is required');
   }
@@ -108,12 +110,12 @@ export async function createVault({ amount, lockDuration, senderAddress, onFinis
     makeStandardSTXPostCondition(
       normalizedSenderAddress,
       FungibleConditionCode.Equal,
-      amount
+      normalizedAmount
     ),
   ];
 
   await openContractCall({
-    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'create-vault', [uintCV(amount), uintCV(lockDuration)], onFinish, onCancel),
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.VAULT, 'create-vault', [uintCV(normalizedAmount), uintCV(normalizedLockDuration)], onFinish, onCancel),
     postConditions,
     postConditionMode: PostConditionMode.Deny,
   });

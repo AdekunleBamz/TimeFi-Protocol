@@ -103,7 +103,7 @@ Before opening a PR or pushing to `main`, run:
 ```bash
 npm run contracts:check
 npm run sdk:test
-npm run frontend:lint
+npm run frontend:test
 npm run verify:local
 ```
 

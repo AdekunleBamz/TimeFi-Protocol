@@ -112,3 +112,10 @@
     transform: translate(-50%, 0) scale(1);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip,
+  .tooltip-bottom {
+    animation: none;
+  }
+}

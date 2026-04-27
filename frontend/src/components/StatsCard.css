@@ -123,6 +123,7 @@
   color: #ffffff;
   line-height: 1.1;
   letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
 }
 
 .stats-change {

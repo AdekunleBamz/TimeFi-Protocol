@@ -500,3 +500,23 @@
         width: 100%;
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .header,
+    .header-logo,
+    .header-logo-img,
+    .header-nav-link,
+    .header-wallet-link,
+    .header-disconnect {
+        transition: none;
+    }
+
+    .header-wallet-dot {
+        animation: none;
+    }
+
+    .header-logo:hover,
+    .header-wallet-link:hover {
+        transform: none;
+    }
+}

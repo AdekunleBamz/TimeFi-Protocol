@@ -117,9 +117,8 @@ npm run frontend:dev
 ### 📦 SDK Library
 
 ```bash
-cd sdk
-npm ci
-npm run build
+npm --prefix sdk ci
+npm run sdk:build
 ```
 
 ### 🔗 SDK Library Integration

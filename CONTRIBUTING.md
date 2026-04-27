@@ -79,8 +79,8 @@ Follow conventional commits:
 # Check contract syntax
 npm run contracts:check
 
-# Run tests
-clarinet test
+# Run protocol tests
+npm run test
 
 # Start devnet
 clarinet devnet start

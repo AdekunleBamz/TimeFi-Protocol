@@ -173,7 +173,7 @@ export function Header() {
 
               <div className="header-wallet-actions">
                 <a
-                  href={`https://explorer.hiro.so/address/${address}?chain=${activeNetwork}`}
+                  href={env.getExplorerAddressUrl(address)}
                   className="header-wallet-link"
                   target="_blank"
                   rel="noopener noreferrer"

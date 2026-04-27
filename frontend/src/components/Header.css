@@ -311,6 +311,11 @@
     border-color: rgba(248, 113, 113, 0.55);
 }
 
+.header-disconnect:focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 2px;
+}
+
 .header-connect {
     border: none;
     padding: 0.7rem 1rem;

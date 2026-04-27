@@ -337,6 +337,11 @@
   font-family: inherit;
 }
 
+.form-button:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
+
 .form-button-primary {
   color: white;
   background: linear-gradient(135deg, #6366f1, #a855f7);
@@ -450,4 +455,3 @@
     min-height: 48px;
   }
 }
-

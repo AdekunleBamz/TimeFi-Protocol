@@ -121,6 +121,11 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
+.select-option:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
+
 .select-option-selected {
   background: rgba(99, 102, 241, 0.15);
   color: #a5b4fc;

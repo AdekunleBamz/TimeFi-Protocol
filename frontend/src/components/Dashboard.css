@@ -257,6 +257,14 @@
   .dashboard-hero {
     animation: none;
   }
+
+  .dashboard-hero-cta {
+    transition: none;
+  }
+
+  .dashboard-hero-cta:hover {
+    transform: none;
+  }
 }
 
 /* Stats Section */

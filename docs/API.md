@@ -30,6 +30,7 @@ Vault IDs increment monotonically with each successful `create-vault` call.
 **Transfer behavior:** deposit amount after fee goes to the deployer custodian, fee goes to `treasury`.
 
 **Fee Calculation:** 0.5% of deposit amount (FEE_BPS = 50 basis points)
+Fee math uses integer arithmetic, so results are floor-rounded in microSTX units.
 
 ---
 

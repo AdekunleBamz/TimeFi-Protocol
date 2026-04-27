@@ -65,6 +65,8 @@ Process a queued withdrawal. Admin only.
 
 **Returns:** `(response bool uint)`
 
+Repeated approvals of the same bot principal are idempotent and return success.
+
 **Events:** Emits `{event: "withdraw", id, owner, amount}`
 
 `amount` in the withdraw event is denominated in microSTX.

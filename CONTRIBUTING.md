@@ -40,7 +40,7 @@ The project consists of multiple components. Please refer to their respective RE
 
 - **Frontend**: [frontend/README.md](frontend/README.md)
 - **SDK**: [sdk/README.md](sdk/README.md)
-- **Contracts**: [docs/API.md](docs/API.md) and files in `contracts/`
+- **Contracts**: [docs/API.md](docs/API.md), `contracts/`, and regression suites in `tests/regressions/`
 
 ## Making Changes
 

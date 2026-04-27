@@ -25,7 +25,8 @@
     "sdk:test": "npm --prefix sdk run test",
     "test": "vitest run",
     "test:report": "vitest run --coverage --costs",
-    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
+    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
+    "verify:local": "npm run contracts:check && npm run sdk:test && npm run frontend:lint && npm run test"
   },
   "author": "adekunlebamz <bams.kunle@gmail.com>",
   "engines": {

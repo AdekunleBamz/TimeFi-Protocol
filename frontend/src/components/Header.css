@@ -279,6 +279,11 @@
     transform: translateY(-1px);
 }
 
+.header-wallet-link:focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 2px;
+}
+
 .header-copy-address.copy-button {
     color: #cbd5e1;
     background: rgba(255, 255, 255, 0.07);

@@ -243,6 +243,12 @@
   color: #e0e7ff;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-hero {
+    animation: none;
+  }
+}
+
 /* Stats Section */
 .dashboard-stats {
   display: grid;

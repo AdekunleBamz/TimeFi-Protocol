@@ -103,3 +103,12 @@
   font-weight: 600;
   color: #f8f9fa;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar,
+  .progress-animated,
+  .circular-progress-bar {
+    transition: none;
+    animation: none;
+  }
+}

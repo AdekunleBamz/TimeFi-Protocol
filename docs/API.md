@@ -46,6 +46,7 @@ Queue a withdrawal request for a mature vault.
 **Events:** Emits `{event: "withdraw-requested", id, owner}`
 
 > This call marks the vault ready for processing; it does not transfer STX immediately.
+> Vault `active` status remains true until `process-withdraw` executes.
 
 ---
 

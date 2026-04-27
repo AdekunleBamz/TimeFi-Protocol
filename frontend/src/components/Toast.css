@@ -132,6 +132,7 @@
   font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
+  min-height: 2.5rem;
   padding: 0.55rem 0.75rem;
   margin-top: 0.9rem;
   border-radius: 0.7rem;

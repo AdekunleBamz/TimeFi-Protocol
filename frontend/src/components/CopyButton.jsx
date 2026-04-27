@@ -4,7 +4,7 @@
  * @module components/CopyButton
  * @author adekunlebamz
  */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Tooltip } from './Tooltip';
 import './CopyButton.css';
 

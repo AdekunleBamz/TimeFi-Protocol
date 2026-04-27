@@ -268,6 +268,8 @@ Because this function is not response-wrapped, callers should not expect `ok`/`e
 | `get-max-lock` | `u52560` (~1 year) |
 | `get-fee-bps` | `u50` (0.5%) |
 
+All constants above are returned as unsigned Clarity integers (`uint`).
+
 **SDK lock period presets (in blocks):**
 
 | Name | Blocks | Approx. duration |

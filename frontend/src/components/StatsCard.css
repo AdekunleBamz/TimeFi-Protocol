@@ -202,3 +202,17 @@
     font-size: 1.25rem;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-card {
+    transition: none;
+  }
+
+  .stats-card:hover {
+    transform: none;
+  }
+
+  .stats-refresh svg {
+    transition: none;
+  }
+}

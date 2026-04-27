@@ -28,7 +28,7 @@ The TimeFi Protocol implements the following security measures:
 
 ## Known Limitations
 
-- This contract has **not been audited**. Use at your own risk.
+- This contract has **not been externally audited** as of April 2026. Use at your own risk.
 - The protocol relies on chain height (`tenure-height`) for lock timing calculations
 - Bot approval uses `contract-hash?` which requires contract principals
 

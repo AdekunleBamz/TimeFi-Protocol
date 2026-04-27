@@ -227,6 +227,7 @@ A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
 - Mainnet testing and funding flows: [MAINNET_TESTING.md](docs/MAINNET_TESTING.md)
 - API reference: [API.md](docs/API.md)
 - Security policy: [SECURITY.md](SECURITY.md)
+- Code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ## 📦 Package Metadata
 

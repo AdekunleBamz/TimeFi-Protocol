@@ -369,6 +369,7 @@
 .vault-control-input,
 .vault-control-select {
   width: 100%;
+  min-height: 2.5rem;
   padding: 0.7rem 0.8rem;
   border-radius: 10px;
   color: #f8fafc;

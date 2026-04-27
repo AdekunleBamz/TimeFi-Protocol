@@ -161,10 +161,10 @@ export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function claimRewards({ vaultId, onFinish, onCancel }) {
-  assertVaultId(vaultId);
+  const normalizedVaultId = assertVaultId(vaultId);
 
   await openContractCall({
-    ...getContractCallDefaultOptions(CONTRACT_NAMES.REWARDS, 'request-claim-rewards', [uintCV(vaultId)], onFinish, onCancel),
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.REWARDS, 'request-claim-rewards', [uintCV(normalizedVaultId)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Allow,
   });
 }

@@ -97,3 +97,15 @@
     flex-direction: column;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .copy-button,
+  .copy-button-copied {
+    transition: none;
+    animation: none;
+  }
+
+  .copy-button:hover {
+    transform: none;
+  }
+}

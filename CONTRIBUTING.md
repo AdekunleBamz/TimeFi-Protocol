@@ -77,7 +77,7 @@ Follow conventional commits:
 
 ```bash
 # Check contract syntax
-clarinet check
+npm run contracts:check
 
 # Run tests
 clarinet test

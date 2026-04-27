@@ -65,6 +65,8 @@ Process a queued withdrawal. Admin only.
 
 **Returns:** `(response bool uint)`
 
+Repeated revocations of the same bot principal are also idempotent.
+
 Repeated approvals of the same bot principal are idempotent and return success.
 
 **Events:** Emits `{event: "withdraw", id, owner, amount}`

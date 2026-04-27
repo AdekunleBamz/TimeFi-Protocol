@@ -99,6 +99,8 @@ npm run sdk:build
 
 Before opening a PR or pushing to `main`, run:
 
+Ensure frontend dependencies are installed first (`npm --prefix frontend ci`).
+
 ```bash
 npm run contracts:check
 npm run sdk:test

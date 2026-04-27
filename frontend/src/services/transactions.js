@@ -179,11 +179,11 @@ export async function claimRewards({ vaultId, onFinish, onCancel }) {
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function vote({ proposalId, vaultId, inFavor, onFinish, onCancel }) {
-  assertPositiveInteger(proposalId, 'proposalId');
-  assertPositiveInteger(vaultId, 'vaultId');
+  const normalizedProposalId = assertPositiveInteger(proposalId, 'proposalId');
+  const normalizedVaultId = assertPositiveInteger(vaultId, 'vaultId');
 
   await openContractCall({
-    ...getContractCallDefaultOptions(CONTRACT_NAMES.GOVERNANCE, 'cast-vote', [uintCV(proposalId), uintCV(vaultId), boolCV(Boolean(inFavor))], onFinish, onCancel),
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.GOVERNANCE, 'cast-vote', [uintCV(normalizedProposalId), uintCV(normalizedVaultId), boolCV(Boolean(inFavor))], onFinish, onCancel),
     postConditionMode: PostConditionMode.Deny,
   });
 }

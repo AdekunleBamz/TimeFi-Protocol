@@ -180,6 +180,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               key={ratio}
               type="button"
               className="form-quick-amount"
+              aria-label={`Set amount to ${Math.round(ratio * 100)} percent of spendable balance`}
               onClick={() => {
                 setAmount((spendableBalance * ratio).toFixed(6));
                 setErrors(prev => ({ ...prev, amount: null }));

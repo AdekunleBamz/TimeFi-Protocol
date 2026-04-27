@@ -23,6 +23,8 @@ Amounts are provided in microSTX, so UI conversions should happen before contrac
 
 **Returns:** `(response uint uint)` - Vault ID on success
 
+Vault IDs increment monotonically with each successful `create-vault` call.
+
 **Events:** Emits `{event: "create", id, owner, amount, unlock}`
 
 **Transfer behavior:** deposit amount after fee goes to the deployer custodian, fee goes to `treasury`.

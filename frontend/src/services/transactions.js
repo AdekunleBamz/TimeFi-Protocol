@@ -145,10 +145,10 @@ export async function withdraw({ vaultId, onFinish, onCancel }) {
  * @param {Function} params.onCancel - Callback on user cancel
  */
 export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
-  assertVaultId(vaultId);
+  const normalizedVaultId = assertVaultId(vaultId);
 
   await openContractCall({
-    ...getContractCallDefaultOptions(CONTRACT_NAMES.EMERGENCY, 'request-emergency-withdraw', [uintCV(vaultId)], onFinish, onCancel),
+    ...getContractCallDefaultOptions(CONTRACT_NAMES.EMERGENCY, 'request-emergency-withdraw', [uintCV(normalizedVaultId)], onFinish, onCancel),
     postConditionMode: PostConditionMode.Allow,
   });
 }

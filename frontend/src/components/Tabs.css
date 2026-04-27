@@ -120,3 +120,12 @@
     font-size: 0.8125rem;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .tab,
+  .tab-panel,
+  .tab-active::after {
+    animation: none;
+    transition: none;
+  }
+}

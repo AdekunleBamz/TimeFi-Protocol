@@ -38,6 +38,7 @@ The TimeFi Protocol implements the following security measures:
 2. Verify the unlock time before creating a vault
 3. Test with small amounts first
 4. Keep your wallet keys secure
+5. Confirm wallet network and API endpoint alignment before write actions
 
 ## Contact
 

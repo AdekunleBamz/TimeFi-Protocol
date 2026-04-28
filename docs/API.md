@@ -211,7 +211,7 @@ Get current treasury address.
 
 **Returns:** `(response principal uint)`
 
-Defaults to deployer at deployment and can be changed via `set-treasury`.
+Defaults to the deployer at deployment and can be updated via `set-treasury`.
 
 ---
 

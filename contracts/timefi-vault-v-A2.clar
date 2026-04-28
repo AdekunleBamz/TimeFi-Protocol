@@ -59,6 +59,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: APPROVE BOT (admin only)
+;; Stores bot principal directly (v-A2 uses principal map, not contract-hash)
 ;; -------------------------------------------------------
 
 (define-public (approve-bot (bot principal))

@@ -39,7 +39,7 @@ TimeFi-Protocol/
 ## 🌟 Features
 
 ### 🔒 Smart Contract Features
-- **Create Vaults** - Deposit STX with time-lock
+- **Create Vaults** - Deposit STX with a time-lock
 - **Withdraw Requests** - Queue withdrawals once the lock matures
 - **Custodian Processing** - Let the deployer process mature withdrawal payouts
 - **Bot Approval** - Approve automated bot principals directly

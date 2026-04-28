@@ -74,7 +74,7 @@ Process a queued withdrawal. Admin-only.
 ---
 
 ### `approve-bot`
-Approve a contract as an automated trading bot. Admin only.
+Approve a contract as an automated trading bot. Admin-only.
 
 ```clarity
 (approve-bot (bot principal))

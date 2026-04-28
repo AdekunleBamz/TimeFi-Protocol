@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Updated terminology around treasury and fee accounting variables.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Clarified distinction between TVL and accumulated protocol fees.
+- Added language that maps contract variables to analytics labels.
 
 ## Date
-2026-03-31
+2026-04-28

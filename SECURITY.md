@@ -35,7 +35,7 @@ The TimeFi Protocol implements the following security measures:
 ## Best Practices for Users
 
 1. Only deposit amounts you can afford to lock
-2. Verify the unlock time before creating a vault
+2. Verify the unlock time and estimated duration before creating a vault
 3. Test with small amounts first
 4. Keep your wallet keys secure
 5. Confirm wallet network and API endpoint alignment before write actions

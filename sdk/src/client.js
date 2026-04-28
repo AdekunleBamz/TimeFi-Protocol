@@ -138,6 +138,7 @@ export class TimeFiClient {
 
     /**
      * Alias for getVaultStatus. Retrieves the human-readable status of a specific vault.
+     * Use getVaultStatus for new code; this alias is retained for backwards compatibility.
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<string>} 'active' or 'expired'.
      * @throws {Error} If vault ID is missing or invalid.

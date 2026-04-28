@@ -235,7 +235,7 @@ export function validateVaultCreation({ amount, lockPeriod, balance }) {
  * validateWithdrawal - Validate that a vault can be withdrawn.
  *
  * Checks that the vault exists, hasn't been withdrawn already,
- * and that the lock period has completed.
+ * and that the lock period has elapsed at the current block height.
  *
  * @param {Object} vault - Vault data object with depositHeight, lockPeriod, isWithdrawn
  * @param {number} currentHeight - Current blockchain block height

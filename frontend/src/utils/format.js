@@ -74,6 +74,11 @@ export const formatMicroStx = (microStx) => (Number(microStx) / 1e6).toFixed(6);
  */
 export const formatBps = (bps) => (Number(bps) / 100).toFixed(2) + "%";
 
+/**
+ * Estimate hours from a block count based on the 10-minute block time.
+ * @param {number|string} blocks - Number of Stacks blocks
+ * @returns {string} Estimated hours as a decimal string (1 decimal place)
+ */
 export const formatBlocksToHours = (blocks) => (Number(blocks) / 6).toFixed(1);
 
 export const formatBlocksToDays = (blocks) => (Number(blocks) / 144).toFixed(1);

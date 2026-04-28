@@ -95,9 +95,10 @@ clarinet devnet start
 
 ## Code Style
 
-- Use clear, descriptive names
+- Use clear, descriptive variable and function names
 - Add comments for complex logic
 - Keep functions focused and small
+- Prefer explicit over implicit
 
 ## Questions?
 

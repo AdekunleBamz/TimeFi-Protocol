@@ -53,8 +53,8 @@ export const formatSTX = (amountMicroStx) => {
 /**
  * Truncates a Stacks address for display.
  * @param {string} address - The full Stacks address.
- * @param {number} [prefix=4] - Number of characters to keep at the start.
- * @param {number} [suffix=4] - Number of characters to keep at the end.
+ * @param {number} [prefixLength=4] - Number of characters to keep at the start.
+ * @param {number} [suffixLength=4] - Number of characters to keep at the end.
  * @returns {string} Truncated address string.
  * @throws {Error} If stacksAddress is not a string.
  */

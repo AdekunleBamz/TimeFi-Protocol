@@ -54,7 +54,7 @@ Submit a withdrawal request for a mature vault.
 ---
 
 ### `process-withdraw`
-Process a queued withdrawal. Admin only.
+Process a queued withdrawal. Admin-only.
 
 ```clarity
 (process-withdraw (id uint))

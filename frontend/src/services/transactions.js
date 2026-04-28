@@ -158,7 +158,7 @@ export async function emergencyWithdraw({ vaultId, onFinish, onCancel }) {
 }
 
 /**
- * Build and submit a claim rewards transaction
+ * Build and submit a claim rewards transaction for a specific vault.
  * @param {Object} params - Transaction parameters
  * @param {number} params.vaultId - Vault ID to claim rewards for
  * @param {Function} params.onFinish - Callback on transaction completion
@@ -174,7 +174,7 @@ export async function claimRewards({ vaultId, onFinish, onCancel }) {
 }
 
 /**
- * Build and submit a vote transaction
+ * Build and submit a governance vote using a vault's locked balance as voting power.
  * @param {Object} params - Transaction parameters
  * @param {number} params.proposalId - Proposal ID to vote on
  * @param {number} params.vaultId - Vault ID used as voting power

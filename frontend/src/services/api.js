@@ -150,7 +150,7 @@ export async function getAccountBalance(address) {
  *
  * @param {string} address - Stacks wallet address to query
  * @param {Object} [options={}] - Pagination and filtering options
- * @param {number} [options.limit=20] - Number of transactions to fetch (1-50)
+ * @param {number} [options.limit=20] - Number of transactions to fetch (capped at 50)
  * @param {number} [options.offset=0] - Number of transactions to skip
  * @returns {Promise<Object>} Paginated transaction list
  * @property {Array} transactions - Array of normalized transaction objects

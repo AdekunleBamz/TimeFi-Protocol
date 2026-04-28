@@ -298,22 +298,32 @@ export function validateBotAddress(botAddress) {
   return { valid: true };
 }
 
+/** Check that a value is a non-negative integer (valid microSTX amount). */
 export const isValidMicroStx = (v) => Number.isInteger(Number(v)) && Number(v) >= 0;
 
+/** Check that a value is a positive integer (valid block count). */
 export const isValidBlockCount = (v) => Number.isInteger(Number(v)) && Number(v) > 0;
 
+/** Check that a value is a number in the 0–10000 basis-points range. */
 export const isValidBps = (v) => Number(v) >= 0 && Number(v) <= 10000;
 
+/** Check that a value is a positive integer (valid vault ID). */
 export const isValidVaultId = (v) => Number.isInteger(Number(v)) && Number(v) > 0;
 
+/** Check that a deposit amount meets the minimum deposit threshold. */
 export const isAboveMinDeposit = (v, min) => Number(v) >= Number(min);
 
+/** Check that a block count is within the allowed lock-period range. */
 export const isWithinLockRange = (v, mn, mx) => Number(v) >= Number(mn) && Number(v) <= Number(mx);
 
+/** Check that a value is a non-empty string after trimming whitespace. */
 export const isNonEmptyString = (v) => typeof v === "string" && v.trim().length > 0;
 
+/** Check that a value is a positive finite number. */
 export const isPositiveNumber = (v) => !isNaN(Number(v)) && Number(v) > 0;
 
+/** Check that a slippage value is in the 0–500 bps range. */
 export const isValidSlippage = (v) => Number(v) >= 0 && Number(v) <= 500;
 
+/** Check that a token amount has no more than the allowed decimal places. */
 export const isValidTokenAmount = (v, decimals) => !isNaN(Number(v)) && Number(v) >= 0 && String(v).split(".")[1]?.length <= decimals;

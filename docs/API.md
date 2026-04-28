@@ -240,7 +240,7 @@ Check if principal owns a vault.
 **Returns:** `(response bool uint)`
 
 Useful in frontends before enabling owner-only actions.
-Calls with unknown vault IDs return `ERR_NOT_FOUND`.
+Calls for unknown vault IDs return `ERR_NOT_FOUND`.
 
 ---
 

@@ -9,7 +9,7 @@ For setup and contributor workflow details, use the root `README.md` and `CONTRI
 Some functions below are admin-only and enforce deployer authorization checks.
 
 ### `create-vault`
-Create a new time-locked vault with STX deposit.
+Create a new time-locked vault with an STX deposit.
 
 ```clarity
 (create-vault (amount uint) (lock-blocks uint))

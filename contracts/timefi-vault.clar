@@ -118,6 +118,8 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: WITHDRAW
+;; Owner-only; vault must be active and unlock-time must be reached
+;; Marks vault inactive and transfers full deposit back to owner
 ;; -------------------------------------------------------
 
 (define-public (withdraw (id uint))

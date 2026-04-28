@@ -41,9 +41,10 @@ function logTxEvent(...args) {
 }
 
 /**
- * assertVaultId - Validate that vaultId is provided.
+ * assertVaultId - Validate that vaultId is provided and is a positive integer.
+ * Delegates to assertPositiveInteger with the field name 'vaultId'.
  * @param {number|undefined|null} vaultId - Vault ID to validate
- * @throws {Error} If vaultId is missing
+ * @throws {Error} If vaultId is missing or not a positive integer
  */
 function assertVaultId(vaultId) {
   return assertPositiveInteger(vaultId, 'vaultId');

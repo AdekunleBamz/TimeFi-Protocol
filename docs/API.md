@@ -35,7 +35,7 @@ Fee math uses integer arithmetic, so results are floor-rounded in microSTX units
 ---
 
 ### `request-withdraw`
-Queue a withdrawal request for a mature vault.
+Submit a withdrawal request for a mature vault.
 
 ```clarity
 (request-withdraw (id uint))

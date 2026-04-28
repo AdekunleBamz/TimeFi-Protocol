@@ -170,7 +170,7 @@ export function validateDepositAmount(amount, balance) {
  * validateLockPeriod - Validate a lock period against available options.
  *
  * Ensures the selected period matches one of the predefined lock periods
- * from the contract configuration.
+ * from the contract configuration. Rejects arbitrary block counts not in the list.
  *
  * @param {number} period - Lock period in blocks
  * @returns {{ valid: boolean, error?: string }} Validation result with error message if invalid

@@ -122,7 +122,7 @@ Treasury updates do not retroactively move previously collected balances.
 
 ## Read-Only Functions
 
-Most read-only helpers return response values; `is-bot` returns a plain boolean.
+Most read-only helpers return response values, while `is-bot` returns a plain boolean.
 
 ### `get-vault`
 Get vault details by ID.

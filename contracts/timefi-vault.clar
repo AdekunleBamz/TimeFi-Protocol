@@ -163,6 +163,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TVL (Total Value Locked)
+;; Running sum of active deposits in microSTX
 ;; -------------------------------------------------------
 
 (define-read-only (get-tvl)
@@ -170,6 +171,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TOTAL FEES COLLECTED
+;; Cumulative protocol fees since deployment in microSTX
 ;; -------------------------------------------------------
 
 (define-read-only (get-total-fees)
@@ -177,6 +179,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET VAULT COUNT
+;; Returns the total number of vaults ever created (monotonically increasing)
 ;; -------------------------------------------------------
 
 (define-read-only (get-vault-count)

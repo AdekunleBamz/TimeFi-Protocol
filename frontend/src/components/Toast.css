@@ -1,6 +1,6 @@
 .toast-container {
   position: fixed;
-  bottom: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   right: 1rem;
   display: flex;
   flex-direction: column-reverse;

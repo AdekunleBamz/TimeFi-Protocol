@@ -30,7 +30,8 @@ const STACKS_NETWORK = NETWORK === 'mainnet'
 
 /**
  * logTxEvent - Debug logging for transaction events.
- * Only logs when VITE_ENABLE_DEBUG is set to 'true'.
+ * Only logs when VITE_ENABLE_DEBUG is set to 'true' in environment config.
+ * No-op in production builds where the flag is not set.
  * @param {...any} args - Arguments to log
  */
 function logTxEvent(...args) {

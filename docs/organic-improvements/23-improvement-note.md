@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Improved cross-reference notes between SDK aliases and core vault helper methods.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Added examples showing alias methods that resolve to the same base calls.
+- Clarified naming consistency for unlock block and unlock height helpers.
 
 ## Date
-2026-03-31
+2026-04-28

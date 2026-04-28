@@ -61,6 +61,12 @@
     transform: translateY(-1px);
 }
 
+.header-logo:focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 3px;
+    border-radius: 10px;
+}
+
 .header-logo-text {
     font-size: 1.25rem;
     font-weight: 900;

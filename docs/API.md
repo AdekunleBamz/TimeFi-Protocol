@@ -1,6 +1,6 @@
 # TimeFi Protocol API Reference
 
-Scope: This reference describes the core vault contract interface used by local tests.
+Scope: This reference summarizes the core vault contract interface used by local tests.
 
 For setup and workflow details, use the root `README.md` and `CONTRIBUTING.md`.
 

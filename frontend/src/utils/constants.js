@@ -276,8 +276,6 @@ export const BLOCKS_PER_WEEK = 1008
 
 export const WALLET_CONNECT_TIMEOUT_MS = 30000
 
-export const MIN_LOCK_BLOCKS = 6
-
 export const MAX_LOCK_BLOCKS = 52560
 
 export const FEE_BASIS_POINTS = 50

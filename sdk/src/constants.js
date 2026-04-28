@@ -100,7 +100,7 @@ export const STACKS_BLOCK_TIME = 600;
 /**
  * Number of microSTX in one STX token.
  *
- * STX uses 6 decimal places, similar to satoshis for Bitcoin.
+ * STX uses 6 decimal places, similar to how satoshis relate to Bitcoin.
  * All on-chain amounts are represented in microSTX.
  *
  * @constant {number}

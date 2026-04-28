@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Added clearer language on microSTX units used by contract arguments and responses.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Clarified where the UI converts STX display values into microSTX calls.
+- Added reminder that on-chain amounts should be treated as integers.
 
 ## Date
-2026-03-31
+2026-04-28

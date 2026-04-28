@@ -85,7 +85,7 @@ console.log(`Can Withdraw: ${canWithdraw}`);
 
 // Get time remaining until unlock
 const timeRemaining = await client.getTimeRemaining(1);
-console.log(`Time Remaining: ${timeRemaining} seconds`);
+console.log(`Time Remaining: ${timeRemaining} blocks`);
 ```
 
 ### Format Utilities

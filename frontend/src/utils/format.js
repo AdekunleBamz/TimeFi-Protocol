@@ -95,6 +95,11 @@ export const formatBlocksToDays = (blocks) => (Number(blocks) / 144).toFixed(1);
  */
 export const formatStxAmount = (stx) => Number(stx).toLocaleString() + " STX";
 
+/**
+ * Convert a Unix timestamp (in seconds) to an ISO 8601 date-time string.
+ * @param {number|string} ts - Unix timestamp in seconds
+ * @returns {string} ISO 8601 formatted string (e.g. "2025-04-28T10:00:00.000Z")
+ */
 export const formatTimestamp = (ts) => new Date(Number(ts) * 1000).toISOString();
 
 export const truncateAddress = (addr) => addr ? addr.slice(0,6) + "..." + addr.slice(-4) : "";

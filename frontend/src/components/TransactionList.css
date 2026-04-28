@@ -252,6 +252,11 @@
   box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
 }
 
+.transaction-link:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
+
 .transaction-direction {
   font-size: 0.75rem;
   color: #94a3b8;
@@ -363,4 +368,3 @@
     gap: 0.5rem;
   }
 }
-

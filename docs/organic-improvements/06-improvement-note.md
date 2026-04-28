@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Improved explanation of emergency withdraw trade-offs for safer user decisions.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Highlighted potential penalties and schedule bypass behavior in plain language.
+- Tightened wording to reflect how the emergency path is surfaced in the frontend.
 
 ## Date
-2026-03-31
+2026-04-28

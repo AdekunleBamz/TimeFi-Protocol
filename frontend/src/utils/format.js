@@ -67,6 +67,11 @@ export const formatSignedNumber = (value) => {
  */
 export const formatMicroStx = (microStx) => (Number(microStx) / 1e6).toFixed(6);
 
+/**
+ * Format basis points as a percentage string.
+ * @param {number|string} bps - Basis points (100 bps = 1%)
+ * @returns {string} Percentage string with two decimal places (e.g. "0.50%")
+ */
 export const formatBps = (bps) => (Number(bps) / 100).toFixed(2) + "%";
 
 export const formatBlocksToHours = (blocks) => (Number(blocks) / 6).toFixed(1);

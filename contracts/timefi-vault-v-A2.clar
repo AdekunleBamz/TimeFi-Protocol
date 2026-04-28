@@ -1,6 +1,7 @@
 ;; -------------------------------------------------------
 ;; TimeFi Vault Contract v-A2
 ;; Custodian pattern - DEPLOYER holds STX
+;; Adds: emergency pause, beneficiary claim, ownership transfer
 ;; Fixed for Clarity 4
 ;; -------------------------------------------------------
 

@@ -94,7 +94,7 @@ function getContractCallDefaultOptions(contractName, functionName, functionArgs,
 }
 
 /**
- * Build and submit a create-vault transaction
+ * Build and submit a create-vault transaction to lock STX for a specified period.
  * @param {Object} params - Transaction parameters
  * @param {number} params.amount - Amount to lock in microSTX
  * @param {number} params.lockDuration - Lock duration in blocks
@@ -126,7 +126,7 @@ export async function createVault({ amount, lockDuration, senderAddress, onFinis
 }
 
 /**
- * Build and submit a withdraw transaction
+ * Build and submit a withdraw transaction to reclaim unlocked vault funds.
  * @param {Object} params - Transaction parameters
  * @param {number} params.vaultId - Vault ID to withdraw from
  * @param {Function} params.onFinish - Callback on transaction completion
@@ -142,7 +142,7 @@ export async function withdraw({ vaultId, onFinish, onCancel }) {
 }
 
 /**
- * Build and submit an emergency withdraw transaction
+ * Build and submit an emergency withdraw transaction when the protocol is paused.
  * @param {Object} params - Transaction parameters
  * @param {number} params.vaultId - Vault ID to emergency withdraw from
  * @param {Function} params.onFinish - Callback on transaction completion

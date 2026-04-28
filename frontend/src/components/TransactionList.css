@@ -190,7 +190,8 @@
   transition: opacity 0.2s ease;
 }
 
-.transaction-item:hover .transaction-tx-copy {
+.transaction-item:hover .transaction-tx-copy,
+.transaction-item:focus-within .transaction-tx-copy {
   opacity: 1;
 }
 
@@ -363,4 +364,3 @@
     gap: 0.5rem;
   }
 }
-

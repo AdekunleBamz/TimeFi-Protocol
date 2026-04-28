@@ -141,6 +141,8 @@ export const MAX_DEPOSIT = 1_000_000 * MICROSTX_IN_STX;
  * Based on the 600-second average block time (144 blocks per day).
  *
  * @constant {number}
+ * @example
+ * console.log(BLOCKS_PER_DAY); // 144
  */
 export const BLOCKS_PER_DAY = Math.round(86400 / STACKS_BLOCK_TIME);
 

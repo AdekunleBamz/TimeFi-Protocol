@@ -364,3 +364,22 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .transaction-item {
+    animation: none;
+    transition: none;
+  }
+
+  .transaction-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .transaction-link {
+    transition: none;
+  }
+
+  .transaction-link:hover {
+    transform: none;
+  }
+}

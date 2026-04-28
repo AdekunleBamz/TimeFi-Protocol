@@ -109,6 +109,11 @@ export const formatTimestamp = (ts) => new Date(Number(ts) * 1000).toISOString()
  */
 export const truncateAddress = (addr) => addr ? addr.slice(0,6) + "..." + addr.slice(-4) : "";
 
+/**
+ * Describe a lock duration in blocks with an estimated day count appended.
+ * @param {number|string} blocks - Number of Stacks blocks
+ * @returns {string} String like "1440 blocks (~10 days)"
+ */
 export const formatLockDuration = (blocks) => blocks + " blocks (~" + (Number(blocks)/144).toFixed(0) + " days)";
 
 export const formatFeeAmount = (fee) => Number(fee).toLocaleString() + " uSTX";

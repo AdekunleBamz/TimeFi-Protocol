@@ -90,10 +90,13 @@ function validateNonEmptyString(value, fieldName) {
 /**
  * validateVaultId - Validate a vault ID.
  *
- * Ensures the ID is a positive integer and exists.
+ * Ensures the ID is a positive integer greater than zero.
  *
  * @param {number|string} id - The vault ID to validate
  * @returns {{ valid: boolean, error?: string }} Validation result
+ * @example
+ * validateVaultId(5)   // { valid: true }
+ * validateVaultId(-1)  // { valid: false, error: '...' }
  */
 export function validateVaultId(id) {
   const numId = Number(id);

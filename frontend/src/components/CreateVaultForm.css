@@ -155,6 +155,7 @@
 
 /* Max Button */
 .form-max-button {
+  min-height: 40px;
   padding: 0 1rem;
   font-size: 0.75rem;
   font-weight: 600;

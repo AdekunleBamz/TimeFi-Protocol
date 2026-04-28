@@ -205,6 +205,7 @@ export async function getTransaction(txId) {
  *
  * Converts raw transaction data from the Hiro API into a standardized
  * format used throughout the application for consistent display and processing.
+ * Called internally by getTransaction and getAccountTransactions.
  *
  * @param {Object} tx - Raw transaction object from Hiro API
  * @returns {Object} Normalized transaction with standardized fields

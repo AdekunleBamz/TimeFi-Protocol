@@ -67,7 +67,8 @@
 ;; -------------------------------------------------------
 ;; PUBLIC: CREATE VAULT
 ;; Creates time-locked vault with STX deposit
-;; Charges 0.5% fee (FEE_BPS) split between deployer and treasury
+;; Charges 0.5% fee (FEE_BPS) on deposit amount
+;; Fee is transferred to the treasury address
 ;; -------------------------------------------------------
 
 (define-public (create-vault (amount uint) (lock-secs uint))

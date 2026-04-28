@@ -7,6 +7,7 @@ Thank you for your interest in contributing to TimeFi Protocol! All contribution
 ### Prerequisites
 
 - Node.js 18+
+- npm 8+ (included with Node.js 18)
 - Clarinet CLI installed
 - Git
 

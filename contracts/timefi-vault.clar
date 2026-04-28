@@ -108,6 +108,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET VAULT
+;; Returns vault details for any caller; no ownership check
 ;; -------------------------------------------------------
 
 (define-read-only (get-vault (id uint))

@@ -51,6 +51,7 @@
 ;; PUBLIC: APPROVE BOT
 ;; Admin-only function to approve a contract as automated trading bot
 ;; Only deployer can approve bots for security
+;; Use revoke-bot to remove an approved bot
 ;; -------------------------------------------------------
 
 (define-public (approve-bot (bot principal))

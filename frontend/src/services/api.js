@@ -183,6 +183,7 @@ export async function getAccountTransactions(address, options = {}) {
  *
  * Retrieves full transaction details from the Hiro API by transaction ID,
  * normalized to the standard transaction format used throughout the app.
+ * Accepts transaction IDs with or without the '0x' prefix.
  *
  * @param {string} txId - Transaction ID (hex string, with or without 0x prefix)
  * @returns {Promise<Object>} Normalized transaction details

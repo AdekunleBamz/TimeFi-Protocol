@@ -6,7 +6,7 @@ For setup and contributor workflow details, use the root `README.md` and `CONTRI
 
 ## Public Functions
 
-Some functions below are admin-only and explicitly enforce deployer authorization checks.
+Some functions below are admin-only and enforce deployer authorization checks.
 
 ### `create-vault`
 Create a new time-locked vault with STX deposit.

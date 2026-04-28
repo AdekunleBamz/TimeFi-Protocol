@@ -253,6 +253,7 @@ export function Dashboard() {
                       type="text"
                       className="vault-control-input"
                       placeholder="Find by vault id"
+                      inputMode="numeric"
                       value={vaultSearch}
                       onChange={(e) => setVaultSearch(e.target.value)}
                       aria-label="Search vaults by ID"

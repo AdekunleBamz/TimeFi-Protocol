@@ -17,7 +17,7 @@ Create a new time-locked vault with an STX deposit.
 
 **Parameters:**
 - `amount` - Amount of STX to deposit in microSTX (minimum 10,000 microSTX = 0.01 STX)
-- `lock-blocks` - Lock duration in Stacks blocks (minimum 6, maximum 52,560)
+- `lock-blocks` - Lock duration in Stacks blocks (6 to 52,560)
 
 Amounts are provided in microSTX, so UI conversions should happen before contract submission.
 

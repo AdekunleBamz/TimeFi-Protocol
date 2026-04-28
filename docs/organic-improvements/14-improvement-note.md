@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Made transaction callback behavior clearer for finish and cancel handling.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Added concise guidance on using onFinish and onCancel in frontend flows.
+- Clarified expected state reset behavior after wallet prompt completion.
 
 ## Date
-2026-03-31
+2026-04-28

@@ -104,7 +104,7 @@ Revoke a previously approved bot. Admin-only.
 ---
 
 ### `set-treasury`
-Update the treasury address. Admin only.
+Update the treasury address. Admin-only.
 
 ```clarity
 (set-treasury (new-treasury principal))

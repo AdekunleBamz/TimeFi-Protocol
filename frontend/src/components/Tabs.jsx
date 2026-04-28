@@ -63,7 +63,7 @@ export function Tabs({ children, defaultValue, onChange, className = '' }) {
  */
 export function TabList({ children, className = '' }) {
   return (
-    <div className={`tab-list ${className}`} role="tablist">
+    <div className={`tab-list ${className}`} role="tablist" aria-orientation="horizontal">
       {children}
     </div>
   );

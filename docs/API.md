@@ -90,7 +90,7 @@ Use a contract principal (`SP....contract-name`) for predictable `is-bot` checks
 ---
 
 ### `revoke-bot`
-Revoke a previously approved bot. Admin only.
+Revoke a previously approved bot. Admin-only.
 
 ```clarity
 (revoke-bot (bot principal))

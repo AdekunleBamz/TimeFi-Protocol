@@ -79,8 +79,9 @@ export function isValidStacksAddress(address) {
 }
 
 /**
- * Formats a number with locale-specific separators.
- * @param {number|string} val - The numeric value to format.
+ * Formats a number with locale-specific separators (en-US).
+ * @param {number|string} numberToFormat - The numeric value to format.
+ * @param {number} [fractionDigits=2] - Number of decimal places to show.
  * @returns {string} Formatted number string.
  * @throws {Error} If val cannot be converted to a number.
  */
@@ -98,8 +99,8 @@ export function formatNumber(numberToFormat, fractionDigits = 2) {
 
 /**
  * Formats a percentage-point value as a percentage string.
- * @param {number|string} val - Percentage points (e.g., 5.25).
- * @param {number} [decimals=2] - Number of decimal places to include.
+ * @param {number|string} valueToFormat - Percentage points (e.g., 5.25 becomes "5.25%").
+ * @param {number} [fractionDigits=2] - Number of decimal places to include.
  * @returns {string} Formatted percentage string.
  * @throws {Error} If decimalValue cannot be converted to a number.
  */

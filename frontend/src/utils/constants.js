@@ -252,7 +252,7 @@ export const TIME_TOKEN_DECIMALS = 6;
 
 export const RETRY_DELAY_MS = 1500;
 
-export const DEFAULT_SLIPPAGE_BPS = 50
+export const DEFAULT_SLIPPAGE_BPS = 50;
 
 export const MAX_SLIPPAGE_BPS = 500
 

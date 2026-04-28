@@ -119,8 +119,9 @@ export function formatPercent(valueToFormat, fractionDigits = 2) {
 }
 
 /**
- * Formats a date or timestamp into a localized date string.
- * @param {Date|string|number} date - The date to format.
+ * Formats a date or timestamp into a localized date string (en-US, MMM D YYYY).
+ * Returns '--' if the input is missing or cannot be parsed as a valid date.
+ * @param {Date|string|number} dateToFormat - The date to format.
  * @returns {string} Formatted date string or '--' if invalid.
  * @throws {Error} If date cannot be parsed.
  */

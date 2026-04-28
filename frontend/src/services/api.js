@@ -97,6 +97,7 @@ async function fetchAPI(endpoint, options = {}) {
  *
  * Retrieves the most recent block height from the Hiro API,
  * used for time-lock calculations and UI display.
+ * Returns 0 if the result cannot be parsed.
  *
  * @returns {Promise<number>} Current block height as an integer
  * @throws {Error} If the API request fails

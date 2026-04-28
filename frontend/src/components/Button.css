@@ -201,3 +201,18 @@
     min-height: 46px;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn-primary::after,
+  .btn-ripple,
+  .btn-spinner {
+    animation: none;
+    transition: none;
+  }
+
+  .btn-ripple,
+  .btn-primary::after {
+    display: none;
+  }
+}

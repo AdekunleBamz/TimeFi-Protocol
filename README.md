@@ -240,7 +240,7 @@ A: The minimum lock period is 6 Stacks blocks, which is approximately 1 hour on 
 ## 🤝 Acknowledgments
 
 - **Stacks Foundation**: For the Clarity 4 development tools and ecosystem support.
-- **Hiro Systems**: For the Stacks/Transactions library.
+- **Hiro Systems**: For the Stacks/Transactions library and API infrastructure.
 
 ## 👤 Contributors
 

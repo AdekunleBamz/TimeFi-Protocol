@@ -21,7 +21,7 @@ If you discover a security vulnerability, please:
 
 The TimeFi Protocol implements the following security measures:
 
-- **Access Controls**: All admin functions require deployer authorization
+- **Access Controls**: All admin functions require deployer authorization via the `DEPLOYER` constant
 - **Input Validation**: All parameters are validated against defined limits
 - **Time-Lock Protection**: Vaults cannot be withdrawn before unlock time
 - **Fee Limits**: Fees are capped at protocol constants

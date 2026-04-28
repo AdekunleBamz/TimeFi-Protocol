@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Updated comments on lock bounds to match current min and max lock constraints.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Added explicit references to the lower and upper lock boundaries.
+- Improved wording for block-based duration estimates used in docs.
 
 ## Date
-2026-03-31
+2026-04-28

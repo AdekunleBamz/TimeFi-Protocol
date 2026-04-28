@@ -71,6 +71,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: REVOKE BOT APPROVAL (admin only)
+;; Sets bot entry to false (map-delete not available in Clarity 4)
 ;; -------------------------------------------------------
 
 (define-public (revoke-bot (bot principal))

@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Documented account transaction pagination limits for stable frontend queries.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Added note on clamped limit and offset behavior in API helpers.
+- Clarified how hasMore is derived from total and current page parameters.
 
 ## Date
-2026-03-31
+2026-04-28

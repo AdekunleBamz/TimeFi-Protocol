@@ -55,7 +55,7 @@ export const CONTRACT_NAMES = Object.freeze({
  * @property {number} MONTH_6 - 180 days (25,920 blocks)
  * @property {number} MONTH_9 - 270 days (38,880 blocks)
  * @property {number} YEAR_1 - 365 days (52,560 blocks)
- * @property {number} YEAR_2 - 730 days (105,120 blocks)
+ * @property {number} YEAR_2 - 730 days (105,120 blocks) — exceeds MAX_LOCK, reserved for future use
  * @example
  * console.log(LOCK_PERIODS.MONTH_1);
  * // 4320 (30 days in blocks)

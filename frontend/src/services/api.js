@@ -242,6 +242,7 @@ function normalizeTransaction(tx) {
  *
  * Provides a standardized interface for calling read-only functions
  * on TimeFi smart contracts via the Stacks blockchain.
+ * Defaults senderAddress to CONTRACT_ADDRESS when not specified.
  *
  * @param {string} contractName - Name of the contract to call
  * @param {string} functionName - Name of the read-only function to execute

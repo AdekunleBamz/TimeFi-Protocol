@@ -23,6 +23,7 @@
   pointer-events: none;
   letter-spacing: 0.02em;
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 /* Position transforms */

@@ -66,11 +66,13 @@ function assertPositiveInteger(value, fieldName) {
 
 /**
  * getContractCallDefaultOptions - Internal helper to get shared transaction options.
+ * Returns an options object suitable for passing to openContractCall.
  * @param {string} contractName - Name of the target contract
  * @param {string} functionName - Name of the Clarity function
  * @param {any[]} functionArgs - Arguments for the function call
  * @param {Function} onFinish - Callback on finish
  * @param {Function} onCancel - Callback on cancel
+ * @returns {Object} Options object for openContractCall
  * @private
  */
 function getContractCallDefaultOptions(contractName, functionName, functionArgs, onFinish, onCancel) {

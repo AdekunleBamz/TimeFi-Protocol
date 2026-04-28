@@ -6,7 +6,7 @@ If you discover a security vulnerability, please:
 
 1. **DO NOT** open a public issue
 2. Email security concerns privately to the maintainers
-3. Include a detailed description of the vulnerability
+3. Include a detailed description of the vulnerability and its potential impact
 4. Allow reasonable time for a fix before public disclosure
 5. Include affected network, contract name, and any relevant txid when available
 6. Share clear reproduction steps and impact assessment details

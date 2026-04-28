@@ -57,7 +57,7 @@ TimeFi-Protocol/
 - Node.js 18+ (LTS recommended)
 - npm package manager (`npm ci` preferred for clean installs)
 - Access to a Stacks node API for the target network (mainnet by default)
-- Wallet network should match the configured API target before running write flows
+- Ensure wallet network matches the configured API target before running write flows
  
 ### 🛠️ Development
 

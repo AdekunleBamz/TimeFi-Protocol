@@ -151,6 +151,8 @@ export const BLOCKS_PER_DAY = Math.round(86400 / STACKS_BLOCK_TIME);
  * Matches the on-chain FEE_BPS constant in the vault contract.
  *
  * @constant {number}
+ * @example
+ * const fee = (depositAmount * FEE_BPS) / 10000;
  */
 export const FEE_BPS = 50;
 

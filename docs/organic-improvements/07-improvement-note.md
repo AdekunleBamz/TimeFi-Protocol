@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Refined vault status labels so locked and unlocked states are interpreted consistently.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Added concise definitions for locked, unlocked, withdrawn, and emergency states.
+- Removed ambiguous phrasing around readiness to withdraw.
 
 ## Date
-2026-03-31
+2026-04-28

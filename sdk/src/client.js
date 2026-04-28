@@ -92,7 +92,7 @@ export class TimeFiClient {
         return this.callReadOnly('get-vault', [uintCV(id)]);
     }
 
-     /**
+    /**
      * Gets the remaining time in blocks until the vault unlocks.
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<number>} The number of blocks remaining.
@@ -103,7 +103,7 @@ export class TimeFiClient {
         return this.callReadOnly('get-time-remaining', [uintCV(id)]);
     }
 
-     /**
+    /**
      * Checks if a vault is currently eligible for withdrawal.
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<boolean>} True if withdrawal is possible.

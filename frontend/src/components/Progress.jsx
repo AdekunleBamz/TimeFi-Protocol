@@ -35,7 +35,8 @@ export function Progress({
   animated = false,
   className = '',
 }) {
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+  const safeValue = Math.min(Math.max(value, 0), max);
+  const percentage = Math.min(Math.max((safeValue / max) * 100, 0), 100);
 
   return (
     <div className={`progress progress-${size} ${className}`}>
@@ -43,7 +44,7 @@ export function Progress({
         className={`progress-bar progress-${variant} ${animated ? 'progress-animated' : ''}`}
         style={{ width: `${percentage}%` }}
         role="progressbar"
-        aria-valuenow={value}
+        aria-valuenow={safeValue}
         aria-valuemin={0}
         aria-valuemax={max}
         aria-valuetext={`${Math.round(percentage)}%`}

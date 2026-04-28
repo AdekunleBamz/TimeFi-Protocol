@@ -81,6 +81,11 @@ export const formatBps = (bps) => (Number(bps) / 100).toFixed(2) + "%";
  */
 export const formatBlocksToHours = (blocks) => (Number(blocks) / 6).toFixed(1);
 
+/**
+ * Estimate days from a block count based on 144 blocks per day (mainnet).
+ * @param {number|string} blocks - Number of Stacks blocks
+ * @returns {string} Estimated days as a decimal string (1 decimal place)
+ */
 export const formatBlocksToDays = (blocks) => (Number(blocks) / 144).toFixed(1);
 
 export const formatStxAmount = (stx) => Number(stx).toLocaleString() + " STX";

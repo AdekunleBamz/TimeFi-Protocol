@@ -116,6 +116,11 @@ export const truncateAddress = (addr) => addr ? addr.slice(0,6) + "..." + addr.s
  */
 export const formatLockDuration = (blocks) => blocks + " blocks (~" + (Number(blocks)/144).toFixed(0) + " days)";
 
+/**
+ * Format a fee amount with locale separators and " uSTX" denomination suffix.
+ * @param {number|string} fee - Fee amount in microSTX
+ * @returns {string} Formatted fee string (e.g. "5,000 uSTX")
+ */
 export const formatFeeAmount = (fee) => Number(fee).toLocaleString() + " uSTX";
 
 export const formatVaultId = (id) => "Vault #" + String(id).padStart(4,"0");

@@ -26,6 +26,7 @@ const ClarityResponseType = {
 
 /**
  * Client for interacting with the TimeFi Protocol on the Stacks blockchain.
+ * Supports both mainnet and testnet, with read-only query methods.
  */
 export class TimeFiClient {
     /** @type {import('@stacks/network').StacksNetwork} @private */

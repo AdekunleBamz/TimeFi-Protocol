@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Improved wording around post-condition modes for safer transaction construction.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Clarified when Deny and Allow post-condition modes are used in the app.
+- Added reminder to validate sender address values before transaction creation.
 
 ## Date
-2026-03-31
+2026-04-28

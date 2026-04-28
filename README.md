@@ -194,7 +194,7 @@ FEE_BPS: 50 (0.5%)
 
 ## 🗳️ Governance
 
-TimeFi Protocol is governed by its community. Future proposals will be handled via the on-chain governance module (currently under active development).
+TimeFi Protocol is governed by its community. Future governance proposals will be handled via the on-chain governance module (currently under active development).
 
 ## 👥 Community
 

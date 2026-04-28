@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Clarified address normalization and trimming behavior in API input validation.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Added guidance to trim address strings before passing to API calls.
+- Noted expected validation errors for missing or malformed inputs.
 
 ## Date
-2026-03-31
+2026-04-28

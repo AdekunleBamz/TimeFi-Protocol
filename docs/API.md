@@ -2,7 +2,7 @@
 
 Scope: This reference summarizes the core vault contract interface used by local tests.
 
-For setup and workflow details, use the root `README.md` and `CONTRIBUTING.md`.
+For setup and contributor workflow details, use the root `README.md` and `CONTRIBUTING.md`.
 
 ## Public Functions
 

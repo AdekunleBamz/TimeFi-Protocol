@@ -393,6 +393,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: REMOVE BENEFICIARY
+;; Owner-only; clears the beneficiary field back to none
 ;; -------------------------------------------------------
 
 (define-public (remove-beneficiary (id uint))
@@ -411,6 +412,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: PROCESS BENEFICIARY CLAIM (deployer processes)
+;; Requires 90-day delay (BENEFICIARY_CLAIM_DELAY blocks) after unlock-time
 ;; -------------------------------------------------------
 
 (define-public (process-beneficiary-claim (id uint))

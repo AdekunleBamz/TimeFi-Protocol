@@ -202,6 +202,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TREASURY ADDRESS
+;; Returns the current treasury principal (default: deployer)
 ;; -------------------------------------------------------
 
 (define-read-only (get-treasury)
@@ -209,6 +210,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: CHECK IF VAULT CAN BE WITHDRAWN
+;; True when vault is active AND current time >= unlock-time
 ;; -------------------------------------------------------
 
 (define-read-only (can-withdraw (id uint))

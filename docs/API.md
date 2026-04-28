@@ -157,7 +157,7 @@ Get total value locked in the protocol (TVL).
 
 **Returns:** `(response uint uint)`
 
-Vault count is monotonic and is not decremented when vaults are withdrawn.
+Vault count is monotonic and does not decrement when vaults are withdrawn.
 
 TVL tracks deposited principal (post-fee), not cumulative protocol fees.
 

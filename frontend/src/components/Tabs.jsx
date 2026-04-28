@@ -92,7 +92,35 @@ export function Tab({ children, value, disabled = false, className = '' }) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       if (!disabled) setActiveTab(value);
+      return;
     }
+
+    if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) {
+      return;
+    }
+
+    const tabList = e.currentTarget.closest('[role="tablist"]');
+    if (!tabList) return;
+
+    const tabs = Array.from(tabList.querySelectorAll('[role="tab"]:not(:disabled)'));
+    const currentIndex = tabs.indexOf(e.currentTarget);
+    if (currentIndex < 0) return;
+
+    e.preventDefault();
+
+    let nextIndex = currentIndex;
+    if (e.key === 'ArrowRight') {
+      nextIndex = (currentIndex + 1) % tabs.length;
+    } else if (e.key === 'ArrowLeft') {
+      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    } else if (e.key === 'Home') {
+      nextIndex = 0;
+    } else if (e.key === 'End') {
+      nextIndex = tabs.length - 1;
+    }
+
+    tabs[nextIndex]?.focus();
+    tabs[nextIndex]?.click();
   };
 
   return (

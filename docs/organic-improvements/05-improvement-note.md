@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Documented the withdraw request flow to reduce confusion between request and final settlement.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Clarified that request-withdraw emits an intent and does not move funds immediately.
+- Added wording that aligns UI expectations with contract event timing.
 
 ## Date
-2026-03-31
+2026-04-28

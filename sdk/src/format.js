@@ -138,8 +138,9 @@ export function formatDate(dateToFormat) {
 }
 
 /**
- * Returns a relative time string (e.g., '5m ago', 'in 1h').
- * @param {Date|string|number} date - The date to compare with now.
+ * Returns a relative time string compared to the current moment (e.g., '5 minutes ago', 'in 1 hour').
+ * Returns '--' if the input is missing or cannot be parsed.
+ * @param {Date|string|number} dateToFormat - The date to compare with now.
  * @returns {string} Formatted relative time string.
  * @throws {Error} If date cannot be parsed.
  */

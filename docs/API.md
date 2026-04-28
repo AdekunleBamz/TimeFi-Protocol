@@ -164,7 +164,7 @@ TVL tracks deposited principal (post-fee), not cumulative protocol fees.
 ---
 
 ### `get-total-fees`
-Get total fees collected.
+Get cumulative protocol fees collected.
 
 ```clarity
 (get-total-fees)

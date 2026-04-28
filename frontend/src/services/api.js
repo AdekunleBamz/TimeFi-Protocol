@@ -116,6 +116,7 @@ export async function getBlockHeight() {
  *
  * Retrieves comprehensive balance data including liquid balance,
  * locked balance, and total sent/received amounts from the Hiro API.
+ * Throws if address is not a valid non-empty string.
  *
  * @param {string} address - Stacks wallet address to query
  * @returns {Promise<Object>} Account balance information

@@ -125,6 +125,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET VAULT
+;; Returns vault map entry; includes beneficiary field (none by default)
 ;; -------------------------------------------------------
 
 (define-read-only (get-vault (id uint))

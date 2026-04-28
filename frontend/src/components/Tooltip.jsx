@@ -64,6 +64,17 @@ export function Tooltip({
     };
   }, []);
 
+  useEffect(() => {
+    if (!isVisible) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        hideTooltip();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isVisible]);
+
   if (!content) {
     return children;
   }

@@ -1,6 +1,6 @@
 # Contributing to TimeFi Protocol
 
-Thank you for your interest in contributing to TimeFi Protocol!
+Thank you for your interest in contributing to TimeFi Protocol! All contributions, large or small, are welcome.
 
 ## Development Setup
 

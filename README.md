@@ -213,7 +213,7 @@ TimeFi Protocol is governed by its community. Future proposals will be handled v
 A: microSTX is the smallest unit of STX. 1 STX = 1,000,000 microSTX.
 
 **Q: What is the minimum lock period?**
-A: The minimum lock period is 6 Stacks blocks, or about 1 hour.
+A: The minimum lock period is 6 Stacks blocks, which is approximately 1 hour on mainnet.
 
 ## 🗺️ Roadmap 2026
 

@@ -157,6 +157,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: PROCESS WITHDRAW (deployer sends STX to owner)
+;; Admin-only: DEPLOYER calls this after withdraw() marks vault inactive
 ;; -------------------------------------------------------
 
 (define-public (process-withdraw (id uint))

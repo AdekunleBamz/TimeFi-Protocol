@@ -153,6 +153,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: IS-ACTIVE
+;; Returns true if vault exists and funds have not been withdrawn
 ;; -------------------------------------------------------
 
 (define-read-only (is-active (id uint))

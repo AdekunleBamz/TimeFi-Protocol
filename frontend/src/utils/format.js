@@ -60,6 +60,11 @@ export const formatSignedNumber = (value) => {
     return `${numericValue}`;
 };
 
+/**
+ * Format microSTX to a fixed 6-decimal STX string without currency symbol.
+ * @param {number|string} microStx - Value in microSTX
+ * @returns {string} STX string with 6 decimal places
+ */
 export const formatMicroStx = (microStx) => (Number(microStx) / 1e6).toFixed(6);
 
 export const formatBps = (bps) => (Number(bps) / 100).toFixed(2) + "%";

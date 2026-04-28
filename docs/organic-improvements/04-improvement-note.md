@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Clarified vault timing semantics so docs consistently refer to block-based lock windows.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Documented that unlock checks depend on chain height, not wall-clock time.
+- Aligned wording with current v-A2 contract behavior.
 
 ## Date
-2026-03-31
+2026-04-28

@@ -4,7 +4,7 @@
  * TimeFi Protocol Constants
  *
  * Centralized configuration values and constants used throughout
- * the TimeFi SDK for interacting with the protocol on Stacks.
+ * the TimeFi SDK for interacting with the protocol on Stacks mainnet and testnet.
  *
  * @module constants
  */

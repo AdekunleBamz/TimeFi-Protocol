@@ -87,7 +87,7 @@ export const RESPONSE_TYPES = Object.freeze({
 /**
  * Average time between Stacks mainnet blocks in seconds.
  *
- * This is an approximation used for time-lock calculations.
+ * This is an approximation used for time-lock calculations and UI display.
  * Actual block times may vary based on network conditions.
  *
  * @constant {number}

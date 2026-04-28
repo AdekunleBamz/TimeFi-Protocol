@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Clarified fee basis points usage to avoid confusion with percentage formatting.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Added examples mapping basis points to percentage values.
+- Noted where fee constants are mirrored between contracts and SDK utilities.
 
 ## Date
-2026-03-31
+2026-04-28

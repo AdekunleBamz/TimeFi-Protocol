@@ -119,7 +119,8 @@ export function validateVaultId(id) {
  * validateDepositAmount - Validate a deposit amount against protocol limits.
  *
  * Checks that the amount is a valid number, within the allowed range
- * (MIN_DEPOSIT to MAX_DEPOSIT), and doesn't exceed user's balance.
+ * (MIN_DEPOSIT to MAX_DEPOSIT), and doesn't exceed the user's current balance.
+ * All amounts are expressed in microSTX.
  *
  * @param {string|number} amount - Deposit amount in microSTX
  * @param {number} [balance] - User's available balance in microSTX (optional)

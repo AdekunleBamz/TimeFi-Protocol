@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Refined lock duration validation notes for numeric-string and finite checks.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Added coverage notes for integer and finite lock period validation.
+- Clarified error messages returned for invalid lock selections.
 
 ## Date
-2026-03-31
+2026-04-28

@@ -184,6 +184,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: REQUEST WITHDRAW (user initiates, deployer processes)
+;; Emits withdraw-requested event; actual transfer done by process-withdraw
 ;; -------------------------------------------------------
 
 (define-public (request-withdraw (id uint))
@@ -200,6 +201,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: IS-ACTIVE
+;; False once vault has been withdrawn or emergency-unlocked
 ;; -------------------------------------------------------
 
 (define-read-only (is-active (id uint))
@@ -209,6 +211,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TVL (Total Value Locked)
+;; Sum of active vault deposits in microSTX
 ;; -------------------------------------------------------
 
 (define-read-only (get-tvl)
@@ -216,6 +219,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET TOTAL FEES COLLECTED
+;; Cumulative protocol fees routed to treasury since deployment
 ;; -------------------------------------------------------
 
 (define-read-only (get-total-fees)
@@ -223,6 +227,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET VAULT COUNT
+;; Total vaults ever created; does not decrease on withdrawal
 ;; -------------------------------------------------------
 
 (define-read-only (get-vault-count)

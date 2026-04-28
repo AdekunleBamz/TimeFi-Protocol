@@ -197,7 +197,7 @@ Get remaining blocks until a vault unlocks.
 
 **Returns:** `(response uint uint)` - 0 if already unlocked
 
-Computed from chain height, so any calendar estimate is only approximate.
+Computed from chain height, so calendar estimates are only approximate.
 Unknown vault IDs return the contract `ERR_NOT_FOUND` response code.
 
 ---

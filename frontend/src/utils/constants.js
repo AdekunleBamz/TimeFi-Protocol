@@ -248,7 +248,7 @@ export const SECONDS_PER_WEEK = 604800;
 
 export const MAX_TIME_TOKEN_SUPPLY = 21000000;
 
-export const TIME_TOKEN_DECIMALS = 6
+export const TIME_TOKEN_DECIMALS = 6;
 
 export const RETRY_DELAY_MS = 1500
 

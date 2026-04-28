@@ -178,6 +178,7 @@ export class TimeFiClient {
 
     /**
      * Alias for getVaultAmount. Retrieves the locked STX amount in a specific vault.
+     * Use getVaultAmount for new code; this alias is retained for backwards compatibility.
      * @param {number|string|BigInt} id - The unique ID of the vault.
      * @returns {Promise<number>} The amount in microSTX.
      * @throws {Error} If vault ID is missing or invalid.

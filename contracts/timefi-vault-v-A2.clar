@@ -84,6 +84,8 @@
 ;; -------------------------------------------------------
 ;; PUBLIC: CREATE VAULT
 ;; User deposits STX to DEPLOYER (custodian pattern)
+;; Blocked when protocol-paused is true (ERR_PAUSED)
+;; Fee is routed to treasury; deposit is held by DEPLOYER
 ;; -------------------------------------------------------
 
 (define-public (create-vault (amount uint) (lock-blocks uint))

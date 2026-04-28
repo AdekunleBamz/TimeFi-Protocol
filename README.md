@@ -43,7 +43,7 @@ TimeFi-Protocol/
 - **Withdraw Requests** - Queue withdrawals once the lock matures
 - **Custodian Processing** - Let the deployer process mature withdrawal payouts
 - **Bot Approval** - Approve automated bot principals directly
-- **Fee Collection** - 0.5% fee on deposits
+- **Fee Collection** - 0.5% protocol fee on deposits
 
 ### 📜 Clarity 4 Functions Used
 - `tenure-height` - For block-based lock timing

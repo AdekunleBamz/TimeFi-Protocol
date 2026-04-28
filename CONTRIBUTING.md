@@ -90,7 +90,7 @@ clarinet devnet start
 ### Testing Guidelines
 
 - Write tests for all new functions.
-- Test both success and error cases.
+- Cover both success and error paths.
 - Test boundary conditions.
 
 ## Code Style

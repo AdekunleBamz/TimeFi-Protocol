@@ -149,7 +149,7 @@ Check if a vault is active.
 ---
 
 ### `get-tvl`
-Get total value locked in the protocol.
+Get total value locked in the protocol (TVL).
 
 ```clarity
 (get-tvl)

@@ -258,6 +258,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: CHECK IF VAULT CAN BE WITHDRAWN
+;; True when vault is active AND current block >= unlock-time
 ;; -------------------------------------------------------
 
 (define-read-only (can-withdraw (id uint))
@@ -268,6 +269,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: CHECK IF VAULT BELONGS TO OWNER
+;; Useful as a pre-flight check before submitting withdraw tx
 ;; -------------------------------------------------------
 
 (define-read-only (is-vault-owner (id uint) (owner principal))
@@ -277,6 +279,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET PROTOCOL CONSTANTS
+;; Off-chain clients can call these instead of hard-coding values
 ;; -------------------------------------------------------
 
 (define-read-only (get-min-deposit)
@@ -293,6 +296,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: CALCULATE FEE FOR AMOUNT
+;; Returns fee (in microSTX) and net deposit for a given gross amount
 ;; -------------------------------------------------------
 
 (define-read-only (calculate-fee (amount uint))

@@ -22,6 +22,7 @@ const normalizeDisplayNumber = (value) => (
 
 /**
  * Formats a microSTX value into a human-readable STX string.
+ * Output uses up to 6 decimal places (the precision of STX).
  * @param {number|BigInt|string|Object} microStx - The value in microSTX.
  * @returns {string} Formatted STX string.
  * @throws {Error} If microStx cannot be converted to a number.

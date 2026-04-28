@@ -221,6 +221,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: CHECK IF VAULT BELONGS TO OWNER
+;; Returns true if the given principal is recorded as vault owner
 ;; -------------------------------------------------------
 
 (define-read-only (is-vault-owner (id uint) (owner principal))
@@ -230,6 +231,7 @@
 
 ;; -------------------------------------------------------
 ;; READ: GET PROTOCOL CONSTANTS
+;; Expose immutable config values for off-chain clients
 ;; -------------------------------------------------------
 
 (define-read-only (get-min-deposit)

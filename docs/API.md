@@ -189,7 +189,7 @@ Get total number of vaults created.
 ---
 
 ### `get-time-remaining`
-Get blocks remaining until vault unlock.
+Get remaining blocks until a vault unlocks.
 
 ```clarity
 (get-time-remaining (id uint))

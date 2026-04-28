@@ -1,11 +1,11 @@
 # Improvement Note
 
 ## Summary
-This is an organic improvement note for the TimeFi Protocol.
+Improved explanation of time remaining calculations for vault unlock estimates.
 
 ## Changes
-- Documentation update for organic improvement
-- Added by adekunlebamz
+- Documented that remaining time is derived from blocks and average block intervals.
+- Added a note that estimates are approximate and can drift with network conditions.
 
 ## Date
-2026-03-31
+2026-04-28

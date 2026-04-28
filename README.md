@@ -56,7 +56,7 @@ TimeFi-Protocol/
 - [Clarinet](https://github.com/hirosystems/clarinet) installed
 - Node.js 18+ (LTS recommended)
 - npm package manager (`npm ci` preferred for clean installs)
-- Access to a Stacks node API for the network you are targeting (mainnet by default)
+- Access to a Stacks node API for the target network (mainnet by default)
 - Wallet network should match the configured API target before running write flows
  
 ### 🛠️ Development

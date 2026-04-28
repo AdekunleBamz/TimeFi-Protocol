@@ -276,8 +276,6 @@ export const BLOCKS_PER_WEEK = 1008
 
 export const WALLET_CONNECT_TIMEOUT_MS = 30000
 
-export const MIN_DEPOSIT_MICRO_STX = 10000
-
 export const STX_DECIMALS = 6
 
 export const BLOCKS_PER_HOUR = 6

@@ -51,7 +51,7 @@ export class TimeFiClient {
 
     // --- Read-only Methods ---
 
-     /**
+    /**
      * Internal helper to call a read-only contract function.
      * @param {string} functionName - Name of the Clarity function.
      * @param {any[]} functionArgs - Arguments for the function call.

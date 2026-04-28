@@ -313,6 +313,7 @@
     border: 1px solid rgba(248, 113, 113, 0.35);
     background: rgba(248, 113, 113, 0.12);
     color: #fecaca;
+    min-height: 40px;
     font-size: 0.76rem;
     font-weight: 700;
     padding: 0.45rem 0.6rem;
@@ -333,6 +334,7 @@
 
 .header-connect {
     border: none;
+    min-height: 40px;
     padding: 0.7rem 1rem;
     border-radius: 10px;
     font-size: 0.86rem;

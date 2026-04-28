@@ -158,7 +158,7 @@ export const FEE_BPS = 50;
 
 /**
  * Minimum lock duration in blocks accepted by the vault contract.
- * Equivalent to approximately 1 hour on mainnet.
+ * Equivalent to approximately 1 hour on mainnet (6 × 10 min).
  *
  * @constant {number}
  */
@@ -166,15 +166,15 @@ export const MIN_LOCK_BLOCKS = 6;
 
 /**
  * Maximum lock duration in blocks accepted by the vault contract.
- * Equivalent to approximately 1 year on mainnet.
+ * Equivalent to approximately 1 year on mainnet (365 × 144 blocks).
  *
  * @constant {number}
  */
 export const MAX_LOCK_BLOCKS = 52560;
 
 /**
- * Default lock period in blocks (6 months).
- * Matches LOCK_PERIODS.MONTH_6 for safe defaults.
+ * Default lock period in blocks (roughly 6 months).
+ * Matches LOCK_PERIODS.MONTH_6, used when no explicit duration is provided.
  *
  * @constant {number}
  */

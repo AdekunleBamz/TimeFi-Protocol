@@ -102,6 +102,11 @@ export const formatStxAmount = (stx) => Number(stx).toLocaleString() + " STX";
  */
 export const formatTimestamp = (ts) => new Date(Number(ts) * 1000).toISOString();
 
+/**
+ * Truncate a Stacks address showing the first 6 and last 4 characters.
+ * @param {string} addr - Full Stacks address
+ * @returns {string} Truncated address or empty string if addr is falsy
+ */
 export const truncateAddress = (addr) => addr ? addr.slice(0,6) + "..." + addr.slice(-4) : "";
 
 export const formatLockDuration = (blocks) => blocks + " blocks (~" + (Number(blocks)/144).toFixed(0) + " days)";

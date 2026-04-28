@@ -117,7 +117,7 @@ function ToastItem({ toast, onRemove }) {
         </div>
         <div className="toast-message">{message}</div>
         {action && (
-          <button type="button" className="toast-action" onClick={action.onClick}>
+          <button type="button" className="toast-action" onClick={action.onClick} title={action.label}>
             {action.label}
           </button>
         )}
@@ -127,6 +127,7 @@ function ToastItem({ toast, onRemove }) {
         className="toast-close"
         onClick={() => onRemove(id)}
         aria-label="Dismiss notification"
+        title="Dismiss notification"
       >
         ×
       </button>

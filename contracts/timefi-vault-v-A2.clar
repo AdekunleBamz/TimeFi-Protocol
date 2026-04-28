@@ -441,6 +441,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: REQUEST BENEFICIARY CLAIM (beneficiary initiates)
+;; Emits event; DEPLOYER then calls process-beneficiary-claim to release funds
 ;; -------------------------------------------------------
 
 (define-public (request-beneficiary-claim (id uint))
@@ -459,6 +460,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: INITIATE VAULT TRANSFER
+;; Owner stores new-owner in pending-transfers map; new owner must accept
 ;; -------------------------------------------------------
 
 (define-public (initiate-transfer (id uint) (new-owner principal))
@@ -476,6 +478,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: ACCEPT VAULT TRANSFER
+;; New owner confirms; clears pending-transfers entry and updates vault owner
 ;; -------------------------------------------------------
 
 (define-public (accept-transfer (id uint))

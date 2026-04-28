@@ -308,6 +308,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: SET TREASURY (admin only)
+;; Updates the principal that receives protocol fees going forward
 ;; -------------------------------------------------------
 
 (define-public (set-treasury (new-treasury principal))
@@ -319,6 +320,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: TOP-UP VAULT (add more STX to existing vault)
+;; Owner-only; vault must be active; fee charged on additional amount
 ;; -------------------------------------------------------
 
 (define-public (top-up-vault (id uint) (amount uint))
@@ -348,6 +350,7 @@
 
 ;; -------------------------------------------------------
 ;; PUBLIC: EXTEND LOCK DURATION
+;; Owner-only; adds blocks to existing unlock-time; cannot exceed MAX_LOCK total
 ;; -------------------------------------------------------
 
 (define-public (extend-lock (id uint) (additional-blocks uint))

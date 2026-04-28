@@ -201,7 +201,7 @@ export function validateLockPeriod(period) {
  * validateVaultCreation - Validate complete vault creation form data.
  *
  * Performs comprehensive validation of all vault creation fields
- * and returns all validation errors at once.
+ * and collects all validation errors rather than stopping at the first one.
  *
  * @param {Object} data - Form data object
  * @param {string} data.amount - Deposit amount in STX

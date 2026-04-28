@@ -253,7 +253,7 @@ Check if principal is an approved bot.
 
 **Returns:** `bool`
 
-In this contract variant, non-contract principals resolve to `false`.
+In this contract variant, non-contract principals always resolve to `false`.
 Because this function is not response-wrapped, callers should not expect `ok`/`err` tuples.
 
 ---

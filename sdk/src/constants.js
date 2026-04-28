@@ -73,6 +73,7 @@ export const LOCK_PERIODS = Object.freeze({
  * Clarity response type identifiers for contract call results.
  *
  * Used to determine if a contract call returned an OK or ERR response.
+ * These values correspond to Clarity's internal representation of response types.
  *
  * @constant {Object}
  * @property {number} OK - Success response type identifier (7)

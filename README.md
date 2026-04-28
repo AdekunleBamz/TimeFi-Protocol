@@ -181,7 +181,7 @@ FEE_BPS: 50 (0.5%)
 
 - **Audit Status**: Internal audit v1.0 complete (external review pending).
 - **Security Bounty**: Bug bounty program coming Q2 2026.
-- **Emergency Pause**: Protocol can be paused by multisig in case of critical vulnerability.
+- **Emergency Pause**: The protocol can be paused by multisig in the event of a critical vulnerability.
 - **Formal Verification**: Clarity contracts are being verified using TLA+.
 
 ### 🌐 Network API Endpoints

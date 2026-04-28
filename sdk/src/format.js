@@ -68,6 +68,7 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
 
 /**
  * Validates that a string is a properly formatted Stacks address.
+ * Checks for the pattern: starts with S, followed by 33 alphanumeric chars.
  * @param {string} address - The address to validate.
  * @returns {boolean} True if address matches Stacks mainnet format (SP...).
  */

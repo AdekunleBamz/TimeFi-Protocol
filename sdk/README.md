@@ -115,6 +115,7 @@ The SDK provides the following exports:
 - `TimeFiClient`: Core class for blockchain interactions.
 - `formatSTX(microStx)`: Converts microSTX to a human-readable STX string.
 - `formatAddress(address)`: Truncates addresses for UI display.
+- `formatNumber(value)`: Formats a number with locale-specific separators.
 - `CONTRACT_ADDRESS`: The main TimeFi Protocol contract address on Stacks.
 
 ## 📄 License

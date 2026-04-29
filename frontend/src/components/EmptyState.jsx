@@ -88,7 +88,7 @@ export function NoVaultsEmptyState({ onCreateVault }) {
         )
       }
       secondaryAction={
-        <a href="https://docs.timefi.io" target="_blank" rel="noopener noreferrer" className="empty-state-link">
+        <a href="https://docs.timefi.io" target="_blank" rel="noopener noreferrer" className="empty-state-link" aria-label="Learn how TimeFi vaults work (opens in new tab)">
           Learn how it works
         </a>
       }

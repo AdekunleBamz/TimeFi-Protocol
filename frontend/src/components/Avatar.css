@@ -131,4 +131,5 @@
   background: transparent;
   color: #9ca3af;
   font-size: 0.75em;
+  font-variant-numeric: tabular-nums;
 }

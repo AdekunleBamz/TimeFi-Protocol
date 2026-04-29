@@ -33,7 +33,7 @@ export function NotFound() {
         <div className="not-found-path">Requested path: <code>{location.pathname}</code></div>
         <div className="not-found-actions">
           <Link to="/">
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" title="Return to the dashboard home">
               Back to Dashboard
             </Button>
           </Link>

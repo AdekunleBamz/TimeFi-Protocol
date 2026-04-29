@@ -75,6 +75,7 @@
 .not-found-code {
     font-size: 0.8rem;
     font-weight: 800;
+    font-variant-numeric: tabular-nums;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #a5b4fc;

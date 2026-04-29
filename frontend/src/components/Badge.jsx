@@ -90,6 +90,7 @@ export function StatusBadge({ status, className = '' }) {
       pulse={config.pulse}
       leadingDot={config.leadingDot}
       className={className}
+      title={config.label}
     >
       {config.label}
     </Badge>

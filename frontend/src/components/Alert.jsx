@@ -116,6 +116,7 @@ export function Alert({
               className="alert-dismiss"
               onClick={onDismiss}
               aria-label="Dismiss alert"
+              title="Dismiss this alert"
             >
               ×
             </button>

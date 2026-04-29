@@ -38,7 +38,7 @@ export function NotFound() {
             </Button>
           </Link>
           <Link to="/#create-vault">
-            <Button variant="secondary" size="lg">
+            <Button variant="secondary" size="lg" title="Jump to vault creation on the dashboard">
               Create a Vault
             </Button>
           </Link>

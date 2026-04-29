@@ -104,6 +104,7 @@
 .not-found-path code {
     font-family: 'IBM Plex Mono', monospace;
     color: #f8fafc;
+    overflow-wrap: anywhere;
 }
 
 .not-found-actions {

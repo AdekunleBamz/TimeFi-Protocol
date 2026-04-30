@@ -99,6 +99,7 @@ export function Header() {
 
         <nav
           id="header-navigation"
+          aria-label="Primary navigation"
           className={`header-nav ${isMenuOpen ? 'header-nav-open' : ''}`}
         >
           <NavLink

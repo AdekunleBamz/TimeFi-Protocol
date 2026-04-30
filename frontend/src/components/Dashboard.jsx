@@ -126,7 +126,13 @@ export function Dashboard() {
           <span>Emergency flow support</span>
         </div>
         {!isConnected && (
-          <button type="button" className="dashboard-hero-cta" onClick={connect}>
+          <button
+            type="button"
+            className="dashboard-hero-cta"
+            onClick={connect}
+            aria-label="Connect wallet to start creating a vault"
+            title="Connect wallet to start creating a vault"
+          >
             Connect Wallet to Start
           </button>
         )}
@@ -226,7 +232,13 @@ export function Dashboard() {
                 <span>Track every vault from one dashboard</span>
                 <span>Claim rewards when they mature</span>
               </div>
-              <button type="button" className="dashboard-hero-cta" onClick={connect}>
+              <button
+                type="button"
+                className="dashboard-hero-cta"
+                onClick={connect}
+                aria-label="Connect wallet to continue to vault creation"
+                title="Connect wallet to continue to vault creation"
+              >
                 Connect Wallet to Continue
               </button>
             </div>

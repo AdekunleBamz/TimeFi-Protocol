@@ -325,7 +325,7 @@ export function Dashboard() {
                     className="dashboard-clear-filters"
                     onClick={() => setVaultSearch('')}
                   >
-                    Clear Search
+                    Clear search
                   </button>
                 }
               />

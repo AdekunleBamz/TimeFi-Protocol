@@ -152,7 +152,9 @@ export function Dashboard() {
             <strong>{blockHeight?.toLocaleString() || '--'}</strong>
           </div>
           <div className="dashboard-wallet-actions">
-            <a href="#create-vault" className="dashboard-wallet-action">Create another vault</a>
+            <a href="#create-vault" className="dashboard-wallet-action" title="Jump to create vault section">
+              Create another vault
+            </a>
             <a href="#your-vaults" className="dashboard-wallet-action dashboard-wallet-action-secondary">Review portfolio</a>
           </div>
         </section>

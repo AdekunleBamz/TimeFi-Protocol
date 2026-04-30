@@ -84,6 +84,7 @@ export function Tab({ children, value, disabled = false, className = '' }) {
 
   return (
     <button
+      type="button"
       className={`tab ${isActive ? 'tab-active' : ''} ${className}`}
       onClick={() => !disabled && setActiveTab(value)}
       onKeyDown={handleKeyDown}

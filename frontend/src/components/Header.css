@@ -253,6 +253,7 @@
     color: #fecaca;
     font-size: 0.76rem;
     font-weight: 700;
+    min-height: 44px;
     padding: 0.45rem 0.6rem;
     border-radius: 8px;
     cursor: pointer;

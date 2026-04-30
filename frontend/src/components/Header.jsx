@@ -141,6 +141,7 @@ export function Header() {
           <Link
             to="/#create-vault"
             aria-label="Navigate to Create Vault section"
+            title="Go to Create Vault section"
             className={`header-nav-link ${
               location.pathname === '/' && location.hash === '#create-vault' ? 'header-nav-link-active' : ''
             }`}

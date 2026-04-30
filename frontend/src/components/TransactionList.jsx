@@ -108,6 +108,7 @@ function TransactionItem({ transaction }) {
             rel="noopener noreferrer"
             className="transaction-link"
             aria-label={`View transaction ${shortTxId} on explorer (opens in new tab)`}
+            title={`Open transaction ${shortTxId} in Hiro explorer`}
           >
             View on explorer
           </a>

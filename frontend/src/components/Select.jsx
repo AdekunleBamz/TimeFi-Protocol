@@ -4,7 +4,7 @@
  * @module components/Select
  * @author adekunlebamz
  */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { Tooltip } from './Tooltip';
 import './Select.css';
 
@@ -49,6 +49,7 @@ export function Select({
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
   const listRef = useRef(null);
+  const listboxId = useId();
 
   const selectedOption = options.find(opt => opt.value === value);
 
@@ -114,6 +115,7 @@ export function Select({
         role="combobox"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
+        aria-controls={listboxId}
         aria-label={label || placeholder}
       >
         <span className={selectedOption ? 'select-value' : 'select-placeholder'}>
@@ -128,7 +130,7 @@ export function Select({
       </div>
 
       {isOpen && (
-        <ul className="select-dropdown" role="listbox" ref={listRef}>
+        <ul className="select-dropdown" role="listbox" ref={listRef} id={listboxId}>
           {options.map((option) => (
             <li
               key={option.value}

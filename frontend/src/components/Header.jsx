@@ -201,6 +201,7 @@ export function Header() {
               onClick={connect}
               disabled={isConnecting}
               aria-label={isConnecting ? 'Connecting to wallet' : 'Connect Stacks wallet'}
+              title={isConnecting ? 'Connecting to wallet' : 'Connect Stacks wallet'}
             >
               {isConnecting ? 'Connecting...' : 'Connect Wallet'}
             </button>

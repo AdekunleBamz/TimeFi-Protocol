@@ -138,6 +138,7 @@ export function Select({
               onClick={() => handleSelect(option)}
               role="option"
               aria-selected={option.value === value}
+              aria-disabled={option.disabled || undefined}
             >
               {option.label}
             </li>

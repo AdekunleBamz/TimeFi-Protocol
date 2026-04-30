@@ -284,7 +284,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
           {loading ? 'Awaiting wallet...' : 'Create Vault'}
         </button>
       </div>
-      <p className="form-submit-hint">{submitHint}</p>
+      <p className="form-submit-hint" role="status" aria-live="polite" aria-atomic="true">{submitHint}</p>
     </form>
   );
 }

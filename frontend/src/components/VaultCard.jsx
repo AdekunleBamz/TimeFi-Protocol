@@ -98,14 +98,16 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
       
       <div className="vault-actions">
         {canWithdrawNow ? (
-          <button 
+          <button
+            type="button"
             className="btn btn-primary"
             onClick={() => onWithdraw(vaultId)}
           >
             Withdraw
           </button>
         ) : (
-          <button 
+          <button
+            type="button"
             className="btn btn-secondary"
             onClick={() => onApproveBot(vaultId)}
           >

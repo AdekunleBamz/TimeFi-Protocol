@@ -78,7 +78,7 @@ function ToastContainer({ toasts, onRemove }) {
   if (typeof document === 'undefined') return null;
 
   return createPortal(
-    <div className="toast-container">
+    <div className="toast-container" role="region" aria-label="Notifications">
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} onRemove={onRemove} />
       ))}

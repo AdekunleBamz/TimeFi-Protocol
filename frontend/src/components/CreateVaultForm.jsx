@@ -284,6 +284,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
           type="submit"
           className="form-button form-button-primary"
           disabled={!isConnected || loading || !amount || !lockPeriod}
+          title={loading ? 'Awaiting wallet confirmation' : 'Create vault'}
         >
           {loading ? 'Awaiting wallet...' : 'Create Vault'}
         </button>

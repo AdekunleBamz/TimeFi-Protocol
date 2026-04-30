@@ -59,11 +59,12 @@ export function Tabs({ children, defaultValue, onChange, className = '' }) {
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - Tab components
  * @param {string} [props.className=''] - Additional CSS class names
+ * @param {string} [props.ariaLabel='Tabs'] - Accessible label for the tab list region
  * @returns {JSX.Element} Tab list container with role="tablist"
  */
-export function TabList({ children, className = '' }) {
+export function TabList({ children, className = '', ariaLabel = 'Tabs' }) {
   return (
-    <div className={`tab-list ${className}`} role="tablist">
+    <div className={`tab-list ${className}`} role="tablist" aria-label={ariaLabel}>
       {children}
     </div>
   );

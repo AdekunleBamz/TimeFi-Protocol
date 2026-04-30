@@ -203,8 +203,12 @@ export function VaultDetails() {
           <span>Retry if the network is still loading.</span>
         </div>
         <div className="vault-error-actions">
-          <Button onClick={() => navigate('/')}>Back to Dashboard</Button>
-          <Button variant="secondary" onClick={refetch}>Retry</Button>
+          <Button onClick={() => navigate('/')} aria-label="Return to dashboard" title="Return to dashboard">
+            Back to Dashboard
+          </Button>
+          <Button variant="secondary" onClick={refetch} aria-label="Retry loading this vault" title="Retry loading this vault">
+            Retry
+          </Button>
         </div>
       </div>
     );

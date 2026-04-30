@@ -262,7 +262,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
       )}
 
       {errors.submit && (
-        <div className="form-error form-error-submit">
+        <div className="form-error form-error-submit" role="alert" aria-live="assertive">
           <strong>Submission failed</strong>
           <span>{errors.submit}</span>
         </div>

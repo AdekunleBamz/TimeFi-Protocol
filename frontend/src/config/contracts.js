@@ -1,5 +1,3 @@
-import { FEE_BPS } from 'timefi-sdk';
-
 /**
  * Contract Configuration - Stacks smart contract addresses and names.
  *
@@ -24,9 +22,10 @@ export {
     CONTRACT_NAMES,
     LOCK_PERIODS,
     MIN_DEPOSIT,
-    MAX_DEPOSIT,
-    FEE_BPS
+    MAX_DEPOSIT
 } from 'timefi-sdk';
+
+export const FEE_BPS = 50;
 
 export default {
     FEE_BPS,

@@ -21,7 +21,6 @@
 export {
     formatSTX,
     formatAddress,
-    formatNumber,
     formatPercent,
     formatDate,
     formatRelativeTime,

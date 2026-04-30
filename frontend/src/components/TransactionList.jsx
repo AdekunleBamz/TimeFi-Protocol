@@ -94,10 +94,15 @@ function TransactionItem({ transaction }) {
           <span className={`transaction-status transaction-status-${status}`}>
             {normalizedStatus}
           </span>
-          <span className="transaction-txid-group">
-            <span className="transaction-txid">{shortTxId}</span>
-            <CopyButton text={txId} variant="icon" className="transaction-tx-copy" />
-          </span>
+            <span className="transaction-txid-group">
+              <span className="transaction-txid">{shortTxId}</span>
+              <CopyButton
+                text={txId}
+                variant="icon"
+                className="transaction-tx-copy"
+                successMessage="Transaction ID copied"
+              />
+            </span>
 
         </div>
 

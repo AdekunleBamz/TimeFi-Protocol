@@ -106,6 +106,7 @@ export function Tab({ children, value, disabled = false, className = '' }) {
       aria-controls={panelId}
       aria-selected={isActive}
       tabIndex={isActive ? 0 : -1}
+      title={typeof children === 'string' ? children : undefined}
     >
       {children}
     </button>

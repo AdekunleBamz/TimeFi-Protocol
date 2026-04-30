@@ -145,7 +145,11 @@ export function VaultCard({ vaultId }) {
       </div>
 
       <div className="vault-actions">
-        <Link className="btn btn-secondary vault-open-link" to={`/vault/${vaultId}`}>
+        <Link
+          className="btn btn-secondary vault-open-link"
+          to={`/vault/${vaultId}`}
+          aria-label={`View details for vault ${vaultId}`}
+        >
           View Details
         </Link>
         {canWithdrawNow && <span className="vault-ready-pill">Ready to Withdraw</span>}

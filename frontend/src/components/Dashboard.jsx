@@ -251,6 +251,7 @@ export function Dashboard() {
                       type="text"
                       className="vault-control-input"
                       placeholder="Find by vault id"
+                      enterKeyHint="search"
                       value={vaultSearch}
                       onChange={(e) => setVaultSearch(e.target.value)}
                       onKeyDown={(event) => {

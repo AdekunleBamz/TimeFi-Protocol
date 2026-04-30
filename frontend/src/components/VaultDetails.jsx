@@ -231,6 +231,7 @@ export function VaultDetails() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View vault owner on Hiro Explorer (opens in new tab)"
+              title="Open vault owner in Hiro Explorer"
             >
               View owner
             </a>

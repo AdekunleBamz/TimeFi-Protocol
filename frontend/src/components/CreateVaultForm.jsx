@@ -275,6 +275,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             className="form-button form-button-secondary"
             onClick={onClose}
             disabled={loading}
+            title="Cancel vault creation"
           >
             Cancel
           </button>

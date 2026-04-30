@@ -153,7 +153,13 @@ export function Dashboard() {
           </div>
           <div className="dashboard-wallet-actions">
             <a href="#create-vault" className="dashboard-wallet-action">Create another vault</a>
-            <a href="#your-vaults" className="dashboard-wallet-action dashboard-wallet-action-secondary">Review portfolio</a>
+            <a
+              href="#your-vaults"
+              className="dashboard-wallet-action dashboard-wallet-action-secondary"
+              title="Jump to your vault portfolio"
+            >
+              Review portfolio
+            </a>
           </div>
         </section>
       )}

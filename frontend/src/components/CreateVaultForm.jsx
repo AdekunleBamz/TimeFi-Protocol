@@ -136,6 +136,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             type="number"
             className={`form-input ${errors.amount ? 'form-input-error' : ''}`}
             placeholder="0.00"
+            enterKeyHint="done"
             value={amount}
             min="0"
             step="0.000001"

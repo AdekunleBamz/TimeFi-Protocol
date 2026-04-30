@@ -213,7 +213,12 @@ export function VaultDetails() {
   return (
     <div className="vault-details">
       <header className="vault-details-header">
-        <button type="button" className="back-button" onClick={() => navigate(-1)}>
+        <button
+          type="button"
+          className="back-button"
+          onClick={() => navigate(-1)}
+          aria-label="Go back to the previous page"
+        >
           ← Back
         </button>
         <div className="vault-header-row">

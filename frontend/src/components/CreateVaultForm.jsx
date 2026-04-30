@@ -182,6 +182,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
                 setErrors(prev => ({ ...prev, amount: null }));
               }}
               disabled={loading || spendableBalance <= 0}
+              aria-label={`Set amount to ${Math.round(ratio * 100)} percent of spendable balance`}
             >
               {Math.round(ratio * 100)}%
             </button>

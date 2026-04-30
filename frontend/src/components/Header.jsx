@@ -87,6 +87,7 @@ export function Header() {
           aria-expanded={isMenuOpen}
           aria-controls="header-navigation"
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          title={isMenuOpen ? 'Close menu' : 'Open menu'}
           onClick={() => setIsMenuOpen((open) => !open)}
         >
           <span className="header-menu-toggle-label">Menu</span>

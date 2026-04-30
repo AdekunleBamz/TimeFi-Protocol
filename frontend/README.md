@@ -48,6 +48,7 @@ npm run dev
 ```
 
 From the repository root, `npm run frontend:dev` provides the same local dev entrypoint.
+From the repository root, `npm run frontend:test` runs the frontend lint/test checks used in CI.
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 

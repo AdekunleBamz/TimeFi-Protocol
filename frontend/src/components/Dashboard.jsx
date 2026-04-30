@@ -299,6 +299,7 @@ export function Dashboard() {
                         setVaultSearch('');
                         setVaultSort('newest');
                       }}
+                      title="Reset vault search and sorting"
                     >
                       Reset search and sort
                     </button>

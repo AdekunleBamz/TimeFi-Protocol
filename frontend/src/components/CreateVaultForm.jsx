@@ -141,6 +141,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             value={amount}
             min="0"
             step="0.000001"
+            inputMode="decimal"
             onChange={(e) => {
               setAmount(e.target.value);
               setErrors(prev => ({ ...prev, amount: null }));

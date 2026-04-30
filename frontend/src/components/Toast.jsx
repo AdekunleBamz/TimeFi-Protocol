@@ -117,7 +117,13 @@ function ToastItem({ toast, onRemove }) {
         </div>
         <div className="toast-message">{message}</div>
         {action && (
-          <button type="button" className="toast-action" onClick={action.onClick}>
+          <button
+            type="button"
+            className="toast-action"
+            onClick={action.onClick}
+            aria-label={action.label}
+            title={action.label}
+          >
             {action.label}
           </button>
         )}

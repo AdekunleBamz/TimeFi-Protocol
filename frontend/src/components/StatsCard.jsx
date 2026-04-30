@@ -40,7 +40,7 @@ export function StatsCard({
 
   if (loading) {
     return (
-      <div className={`stats-card stats-card-loading ${className}`} aria-busy="true">
+      <div className={`stats-card stats-card-loading ${className}`} aria-busy="true" role="status" aria-live="polite">
         <div className="stats-skeleton stats-skeleton-icon" aria-hidden="true" />
         <div className="stats-content">
           <div className="stats-skeleton stats-skeleton-label" aria-hidden="true" />

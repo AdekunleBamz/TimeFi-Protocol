@@ -76,6 +76,9 @@ export function VaultCard({ vaultId }) {
     return (
       <div className="vault-card error" role="alert">
         <p>{error || 'Vault not found'}</p>
+        <button type="button" className="vault-refresh-note" onClick={fetchVaultData}>
+          Try again
+        </button>
       </div>
     );
   }

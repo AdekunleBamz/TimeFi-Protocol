@@ -79,7 +79,7 @@ export function Header() {
           </div>
         </Link>
 
-        <div className="header-page-label">{pageLabel}</div>
+        <div className="header-page-label" role="status" aria-live="polite" aria-atomic="true">{pageLabel}</div>
 
         <button
           type="button"

@@ -1,5 +1,7 @@
 # TimeFi Protocol API Reference
 
+Amounts are expressed in microSTX unless stated otherwise.
+
 ## Public Functions
 
 ### `create-vault`

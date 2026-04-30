@@ -128,6 +128,7 @@ export function Header() {
           <NavLink
             to="/"
             aria-label="Navigate to Dashboard"
+            title="Go to Dashboard"
             className={({ isActive }) =>
               `header-nav-link ${
                 isActive && location.hash !== '#create-vault' && location.hash !== '#your-vaults'

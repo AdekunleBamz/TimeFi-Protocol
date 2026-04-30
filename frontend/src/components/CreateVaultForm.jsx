@@ -154,6 +154,8 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             className="form-max-button"
             onClick={handleMaxClick}
             disabled={loading}
+            aria-label="Use maximum spendable balance"
+            title="Use maximum spendable balance"
           >
             MAX
           </button>

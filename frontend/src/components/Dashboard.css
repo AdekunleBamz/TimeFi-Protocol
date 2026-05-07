@@ -180,6 +180,11 @@
   box-shadow: 0 12px 28px rgba(0, 212, 170, 0.35);
 }
 
+.dashboard-hero-cta:focus-visible {
+  outline: 2px solid rgba(56, 189, 248, 0.9);
+  outline-offset: 3px;
+}
+
 .dashboard-wallet-panel {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) repeat(3, minmax(0, 0.7fr));

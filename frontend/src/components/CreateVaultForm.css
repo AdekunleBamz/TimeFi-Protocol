@@ -316,6 +316,7 @@
   color: #ecfdf5;
   font-size: 0.86rem;
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .vault-preview-note {

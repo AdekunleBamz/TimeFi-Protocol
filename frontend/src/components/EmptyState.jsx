@@ -77,7 +77,7 @@ export function NoVaultsEmptyState({ onCreateVault }) {
       note="A first vault gives you live protocol stats, transaction history, and a concrete reward projection to monitor."
       action={
         onCreateVault && (
-          <button className="empty-state-button" onClick={onCreateVault}>
+          <button className="empty-state-button" onClick={onCreateVault} aria-label="Create your first vault">
             Create Vault
           </button>
         )

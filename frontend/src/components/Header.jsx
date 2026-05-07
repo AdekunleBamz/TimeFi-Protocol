@@ -134,7 +134,7 @@ export function Header() {
         <div className={`header-actions ${isMenuOpen ? 'header-actions-open' : ''}`}>
           {isConnected ? (
             <div className="header-wallet">
-              <div className="header-balance">
+              <div className="header-balance" role="status" aria-live="polite" aria-atomic="true">
                 <span className="header-wallet-state">
                   <span className="header-wallet-dot" />
                   Wallet live

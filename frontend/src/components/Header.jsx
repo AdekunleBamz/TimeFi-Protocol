@@ -154,6 +154,7 @@ export function Header() {
                 </a>
                 <CopyButton text={address} className="header-copy-address" successMessage="Address copied" />
                 <button
+                  type="button"
                   className="header-disconnect"
                   onClick={disconnect}
                   aria-label="Disconnect wallet"
@@ -168,7 +169,7 @@ export function Header() {
               </div>
             </div>
           ) : (
-            <button className="header-connect" onClick={connect} disabled={isConnecting}>
+            <button type="button" className="header-connect" onClick={connect} disabled={isConnecting}>
               {isConnecting ? 'Connecting...' : 'Connect Wallet'}
             </button>
           )}

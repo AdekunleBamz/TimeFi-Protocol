@@ -180,6 +180,16 @@
   box-shadow: 0 12px 28px rgba(0, 212, 170, 0.35);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-hero-cta {
+    transition: none;
+  }
+
+  .dashboard-hero-cta:hover {
+    transform: none;
+  }
+}
+
 .dashboard-wallet-panel {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) repeat(3, minmax(0, 0.7fr));

@@ -437,6 +437,16 @@
   outline-offset: 2px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .vault-browser-reset {
+    transition: none;
+  }
+
+  .vault-browser-reset:hover {
+    transform: none;
+  }
+}
+
 .create-vault-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);

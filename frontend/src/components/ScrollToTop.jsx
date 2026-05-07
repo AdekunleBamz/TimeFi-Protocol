@@ -41,6 +41,8 @@ export function ScrollToTop() {
       onClick={scrollToTop}
       aria-label="Scroll back to top"
       title="Scroll back to top"
+      tabIndex={isVisible ? 0 : -1}
+      aria-hidden={!isVisible}
     >
       <svg
         width="24"

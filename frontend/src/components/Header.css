@@ -186,6 +186,7 @@
     font-weight: 800;
     color: #ffffff;
     font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
 }
 
 .header-balance-label {

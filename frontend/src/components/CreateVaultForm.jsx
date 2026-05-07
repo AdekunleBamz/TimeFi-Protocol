@@ -208,6 +208,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               }}
               disabled={loading}
               aria-pressed={lockPeriod === option.blocks}
+              aria-label={`${option.label}, about ${option.days} days, ${option.apy} percent APY`}
             >
               {option.apy === maxApy && (
                 <span className="lock-period-badge">Best yield</span>

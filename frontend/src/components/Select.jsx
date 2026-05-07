@@ -117,6 +117,7 @@ export function Select({
         aria-haspopup="listbox"
         aria-controls={listboxId}
         aria-label={label || placeholder}
+        aria-disabled={disabled || undefined}
       >
         <span className={selectedOption ? 'select-value' : 'select-placeholder'}>
           {selectedOption ? selectedOption.label : placeholder}

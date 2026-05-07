@@ -151,6 +151,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             className="form-max-button"
             onClick={handleMaxClick}
             disabled={loading}
+            title="Use full spendable balance"
           >
             MAX
           </button>

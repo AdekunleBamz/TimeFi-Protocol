@@ -50,6 +50,7 @@ export function Select({
   const containerRef = useRef(null);
   const listRef = useRef(null);
   const listboxId = useId();
+  const labelId = useId();
 
   const selectedOption = options.find(opt => opt.value === value);
 
@@ -105,7 +106,7 @@ export function Select({
 
   return (
     <div className={`select-container ${className}`} ref={containerRef}>
-      {label && <label className="select-label">{label}</label>}
+      {label && <label className="select-label" id={labelId}>{label}</label>}
 
       <div
         className={`select ${isOpen ? 'select-open' : ''} ${error ? 'select-error' : ''} ${disabled ? 'select-disabled' : ''}`}
@@ -116,7 +117,8 @@ export function Select({
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         aria-controls={listboxId}
-        aria-label={label || placeholder}
+        aria-labelledby={label ? labelId : undefined}
+        aria-label={label ? undefined : placeholder}
       >
         <span className={selectedOption ? 'select-value' : 'select-placeholder'}>
           {selectedOption ? selectedOption.label : placeholder}

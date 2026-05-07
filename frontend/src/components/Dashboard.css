@@ -149,6 +149,11 @@
   color: #ffffff;
 }
 
+.dashboard-hero-link:focus-visible {
+  outline: 2px solid rgba(0, 194, 168, 0.85);
+  outline-offset: 2px;
+}
+
 .dashboard-hero-highlights {
   margin-top: 1rem;
 }

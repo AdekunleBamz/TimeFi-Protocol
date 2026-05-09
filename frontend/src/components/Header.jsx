@@ -149,6 +149,7 @@ export function Header() {
                   className="header-wallet-link"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="View connected wallet on Hiro explorer (opens in new tab)"
                 >
                   {truncateAddress(address)}
                 </a>

@@ -30,7 +30,9 @@ export function NotFound() {
 
         <h1>Page Not Found</h1>
         <p>The page you requested is unavailable. Use the shortcuts below to get back on track.</p>
-        <div className="not-found-path">Requested path: <code>{location.pathname}</code></div>
+        <div className="not-found-path">
+          Requested path: <code title={location.pathname}>{location.pathname}</code>
+        </div>
         <div className="not-found-actions">
           <Link to="/">
             <Button variant="primary" size="lg">

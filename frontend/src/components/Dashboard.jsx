@@ -103,7 +103,9 @@ export function Dashboard() {
         <h1>Welcome to TimeFi</h1>
         <p>Time-locked vaults for disciplined savings on Stacks</p>
         <div className="dashboard-hero-links">
-          <a href="#create-vault" className="dashboard-hero-link">Start a vault</a>
+          <a href="#create-vault" className="dashboard-hero-link" title="Jump to vault creation">
+            Start a vault
+          </a>
           <a href="#your-vaults" className="dashboard-hero-link">Browse your vaults</a>
         </div>
         <div className="dashboard-hero-metrics" role="list" aria-label="Protocol snapshot">

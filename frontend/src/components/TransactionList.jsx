@@ -39,7 +39,7 @@ export function TransactionList({ transactions = [], loading = false }) {
   if (transactions.length === 0) {
     return (
       <div className="transaction-list-empty" aria-live="polite">
-        <p>No transactions yet</p>
+        <p>No transactions yet. Your first vault action will appear here.</p>
       </div>
     );
   }

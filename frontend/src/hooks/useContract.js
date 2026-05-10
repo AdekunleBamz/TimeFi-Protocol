@@ -28,6 +28,9 @@ export function useContract() {
    * @param {number} lockDuration - Lock duration in seconds
    */
   const createVault = useCallback(async (amount, lockDuration) => {
+    if (!Number.isFinite(Number(amount)) || !Number.isFinite(Number(lockDuration))) {
+      throw new Error('createVault: amount and lockDuration must be valid numbers');
+    }
     const txOptions = {
       contractAddress: CONTRACT_ADDRESS,
       contractName: CONTRACT_NAME,

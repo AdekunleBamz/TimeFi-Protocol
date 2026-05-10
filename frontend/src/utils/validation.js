@@ -299,7 +299,11 @@ export function validateBotAddress(botAddress) {
 }
 
 /** Check that a value is a non-negative integer (valid microSTX amount). */
-export const isValidMicroStx = (v) => Number.isInteger(Number(v)) && Number(v) >= 0;
+export const isValidMicroStx = (v) => {
+    if (v === undefined || v === null) return false;
+    const n = Number(v);
+    return Number.isInteger(n) && n >= 0;
+};
 
 /** Check that a value is a positive integer (valid block count). */
 export const isValidBlockCount = (v) => Number.isInteger(Number(v)) && Number(v) > 0;

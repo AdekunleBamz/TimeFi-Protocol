@@ -20,6 +20,9 @@ export function useReadOnly() {
    * Execute a read-only function call
    */
   const callReadOnly = useCallback(async (functionName, functionArgs = [], senderAddress) => {
+    if (!functionName || typeof functionName !== 'string') {
+      throw new Error('callReadOnly: functionName must be a non-empty string');
+    }
     setLoading(true);
     setError(null);
     

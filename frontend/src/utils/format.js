@@ -73,9 +73,13 @@ export const formatMicroStx = (microStx) => {
 /**
  * Format basis points as a percentage string.
  * @param {number|string} bps - Basis points (100 bps = 1%)
- * @returns {string} Percentage string with two decimal places (e.g. "0.50%")
+ * @returns {string} Percentage string with two decimal places (e.g. "0.50%"), or "0.00%" for invalid input
  */
-export const formatBps = (bps) => (Number(bps) / 100).toFixed(2) + "%";
+export const formatBps = (bps) => {
+    if (bps === undefined || bps === null) return '0.00%';
+    const n = Number(bps);
+    return Number.isFinite(n) ? (n / 100).toFixed(2) + '%' : '0.00%';
+};
 
 /**
  * Estimate hours from a block count based on the 10-minute block time.

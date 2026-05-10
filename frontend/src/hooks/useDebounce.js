@@ -3,21 +3,22 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 /**
  * Hook that debounces a value
  * @param {any} value - Value to debounce
- * @param {number} delay - Delay in ms
+ * @param {number} delay - Delay in ms (must be non-negative; defaults to 300)
  * @returns {any} Debounced value
  */
 export function useDebounce(value, delay = 300) {
+    const safeDelay = typeof delay === 'number' && delay >= 0 ? delay : 300;
     const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedValue(value);
-        }, delay);
+        }, safeDelay);
 
         return () => {
             clearTimeout(handler);
         };
-    }, [value, delay]);
+    }, [value, safeDelay]);
 
     return debouncedValue;
 }

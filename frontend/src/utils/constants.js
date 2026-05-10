@@ -305,3 +305,9 @@ export const VAULT_SEARCH_DEBOUNCE_MS = 300;
  * @type {number}
  */
 export const MAX_VAULT_LABEL_LENGTH = 50;
+
+/**
+ * TRANSACTION_POLL_INTERVAL_MS - Polling interval in ms for transaction confirmation status.
+ * @type {number}
+ */
+export const TRANSACTION_POLL_INTERVAL_MS = 10000;

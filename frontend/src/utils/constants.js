@@ -317,3 +317,9 @@ export const TRANSACTION_POLL_INTERVAL_MS = 10000;
  * @type {number}
  */
 export const ANIMATION_FAST_MS = 150;
+
+/**
+ * ERROR_DISPLAY_DURATION_MS - Duration in ms to show inline error messages before auto-clearing.
+ * @type {number}
+ */
+export const ERROR_DISPLAY_DURATION_MS = 5000;

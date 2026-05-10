@@ -47,8 +47,12 @@ export function useContract() {
   /**
    * Withdraw from a vault after lock period
    * @param {number} vaultId - The vault ID to withdraw from
+   * @throws {Error} if vaultId is not a valid positive number
    */
   const withdraw = useCallback(async (vaultId) => {
+    if (!Number.isFinite(Number(vaultId)) || Number(vaultId) < 0) {
+      throw new Error('withdraw: vaultId must be a valid non-negative number');
+    }
     const txOptions = {
       contractAddress: CONTRACT_ADDRESS,
       contractName: CONTRACT_NAME,

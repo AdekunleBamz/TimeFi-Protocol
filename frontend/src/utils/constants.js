@@ -311,3 +311,9 @@ export const MAX_VAULT_LABEL_LENGTH = 50;
  * @type {number}
  */
 export const TRANSACTION_POLL_INTERVAL_MS = 10000;
+
+/**
+ * ANIMATION_FAST_MS - Duration in ms for fast UI animations (e.g., button feedback).
+ * @type {number}
+ */
+export const ANIMATION_FAST_MS = 150;

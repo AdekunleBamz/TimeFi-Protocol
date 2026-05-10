@@ -36,7 +36,11 @@ export const clamp = (v, mn, mx) => Math.min(Math.max(Number(v), Number(mn)), Nu
 export const bpsToPercent = (bps) => Number(bps) / 100;
 
 /** Returns true when blocks is a valid positive integer. */
-export const isValidBlockCount = (blocks) => Number.isInteger(Number(blocks)) && Number(blocks) > 0;
+export const isValidBlockCount = (blocks) => {
+    if (blocks === undefined || blocks === null) return false;
+    const n = Number(blocks);
+    return Number.isInteger(n) && n > 0;
+};
 
 /** Returns true when a fee in basis points is within the 0-10000 range. */
 export const isValidFeeBps = (bps) => Number.isInteger(Number(bps)) && Number(bps) >= 0 && Number(bps) <= 10000;

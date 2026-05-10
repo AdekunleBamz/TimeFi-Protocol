@@ -1,5 +1,10 @@
 
-export const microStxToStx = (v) => Number(v) / 1e6;
+/** Converts microSTX to STX. Returns 0 for invalid inputs. */
+export const microStxToStx = (v) => {
+    if (v === undefined || v === null) return 0;
+    const n = Number(v);
+    return Number.isFinite(n) ? n / 1e6 : 0;
+};
 
 export const stxToMicroStx = (v) => Math.round(Number(v) * 1e6);
 

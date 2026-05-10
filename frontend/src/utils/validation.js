@@ -306,7 +306,11 @@ export const isValidMicroStx = (v) => {
 };
 
 /** Check that a value is a positive integer (valid block count). */
-export const isValidBlockCount = (v) => Number.isInteger(Number(v)) && Number(v) > 0;
+export const isValidBlockCount = (v) => {
+    if (v === undefined || v === null) return false;
+    const n = Number(v);
+    return Number.isInteger(n) && n > 0;
+};
 
 /** Check that a value is a number in the 0–10000 basis-points range. */
 export const isValidBps = (v) => Number(v) >= 0 && Number(v) <= 10000;

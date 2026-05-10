@@ -85,7 +85,11 @@ export const secondsRemaining = (depositHeight, lockPeriod, currentHeight, block
 export const clampNum = (v, lo, hi) => Math.min(Number(hi), Math.max(Number(lo), Number(v)));
 
 /** Returns true when a block height value is a non-negative integer. */
-export const isValidBlockHeight = (h) => Number.isInteger(Number(h)) && Number(h) >= 0;
+export const isValidBlockHeight = (h) => {
+    if (h === undefined || h === null) return false;
+    const n = Number(h);
+    return Number.isInteger(n) && n >= 0;
+};
 
 /** Returns the estimated completion date for a vault given current block and block time. */
 export const estimatedUnlockDate = (depositHeight, lockPeriod, currentHeight, blockTimeSec = 600) => {

@@ -335,7 +335,11 @@ export const isNonEmptyString = (v) => typeof v === "string" && v.trim().length 
 export const isPositiveNumber = (v) => !isNaN(Number(v)) && Number(v) > 0;
 
 /** Check that a slippage value is in the 0–500 bps range. */
-export const isValidSlippage = (v) => Number(v) >= 0 && Number(v) <= 500;
+export const isValidSlippage = (v) => {
+    if (v === undefined || v === null) return false;
+    const n = Number(v);
+    return Number.isFinite(n) && n >= 0 && n <= 500;
+};
 
 /** Check that a token amount has no more than the allowed decimal places. */
 export const isValidTokenAmount = (v, decimals) => !isNaN(Number(v)) && Number(v) >= 0 && String(v).split(".")[1]?.length <= decimals;

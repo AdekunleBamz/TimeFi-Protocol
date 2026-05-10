@@ -98,9 +98,13 @@ export const formatBlocksToDays = (blocks) => (Number(blocks) / 144).toFixed(1);
 /**
  * Format a whole STX value with locale separators and " STX" suffix.
  * @param {number|string} stx - STX amount (not microSTX)
- * @returns {string} Formatted amount string (e.g. "1,500 STX")
+ * @returns {string} Formatted amount string (e.g. "1,500 STX"), or "0 STX" for invalid input
  */
-export const formatStxAmount = (stx) => Number(stx).toLocaleString() + " STX";
+export const formatStxAmount = (stx) => {
+    if (stx === undefined || stx === null) return '0 STX';
+    const n = Number(stx);
+    return (Number.isFinite(n) ? n.toLocaleString() : '0') + ' STX';
+};
 
 /**
  * Convert a Unix timestamp (in seconds) to an ISO 8601 date-time string.

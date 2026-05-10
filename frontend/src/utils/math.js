@@ -6,7 +6,12 @@ export const microStxToStx = (v) => {
     return Number.isFinite(n) ? n / 1e6 : 0;
 };
 
-export const stxToMicroStx = (v) => Math.round(Number(v) * 1e6);
+/** Converts STX to microSTX. Returns 0 for invalid inputs. */
+export const stxToMicroStx = (v) => {
+    if (v === undefined || v === null) return 0;
+    const n = Number(v);
+    return Number.isFinite(n) ? Math.round(n * 1e6) : 0;
+};
 
 export const calcFee = (amount, bps) => Math.floor(Number(amount) * Number(bps) / 10000);
 

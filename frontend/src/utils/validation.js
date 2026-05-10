@@ -342,4 +342,10 @@ export const isValidSlippage = (v) => {
 };
 
 /** Check that a token amount has no more than the allowed decimal places. */
-export const isValidTokenAmount = (v, decimals) => !isNaN(Number(v)) && Number(v) >= 0 && String(v).split(".")[1]?.length <= decimals;
+export const isValidTokenAmount = (v, decimals) => {
+    if (v === undefined || v === null || decimals === undefined || decimals === null) return false;
+    const n = Number(v);
+    if (!Number.isFinite(n) || n < 0) return false;
+    const decimalPart = String(v).split('.')[1];
+    return !decimalPart || decimalPart.length <= Number(decimals);
+};

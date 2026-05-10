@@ -86,14 +86,20 @@ export const formatBps = (bps) => {
  * @param {number|string} blocks - Number of Stacks blocks
  * @returns {string} Estimated hours as a decimal string (1 decimal place)
  */
-export const formatBlocksToHours = (blocks) => (Number(blocks) / 6).toFixed(1);
+export const formatBlocksToHours = (blocks) => {
+  const n = Number(blocks);
+  return Number.isFinite(n) ? (n / 6).toFixed(1) : '0.0';
+};
 
 /**
  * Estimate days from a block count based on 144 blocks per day (mainnet).
  * @param {number|string} blocks - Number of Stacks blocks
  * @returns {string} Estimated days as a decimal string (1 decimal place)
  */
-export const formatBlocksToDays = (blocks) => (Number(blocks) / 144).toFixed(1);
+export const formatBlocksToDays = (blocks) => {
+  const n = Number(blocks);
+  return Number.isFinite(n) ? (n / 144).toFixed(1) : '0.0';
+};
 
 /**
  * Format a whole STX value with locale separators and " STX" suffix.
@@ -130,7 +136,11 @@ export const truncateAddress = (addr) => {
  * @param {number|string} blocks - Number of Stacks blocks
  * @returns {string} String like "1440 blocks (~10 days)"
  */
-export const formatLockDuration = (blocks) => blocks + " blocks (~" + (Number(blocks)/144).toFixed(0) + " days)";
+export const formatLockDuration = (blocks) => {
+  const n = Number(blocks);
+  if (!Number.isFinite(n)) return '-- blocks';
+  return `${n} blocks (~${(n / 144).toFixed(0)} days)`;
+};
 
 /**
  * Format a fee amount with locale separators and " uSTX" denomination suffix.

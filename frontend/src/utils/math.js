@@ -13,7 +13,13 @@ export const stxToMicroStx = (v) => {
     return Number.isFinite(n) ? Math.round(n * 1e6) : 0;
 };
 
-export const calcFee = (amount, bps) => Math.floor(Number(amount) * Number(bps) / 10000);
+/** Calculates the fee for a given amount and basis points. Returns 0 for invalid inputs. */
+export const calcFee = (amount, bps) => {
+    const a = Number(amount);
+    const b = Number(bps);
+    if (!Number.isFinite(a) || !Number.isFinite(b) || b < 0) return 0;
+    return Math.floor(a * b / 10000);
+};
 
 export const calcNetAmount = (amount, bps) => Number(amount) - Math.floor(Number(amount) * Number(bps) / 10000);
 

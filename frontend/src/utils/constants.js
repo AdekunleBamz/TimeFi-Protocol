@@ -287,3 +287,9 @@ export const BLOCKS_PER_DAY = 144;
 export const BLOCKS_PER_WEEK = 1008;
 
 export const WALLET_CONNECT_TIMEOUT_MS = 30000;
+
+/**
+ * DEFAULT_SLIPPAGE_DISPLAY - Default slippage percentage shown in UI (0.5%).
+ * @type {number}
+ */
+export const DEFAULT_SLIPPAGE_DISPLAY = 0.5;

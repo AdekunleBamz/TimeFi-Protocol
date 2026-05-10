@@ -43,7 +43,11 @@ export const isValidBlockCount = (blocks) => {
 };
 
 /** Returns true when a fee in basis points is within the 0-10000 range. */
-export const isValidFeeBps = (bps) => Number.isInteger(Number(bps)) && Number(bps) >= 0 && Number(bps) <= 10000;
+export const isValidFeeBps = (bps) => {
+    if (bps === undefined || bps === null) return false;
+    const n = Number(bps);
+    return Number.isInteger(n) && n >= 0 && n <= 10000;
+};
 
 /** Returns the number of blocks remaining until a vault unlocks; 0 if already past. */
 export const blocksRemaining = (depositHeight, lockPeriod, currentHeight) =>

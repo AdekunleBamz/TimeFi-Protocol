@@ -62,9 +62,13 @@ export const formatSignedNumber = (value) => {
 /**
  * Format microSTX to a fixed 6-decimal STX string without currency symbol.
  * @param {number|string} microStx - Value in microSTX
- * @returns {string} STX string with 6 decimal places
+ * @returns {string} STX string with 6 decimal places, or '0.000000' for invalid input
  */
-export const formatMicroStx = (microStx) => (Number(microStx) / 1e6).toFixed(6);
+export const formatMicroStx = (microStx) => {
+    if (microStx === undefined || microStx === null) return '0.000000';
+    const n = Number(microStx);
+    return Number.isFinite(n) ? (n / 1e6).toFixed(6) : '0.000000';
+};
 
 /**
  * Format basis points as a percentage string.

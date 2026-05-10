@@ -63,6 +63,8 @@ export function useClickOutside(handler, options = {}) {
       handlerRef.current(event);
     };
 
+    if (typeof handlerRef.current !== 'function') return;
+
     document.addEventListener(eventType, listener, { capture });
     if (listenTouch) {
       document.addEventListener('touchstart', listener, { passive: true });

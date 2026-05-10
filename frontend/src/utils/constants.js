@@ -293,3 +293,9 @@ export const WALLET_CONNECT_TIMEOUT_MS = 30000;
  * @type {number}
  */
 export const DEFAULT_SLIPPAGE_DISPLAY = 0.5;
+
+/**
+ * VAULT_SEARCH_DEBOUNCE_MS - Debounce delay in ms for vault search/filter inputs.
+ * @type {number}
+ */
+export const VAULT_SEARCH_DEBOUNCE_MS = 300;

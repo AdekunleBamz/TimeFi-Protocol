@@ -130,6 +130,8 @@ export const Keys = {
   Home: 'Home',
   End: 'End',
   Tab: 'Tab',
+  PageUp: 'PageUp',
+  PageDown: 'PageDown',
 };
 
 /**
@@ -209,6 +211,7 @@ export function handleListNavigation(event, items, currentIndex) {
  * focusable[0]?.focus(); // Focus first element
  */
 export function getFocusableElements(container) {
+  if (!container) return [];
   const selector = [
     'a[href]',
     'button:not([disabled])',

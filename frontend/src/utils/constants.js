@@ -299,3 +299,9 @@ export const DEFAULT_SLIPPAGE_DISPLAY = 0.5;
  * @type {number}
  */
 export const VAULT_SEARCH_DEBOUNCE_MS = 300;
+
+/**
+ * MAX_VAULT_LABEL_LENGTH - Maximum character length for custom vault display labels.
+ * @type {number}
+ */
+export const MAX_VAULT_LABEL_LENGTH = 50;

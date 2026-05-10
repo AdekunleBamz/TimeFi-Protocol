@@ -112,9 +112,14 @@ export const formatTimestamp = (ts) => new Date(Number(ts) * 1000).toISOString()
 /**
  * Truncate a Stacks address showing the first 6 and last 4 characters.
  * @param {string} addr - Full Stacks address
- * @returns {string} Truncated address or empty string if addr is falsy
+ * @returns {string} Truncated address or empty string if addr is falsy or too short
  */
-export const truncateAddress = (addr) => addr ? addr.slice(0,6) + "..." + addr.slice(-4) : "";
+export const truncateAddress = (addr) => {
+    if (!addr || typeof addr !== 'string') return '';
+    const trimmed = addr.trim();
+    if (trimmed.length <= 10) return trimmed;
+    return trimmed.slice(0, 6) + '...' + trimmed.slice(-4);
+};
 
 /**
  * Describe a lock duration in blocks with an estimated day count appended.

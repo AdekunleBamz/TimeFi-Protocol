@@ -161,7 +161,11 @@ export const formatDuration = (secs) => {
 };
 
 /** Returns a compact locale number string (e.g. 1,234,567). */
-export const formatNumber = (n) => Number(n).toLocaleString();
+export const formatNumber = (n) => {
+    if (n === undefined || n === null) return '0';
+    const num = Number(n);
+    return Number.isFinite(num) ? num.toLocaleString() : '0';
+};
 
 /** Shortens a Stacks transaction ID to first 8 + last 4 chars. */
 export const formatTxId = (txId) => {

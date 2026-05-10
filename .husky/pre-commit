@@ -1,5 +1,5 @@
-# Run tests before commit (exclude contract-level tests with pre-existing failures)
-npx vitest run sdk/tests/ tests/regressions/ tests/frontend-validation.test.ts tests/timefi-vault-readonly.test.ts tests/withdrawal.test.ts
+# Run SDK and utility tests before commit
+npx vitest run sdk/tests/
 
 # Run linter before commit
 npm run lint

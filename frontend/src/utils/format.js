@@ -141,8 +141,12 @@ export const formatFeeAmount = (fee) => Number(fee).toLocaleString() + " uSTX";
 
 export const formatVaultId = (id) => "Vault #" + String(id).padStart(4,"0");
 
-/** Formats a microSTX amount as a rounded STX string with 2 decimal places. */
-export const formatStxShort = (microStx) => (Number(microStx) / 1e6).toFixed(2) + ' STX';
+/** Formats a microSTX amount as a rounded STX string with 2 decimal places. Returns '0.00 STX' for invalid input. */
+export const formatStxShort = (microStx) => {
+    if (microStx === undefined || microStx === null) return '0.00 STX';
+    const n = Number(microStx);
+    return (Number.isFinite(n) ? (n / 1e6).toFixed(2) : '0.00') + ' STX';
+};
 
 /** Formats a block count as an approximate day range string, e.g. "~30 days". */
 export const formatBlocksApprox = (blocks) => `~${Math.round(Number(blocks) / 144)} days`;

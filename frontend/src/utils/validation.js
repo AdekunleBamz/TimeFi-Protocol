@@ -313,7 +313,11 @@ export const isValidBlockCount = (v) => {
 };
 
 /** Check that a value is a number in the 0–10000 basis-points range. */
-export const isValidBps = (v) => Number(v) >= 0 && Number(v) <= 10000;
+export const isValidBps = (v) => {
+    if (v === undefined || v === null) return false;
+    const n = Number(v);
+    return Number.isFinite(n) && n >= 0 && n <= 10000;
+};
 
 /** Check that a value is a positive integer (valid vault ID). */
 export const isValidVaultId = (v) => Number.isInteger(Number(v)) && Number(v) > 0;

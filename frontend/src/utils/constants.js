@@ -258,6 +258,18 @@ export const MAX_SLIPPAGE_BPS = 500;
 
 export const LOCK_EXTENSION_BLOCKS = 144;
 
+/**
+ * MAX_PENDING_TRANSACTIONS - Maximum number of pending transactions tracked in UI.
+ * @type {number}
+ */
+export const MAX_PENDING_TRANSACTIONS = 5;
+
+/**
+ * VAULT_NOTE_MAX_LENGTH - Maximum character length for vault notes/labels.
+ * @type {number}
+ */
+export const VAULT_NOTE_MAX_LENGTH = 80;
+
 export const MIN_LOCK_BLOCKS = 6;
 
 export const MAX_LOCK_BLOCKS = 52560;

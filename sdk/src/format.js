@@ -39,10 +39,6 @@ export const formatSTX = (amountMicroStx) => {
         const normalizedRawValue = typeof rawValue === 'string' ? rawValue.replace(/,/g, '').trim() : rawValue;
         const value = Number(normalizedRawValue);
         if (!Number.isFinite(value)) return '0.000000';
-
-        // Convert to Number safely, handles string, bigint, etc.
-        const value = Number(rawValue);
-        if (isNaN(value)) return '0.000000';
         
         const stx = value / 1_000_000;
         return stx.toLocaleString(undefined, {
@@ -70,28 +66,33 @@ export const formatAddress = (stacksAddress, prefixLength = 4, suffixLength = 4)
     return `${normalizedAddress.slice(0, prefixLength)}...${normalizedAddress.slice(-suffixLength)}`;
 };
 
-export const formatNumber = (val) => {
-    if (val === undefined || val === null) return '0';
-    const num = Number(val);
-    return isNaN(num) ? '0' : num.toLocaleString();
+export const formatNumber = (val, decimals = 2) => {
+    const safeDec = !Number.isInteger(decimals) ? 2 : decimals < 0 ? 2 : decimals > 20 ? 20 : decimals;
+    if (val === undefined || val === null) return (0).toLocaleString(undefined, { minimumFractionDigits: safeDec, maximumFractionDigits: safeDec });
+    const cleaned = typeof val === 'string' ? val.replace(/,/g, '').trim() : val;
+    const num = Number(cleaned);
+    if (isNaN(num) || !isFinite(num)) return (0).toLocaleString(undefined, { minimumFractionDigits: safeDec, maximumFractionDigits: safeDec });
+    return num.toLocaleString(undefined, { minimumFractionDigits: safeDec, maximumFractionDigits: safeDec });
 };
 
 export const formatPercent = (val, decimals = 2) => {
-    if (val === undefined || val === null) return '0%';
-    const num = Number(val);
-    if (isNaN(num)) return '0%';
-    return (num * 100).toFixed(decimals) + '%';
+    const safeDec = !Number.isInteger(decimals) ? 2 : decimals < 0 ? 2 : decimals > 20 ? 20 : decimals;
+    if (val === undefined || val === null) return (0).toFixed(safeDec) + '%';
+    const cleaned = typeof val === 'string' ? val.replace(/,/g, '').trim() : val;
+    const num = Number(cleaned);
+    if (isNaN(num) || !isFinite(num)) return (0).toFixed(safeDec) + '%';
+    return num.toLocaleString(undefined, { minimumFractionDigits: safeDec, maximumFractionDigits: safeDec }) + '%';
 };
 
 export const formatDate = (date) => {
-    if (!date) return '--';
+    if (date === undefined || date === null || typeof date === 'boolean' || (typeof date === 'number' && isNaN(date))) return '--';
     const d = new Date(date);
     if (isNaN(d.getTime())) return '--';
     return d.toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
-    }).format(dateInstance);
+    });
 }
 
 /**
@@ -107,28 +108,25 @@ export function formatRelativeTime(dateToFormat) {
     const dateInstance = new Date(dateToFormat);
     if (isNaN(dateInstance.getTime())) return '--';
 
+    const diffInSeconds = Math.floor((Date.now() - dateInstance.getTime()) / 1000);
+    const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
+
     // Handle future dates
     if (diffInSeconds < -1) {
         const absDiff = Math.abs(diffInSeconds);
-        if (absDiff < 60) return 'in a few seconds';
-        if (absDiff < 3600) return `in ${Math.floor(absDiff / 60)}m`;
-        if (absDiff < 86400) return `in ${Math.floor(absDiff / 3600)}h`;
-        return `in ${Math.floor(absDiff / 86400)}d`;
+        if (absDiff < 60) return rtf.format(-Math.round(absDiff), 'second');
+        if (absDiff < 3600) return rtf.format(-Math.floor(absDiff / 60), 'minute');
+        if (absDiff < 86400) return rtf.format(-Math.floor(absDiff / 3600), 'hour');
+        return rtf.format(-Math.floor(absDiff / 86400), 'day');
     }
 
-    if (diffInSeconds < 5) return 'just now';
-    if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
-    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
-    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
-    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
-
-    if (Math.abs(secondsDiff) < 60) return rtf.format(secondsDiff, 'second');
-    const minutesDiff = Math.floor(secondsDiff / 60);
-    if (Math.abs(minutesDiff) < 60) return rtf.format(minutesDiff, 'minute');
+    if (diffInSeconds < 60) return rtf.format(-Math.round(diffInSeconds), 'second');
+    const minutesDiff = Math.floor(diffInSeconds / 60);
+    if (minutesDiff < 60) return rtf.format(-minutesDiff, 'minute');
     const hoursDiff = Math.floor(minutesDiff / 60);
-    if (Math.abs(hoursDiff) < 24) return rtf.format(hoursDiff, 'hour');
+    if (hoursDiff < 24) return rtf.format(-hoursDiff, 'hour');
     const daysDiff = Math.floor(hoursDiff / 24);
-    return rtf.format(daysDiff, 'day');
+    return rtf.format(-daysDiff, 'day');
 }
 
 /**

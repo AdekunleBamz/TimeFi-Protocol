@@ -59,9 +59,13 @@ export const lockProgress = (depositHeight, lockPeriod, currentHeight) => {
 /** Converts a number of weeks to the equivalent block count (Stacks mainnet). */
 export const weeksToBlocks = (weeks) => Math.round(Number(weeks) * 1008);
 
-/** Returns the net deposit after applying a basis-point fee, floored to integer. */
-export const netDeposit = (amount, feeBps) =>
-  Math.floor(Number(amount) - Math.floor(Number(amount) * Number(feeBps) / 10000));
+/** Returns the net deposit amount after fee deduction. Returns 0 for invalid inputs. */
+export const netDeposit = (amount, feeBps) => {
+    const a = Number(amount);
+    const b = Number(feeBps);
+    if (!Number.isFinite(a) || !Number.isFinite(b) || b < 0) return 0;
+    return Math.floor(a - Math.floor(a * b / 10000));
+};
 
 /** Returns true when the microSTX amount meets or exceeds the minimum deposit. */
 export const meetsMinDeposit = (amount, minDeposit) => Number(amount) >= Number(minDeposit);

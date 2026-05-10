@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * useMediaQuery - Hook for checking if a CSS media query matches.

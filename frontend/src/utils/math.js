@@ -142,10 +142,20 @@ export const lockProgress = (depositHeight, lockPeriod, currentHeight) => {
   return Math.round((elapsed / total) * 100);
 };
 
-/** Converts a number of weeks to the equivalent block count (Stacks mainnet). */
+/**
+ * weeksToBlocks - Convert weeks to the equivalent Stacks mainnet block count.
+ * Uses 1008 blocks per week (144 blocks/day × 7 days).
+ * @param {number|string} weeks - Number of weeks
+ * @returns {number} Rounded block count
+ */
 export const weeksToBlocks = (weeks) => Math.round(Number(weeks) * 1008);
 
-/** Returns the net deposit amount after fee deduction. Returns 0 for invalid inputs. */
+/**
+ * netDeposit - Calculate the vault deposit amount after deducting the protocol fee.
+ * @param {number|string} amount - Gross amount in micro-STX
+ * @param {number|string} feeBps - Fee rate in basis points
+ * @returns {number} Net deposit in micro-STX, or 0 for invalid inputs
+ */
 export const netDeposit = (amount, feeBps) => {
     const a = Number(amount);
     const b = Number(feeBps);

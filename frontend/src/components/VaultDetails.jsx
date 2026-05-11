@@ -159,6 +159,10 @@ export function VaultDetails() {
     };
   }, [normalizedVault, vaultStatus, isOwner]);
 
+  /**
+   * handleWithdraw - Submit a normal vault withdrawal transaction.
+   * Shows success/cancel/error toasts and refreshes vault data on completion.
+   */
   const handleWithdraw = async () => {
     try {
       await withdraw(vaultId, {
@@ -173,6 +177,10 @@ export function VaultDetails() {
     }
   };
 
+  /**
+   * handleClaimRewards - Submit a rewards claim transaction.
+   * Shows success/cancel/error toasts and refreshes vault data on completion.
+   */
   const handleClaimRewards = async () => {
     try {
       await claimRewards(vaultId, {
@@ -187,6 +195,10 @@ export function VaultDetails() {
     }
   };
 
+  /**
+   * handleEmergencyWithdraw - Submit an emergency withdrawal after user confirmation.
+   * Warns that penalties may apply and bypasses the normal lock schedule.
+   */
   const handleEmergencyWithdraw = async () => {
     const proceed = window.confirm(
       'Emergency withdraw can include penalties and bypasses the normal unlock schedule. Continue?'

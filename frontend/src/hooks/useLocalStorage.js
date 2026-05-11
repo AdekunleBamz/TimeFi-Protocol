@@ -14,7 +14,7 @@ import { useState, useEffect, useCallback } from 'react';
  * @returns {[T, Function]} Tuple of the persisted value and its setter
  */
 export function useLocalStorage(key, initialValue) {
-    // Get from local storage then parse stored json or return initialValue
+    // Get from local storage then parse stored JSON or return initialValue
     const readValue = useCallback(() => {
         if (typeof window === 'undefined') return initialValue;
 

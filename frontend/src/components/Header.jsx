@@ -23,7 +23,9 @@ export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  /** Uppercased network label derived from the VITE_NETWORK environment variable. */
   const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
+  /** Human-readable current page title derived from the URL pathname. */
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`
     : location.pathname === '/404'

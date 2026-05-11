@@ -97,6 +97,7 @@ function ToastContainer({ toasts, onRemove }) {
 function ToastItem({ toast, onRemove }) {
   const { id, message, variant, title, action } = toast;
 
+  /** Icon character keyed by toast variant for quick visual identification. */
   const icons = {
     success: '✓',
     error: '✕',

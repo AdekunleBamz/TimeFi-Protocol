@@ -38,8 +38,11 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   const [lockPeriod, setLockPeriod] = useState(null);
   const [errors, setErrors] = useState({});
 
+  /** Wallet balance in STX units (converted from microSTX). */
   const balanceInSTX = balance ? balance / 1_000_000 : 0;
+  /** Fee reserve in STX for vault creation transaction. */
   const feeReserveSTX = estimateFee('create-vault') / 1_000_000;
+  /** Maximum STX the user can lock after reserving gas fees. */
   const spendableBalance = Math.max(balanceInSTX - feeReserveSTX, 0);
   const selectedPeriod = useMemo(
     () => Object.values(LOCK_PERIODS).find((period) => period.blocks === lockPeriod),

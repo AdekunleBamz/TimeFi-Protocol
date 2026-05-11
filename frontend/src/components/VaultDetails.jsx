@@ -64,11 +64,13 @@ export function VaultDetails() {
     return Math.max(normalizedVault.unlockHeight - blockHeight, 0);
   }, [normalizedVault, blockHeight]);
 
+  /** Remaining lock time expressed as seconds (blocks × 600 s average block time). */
   const countdownSeconds = useMemo(() => {
     if (blocksRemaining === null || blocksRemaining === undefined) return null;
     return blocksRemaining * 600;
   }, [blocksRemaining]);
 
+  /** Human-readable approximate remaining time label (e.g. "~2d 4h" or "Ready now"). */
   const approximateRemainingLabel = useMemo(() => {
     if (countdownSeconds === null || countdownSeconds === undefined) return '--';
     if (countdownSeconds <= 0) return 'Ready now';

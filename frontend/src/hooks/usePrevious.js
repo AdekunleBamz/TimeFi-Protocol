@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 /**
- * Hook to store previous value of a variable.
- * Returns undefined on first render, then the previous value on subsequent renders.
+ * usePrevious - Stores the previous value of a variable.
+ *
+ * Returns `undefined` on the first render, then the value from the previous
+ * render on all subsequent renders.
+ *
  * @template T
  * @param {T} value - The value to track
  * @returns {T|undefined} The value from the previous render

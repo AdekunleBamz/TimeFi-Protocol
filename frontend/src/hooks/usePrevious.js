@@ -49,7 +49,14 @@ export function useValueChange(value, callback) {
 }
 
 /**
- * Hook for managing history (undo/redo)
+ * useUndoRedo - Manages a value with undo/redo history.
+ *
+ * Tracks a history stack and a pointer so callers can step backward
+ * (undo) and forward (redo) through previous states.
+ *
+ * @template T
+ * @param {T} initialState - Starting state value
+ * @returns {{ state: T, set: Function, undo: Function, redo: Function, canUndo: boolean, canRedo: boolean }}
  */
 export function useUndoRedo(initialState) {
     const [state, setState] = useState(initialState);

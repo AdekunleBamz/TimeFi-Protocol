@@ -72,6 +72,14 @@ export function CreateVaultForm({ onSuccess, onClose }) {
         ? 'Choose a lock period'
         : 'Transaction opens in your wallet';
 
+  /**
+   * handleSubmit - Validate input and submit the create-vault contract call.
+   *
+   * Validates amount and lock period before opening the Stacks wallet transaction.
+   * Shows toast feedback on success, cancel, or error; resets form on success.
+   *
+   * @param {React.FormEvent} e - Form submission event
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
 

@@ -35,10 +35,20 @@ export class ErrorBoundary extends Component {
     this.state = { hasError: false, error: null, errorInfo: null };
   }
 
+  /**
+   * getDerivedStateFromError - Update state to trigger error fallback UI.
+   * @param {Error} error - The thrown error
+   * @returns {{ hasError: boolean, error: Error }}
+   */
   static getDerivedStateFromError(error) {
     return { hasError: true, error };
   }
 
+  /**
+   * componentDidCatch - Log the error and call the optional onError prop.
+   * @param {Error} error - The thrown error
+   * @param {React.ErrorInfo} errorInfo - Component stack information
+   */
   componentDidCatch(error, errorInfo) {
     this.setState({ errorInfo });
 

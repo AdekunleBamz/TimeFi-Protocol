@@ -21,7 +21,12 @@ export const stxToMicroStx = (v) => {
     return Number.isFinite(n) ? Math.round(n * 1e6) : 0;
 };
 
-/** Calculates the fee for a given amount and basis points. Returns 0 for invalid inputs. */
+/**
+ * calcFee - Calculate the protocol fee for a given amount and fee rate.
+ * @param {number|string} amount - Amount in micro-STX
+ * @param {number|string} bps - Fee rate in basis points (100 bps = 1%)
+ * @returns {number} Fee in micro-STX rounded down, or 0 for invalid inputs
+ */
 export const calcFee = (amount, bps) => {
     const a = Number(amount);
     const b = Number(bps);
@@ -29,8 +34,20 @@ export const calcFee = (amount, bps) => {
     return Math.floor(a * b / 10000);
 };
 
+/**
+ * calcNetAmount - Return the amount after subtracting the basis-point fee.
+ * @param {number|string} amount - Amount in micro-STX
+ * @param {number|string} bps - Fee rate in basis points
+ * @returns {number} Net amount after fee deduction
+ */
 export const calcNetAmount = (amount, bps) => Number(amount) - Math.floor(Number(amount) * Number(bps) / 10000);
 
+/**
+ * blocksToSeconds - Convert a block count to an estimated duration in seconds.
+ * Uses the 10-minute (600 s) Stacks mainnet block target.
+ * @param {number|string} blocks - Number of Stacks blocks
+ * @returns {number} Estimated duration in seconds
+ */
 export const blocksToSeconds = (blocks) => Number(blocks) * 600;
 
 export const secondsToBlocks = (secs) => Math.ceil(Number(secs) / 600);

@@ -41,7 +41,7 @@ export function ConfirmModal({
   description,
   confirmText = 'Confirm',
   cancelText = 'Cancel',
-  variant = 'primary', // 'primary' or 'danger'
+  variant = 'primary', // 'primary' for safe actions, 'danger' for destructive ones
   loading = false,
 }) {
 

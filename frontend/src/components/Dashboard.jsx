@@ -32,7 +32,7 @@ export function Dashboard() {
   const [vaultSearch, setVaultSearch] = useState('');
   const [vaultSort, setVaultSort] = useState('newest');
   
-  // Fetch user vaults
+  // Fetch user vaults when the wallet is connected
   const { data: vaultIds, loading: vaultsLoading } = useReadOnly(
     'get-user-vaults',
     address ? [address] : null,

@@ -15,6 +15,10 @@ import { Skeleton } from './Skeleton';
 import { Tooltip } from './Tooltip';
 import './VaultDetails.css';
 
+/**
+ * Active network resolved from the VITE_NETWORK env variable.
+ * Defaults to 'mainnet' when the variable is absent or not 'testnet'.
+ */
 const ACTIVE_NETWORK =
   String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'testnet'
     ? 'testnet'

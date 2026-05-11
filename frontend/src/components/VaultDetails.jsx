@@ -85,6 +85,7 @@ export function VaultDetails() {
     return `~${Math.ceil(countdownSeconds / 3600)}h`;
   }, [countdownSeconds]);
 
+  /** Derived vault status string: 'withdrawn', 'emergency', 'unlocked', or 'locked'. */
   const vaultStatus = useMemo(() => {
     if (!normalizedVault) return null;
 
@@ -94,6 +95,7 @@ export function VaultDetails() {
     return 'locked';
   }, [normalizedVault, blocksRemaining]);
 
+  /** Lock completion percentage (0–100) used to fill the progress bar. */
   const progressPercent = useMemo(() => {
     if (!normalizedVault) return 0;
     if (blocksRemaining === null || blocksRemaining === undefined) return 0;

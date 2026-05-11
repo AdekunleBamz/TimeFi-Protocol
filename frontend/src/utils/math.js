@@ -110,14 +110,31 @@ export const isValidFeeBps = (bps) => {
     return Number.isInteger(n) && n >= 0 && n <= 10000;
 };
 
-/** Returns the number of blocks remaining until a vault unlocks; 0 if already past. */
+/**
+ * blocksRemaining - Calculate blocks left until a vault unlocks.
+ * @param {number|string} depositHeight - Block height when the vault was created
+ * @param {number|string} lockPeriod - Lock duration in blocks
+ * @param {number|string} currentHeight - Current Stacks block height
+ * @returns {number} Blocks remaining (0 if already past the unlock point)
+ */
 export const blocksRemaining = (depositHeight, lockPeriod, currentHeight) =>
   Math.max(0, Number(depositHeight) + Number(lockPeriod) - Number(currentHeight));
 
-/** Returns the unlock block height for a vault. */
+/**
+ * unlockHeight - Calculate the block height at which a vault becomes unlocked.
+ * @param {number|string} depositHeight - Block height when the vault was created
+ * @param {number|string} lockPeriod - Lock duration in blocks
+ * @returns {number} Absolute unlock block height
+ */
 export const unlockHeight = (depositHeight, lockPeriod) => Number(depositHeight) + Number(lockPeriod);
 
-/** Returns how far along (0-100) the lock period has progressed. */
+/**
+ * lockProgress - Return how far along the lock period is as a 0–100 percentage.
+ * @param {number|string} depositHeight - Block height when the vault was created
+ * @param {number|string} lockPeriod - Total lock duration in blocks
+ * @param {number|string} currentHeight - Current Stacks block height
+ * @returns {number} Progress percentage clamped to [0, 100]
+ */
 export const lockProgress = (depositHeight, lockPeriod, currentHeight) => {
   const total = Number(lockPeriod);
   if (total <= 0) return 100;

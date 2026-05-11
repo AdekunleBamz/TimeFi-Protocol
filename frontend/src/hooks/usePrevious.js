@@ -19,7 +19,11 @@ export function usePrevious(value) {
 }
 
 /**
- * Hook to detect if a value has changed
+ * useHasChanged - Returns true when the tracked value differs from its previous render.
+ *
+ * @template T
+ * @param {T} value - Value to monitor for changes
+ * @returns {boolean} `true` if the value changed since the last render
  */
 export function useHasChanged(value) {
     const prevValue = usePrevious(value);

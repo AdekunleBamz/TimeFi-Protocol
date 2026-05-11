@@ -50,6 +50,12 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
     return (microStx / 1_000_000).toFixed(6);
   };
 
+  /**
+   * Formats a duration in seconds into a human-readable string (e.g. "2d 4h 30m").
+   * Returns "Ready to withdraw" when `seconds` is zero or negative.
+   * @param {number} seconds - Remaining lock time in seconds
+   * @returns {string} Human-readable time string
+   */
   const formatTime = (seconds) => {
     if (seconds <= 0) return 'Ready to withdraw';
     

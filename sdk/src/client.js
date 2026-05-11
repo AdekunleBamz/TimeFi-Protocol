@@ -82,17 +82,20 @@ export class TimeFiClient {
     }
 
     async getVault(vaultId) {
-        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
+        if (vaultId === undefined || vaultId === null) throw new Error('Vault ID is required');
+        this.#validateVaultId(vaultId);
         return this.callReadOnly('get-vault', [uintCV(vaultId)]);
     }
 
     async getTimeRemaining(vaultId) {
-        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
+        if (vaultId === undefined || vaultId === null) throw new Error('Vault ID is required');
+        this.#validateVaultId(vaultId);
         return this.callReadOnly('get-time-remaining', [uintCV(vaultId)]);
     }
 
     async canWithdraw(vaultId) {
-        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
+        if (vaultId === undefined || vaultId === null) throw new Error('Vault ID is required');
+        this.#validateVaultId(vaultId);
         return this.callReadOnly('can-withdraw', [uintCV(vaultId)]);
     }
 
@@ -723,12 +726,13 @@ export class TimeFiClient {
     }
 
     getWithdrawOptions(vaultId) {
-        if (vaultId === undefined || vaultId === null) throw new Error('vaultId is required');
+        if (vaultId === undefined || vaultId === null) throw new Error('Vault ID is required');
+        this.#validateVaultId(vaultId);
         return {
             contractAddress: this.#contractAddress,
             contractName: CONTRACT_NAMES.VAULT,
             functionName: 'request-withdraw',
-            functionArgs: [uintCV(id)],
+            functionArgs: [uintCV(vaultId)],
             network: this.#network,
             anchorMode: AnchorMode.Any,
             postConditionMode: PostConditionMode.Deny,

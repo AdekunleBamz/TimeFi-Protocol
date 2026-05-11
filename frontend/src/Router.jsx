@@ -35,17 +35,6 @@ function PageLoader() {
   );
 }
 
-function ScrollManager() {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.hash) return;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [location.pathname, location.hash]);
-
-  return null;
-}
-
 /**
  * ScrollManager - Scroll to top on route change (except hash navigation).
  * @returns {null} No visual output

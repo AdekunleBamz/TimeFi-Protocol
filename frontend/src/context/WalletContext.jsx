@@ -1,13 +1,17 @@
-import { createContext, useContext, useState, useCallback } from 'react';
-import { showConnect, disconnect } from '@stacks/connect';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { showConnect, AppConfig, UserSession } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 
 const WalletContext = createContext(null);
 
 const appDetails = {
   name: 'TimeFi Protocol',
-  icon: '/logo.svg',
+  icon: `${typeof window !== 'undefined' ? window.location.origin : ''}/logo.svg`,
 };
+
+// Stable app config and user session — shared across auth + tx calls
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+export const userSession = new UserSession({ appConfig });
 
 export function WalletProvider({ children }) {
   const [userData, setUserData] = useState(null);
@@ -15,11 +19,25 @@ export function WalletProvider({ children }) {
 
   const network = new StacksMainnet();
 
+  // Handle redirect-back from Leather / Hiro after auth confirm
+  useEffect(() => {
+    if (userSession.isSignInPending()) {
+      userSession.handlePendingSignIn().then((data) => {
+        setUserData(data);
+      }).catch(() => {
+        // auth response invalid or cancelled — ignore
+      });
+    } else if (userSession.isUserSignedIn()) {
+      setUserData(userSession.loadUserData());
+    }
+  }, []);
+
   const connect = useCallback(() => {
     setIsConnecting(true);
     showConnect({
       appDetails,
-      onFinish: ({ userSession }) => {
+      userSession,
+      onFinish: () => {
         const data = userSession.loadUserData();
         setUserData(data);
         setIsConnecting(false);
@@ -31,9 +49,11 @@ export function WalletProvider({ children }) {
   }, []);
 
   const disconnectWallet = useCallback(() => {
-    disconnect();
+    userSession.signUserOut();
     setUserData(null);
   }, []);
+
+  const stxAddress = userData?.profile?.stxAddress?.mainnet || null;
 
   const value = {
     userData,
@@ -42,7 +62,9 @@ export function WalletProvider({ children }) {
     connect,
     disconnect: disconnectWallet,
     network,
-    stxAddress: userData?.profile?.stxAddress?.mainnet || null,
+    stxAddress,
+    address: stxAddress,
+    balance: null,
   };
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
 import { CopyButton } from './CopyButton';
@@ -22,6 +22,7 @@ import './Header.css';
 export function Header() {
   const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const networkLabel = (import.meta.env.VITE_NETWORK || 'mainnet').toUpperCase();
   const pageLabel = location.pathname.startsWith('/vault/')
     ? `Vault ${location.pathname.replace('/vault/', '#')}`

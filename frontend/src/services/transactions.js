@@ -9,10 +9,7 @@ import {
 import { openContractCall } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { CONTRACT_ADDRESS, CONTRACT_NAMES } from '../config/contracts';
-
-const STACKS_NETWORK = import.meta.env.VITE_NETWORK === 'mainnet'
-  ? new StacksMainnet()
-  : new StacksTestnet();
+import { userSession } from '../context/WalletContext';
 
 /**
  * Transaction Service - Build and submit Stacks blockchain transactions.
@@ -86,6 +83,7 @@ function getContractCallDefaultOptions(contractName, functionName, functionArgs,
     contractName,
     functionName,
     functionArgs,
+    userSession,
     onFinish: (data) => {
       logTxEvent(`${functionName} transaction:`, data.txId);
       onFinish?.(data);

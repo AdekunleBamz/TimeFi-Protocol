@@ -8,5 +8,15 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'stacks-vendor': ['@stacks/connect', '@stacks/network', '@stacks/transactions'],
+        },
+      },
+    },
   },
 });

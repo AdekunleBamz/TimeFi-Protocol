@@ -43,6 +43,9 @@ export function WalletProvider({ children }) {
     }
   }, []);
 
+  /**
+   * connect - Open the Stacks wallet connection modal and update auth state on success.
+   */
   const connect = useCallback(() => {
     setIsConnecting(true);
     showConnect({
@@ -59,6 +62,9 @@ export function WalletProvider({ children }) {
     });
   }, []);
 
+  /**
+   * disconnectWallet - Sign the user out and clear wallet state.
+   */
   const disconnectWallet = useCallback(() => {
     userSession.signUserOut();
     setUserData(null);
@@ -85,6 +91,13 @@ export function WalletProvider({ children }) {
   );
 }
 
+/**
+ * useWallet - Consume the WalletContext.
+ *
+ * Must be used inside a `<WalletProvider>`. Throws if called outside.
+ *
+ * @returns {{ userData: Object|null, isConnected: boolean, isConnecting: boolean, connect: Function, disconnect: Function, network: StacksMainnet, stxAddress: string|null, address: string|null, balance: null }}
+ */
 export function useWallet() {
   const context = useContext(WalletContext);
   if (!context) {

@@ -41,6 +41,11 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
     return () => clearInterval(interval);
   }, [vaultId, getVault, getTimeRemaining, canWithdraw]);
 
+  /**
+   * Converts a microSTX value to a human-readable STX string with 6 decimals.
+   * @param {number} microStx - Amount in microSTX (1 STX = 1,000,000 microSTX)
+   * @returns {string} Formatted STX amount
+   */
   const formatSTX = (microStx) => {
     return (microStx / 1_000_000).toFixed(6);
   };

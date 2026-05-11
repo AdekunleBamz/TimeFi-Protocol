@@ -8,7 +8,7 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import './Toast.css';
 
-// Create context for toast notifications
+/** Internal React context for sharing toast dispatch with child components. */
 const ToastContext = createContext(null);
 
 /**

@@ -31,7 +31,13 @@ export function useHasChanged(value) {
 }
 
 /**
- * Hook to execute a callback when a value changes
+ * useValueChange - Executes a callback whenever the tracked value changes.
+ *
+ * Does not fire on the initial render — only on subsequent changes.
+ *
+ * @template T
+ * @param {T} value - Value to watch for changes
+ * @param {Function} callback - Called with `(newValue, previousValue)` on change
  */
 export function useValueChange(value, callback) {
     const prevValue = usePrevious(value);

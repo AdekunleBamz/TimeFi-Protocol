@@ -66,6 +66,7 @@ export function TransactionList({ transactions = [], loading = false }) {
 function TransactionItem({ transaction }) {
   const { type, amount, timestamp, status, txId, vaultId } = transaction;
 
+  /** Display configuration (label, icon, colour) keyed by transaction type. */
   const typeConfig = {
     deposit: { label: 'Deposit', icon: '↓', color: 'green' },
     withdraw: { label: 'Withdraw', icon: '↑', color: 'blue' },

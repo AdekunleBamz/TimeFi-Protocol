@@ -1,5 +1,14 @@
 import { useState } from 'react';
 
+/**
+ * App - Root application component for TimeFi Protocol.
+ *
+ * Renders the top-level layout including header, wallet connection
+ * prompt (when disconnected), vault creation form (when connected),
+ * and footer.
+ *
+ * @returns {JSX.Element}
+ */
 function App() {
   const [connected, setConnected] = useState(false);
 

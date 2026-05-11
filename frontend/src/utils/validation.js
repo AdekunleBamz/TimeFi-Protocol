@@ -1,11 +1,26 @@
 import { LOCK_PERIODS, MIN_DEPOSIT, MAX_DEPOSIT } from '../config/contracts';
 
+/** Micro-STX per STX conversion factor (1 STX = 1 000 000 micro-STX). */
 const MICROSTX_PER_STX = 1_000_000;
 
+/**
+ * protocolUsesStxAmountUnits - Return true when the protocol contract accepts
+ * plain STX amounts rather than micro-STX.
+ * @returns {boolean}
+ */
 function protocolUsesStxAmountUnits() {
   return Number.isFinite(MIN_DEPOSIT) && MIN_DEPOSIT > 0 && MIN_DEPOSIT < 1;
 }
 
+/**
+ * toMicroStxComparable - Normalise a user-supplied amount to micro-STX for comparison.
+ *
+ * If the protocol uses STX-unit amounts (MIN_DEPOSIT < 1), the value is
+ * scaled by 1 000 000. Otherwise the raw numeric value is returned.
+ *
+ * @param {number|string} value - Amount to normalise
+ * @returns {number} Micro-STX comparable value, or NaN for invalid input
+ */
 function toMicroStxComparable(value) {
   const numericValue = Number(value);
   if (!Number.isFinite(numericValue)) {

@@ -181,17 +181,39 @@ export const meetsMinDeposit = (amount, minDeposit) => Number(amount) >= Number(
 export const isUnlocked = (depositHeight, lockPeriod, currentHeight) =>
   Number(currentHeight) >= Number(depositHeight) + Number(lockPeriod);
 
-/** Converts microSTX to STX as a fixed-decimal string. */
+/**
+ * microStxToStxFixed - Convert micro-STX to STX as a fixed-decimal string.
+ * @param {number|string} v - Amount in micro-STX
+ * @param {number} [decimals=2] - Decimal places in the output string
+ * @returns {string} STX amount with fixed decimal places (e.g. "1.50")
+ */
 export const microStxToStxFixed = (v, decimals = 2) => (Number(v) / 1e6).toFixed(decimals);
 
-/** Returns estimated seconds remaining until a vault unlocks. */
+/**
+ * secondsRemaining - Estimate seconds until a vault unlocks.
+ * @param {number|string} depositHeight - Block height when the vault was created
+ * @param {number|string} lockPeriod - Lock duration in blocks
+ * @param {number|string} currentHeight - Current Stacks block height
+ * @param {number} [blockTimeSec=600] - Approximate block time in seconds
+ * @returns {number} Estimated seconds remaining (0 if already unlocked)
+ */
 export const secondsRemaining = (depositHeight, lockPeriod, currentHeight, blockTimeSec = 600) =>
   Math.max(0, blocksRemaining(depositHeight, lockPeriod, currentHeight) * blockTimeSec);
 
-/** Clamps a number between lo and hi (inclusive). */
+/**
+ * clampNum - Constrain a number between lo and hi (inclusive).
+ * @param {number|string} v - Value to clamp
+ * @param {number|string} lo - Lower bound
+ * @param {number|string} hi - Upper bound
+ * @returns {number} Clamped value
+ */
 export const clampNum = (v, lo, hi) => Math.min(Number(hi), Math.max(Number(lo), Number(v)));
 
-/** Returns true when a block height value is a non-negative integer. */
+/**
+ * isValidBlockHeight - Return true when a block height is a non-negative integer.
+ * @param {number|string} h - Value to validate
+ * @returns {boolean}
+ */
 export const isValidBlockHeight = (h) => {
     if (h === undefined || h === null) return false;
     const n = Number(h);

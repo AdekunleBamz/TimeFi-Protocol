@@ -9,7 +9,7 @@ import { Button } from './Button';
 import { Tooltip } from './Tooltip';
 import './ErrorBoundary.css';
 
-const isDevelopment = import.meta.env.DEV;
+/** True when running in Vite dev mode — enables verbose error logging. */\nconst isDevelopment = import.meta.env.DEV;
 
 /**
  * ErrorBoundary - React error boundary component for catching and handling errors.

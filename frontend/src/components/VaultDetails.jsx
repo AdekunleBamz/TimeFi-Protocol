@@ -493,6 +493,15 @@ function getStatusVariant(status) {
   return variants[status] || 'default';
 }
 
+/**
+ * normalizeVault - Normalize a raw vault response into a consistent shape.
+ *
+ * Handles multiple key name formats returned by different contract versions
+ * (camelCase, kebab-case) and coerces types to their expected primitives.
+ *
+ * @param {Object|null} vault - Raw vault data from the contract
+ * @returns {{ amount: number, rewards: number, owner: string, unlockHeight: number, lockDuration: number, createdAt: number, createdHeight: number, withdrawn: boolean, emergencyUnlocked: boolean }|null}
+ */
 function normalizeVault(vault) {
   if (!vault) return null;
 
@@ -509,6 +518,16 @@ function normalizeVault(vault) {
   };
 }
 
+/**
+ * formatCreatedDisplay - Return a human-readable creation date for a vault.
+ *
+ * Checks whether `createdAt` is a Unix timestamp in ms, s, or block height
+ * and returns the most informative label available.
+ *
+ * @param {number} createdAt - Unix timestamp in ms or s, or 0 if unavailable
+ * @param {number} createdHeight - Stacks block height when vault was created
+ * @returns {string} Relative time string or block reference
+ */
 function formatCreatedDisplay(createdAt, createdHeight) {
   if (createdAt > 1_000_000_000_000) {
     return formatRelativeTime(createdAt);

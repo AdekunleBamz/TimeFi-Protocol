@@ -1,12 +1,20 @@
 
-/** Converts microSTX to STX. Returns 0 for invalid inputs. */
+/**
+ * microStxToStx - Convert micro-STX to STX.
+ * @param {number|string} v - Amount in micro-STX
+ * @returns {number} Equivalent STX value, or 0 for invalid input
+ */
 export const microStxToStx = (v) => {
     if (v === undefined || v === null) return 0;
     const n = Number(v);
     return Number.isFinite(n) ? n / 1e6 : 0;
 };
 
-/** Converts STX to microSTX. Returns 0 for invalid inputs. */
+/**
+ * stxToMicroStx - Convert STX to micro-STX.
+ * @param {number|string} v - Amount in STX
+ * @returns {number} Equivalent micro-STX value rounded to nearest integer, or 0 for invalid input
+ */
 export const stxToMicroStx = (v) => {
     if (v === undefined || v === null) return 0;
     const n = Number(v);

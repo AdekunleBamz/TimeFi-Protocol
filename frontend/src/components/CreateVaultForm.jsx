@@ -63,6 +63,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     : 0;
   /** Remaining wallet balance after the lock and fee reserve. */
   const walletLeftAfterLock = Math.max(balanceInSTX - parsedAmount - feeReserveSTX, 0);
+  /** Contextual hint shown below the submit button to guide the user through form completion. */
   const submitHint = !isConnected
     ? 'Connect a wallet to start'
     : !amount

@@ -58,6 +58,12 @@ export function Header() {
     };
   }, [isMenuOpen]);
 
+  /**
+   * Formats a microSTX balance as a human-readable STX string.
+   * Returns '--' when the value is null or undefined.
+   * @param {number|null} bal - Balance in microSTX
+   * @returns {string} Formatted STX amount or '--'
+   */
   const formatBalance = (bal) => {
     if (bal === null || bal === undefined) return '--';
     return (bal / 1_000_000).toLocaleString('en-US', {

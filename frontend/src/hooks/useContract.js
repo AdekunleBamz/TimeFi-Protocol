@@ -19,7 +19,14 @@ const network = import.meta.env.VITE_NETWORK === 'mainnet'
   : new StacksTestnet();
 
 /**
- * Custom hook for interacting with TimeFi vault contract
+ * useContract - Hook for building TimeFi vault contract call options.
+ *
+ * Provides typed builder functions for every write contract entry point.
+ * Each function returns a `txOptions` object ready to pass to the
+ * Stacks Connect `openContractCall` or `openContractDeploy` API — no
+ * transaction is broadcast directly from the hook.
+ *
+ * @returns {{ createVault: Function, withdraw: Function, approveBot: Function, revokeBot: Function, emergencyWithdraw: Function, claimRewards: Function }}
  */
 export function useContract() {
   /**

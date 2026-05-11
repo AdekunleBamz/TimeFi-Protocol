@@ -53,6 +53,7 @@ export function Dashboard() {
     };
   }, [vaultIds]);
 
+  /** Protocol-level metrics rendered in the stats bar at the top of the dashboard. */
   const protocolSnapshot = useMemo(() => ([
     {
       label: 'Protocol TVL',

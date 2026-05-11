@@ -73,49 +73,63 @@ export function useReadOnly() {
   }, [callReadOnly]);
 
   /**
-   * Get total fees collected
+   * getTotalFees - Fetch total protocol fees collected to date.
+   * @returns {Promise<Object>} Accumulated fees in micro-STX
    */
   const getTotalFees = useCallback(async () => {
     return callReadOnly('get-total-fees', []);
   }, [callReadOnly]);
 
   /**
-   * Get total vault count
+   * getVaultCount - Fetch the total number of vaults created.
+   * @returns {Promise<Object>} Vault count as a Clarity uint
    */
   const getVaultCount = useCallback(async () => {
     return callReadOnly('get-vault-count', []);
   }, [callReadOnly]);
 
   /**
-   * Get time remaining for a vault
+   * getTimeRemaining - Fetch the number of blocks remaining until vault unlock.
+   * @param {number} vaultId - Vault identifier
+   * @returns {Promise<Object>} Remaining block count
    */
   const getTimeRemaining = useCallback(async (vaultId) => {
     return callReadOnly('get-time-remaining', [uintCV(vaultId)]);
   }, [callReadOnly]);
 
   /**
-   * Check if vault can be withdrawn
+   * canWithdraw - Check whether a vault is eligible for withdrawal.
+   * @param {number} vaultId - Vault identifier
+   * @returns {Promise<Object>} Boolean Clarity value
    */
   const canWithdraw = useCallback(async (vaultId) => {
     return callReadOnly('can-withdraw', [uintCV(vaultId)]);
   }, [callReadOnly]);
 
   /**
-   * Check if address is vault owner
+   * isVaultOwner - Check whether a principal is the owner of a vault.
+   * @param {number} vaultId - Vault identifier
+   * @param {string} owner - Stacks principal address
+   * @returns {Promise<Object>} Boolean Clarity value
    */
   const isVaultOwner = useCallback(async (vaultId, owner) => {
     return callReadOnly('is-vault-owner', [uintCV(vaultId), principalCV(owner)]);
   }, [callReadOnly]);
 
   /**
-   * Check if address is approved bot
+   * isBot - Check whether a principal is an approved automation bot.
+   * @param {number} vaultId - Vault identifier
+   * @param {string} bot - Stacks principal address
+   * @returns {Promise<Object>} Boolean Clarity value
    */
   const isBot = useCallback(async (vaultId, bot) => {
     return callReadOnly('is-bot', [uintCV(vaultId), principalCV(bot)]);
   }, [callReadOnly]);
 
   /**
-   * Calculate fee for an amount
+   * calculateFee - Calculate the protocol fee for a given STX amount.
+   * @param {number} amount - Amount in micro-STX
+   * @returns {Promise<Object>} Fee amount in micro-STX
    */
   const calculateFee = useCallback(async (amount) => {
     return callReadOnly('calculate-fee', [uintCV(amount)]);

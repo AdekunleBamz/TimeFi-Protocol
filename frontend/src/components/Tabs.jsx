@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext, useId } from 'react';
 import './Tabs.css';
 
-// Context for sharing tab state between components
+/** Internal React context for sharing active tab state between Tabs sub-components. */
 const TabsContext = createContext();
 
 /**

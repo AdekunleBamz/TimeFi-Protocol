@@ -49,14 +49,19 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     [lockPeriod]
   );
   const parsedAmount = Number(amount || 0);
+  /** Estimated AGS rewards based on the selected lock period APY and input amount. */
   const expectedRewards = selectedPeriod && parsedAmount > 0
     ? (parsedAmount * selectedPeriod.apy) / 100
     : 0;
+  /** Number of days until the vault unlocks given the selected lock period. */
   const unlockDays = selectedPeriod ? Math.ceil(selectedPeriod.blocks / 144) : null;
+  /** Absolute block height at which the vault will unlock. */
   const unlockBlock = selectedPeriod && blockHeight ? blockHeight + selectedPeriod.blocks : null;
+  /** Percentage of spendable balance being committed to this vault (0–100). */
   const allocationPercent = spendableBalance > 0
     ? Math.min((parsedAmount / spendableBalance) * 100, 100)
     : 0;
+  /** Remaining wallet balance after the lock and fee reserve. */
   const walletLeftAfterLock = Math.max(balanceInSTX - parsedAmount - feeReserveSTX, 0);
   const submitHint = !isConnected
     ? 'Connect a wallet to start'

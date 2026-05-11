@@ -53,10 +53,12 @@ export function VaultDetails() {
 
   const normalizedVault = useMemo(() => normalizeVault(vault), [vault]);
 
+  /** Whether the connected wallet is the vault owner. */
   const isOwner = useMemo(() => {
     return normalizedVault?.owner === address;
   }, [normalizedVault, address]);
 
+  /** Blocks remaining until the vault lock expires (0 when already past unlock height). */
   const blocksRemaining = useMemo(() => {
     if (!normalizedVault || !blockHeight) return null;
     return Math.max(normalizedVault.unlockHeight - blockHeight, 0);

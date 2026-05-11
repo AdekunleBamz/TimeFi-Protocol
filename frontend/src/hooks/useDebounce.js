@@ -52,7 +52,11 @@ export function useDebouncedCallback(callback, delay = 300) {
 }
 
 /**
- * Alias for useDebounce
+ * useDebouncedValue - Alias for {@link useDebounce}.
+ *
+ * @param {any} value - Value to debounce
+ * @param {number} [delay=300] - Delay in milliseconds
+ * @returns {any} Debounced value
  */
 export function useDebouncedValue(value, delay) {
     return useDebounce(value, delay);

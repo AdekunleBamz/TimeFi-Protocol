@@ -2,7 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useReadOnly } from '../hooks/useReadOnly';
 
 /**
- * VaultCard component displays vault information
+ * VaultCard component displays vault information.
+ *
+ * Fetches and renders vault details including lock status, time remaining,
+ * deposited amount, and action buttons for withdrawal and bot approval.
+ * Polls every 30 seconds to keep time-remaining data fresh.
+ *
+ * @param {Object} props
+ * @param {number|string} props.vaultId - Unique vault identifier
+ * @param {Function} [props.onWithdraw] - Callback invoked when the user initiates withdrawal
+ * @param {Function} [props.onApproveBot] - Callback invoked when the user approves an automation bot
+ * @returns {JSX.Element} VaultCard element
  */
 export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
   const [vault, setVault] = useState(null);

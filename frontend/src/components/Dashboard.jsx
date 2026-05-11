@@ -72,6 +72,7 @@ export function Dashboard() {
     },
   ]), [totalLocked, vaultCount, blockHeight]);
 
+  /** Vault IDs filtered by the current search query and sorted by the active sort option. */
   const filteredVaultIds = useMemo(() => {
     if (!Array.isArray(vaultIds)) return [];
 

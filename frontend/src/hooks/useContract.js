@@ -30,9 +30,10 @@ const network = import.meta.env.VITE_NETWORK === 'mainnet'
  */
 export function useContract() {
   /**
-   * Create a new time-locked vault
-   * @param {number} amount - Amount in microSTX
-   * @param {number} lockDuration - Lock duration in seconds
+   * createVault - Build tx options for creating a new time-locked vault.
+   * @param {number} amount - Deposit amount in micro-STX
+   * @param {number} lockDuration - Lock duration in blocks
+   * @returns {Promise<Object>} Contract call options object
    */
   const createVault = useCallback(async (amount, lockDuration) => {
     if (!Number.isFinite(Number(amount)) || !Number.isFinite(Number(lockDuration))) {
@@ -52,9 +53,10 @@ export function useContract() {
   }, []);
 
   /**
-   * Withdraw from a vault after lock period
+   * withdraw - Build tx options to withdraw from a vault after its lock period.
    * @param {number} vaultId - The vault ID to withdraw from
-   * @throws {Error} if vaultId is not a valid positive number
+   * @returns {Promise<Object>} Contract call options object
+   * @throws {Error} if vaultId is not a valid non-negative number
    */
   const withdraw = useCallback(async (vaultId) => {
     if (!Number.isFinite(Number(vaultId)) || Number(vaultId) < 0) {
@@ -74,9 +76,10 @@ export function useContract() {
   }, []);
 
   /**
-   * Approve a bot to manage vault
+   * approveBot - Build tx options to approve an automation bot for a vault.
    * @param {number} vaultId - The vault ID
-   * @param {string} botAddress - Bot principal address
+   * @param {string} botAddress - Bot principal address (Stacks)
+   * @returns {Promise<Object>} Contract call options object
    */
   const approveBot = useCallback(async (vaultId, botAddress) => {
     const txOptions = {

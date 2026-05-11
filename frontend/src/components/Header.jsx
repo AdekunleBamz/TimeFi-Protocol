@@ -48,6 +48,7 @@ export function Header() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isMenuOpen]);
 
+  // Lock body scroll on mobile when the navigation menu is open
   useEffect(() => {
     if (!isMenuOpen) return undefined;
     const mediaQuery = window.matchMedia('(max-width: 920px)');

@@ -37,7 +37,7 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
     };
 
     fetchVaultData();
-    const interval = setInterval(fetchVaultData, 30000); // Refresh every 30s
+    const interval = setInterval(fetchVaultData, 30000); // Refresh every 30 s to keep lock-timer accurate
     return () => clearInterval(interval);
   }, [vaultId, getVault, getTimeRemaining, canWithdraw]);
 

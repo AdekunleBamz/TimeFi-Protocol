@@ -163,10 +163,21 @@ export const netDeposit = (amount, feeBps) => {
     return Math.floor(a - Math.floor(a * b / 10000));
 };
 
-/** Returns true when the microSTX amount meets or exceeds the minimum deposit. */
+/**
+ * meetsMinDeposit - Check whether an amount satisfies the minimum deposit requirement.
+ * @param {number|string} amount - Amount to check in micro-STX
+ * @param {number|string} minDeposit - Minimum required amount in micro-STX
+ * @returns {boolean}
+ */
 export const meetsMinDeposit = (amount, minDeposit) => Number(amount) >= Number(minDeposit);
 
-/** Returns true when the vault has passed its unlock block. */
+/**
+ * isUnlocked - Return true when the vault's lock period has fully elapsed.
+ * @param {number|string} depositHeight - Block height when the vault was created
+ * @param {number|string} lockPeriod - Lock duration in blocks
+ * @param {number|string} currentHeight - Current Stacks block height
+ * @returns {boolean}
+ */
 export const isUnlocked = (depositHeight, lockPeriod, currentHeight) =>
   Number(currentHeight) >= Number(depositHeight) + Number(lockPeriod);
 

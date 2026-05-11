@@ -2,7 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 
 /**
- * Hook for fetching current Stacks block height
+ * Hook for fetching the current Stacks block height.
+ *
+ * Polls the Hiro API every 60 seconds and exposes the latest block height,
+ * loading state, error, and a manual refetch function.
+ *
+ * @returns {{ blockHeight: number|null, loading: boolean, error: string|null, refetch: Function }}
  */
 export function useBlockHeight() {
     const [blockHeight, setBlockHeight] = useState(null);

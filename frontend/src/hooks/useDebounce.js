@@ -28,9 +28,14 @@ export function useDebounce(value, delay = 300) {
 }
 
 /**
- * Hook that debounces a callback function
+ * useDebouncedCallback - Hook that returns a debounced version of a callback.
+ *
+ * The returned function delays calling `callback` until after `delay` ms
+ * have elapsed since the last invocation.
+ *
  * @param {Function} callback - Function to debounce
- * @param {number} delay - Delay in ms
+ * @param {number} [delay=300] - Delay in milliseconds
+ * @returns {Function} Debounced callback function
  */
 export function useDebouncedCallback(callback, delay = 300) {
     const timeoutRef = useRef();

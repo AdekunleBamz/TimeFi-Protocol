@@ -4,6 +4,10 @@ import { CopyButton } from './CopyButton';
 import { Tooltip } from './Tooltip';
 import './TransactionList.css';
 
+/**
+ * Active network derived from the VITE_NETWORK environment variable.
+ * Used to build the correct Hiro Explorer URL for transaction links.
+ */
 const ACTIVE_NETWORK =
   String(import.meta.env.VITE_NETWORK || 'mainnet').trim().toLowerCase() === 'testnet'
     ? 'testnet'

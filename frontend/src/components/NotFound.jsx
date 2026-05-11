@@ -16,6 +16,7 @@ import './NotFound.css';
  * <Route path="*" element={<NotFound />} />
  */
 export function NotFound() {
+  /** Current browser location — used to display the unmatched path. */
   const location = useLocation();
 
   return (

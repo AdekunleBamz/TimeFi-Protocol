@@ -107,6 +107,14 @@ export function VaultDetails() {
     return Math.min(100, Math.max(0, (elapsed / total) * 100));
   }, [normalizedVault, blocksRemaining]);
 
+  /**
+   * statusBanner - Derive a contextual banner object based on current vault state.
+   *
+   * Returns title, message, and tone for rendering an informational ribbon
+   * at the top of the vault detail view.
+   *
+   * @type {{ title: string, message: string, tone: string }}
+   */
   const statusBanner = useMemo(() => {
     if (!normalizedVault) {
       return {

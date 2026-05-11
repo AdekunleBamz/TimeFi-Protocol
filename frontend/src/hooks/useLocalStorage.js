@@ -41,7 +41,7 @@ export function useLocalStorage(key, initialValue) {
         }
     }, [key, storedValue]);
 
-    // Sync with other tabs
+    // Sync value across browser tabs via the storage event
     useEffect(() => {
         const handleStorageChange = (e) => {
             if (e.key === key && e.newValue !== null) {

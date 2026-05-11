@@ -96,8 +96,9 @@ export function useContract() {
   }, []);
 
   /**
-   * Revoke bot approval
-   * @param {number} vaultId - The vault ID
+   * revokeBot - Build tx options to revoke a previously approved bot.
+   * @param {number} vaultId - The vault ID whose bot approval should be removed
+   * @returns {Promise<Object>} Contract call options object
    */
   const revokeBot = useCallback(async (vaultId) => {
     const txOptions = {

@@ -10,14 +10,24 @@ const network = import.meta.env.VITE_NETWORK === 'mainnet'
   : new StacksTestnet();
 
 /**
- * Custom hook for read-only contract queries
+ * useReadOnly - Hook for invoking read-only TimeFi contract functions.
+ *
+ * Provides typed wrappers around callReadOnlyFunction for every public
+ * read-only entry point exposed by the timefi-vault contract. All calls
+ * are network-aware and return ClarityValue-parsed JSON.
+ *
+ * @returns {{ loading: boolean, error: string|null, getVault: Function, getTVL: Function, getTotalFees: Function, getVaultCount: Function, getTimeRemaining: Function, canWithdraw: Function, isVaultOwner: Function, isBot: Function, calculateFee: Function, callReadOnly: Function }}
  */
 export function useReadOnly() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   /**
-   * Execute a read-only function call
+   * callReadOnly - Execute an arbitrary read-only contract function.
+   * @param {string} functionName - Clarity function name
+   * @param {Array} [functionArgs=[]] - Encoded Clarity arguments
+   * @param {string} [senderAddress] - Optional sender principal
+   * @returns {Promise<Object>} Parsed Clarity value as JSON
    */
   const callReadOnly = useCallback(async (functionName, functionArgs = [], senderAddress) => {
     if (!functionName || typeof functionName !== 'string') {

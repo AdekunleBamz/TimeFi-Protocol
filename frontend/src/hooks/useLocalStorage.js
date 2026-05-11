@@ -1,9 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 
 /**
- * Hook for persisting state to localStorage
- * @param {string} key - Storage key
- * @param {any} initialValue - Default value
+ * useLocalStorage - Hook for persisting state to localStorage.
+ *
+ * Works like `useState` but reads from and writes to `localStorage` using
+ * the given key. Syncs automatically across browser tabs via the
+ * `storage` event. Falls back to `initialValue` if the key is absent
+ * or JSON parsing fails.
+ *
+ * @template T
+ * @param {string} key - localStorage key used to persist the value
+ * @param {T} initialValue - Default value when the key is absent
+ * @returns {[T, Function]} Tuple of the persisted value and its setter
  */
 export function useLocalStorage(key, initialValue) {
     // Get from local storage then parse stored json or return initialValue

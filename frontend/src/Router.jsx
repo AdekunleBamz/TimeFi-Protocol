@@ -5,7 +5,7 @@ import { Skeleton } from './components/Skeleton';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Tooltip } from './components/Tooltip';
 
-// Lazy load pages for code splitting
+// Lazy-load pages to enable per-route code splitting and reduce initial bundle size
 const Dashboard = lazy(() => import('./components/Dashboard'));
 const VaultDetails = lazy(() => import('./components/VaultDetails'));
 const NotFound = lazy(() => import('./components/NotFound'));

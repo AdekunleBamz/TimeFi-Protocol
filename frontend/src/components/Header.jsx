@@ -72,6 +72,11 @@ export function Header() {
     });
   };
 
+  /**
+   * Truncates a Stacks address to the first 6 and last 4 characters.
+   * @param {string} addr - Full Stacks address
+   * @returns {string} Truncated address string or empty string if falsy
+   */
   const truncateAddress = (addr) => {
     if (!addr) return '';
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;

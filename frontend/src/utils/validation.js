@@ -89,6 +89,12 @@ export function validateAddress(address) {
   return { valid: true };
 }
 
+/**
+ * validateNonEmptyString - Return an error result when `value` is not a non-empty string.
+ * @param {any} value - Value to check
+ * @param {string} fieldName - Human-readable field label used in the error message
+ * @returns {{ valid: boolean, error?: string }} Validation result
+ */
 function validateNonEmptyString(value, fieldName) {
   if (typeof value !== 'string') {
     return { valid: false, error: `${fieldName} is required` };

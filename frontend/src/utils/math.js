@@ -220,7 +220,14 @@ export const isValidBlockHeight = (h) => {
     return Number.isInteger(n) && n >= 0;
 };
 
-/** Returns the estimated completion date for a vault given current block and block time. */
+/**
+ * estimatedUnlockDate - Estimate the wall-clock date when a vault will unlock.
+ * @param {number|string} depositHeight - Block height when the vault was created
+ * @param {number|string} lockPeriod - Lock duration in blocks
+ * @param {number|string} currentHeight - Current Stacks block height
+ * @param {number} [blockTimeSec=600] - Approximate block time in seconds
+ * @returns {Date} Estimated unlock date
+ */
 export const estimatedUnlockDate = (depositHeight, lockPeriod, currentHeight, blockTimeSec = 600) => {
   const secsLeft = secondsRemaining(depositHeight, lockPeriod, currentHeight, blockTimeSec);
   return new Date(Date.now() + secsLeft * 1000);

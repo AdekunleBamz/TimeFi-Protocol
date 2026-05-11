@@ -50,14 +50,42 @@ export const calcNetAmount = (amount, bps) => Number(amount) - Math.floor(Number
  */
 export const blocksToSeconds = (blocks) => Number(blocks) * 600;
 
+/**
+ * secondsToBlocks - Convert a duration in seconds to an estimated block count.
+ * @param {number|string} secs - Duration in seconds
+ * @returns {number} Block count rounded up to ensure the full duration is covered
+ */
 export const secondsToBlocks = (secs) => Math.ceil(Number(secs) / 600);
 
+/**
+ * daysToBlocks - Convert days to the equivalent block count.
+ * Uses 144 blocks per day (Stacks mainnet).
+ * @param {number|string} days - Number of days
+ * @returns {number} Rounded block count
+ */
 export const daysToBlocks = (days) => Math.round(Number(days) * 144);
 
+/**
+ * blocksToDays - Convert a block count to the equivalent number of days.
+ * @param {number|string} blocks - Number of Stacks blocks
+ * @returns {number} Approximate number of days
+ */
 export const blocksToDays = (blocks) => Number(blocks) / 144;
 
+/**
+ * clamp - Constrain a number within [min, max].
+ * @param {number|string} v - Value to clamp
+ * @param {number|string} mn - Minimum allowed value
+ * @param {number|string} mx - Maximum allowed value
+ * @returns {number} Value clamped to the specified range
+ */
 export const clamp = (v, mn, mx) => Math.min(Math.max(Number(v), Number(mn)), Number(mx));
 
+/**
+ * bpsToPercent - Convert basis points to a percentage number.
+ * @param {number|string} bps - Basis points (100 bps = 1%)
+ * @returns {number} Percentage value (e.g. 50 for 5000 bps)
+ */
 export const bpsToPercent = (bps) => Number(bps) / 100;
 
 /** Returns true when blocks is a valid positive integer. */

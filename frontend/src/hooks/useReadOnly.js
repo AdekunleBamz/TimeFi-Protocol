@@ -56,14 +56,17 @@ export function useReadOnly() {
   }, []);
 
   /**
-   * Get vault details by ID
+   * getVault - Fetch vault data by its on-chain ID.
+   * @param {number} vaultId - Vault identifier
+   * @returns {Promise<Object>} Vault data
    */
   const getVault = useCallback(async (vaultId) => {
     return callReadOnly('get-vault', [uintCV(vaultId)]);
   }, [callReadOnly]);
 
   /**
-   * Get total value locked in the protocol
+   * getTVL - Fetch the total value locked across all vaults.
+   * @returns {Promise<Object>} TVL value in micro-STX
    */
   const getTVL = useCallback(async () => {
     return callReadOnly('get-tvl', []);

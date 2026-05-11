@@ -43,7 +43,10 @@ export function Dashboard() {
   const { data: totalLocked } = useReadOnly('get-total-locked', []);
   const { data: vaultCount } = useReadOnly('get-vault-count', []);
 
-  // Calculate user stats
+  /**
+   * userStats - Aggregate counts derived from the user's vault ID list.
+   * @type {{ totalVaults: number, activeVaults: number }}
+   */
   const userStats = useMemo(() => {
     if (!vaultIds) return { totalVaults: 0, activeVaults: 0 };
 

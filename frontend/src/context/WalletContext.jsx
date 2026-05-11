@@ -4,15 +4,26 @@ import { StacksMainnet, StacksTestnet } from '@stacks/network';
 
 const WalletContext = createContext(null);
 
+/** Stacks Connect app metadata displayed in the wallet connection modal. */
 const appDetails = {
   name: 'TimeFi Protocol',
   icon: `${typeof window !== 'undefined' ? window.location.origin : ''}/logo.svg`,
 };
 
-// Stable app config and user session — shared across auth + tx calls
+/** Requests read/write and publish permissions from the connected wallet. */
 const appConfig = new AppConfig(['store_write', 'publish_data']);
+/** Shared user session — reused across auth flows and contract transactions. */
 export const userSession = new UserSession({ appConfig });
 
+/**
+ * WalletProvider - Provides wallet connection state to the component tree.
+ *
+ * Manages Leather/Hiro wallet auth, handles the post-auth redirect, and
+ * exposes connect/disconnect helpers plus the active Stacks address.
+ *
+ * @param {{ children: React.ReactNode }} props
+ * @returns {JSX.Element}
+ */
 export function WalletProvider({ children }) {
   const [userData, setUserData] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);

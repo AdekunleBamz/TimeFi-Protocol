@@ -32,6 +32,7 @@ export function Header() {
       ? 'Route not found'
       : 'Dashboard';
 
+  // Close menu on route change (navigated by clicking a nav link)
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname, location.hash]);

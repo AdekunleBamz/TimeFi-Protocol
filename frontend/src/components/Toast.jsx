@@ -39,7 +39,7 @@ export function ToastProvider({ children }) {
         removeToast(id);
       }, newToast.duration);
 
-      // store timer id on the toast object for potential early cleanup
+      // Store timer id on the toast object for potential early cleanup
       newToast._timer = timer;
     }
 

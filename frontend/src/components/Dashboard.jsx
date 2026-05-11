@@ -89,6 +89,7 @@ export function Dashboard() {
     return sorted;
   }, [vaultIds, vaultSearch, vaultSort]);
 
+  // Scroll to anchored section when navigating via in-page hash links
   useEffect(() => {
     if (!location.hash) return;
     const targetId = location.hash.replace('#', '');

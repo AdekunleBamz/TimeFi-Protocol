@@ -38,6 +38,7 @@ export const calcFee = (amount, bps) => {
  * calcNetAmount - Return the amount after subtracting the basis-point fee.
  * @param {number|string} amount - Amount in micro-STX
  * @param {number|string} bps - Fee rate in basis points
+ * @remarks Expects callers to pass already-normalized numeric values.
  * @returns {number} Net amount after fee deduction
  */
 export const calcNetAmount = (amount, bps) => Number(amount) - Math.floor(Number(amount) * Number(bps) / 10000);

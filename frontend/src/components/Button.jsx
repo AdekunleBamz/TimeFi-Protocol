@@ -45,6 +45,9 @@ export function Button({
 }) {
   const [ripples, setRipples] = useState([]);
 
+  /**
+   * Adds a local ripple and forwards the click event when the button is actionable.
+   */
   const handleClick = (e) => {
     if (disabled || loading) return;
 
@@ -108,4 +111,3 @@ export function Button({
 }
 
 export default Button;
-

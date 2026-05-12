@@ -9,6 +9,7 @@
  */
 
 const STORAGE_PREFIX = 'timefi_';
+/** Cached availability result so repeated storage reads avoid extra probes. */
 let storageAvailableCache = null;
 
 /**

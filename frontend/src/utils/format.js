@@ -115,6 +115,7 @@ export const formatStxAmount = (stx) => {
 /**
  * Convert a Unix timestamp (in seconds) to an ISO 8601 date-time string.
  * @param {number|string} ts - Unix timestamp in seconds
+ * @remarks The input is interpreted as seconds, not milliseconds.
  * @returns {string} ISO 8601 formatted string (e.g. "2025-04-28T10:00:00.000Z")
  */
 export const formatTimestamp = (ts) => new Date(Number(ts) * 1000).toISOString();

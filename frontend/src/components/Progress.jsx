@@ -35,6 +35,7 @@ export function Progress({
   animated = false,
   className = '',
 }) {
+  // Clamp visual progress to the supported 0-100 range while preserving raw ARIA values.
   const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
 
   return (

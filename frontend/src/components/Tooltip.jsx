@@ -82,6 +82,7 @@ export function Tooltip({
         {children}
       </span>
 
+      {/* Render in a portal so tooltip positioning is not clipped by parent overflow. */}
       {isVisible && createPortal(
         <div
           id={tooltipId}

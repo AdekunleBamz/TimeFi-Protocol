@@ -10,6 +10,9 @@
  * @module format
  */
 
+/**
+ * Normalizes Intl fraction digit inputs to the supported 0-20 range.
+ */
 const normalizeFractionDigits = (fractionDigits, fallback = 2) => {
     const parsedDigits = Number(fractionDigits);
     if (!Number.isInteger(parsedDigits) || parsedDigits < 0) return fallback;

@@ -21,6 +21,7 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
   const { getVault, getTimeRemaining, canWithdraw, loading } = useReadOnly();
 
   useEffect(() => {
+    // Refresh vault reads together so lock status and remaining time stay in sync.
     const fetchVaultData = async () => {
       try {
         const vaultData = await getVault(vaultId);

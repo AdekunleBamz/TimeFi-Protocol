@@ -42,6 +42,9 @@ export function CopyButton({
     };
   }, []);
 
+  /**
+   * Copies text using the Clipboard API, then falls back to a hidden textarea.
+   */
   const handleCopy = useCallback(async () => {
     if (!text) return;
 

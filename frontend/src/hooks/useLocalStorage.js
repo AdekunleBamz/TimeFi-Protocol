@@ -15,6 +15,7 @@ import { useState, useEffect, useCallback } from 'react';
  */
 export function useLocalStorage(key, initialValue) {
     // Get from local storage then parse stored JSON or return initialValue
+    /** Reads the current persisted value with SSR and parse-error fallbacks. */
     const readValue = useCallback(() => {
         if (typeof window === 'undefined') return initialValue;
 

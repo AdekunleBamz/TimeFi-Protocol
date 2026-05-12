@@ -81,6 +81,11 @@ export class TimeFiClient {
         }
     }
 
+    /**
+     * Retrieves a vault record by ID from the active vault contract.
+     * @param {number|string|BigInt} vaultId - Vault identifier to query.
+     * @returns {Promise<any>} Parsed vault data from the read-only response.
+     */
     async getVault(vaultId) {
         if (vaultId === undefined || vaultId === null) throw new Error('Vault ID is required');
         this.#validateVaultId(vaultId);

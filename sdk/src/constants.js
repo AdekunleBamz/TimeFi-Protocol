@@ -48,6 +48,7 @@ export const CONTRACT_NAMES = Object.freeze({
  *
  * Lock periods are defined in blocks to match the live vault contract.
  * With ~10 minute Stacks blocks, these map closely to the named durations.
+ * Use MAX_LOCK to reject periods that are reserved for future contracts.
  *
  * @constant {Object}
  * @property {number} MONTH_1 - 30 days (4,320 blocks)

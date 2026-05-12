@@ -6,6 +6,7 @@ const MICROSTX_PER_STX = 1_000_000;
 /**
  * protocolUsesStxAmountUnits - Return true when the protocol contract accepts
  * plain STX amounts rather than micro-STX.
+ * Keeps frontend comparisons aligned with the deployed contract denomination.
  * @returns {boolean}
  */
 function protocolUsesStxAmountUnits() {

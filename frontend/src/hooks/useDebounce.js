@@ -15,6 +15,7 @@ export function useDebounce(value, delay = 300) {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
+        // Reset the pending update whenever the value or normalized delay changes.
         const handler = setTimeout(() => {
             setDebouncedValue(value);
         }, safeDelay);

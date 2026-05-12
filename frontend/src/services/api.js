@@ -64,6 +64,7 @@ async function fetchAPI(endpoint, options = {}) {
   const url = `${HIRO_API_URL}${normalizedEndpoint}`;
   const { timeout = 15000, ...fetchOptions } = options;
 
+  // Abort slow Hiro requests so UI callers can recover instead of hanging.
   const controller = new AbortController();
   const timerId = setTimeout(() => controller.abort(), timeout);
 

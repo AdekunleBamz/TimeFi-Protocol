@@ -4,7 +4,7 @@
 Refined vault status labels so locked and unlocked states are interpreted consistently.
 
 ## Changes
-- Added concise definitions for locked, unlocked, withdrawn, and emergency states.
+- Added concise definitions for locked, unlocked, withdrawn, and emergency-withdrawn states.
 - Removed ambiguous phrasing around readiness to withdraw.
 
 ## Date

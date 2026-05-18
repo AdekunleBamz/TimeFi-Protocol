@@ -4,4 +4,4 @@ Withdrawal request QA should confirm the vault remains locked until the custodia
 
 Record the request transaction ID separately from the final payout transaction ID.
 
-This keeps support from treating the request as an immediate withdrawal settlement.
+This prevents support from treating the request as an immediate withdrawal settlement.

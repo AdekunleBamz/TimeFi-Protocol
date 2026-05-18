@@ -68,6 +68,7 @@
     line-height: 1.6;
     color: #cbd5e1;
     max-width: 440px;
+    overflow-wrap: anywhere;
     margin: 0 0 2rem;
 }
 

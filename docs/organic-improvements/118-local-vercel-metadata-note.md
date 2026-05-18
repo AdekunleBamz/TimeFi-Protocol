@@ -6,4 +6,4 @@ Local Vercel metadata should stay out of commits unless the repo intentionally t
 ## Checks
 - Run `git status --short` after local Vercel linking.
 - Leave `.vercel/` uncommitted for personal projects.
-- Document deployment settings in project docs instead of local metadata.
+- Document deployment settings in project documentation instead of local metadata.

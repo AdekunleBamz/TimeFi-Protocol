@@ -5,7 +5,7 @@ Expanded notes around vault owner checks to better document authorization bounda
 
 ## Changes
 - Noted that owner assertions gate withdraw and management actions.
-- Clarified that read-only calls remain available without owner privileges.
+- Clarified that read-only calls remain available to any caller.
 
 ## Date
 2026-04-28

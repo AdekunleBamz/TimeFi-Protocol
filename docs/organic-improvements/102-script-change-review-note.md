@@ -6,4 +6,4 @@ Operational scripts should be reviewed separately from frontend and contract doc
 ## Checks
 - Inspect script diffs for secrets before committing.
 - Confirm script changes are intentional and owner-approved.
-- Avoid bundling script changes with unrelated docs commits.
+- Avoid bundling script changes with unrelated documentation commits.

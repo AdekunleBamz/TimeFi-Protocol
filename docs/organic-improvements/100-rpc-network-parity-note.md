@@ -5,5 +5,5 @@ RPC endpoint fallbacks should stay on the same network as the selected contract 
 
 ## Checks
 - Force primary RPC failure.
-- Confirm fallback endpoint uses the expected network.
+- Confirm the fallback endpoint uses the expected network.
 - Log endpoint names without secret tokens.

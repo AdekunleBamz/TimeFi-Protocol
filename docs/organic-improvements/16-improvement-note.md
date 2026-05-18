@@ -4,7 +4,7 @@
 Documented account transaction pagination limits for stable frontend queries.
 
 ## Changes
-- Added note on clamped limit and offset behavior in API helpers.
+- Added note on clamped limit and offset behavior in the API helpers.
 - Clarified how hasMore is derived from total and current page parameters.
 
 ## Date

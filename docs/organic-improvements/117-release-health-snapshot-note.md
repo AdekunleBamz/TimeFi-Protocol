@@ -5,5 +5,5 @@ Release handoffs should capture contract, SDK, and frontend verification outcome
 
 ## Checks
 - Record `npm run check`, `npm run sdk:build`, and `npm run frontend:build` results.
-- Include Node and npm versions for reproducibility.
+- Include the Node and npm versions for reproducibility.
 - Call out any warnings that were accepted.

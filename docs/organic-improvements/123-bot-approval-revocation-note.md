@@ -1,6 +1,6 @@
 # Bot approval revocation note
 
-When bot approvals change, test both approval and revocation paths with the same principal.
+When bot approvals change, test both the approval and revocation paths with the same principal.
 
 The release note should list the contract principal only, not private bot credentials.
 

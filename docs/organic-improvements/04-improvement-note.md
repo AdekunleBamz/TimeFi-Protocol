@@ -5,7 +5,7 @@ Clarified vault timing semantics so docs consistently refer to block-based lock 
 
 ## Changes
 - Documented that unlock checks depend on chain height, not wall-clock time.
-- Aligned wording with current v-A2 contract behavior.
+- Aligned wording with the current v-A2 contract behavior.
 
 ## Date
 2026-04-28

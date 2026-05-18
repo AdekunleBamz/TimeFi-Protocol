@@ -5,5 +5,5 @@ Stale wallet sessions should recover through reconnect without clearing unrelate
 
 ## Checks
 - Switch wallet accounts and refresh the app.
-- Confirm balances and vault ownership refresh.
+- Confirm balances and vault ownership refresh correctly.
 - Document manual cleanup steps for support.

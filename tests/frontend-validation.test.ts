@@ -394,4 +394,10 @@ describe('frontend validation helpers', () => {
   it('accepts whitespace-padded vault ids in form validation', () => {
     expect(validateVaultId(' 7 ').valid).toBe(true);
   });
+
+  it('rejects unsupported positive lock periods', () => {
+    const result = validateLockPeriod(1);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Invalid lock period selected');
+  });
 });

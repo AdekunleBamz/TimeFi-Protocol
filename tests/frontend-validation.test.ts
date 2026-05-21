@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
+import { isValidMicroStx, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -283,5 +283,9 @@ describe('frontend validation helpers', () => {
     const result = validateVaultCreation({ amount: MIN_DEPOSIT, lockPeriod: 1, balance: MIN_DEPOSIT });
     expect(result.valid).toBe(false);
     expect(result.errors.lockPeriod).toBe('Invalid lock period selected');
+  });
+
+  it('accepts zero microSTX helper values', () => {
+    expect(isValidMicroStx(0)).toBe(true);
   });
 });

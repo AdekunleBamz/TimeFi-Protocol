@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isValidBlockCount, isValidBps, isValidMicroStx, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
+import { isValidBlockCount, isValidBps, isValidMicroStx, isValidVaultId, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -315,5 +315,9 @@ describe('frontend validation helpers', () => {
 
   it('rejects oversized basis-point helper values', () => {
     expect(isValidBps(10001)).toBe(false);
+  });
+
+  it('accepts numeric-string vault id helper values', () => {
+    expect(isValidVaultId('7')).toBe(true);
   });
 });

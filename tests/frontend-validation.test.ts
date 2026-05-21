@@ -360,4 +360,8 @@ describe('frontend validation helpers', () => {
   it('accepts maximum slippage helper values', () => {
     expect(isValidSlippage(500)).toBe(true);
   });
+
+  it('rejects oversized slippage helper values', () => {
+    expect(isValidSlippage(501)).toBe(false);
+  });
 });

@@ -308,4 +308,8 @@ describe('frontend validation helpers', () => {
   it('accepts zero basis-point helper values', () => {
     expect(isValidBps(0)).toBe(true);
   });
+
+  it('accepts maximum basis-point helper values', () => {
+    expect(isValidBps(10000)).toBe(true);
+  });
 });

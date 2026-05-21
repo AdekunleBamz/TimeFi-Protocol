@@ -387,5 +387,9 @@ describe('Format Utilities', () => {
     it('should return zero milliseconds for invalid block inputs', () => {
       expect(blocksToMs('invalid', 600)).toBe(0);
     });
+
+    it('should return zero milliseconds for invalid block-time inputs', () => {
+      expect(blocksToMs(2, 'slow')).toBe(0);
+    });
   });
 });

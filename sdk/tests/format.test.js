@@ -171,6 +171,10 @@ describe('Format Utilities', () => {
     it('should format negative numbers with separators', () => {
       expect(formatNumber(-1234.5)).toBe('-1,234.50');
     });
+
+    it('should format numbers with zero fraction digits', () => {
+      expect(formatNumber(1234.5, 0)).toBe('1,235');
+    });
   });
 
   describe('formatPercent', () => {

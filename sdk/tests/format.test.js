@@ -313,6 +313,11 @@ describe('Format Utilities', () => {
       const future = new Date(Date.now() + 30000);
       expect(formatRelativeTime(future)).toContain('second');
     });
+
+    it('should format future times in minutes', () => {
+      const future = new Date(Date.now() + 120000);
+      expect(formatRelativeTime(future)).toContain('minute');
+    });
   });
 
   describe('formatBlocksToTime', () => {

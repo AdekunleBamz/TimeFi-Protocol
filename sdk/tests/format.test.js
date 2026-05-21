@@ -71,6 +71,10 @@ describe('Format Utilities', () => {
     it('should handle string values inside value objects', () => {
       expect(formatSTX({ value: '2500000' })).toBe('2.5');
     });
+
+    it('should handle invalid value objects gracefully', () => {
+      expect(formatSTX({ value: 'invalid' })).toBe('0.000000');
+    });
   });
 
   describe('formatAddress', () => {

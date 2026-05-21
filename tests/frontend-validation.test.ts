@@ -320,4 +320,8 @@ describe('frontend validation helpers', () => {
   it('accepts numeric-string vault id helper values', () => {
     expect(isValidVaultId('7')).toBe(true);
   });
+
+  it('rejects zero vault id helper values', () => {
+    expect(isValidVaultId(0)).toBe(false);
+  });
 });

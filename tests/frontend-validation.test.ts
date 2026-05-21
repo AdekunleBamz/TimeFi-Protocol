@@ -407,4 +407,10 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toContain('1 blocks remaining');
   });
+
+  it('rejects non-string bot address inputs', () => {
+    const result = validateBotAddress(null);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('Bot address is required');
+  });
 });

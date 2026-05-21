@@ -386,4 +386,8 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toContain('prefix');
   });
+
+  it('accepts numeric-string vault ids in form validation', () => {
+    expect(validateVaultId('7').valid).toBe(true);
+  });
 });

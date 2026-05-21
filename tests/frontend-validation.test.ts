@@ -288,4 +288,8 @@ describe('frontend validation helpers', () => {
   it('accepts zero microSTX helper values', () => {
     expect(isValidMicroStx(0)).toBe(true);
   });
+
+  it('rejects fractional microSTX helper values', () => {
+    expect(isValidMicroStx(1.5)).toBe(false);
+  });
 });

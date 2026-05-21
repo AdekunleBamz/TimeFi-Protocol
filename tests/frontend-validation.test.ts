@@ -417,4 +417,8 @@ describe('frontend validation helpers', () => {
   it('rejects token amount helper calls without decimal settings', () => {
     expect(isValidTokenAmount('1', null)).toBe(false);
   });
+
+  it('accepts numeric-string slippage helper values', () => {
+    expect(isValidSlippage('25')).toBe(true);
+  });
 });

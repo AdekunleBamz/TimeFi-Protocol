@@ -14,7 +14,8 @@ import {
   formatDate, 
   formatRelativeTime,
   formatBlocksToTime,
-  blocksToMs
+  blocksToMs,
+  isValidSTXAmount
 } from '../src/format.js';
 
 describe('Format Utilities', () => {
@@ -390,6 +391,12 @@ describe('Format Utilities', () => {
 
     it('should return zero milliseconds for invalid block-time inputs', () => {
       expect(blocksToMs(2, 'slow')).toBe(0);
+    });
+  });
+
+  describe('isValidSTXAmount', () => {
+    it('should accept positive BigInt microSTX amounts', () => {
+      expect(isValidSTXAmount(BigInt(1))).toBe(true);
     });
   });
 });

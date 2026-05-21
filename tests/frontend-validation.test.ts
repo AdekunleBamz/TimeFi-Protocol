@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isAboveMinDeposit, isNonEmptyString, isValidBlockCount, isValidBps, isValidMicroStx, isValidVaultId, isWithinLockRange, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
+import { isAboveMinDeposit, isNonEmptyString, isPositiveNumber, isValidBlockCount, isValidBps, isValidMicroStx, isValidVaultId, isWithinLockRange, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -347,5 +347,9 @@ describe('frontend validation helpers', () => {
 
   it('rejects object values in non-empty string helper', () => {
     expect(isNonEmptyString({})).toBe(false);
+  });
+
+  it('accepts numeric-string positive number helper values', () => {
+    expect(isPositiveNumber('1')).toBe(true);
   });
 });

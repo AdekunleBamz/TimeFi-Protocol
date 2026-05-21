@@ -376,4 +376,8 @@ describe('frontend validation helpers', () => {
   it('rejects negative token amount helper values', () => {
     expect(isValidTokenAmount('-1', 6)).toBe(false);
   });
+
+  it('accepts valid testnet stacks addresses', () => {
+    expect(validateAddress('ST3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').valid).toBe(true);
+  });
 });

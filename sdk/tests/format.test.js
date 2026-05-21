@@ -383,5 +383,9 @@ describe('Format Utilities', () => {
     it('should accept numeric string block conversion inputs', () => {
       expect(blocksToMs('2', '600')).toBe(1200000);
     });
+
+    it('should return zero milliseconds for invalid block inputs', () => {
+      expect(blocksToMs('invalid', 600)).toBe(0);
+    });
   });
 });

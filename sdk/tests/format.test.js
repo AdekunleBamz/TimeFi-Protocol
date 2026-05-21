@@ -63,6 +63,10 @@ describe('Format Utilities', () => {
     it('should format negative microSTX values explicitly', () => {
       expect(formatSTX(-1000000)).toBe('-1');
     });
+
+    it('should round fractional microSTX display precision', () => {
+      expect(formatSTX(1234567.8)).toBe('1.234568');
+    });
   });
 
   describe('formatAddress', () => {

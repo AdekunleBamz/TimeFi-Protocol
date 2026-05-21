@@ -167,6 +167,10 @@ describe('Format Utilities', () => {
       expect(formatNumber(Infinity)).toBe('0.00');
       expect(formatNumber(-Infinity)).toBe('0.00');
     });
+
+    it('should format negative numbers with separators', () => {
+      expect(formatNumber(-1234.5)).toBe('-1,234.50');
+    });
   });
 
   describe('formatPercent', () => {

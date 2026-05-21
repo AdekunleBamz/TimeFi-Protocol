@@ -271,4 +271,11 @@ describe('frontend validation helpers', () => {
     const firstSupportedBlocks = Object.values(LOCK_PERIODS)[0].blocks;
     expect(validateVaultCreation({ amount: MIN_DEPOSIT, lockPeriod: firstSupportedBlocks, balance: MIN_DEPOSIT }).valid).toBe(true);
   });
+
+  it('collects amount errors for vault creation payloads', () => {
+    const firstSupportedBlocks = Object.values(LOCK_PERIODS)[0].blocks;
+    const result = validateVaultCreation({ amount: '', lockPeriod: firstSupportedBlocks, balance: MIN_DEPOSIT });
+    expect(result.valid).toBe(false);
+    expect(result.errors.amount).toBe('Please enter an amount');
+  });
 });

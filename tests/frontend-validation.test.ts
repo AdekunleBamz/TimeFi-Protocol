@@ -278,4 +278,10 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.errors.amount).toBe('Please enter an amount');
   });
+
+  it('collects lock period errors for vault creation payloads', () => {
+    const result = validateVaultCreation({ amount: MIN_DEPOSIT, lockPeriod: 1, balance: MIN_DEPOSIT });
+    expect(result.valid).toBe(false);
+    expect(result.errors.lockPeriod).toBe('Invalid lock period selected');
+  });
 });

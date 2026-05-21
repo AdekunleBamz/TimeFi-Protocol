@@ -122,6 +122,10 @@ describe('Format Utilities', () => {
     it('should truncate just above the display threshold', () => {
       expect(formatAddress('123456789012')).toBe('1234...9012');
     });
+
+    it('should trim short addresses before returning them', () => {
+      expect(formatAddress('  SP3...GG6N  ')).toBe('SP3...GG6N');
+    });
   });
 
   describe('formatNumber', () => {

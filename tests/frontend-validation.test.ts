@@ -344,4 +344,8 @@ describe('frontend validation helpers', () => {
   it('accepts trimmed non-empty string helper values', () => {
     expect(isNonEmptyString(' vault ')).toBe(true);
   });
+
+  it('rejects object values in non-empty string helper', () => {
+    expect(isNonEmptyString({})).toBe(false);
+  });
 });

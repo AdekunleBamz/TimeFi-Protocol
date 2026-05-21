@@ -59,6 +59,10 @@ describe('Format Utilities', () => {
       expect(formatSTX(NaN)).toBe('0.000000');
       expect(formatSTX(Infinity)).toBe('0.000000');
     });
+
+    it('should format negative microSTX values explicitly', () => {
+      expect(formatSTX(-1000000)).toBe('-1');
+    });
   });
 
   describe('formatAddress', () => {

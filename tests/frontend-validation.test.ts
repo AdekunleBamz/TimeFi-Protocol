@@ -372,4 +372,8 @@ describe('frontend validation helpers', () => {
   it('rejects token amounts above the decimal precision limit', () => {
     expect(isValidTokenAmount('1.1234567', 6)).toBe(false);
   });
+
+  it('rejects negative token amount helper values', () => {
+    expect(isValidTokenAmount('-1', 6)).toBe(false);
+  });
 });

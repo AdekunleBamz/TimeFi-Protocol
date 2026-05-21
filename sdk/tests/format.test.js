@@ -223,6 +223,10 @@ describe('Format Utilities', () => {
     it('should format percentages with zero fraction digits', () => {
       expect(formatPercent(12.5, 0)).toBe('13%');
     });
+
+    it('should honor custom digits for null percentages', () => {
+      expect(formatPercent(null, 3)).toBe('0.000%');
+    });
   });
 
   describe('formatDate', () => {

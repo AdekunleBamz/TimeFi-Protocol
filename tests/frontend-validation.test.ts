@@ -300,4 +300,8 @@ describe('frontend validation helpers', () => {
   it('rejects zero block count helper values', () => {
     expect(isValidBlockCount(0)).toBe(false);
   });
+
+  it('accepts numeric-string block count helper values', () => {
+    expect(isValidBlockCount('10')).toBe(true);
+  });
 });

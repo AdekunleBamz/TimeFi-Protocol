@@ -126,6 +126,10 @@ describe('Format Utilities', () => {
     it('should trim short addresses before returning them', () => {
       expect(formatAddress('  SP3...GG6N  ')).toBe('SP3...GG6N');
     });
+
+    it('should apply custom address truncation thresholds', () => {
+      expect(formatAddress('12345678', 2, 2)).toBe('12...78');
+    });
   });
 
   describe('formatNumber', () => {

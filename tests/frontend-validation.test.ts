@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isAboveMinDeposit, isValidBlockCount, isValidBps, isValidMicroStx, isValidVaultId, isWithinLockRange, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
+import { isAboveMinDeposit, isNonEmptyString, isValidBlockCount, isValidBps, isValidMicroStx, isValidVaultId, isWithinLockRange, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -339,5 +339,9 @@ describe('frontend validation helpers', () => {
 
   it('rejects lock range helper values below the minimum', () => {
     expect(isWithinLockRange(9, 10, 20)).toBe(false);
+  });
+
+  it('accepts trimmed non-empty string helper values', () => {
+    expect(isNonEmptyString(' vault ')).toBe(true);
   });
 });

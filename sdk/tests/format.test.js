@@ -318,6 +318,10 @@ describe('Format Utilities', () => {
       const future = new Date(Date.now() + 120000);
       expect(formatRelativeTime(future)).toContain('minute');
     });
+
+    it('should handle empty relative-time inputs', () => {
+      expect(formatRelativeTime('')).toBe('--');
+    });
   });
 
   describe('formatBlocksToTime', () => {

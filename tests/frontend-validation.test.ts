@@ -413,4 +413,8 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Bot address is required');
   });
+
+  it('rejects token amount helper calls without decimal settings', () => {
+    expect(isValidTokenAmount('1', null)).toBe(false);
+  });
 });

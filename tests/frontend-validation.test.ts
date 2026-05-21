@@ -352,4 +352,8 @@ describe('frontend validation helpers', () => {
   it('accepts numeric-string positive number helper values', () => {
     expect(isPositiveNumber('1')).toBe(true);
   });
+
+  it('rejects zero positive number helper values', () => {
+    expect(isPositiveNumber(0)).toBe(false);
+  });
 });

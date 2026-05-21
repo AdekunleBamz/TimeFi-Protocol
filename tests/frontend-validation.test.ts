@@ -336,4 +336,8 @@ describe('frontend validation helpers', () => {
   it('accepts lock range helper boundary values', () => {
     expect(isWithinLockRange(10, 10, 20)).toBe(true);
   });
+
+  it('rejects lock range helper values below the minimum', () => {
+    expect(isWithinLockRange(9, 10, 20)).toBe(false);
+  });
 });

@@ -215,6 +215,10 @@ describe('Format Utilities', () => {
       expect(formatPercent(NaN)).toBe('0.00%');
       expect(formatPercent(Infinity)).toBe('0.00%');
     });
+
+    it('should format negative percentages explicitly', () => {
+      expect(formatPercent(-1.5)).toBe('-1.50%');
+    });
   });
 
   describe('formatDate', () => {

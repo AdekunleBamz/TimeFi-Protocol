@@ -328,4 +328,8 @@ describe('frontend validation helpers', () => {
   it('accepts deposit helper values at the minimum boundary', () => {
     expect(isAboveMinDeposit(MIN_DEPOSIT, MIN_DEPOSIT)).toBe(true);
   });
+
+  it('rejects deposit helper values below the minimum boundary', () => {
+    expect(isAboveMinDeposit(MIN_DEPOSIT - 1, MIN_DEPOSIT)).toBe(false);
+  });
 });

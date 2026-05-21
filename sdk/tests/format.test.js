@@ -308,6 +308,11 @@ describe('Format Utilities', () => {
       expect(formatRelativeTime(NaN)).toBe('--');
       expect(formatRelativeTime(false)).toBe('--');
     });
+
+    it('should format future times in seconds', () => {
+      const future = new Date(Date.now() + 30000);
+      expect(formatRelativeTime(future)).toContain('second');
+    });
   });
 
   describe('formatBlocksToTime', () => {

@@ -364,5 +364,9 @@ describe('Format Utilities', () => {
     it('returns zero days for null block counts', () => {
       expect(formatBlocksToTime(null)).toBe('0 days');
     });
+
+    it('returns zero days for nonnumeric block time values', () => {
+      expect(formatBlocksToTime(144, 'slow')).toBe('0 days');
+    });
   });
 });

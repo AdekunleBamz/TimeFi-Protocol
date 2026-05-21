@@ -400,4 +400,11 @@ describe('frontend validation helpers', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('Invalid lock period selected');
   });
+
+  it('reports one remaining block for locked withdrawals', () => {
+    const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: false };
+    const result = validateWithdrawal(vault, 109);
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('1 blocks remaining');
+  });
 });

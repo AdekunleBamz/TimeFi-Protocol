@@ -356,5 +356,9 @@ describe('Format Utilities', () => {
     it('formats fractional year durations', () => {
       expect(formatBlocksToTime(78840)).toBe('1.5 years');
     });
+
+    it('returns zero days for negative block counts', () => {
+      expect(formatBlocksToTime(-1)).toBe('0 days');
+    });
   });
 });

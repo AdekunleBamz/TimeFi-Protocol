@@ -118,6 +118,10 @@ describe('Format Utilities', () => {
       const address = '  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ';
       expect(formatAddress(address)).toBe('SP3F...GG6N');
     });
+
+    it('should truncate just above the display threshold', () => {
+      expect(formatAddress('123456789012')).toBe('1234...9012');
+    });
   });
 
   describe('formatNumber', () => {

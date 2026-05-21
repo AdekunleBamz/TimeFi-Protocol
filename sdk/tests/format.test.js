@@ -75,6 +75,10 @@ describe('Format Utilities', () => {
     it('should handle invalid value objects gracefully', () => {
       expect(formatSTX({ value: 'invalid' })).toBe('0.000000');
     });
+
+    it('formatMicroSTX should handle comma-delimited strings', () => {
+      expect(formatMicroSTX('2,500,000')).toBe('2.5');
+    });
   });
 
   describe('formatAddress', () => {

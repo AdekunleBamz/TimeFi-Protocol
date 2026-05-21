@@ -410,5 +410,9 @@ describe('Format Utilities', () => {
     it('should reject invalid string microSTX amounts', () => {
       expect(isValidSTXAmount('invalid')).toBe(false);
     });
+
+    it('should reject null microSTX amounts', () => {
+      expect(isValidSTXAmount(null)).toBe(false);
+    });
   });
 });

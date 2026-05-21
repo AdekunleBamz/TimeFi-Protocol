@@ -179,6 +179,10 @@ describe('Format Utilities', () => {
     it('should trim spaced numeric strings before formatting numbers', () => {
       expect(formatNumber(' 1234.5 ')).toBe('1,234.50');
     });
+
+    it('should fall back for non-integer number fraction digits', () => {
+      expect(formatNumber(1234.5, 1.5)).toBe('1,234.50');
+    });
   });
 
   describe('formatPercent', () => {

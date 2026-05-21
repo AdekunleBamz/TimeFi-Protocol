@@ -402,5 +402,9 @@ describe('Format Utilities', () => {
     it('should reject zero microSTX amounts', () => {
       expect(isValidSTXAmount(0)).toBe(false);
     });
+
+    it('should accept positive string microSTX amounts', () => {
+      expect(isValidSTXAmount('1000000')).toBe(true);
+    });
   });
 });

@@ -360,5 +360,9 @@ describe('Format Utilities', () => {
     it('returns zero days for negative block counts', () => {
       expect(formatBlocksToTime(-1)).toBe('0 days');
     });
+
+    it('returns zero days for null block counts', () => {
+      expect(formatBlocksToTime(null)).toBe('0 days');
+    });
   });
 });

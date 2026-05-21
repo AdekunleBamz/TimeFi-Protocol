@@ -368,5 +368,9 @@ describe('Format Utilities', () => {
     it('returns zero days for nonnumeric block time values', () => {
       expect(formatBlocksToTime(144, 'slow')).toBe('0 days');
     });
+
+    it('rounds mid-range block durations to month labels', () => {
+      expect(formatBlocksToTime(6480)).toBe('2 months');
+    });
   });
 });

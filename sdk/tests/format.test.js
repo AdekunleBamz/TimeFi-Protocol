@@ -185,6 +185,10 @@ describe('Format Utilities', () => {
     it('should fall back for non-integer number fraction digits', () => {
       expect(formatNumber(1234.5, 1.5)).toBe('1,234.50');
     });
+
+    it('should format empty numeric strings as zero', () => {
+      expect(formatNumber('')).toBe('0.00');
+    });
   });
 
   describe('formatPercent', () => {

@@ -67,6 +67,10 @@ describe('Format Utilities', () => {
     it('should round fractional microSTX display precision', () => {
       expect(formatSTX(1234567.8)).toBe('1.234568');
     });
+
+    it('should handle string values inside value objects', () => {
+      expect(formatSTX({ value: '2500000' })).toBe('2.5');
+    });
   });
 
   describe('formatAddress', () => {

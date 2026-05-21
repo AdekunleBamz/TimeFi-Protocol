@@ -13,7 +13,8 @@ import {
   formatPercent, 
   formatDate, 
   formatRelativeTime,
-  formatBlocksToTime
+  formatBlocksToTime,
+  blocksToMs
 } from '../src/format.js';
 
 describe('Format Utilities', () => {
@@ -371,6 +372,12 @@ describe('Format Utilities', () => {
 
     it('rounds mid-range block durations to month labels', () => {
       expect(formatBlocksToTime(6480)).toBe('2 months');
+    });
+  });
+
+  describe('blocksToMs', () => {
+    it('should convert block durations to milliseconds', () => {
+      expect(blocksToMs(2, 600)).toBe(1200000);
     });
   });
 });

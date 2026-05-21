@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
+import { validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -265,5 +265,10 @@ describe('frontend validation helpers', () => {
     const vault = { depositHeight: 100, lockPeriod: 10, isWithdrawn: false };
     const result = validateWithdrawal(vault, 111);
     expect(result.valid).toBe(true);
+  });
+
+  it('accepts complete vault creation payloads', () => {
+    const firstSupportedBlocks = Object.values(LOCK_PERIODS)[0].blocks;
+    expect(validateVaultCreation({ amount: MIN_DEPOSIT, lockPeriod: firstSupportedBlocks, balance: MIN_DEPOSIT }).valid).toBe(true);
   });
 });

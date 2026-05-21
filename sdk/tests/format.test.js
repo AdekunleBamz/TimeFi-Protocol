@@ -379,5 +379,9 @@ describe('Format Utilities', () => {
     it('should convert block durations to milliseconds', () => {
       expect(blocksToMs(2, 600)).toBe(1200000);
     });
+
+    it('should accept numeric string block conversion inputs', () => {
+      expect(blocksToMs('2', '600')).toBe(1200000);
+    });
   });
 });

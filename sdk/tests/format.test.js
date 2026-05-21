@@ -219,6 +219,10 @@ describe('Format Utilities', () => {
     it('should format negative percentages explicitly', () => {
       expect(formatPercent(-1.5)).toBe('-1.50%');
     });
+
+    it('should format percentages with zero fraction digits', () => {
+      expect(formatPercent(12.5, 0)).toBe('13%');
+    });
   });
 
   describe('formatDate', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isValidBlockCount, isValidBps, isValidMicroStx, isValidVaultId, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
+import { isAboveMinDeposit, isValidBlockCount, isValidBps, isValidMicroStx, isValidVaultId, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -323,5 +323,9 @@ describe('frontend validation helpers', () => {
 
   it('rejects zero vault id helper values', () => {
     expect(isValidVaultId(0)).toBe(false);
+  });
+
+  it('accepts deposit helper values at the minimum boundary', () => {
+    expect(isAboveMinDeposit(MIN_DEPOSIT, MIN_DEPOSIT)).toBe(true);
   });
 });

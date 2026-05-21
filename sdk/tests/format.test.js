@@ -263,6 +263,10 @@ describe('Format Utilities', () => {
     it('should handle false date inputs as invalid', () => {
       expect(formatDate(false)).toBe('--');
     });
+
+    it('should handle empty date strings as invalid', () => {
+      expect(formatDate('')).toBe('--');
+    });
   });
 
   describe('formatRelativeTime', () => {

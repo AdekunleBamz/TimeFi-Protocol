@@ -113,15 +113,15 @@ const vault = await client.getVault(1);
 
 ## 📝 Contract Functions
 
-Before opening a PR or pushing to `main`, run:
+Before opening a PR or pushing to `main`, run the available root, SDK, and frontend checks.
 
-Ensure frontend dependencies are installed first (`npm --prefix frontend ci`). `npm run verify:local` runs the full suite and can take several minutes.
+Ensure frontend and SDK dependencies are installed first (`npm --prefix frontend ci` and `npm --prefix sdk ci`).
 
 ```bash
-npm run contracts:check
-npm run sdk:test
-npm run frontend:test
-npm run verify:local
+npm run check
+npm run test
+npm run sdk:build
+npm run frontend:build
 ```
 
 ### 💻 Frontend Dashboard

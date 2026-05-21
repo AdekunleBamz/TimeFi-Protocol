@@ -380,4 +380,10 @@ describe('frontend validation helpers', () => {
   it('accepts valid testnet stacks addresses', () => {
     expect(validateAddress('ST3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').valid).toBe(true);
   });
+
+  it('rejects lowercase stacks address prefixes', () => {
+    const result = validateAddress('sp3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N');
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('prefix');
+  });
 });

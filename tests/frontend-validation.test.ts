@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isValidBlockCount, isValidMicroStx, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
+import { isValidBlockCount, isValidBps, isValidMicroStx, validateAddress, validateBotAddress, validateDepositAmount, validateLockPeriod, validateVaultCreation, validateVaultId, validateWithdrawal } from '../frontend/src/utils/validation.js';
 import { LOCK_PERIODS, MIN_DEPOSIT } from '../frontend/src/config/contracts.js';
 
 describe('frontend validation helpers', () => {
@@ -303,5 +303,9 @@ describe('frontend validation helpers', () => {
 
   it('accepts numeric-string block count helper values', () => {
     expect(isValidBlockCount('10')).toBe(true);
+  });
+
+  it('accepts zero basis-point helper values', () => {
+    expect(isValidBps(0)).toBe(true);
   });
 });

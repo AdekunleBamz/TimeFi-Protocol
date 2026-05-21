@@ -259,6 +259,10 @@ describe('Format Utilities', () => {
       expect(formatDate(NaN)).toBe('--');
       expect(formatDate(true)).toBe('--');
     });
+
+    it('should handle false date inputs as invalid', () => {
+      expect(formatDate(false)).toBe('--');
+    });
   });
 
   describe('formatRelativeTime', () => {

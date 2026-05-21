@@ -229,6 +229,10 @@ describe('Format Utilities', () => {
     it('should honor custom digits for null percentages', () => {
       expect(formatPercent(null, 3)).toBe('0.000%');
     });
+
+    it('should fall back for non-integer percent fraction digits', () => {
+      expect(formatPercent(5.5, 1.5)).toBe('5.50%');
+    });
   });
 
   describe('formatDate', () => {

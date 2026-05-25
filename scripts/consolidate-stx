@@ -4,6 +4,28 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import readline from 'node:readline/promises';
+import { readFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+// Load .env from project root (ESM-compatible, no dotenv dependency needed)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const envPath = path.join(__dirname, '../.env');
+if (existsSync(envPath)) {
+  for (const line of readFileSync(envPath, 'utf8').split('\n')) {
+    const match = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*)$/);
+    if (match && !process.env[match[1]]) {
+      process.env[match[1]] = match[2].trim().replace(/^["']|["']$/g, '');
+    }
+  }
+}
+
+const HIRO_API_KEY = process.env.HIRO_API_KEY || '';
+const HIRO_HEADERS = HIRO_API_KEY ? { 'x-api-key': HIRO_API_KEY } : {};
+if (HIRO_API_KEY) {
+  console.log('[API KEY] Hiro API key loaded — authenticated rate limit tier active.');
+} else {
+  console.warn('[API KEY] No HIRO_API_KEY set — running on unauthenticated (lower) rate limits.');
+}
 
 import { createNetwork } from '@stacks/network';
 import {
@@ -494,7 +516,7 @@ async function fetchAccountState({ address, apiBaseUrl }) {
   const endpoint = `${apiBaseUrl}/v2/accounts/${address}?proof=0`;
 
   for (let attempt = 1; attempt <= ACCOUNT_FETCH_MAX_ATTEMPTS; attempt += 1) {
-    const response = await fetch(endpoint);
+    const response = await fetch(endpoint, { headers: HIRO_HEADERS });
 
     if (response.ok) {
       const account = await response.json();

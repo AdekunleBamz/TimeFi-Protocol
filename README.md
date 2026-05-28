@@ -80,9 +80,6 @@ npm run test
 # Run tests with coverage + costs
 npm run test:report
 
-# Run frontend tests from root
-npm run frontend:test
-
 # Start devnet
 clarinet devnet start
 
@@ -113,15 +110,13 @@ const vault = await client.getVault(1);
 
 ## 📝 Contract Functions
 
-Before opening a PR or pushing to `main`, run:
-
-Ensure frontend dependencies are installed first (`npm --prefix frontend ci`). `npm run verify:local` runs the full suite and can take several minutes.
+Before opening a PR or pushing to `main`, run the checks that match the area you touched.
+Ensure frontend dependencies are installed first with `npm --prefix frontend ci`.
 
 ```bash
-npm run contracts:check
-npm run sdk:test
-npm run frontend:test
-npm run verify:local
+npm run check
+npm run frontend:build
+npm run sdk:build
 ```
 
 ### 💻 Frontend Dashboard

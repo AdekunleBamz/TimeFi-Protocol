@@ -46,8 +46,7 @@ describe("TimeFi Vault - Bot Approval System", () => {
       expect(result.result).toBeErr(Cl.uint(100)); // ERR_UNAUTHORIZED
     });
 
-    it("should return ERR_BOT for non-contract principals", () => {
-      // Regular wallet addresses don't have contract hashes
+    it("should allow deployer to approve wallet principals", () => {
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "approve-bot",
@@ -55,8 +54,7 @@ describe("TimeFi Vault - Bot Approval System", () => {
         deployer
       );
 
-      // contract-hash? returns none for regular principals
-      expect(result.result).toBeErr(Cl.uint(106)); // ERR_BOT
+      expect(result.result).toBeOk(Cl.bool(true));
     });
   });
 

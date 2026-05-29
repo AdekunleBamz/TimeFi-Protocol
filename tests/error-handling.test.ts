@@ -34,11 +34,11 @@ describe("TimeFi Vault - Error Handling", () => {
   });
 
   describe("ERR_LOCK_PERIOD (u104) - Invalid lock period", () => {
-    it("should reject lock period below minimum (3600 seconds)", () => {
+    it("should reject lock period below minimum (6 blocks)", () => {
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(100000), Cl.uint(3599)],
+        [Cl.uint(100000), Cl.uint(5)],
         wallet1
       );
 
@@ -56,11 +56,11 @@ describe("TimeFi Vault - Error Handling", () => {
       expect(result.result).toBeErr(Cl.uint(104));
     });
 
-    it("should reject lock period above maximum (31,536,000 seconds)", () => {
+    it("should reject lock period above maximum (52,560 blocks)", () => {
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
-        [Cl.uint(100000), Cl.uint(31536001)],
+        [Cl.uint(100000), Cl.uint(52561)],
         wallet1
       );
 

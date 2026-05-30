@@ -237,6 +237,28 @@ Cancel a pending vault ownership transfer.
 
 ---
 
+### `pause-protocol`
+Pause protocol write flows. Admin only.
+
+```clarity
+(pause-protocol)
+```
+
+**Returns:** `(response bool uint)`
+
+---
+
+### `unpause-protocol`
+Resume protocol write flows. Admin only.
+
+```clarity
+(unpause-protocol)
+```
+
+**Returns:** `(response bool uint)`
+
+---
+
 ## Read-Only Functions
 
 ### `get-vault`

@@ -8,12 +8,12 @@ Amounts are expressed in microSTX unless stated otherwise.
 Create a new time-locked vault with STX deposit.
 
 ```clarity
-(create-vault (amount uint) (lock-secs uint))
+(create-vault (amount uint) (lock-blocks uint))
 ```
 
 **Parameters:**
 - `amount` - Amount of STX to deposit (minimum 10,000 microSTX)
-- `lock-secs` - Lock duration in seconds (3,600 to 31,536,000)
+- `lock-blocks` - Lock duration in blocks
 
 **Returns:** `(response uint uint)` - Vault ID on success
 
@@ -34,6 +34,34 @@ Withdraw funds from an unlocked vault.
 **Returns:** `(response bool uint)` - true on success
 
 **Events:** Emits `{event: "withdraw", id, owner}`
+
+---
+
+### `request-withdraw`
+Queue a withdrawal request once a vault is mature.
+
+```clarity
+(request-withdraw (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID to queue for withdrawal
+
+**Returns:** `(response bool uint)`
+
+---
+
+### `process-withdraw`
+Settle a mature queued withdrawal. Deployer only.
+
+```clarity
+(process-withdraw (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID to settle
+
+**Returns:** `(response bool uint)`
 
 ---
 

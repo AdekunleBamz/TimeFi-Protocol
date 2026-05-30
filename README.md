@@ -119,6 +119,12 @@ npm run frontend:build
 npm run sdk:build
 ```
 
+For a single production-facing gate, run:
+
+```bash
+npm run verify:production
+```
+
 ### 💻 Frontend Dashboard
 
 ```bash

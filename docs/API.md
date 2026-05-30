@@ -166,6 +166,34 @@ Remove the configured beneficiary from a vault.
 
 ---
 
+### `request-beneficiary-claim`
+Queue a beneficiary claim after the configured delay.
+
+```clarity
+(request-beneficiary-claim (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID to queue for beneficiary settlement
+
+**Returns:** `(response bool uint)`
+
+---
+
+### `process-beneficiary-claim`
+Settle a queued beneficiary claim. Deployer only.
+
+```clarity
+(process-beneficiary-claim (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID to settle
+
+**Returns:** `(response bool uint)`
+
+---
+
 ## Read-Only Functions
 
 ### `get-vault`

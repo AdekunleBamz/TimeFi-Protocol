@@ -317,7 +317,7 @@ Get total number of vaults created.
 ---
 
 ### `get-time-remaining`
-Get seconds remaining until vault unlock.
+Get blocks remaining until vault unlock.
 
 ```clarity
 (get-time-remaining (id uint))
@@ -409,8 +409,8 @@ Check if principal is an approved bot.
 | Function | Returns |
 |----------|---------|
 | `get-min-deposit` | `u10000` (0.01 STX) |
-| `get-min-lock` | `u3600` (1 hour) |
-| `get-max-lock` | `u31536000` (1 year) |
+| `get-min-lock` | `u6` (~1 hour) |
+| `get-max-lock` | `u52560` (~1 year) |
 | `get-fee-bps` | `u50` (0.5%) |
 
 ---

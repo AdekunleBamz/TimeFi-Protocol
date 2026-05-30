@@ -14,7 +14,8 @@
     "test": "vitest run",
     "test:report": "vitest run -- --coverage --costs",
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
-    "lint": "echo 'Lint checks passed'"
+    "lint": "echo 'Lint checks passed'",
+    "verify:production": "npm run lint && npm run build"
   },
   "author": "AdekunleBamz <adekunle@stackpulse.io>",
   "engines": {

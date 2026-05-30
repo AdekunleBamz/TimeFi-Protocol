@@ -194,6 +194,49 @@ Settle a queued beneficiary claim. Deployer only.
 
 ---
 
+### `initiate-transfer`
+Start ownership transfer for a vault.
+
+```clarity
+(initiate-transfer (id uint) (new-owner principal))
+```
+
+**Parameters:**
+- `id` - Vault ID to transfer
+- `new-owner` - Principal that can accept ownership
+
+**Returns:** `(response bool uint)`
+
+---
+
+### `accept-transfer`
+Accept a pending vault ownership transfer.
+
+```clarity
+(accept-transfer (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID with a pending transfer to the caller
+
+**Returns:** `(response bool uint)`
+
+---
+
+### `cancel-transfer`
+Cancel a pending vault ownership transfer.
+
+```clarity
+(cancel-transfer (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID with a pending transfer
+
+**Returns:** `(response bool uint)`
+
+---
+
 ## Read-Only Functions
 
 ### `get-vault`

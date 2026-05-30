@@ -137,6 +137,35 @@ Extend the unlock height for an active vault.
 
 ---
 
+### `set-beneficiary`
+Assign a beneficiary principal for a vault.
+
+```clarity
+(set-beneficiary (id uint) (beneficiary principal))
+```
+
+**Parameters:**
+- `id` - Vault ID to update
+- `beneficiary` - Principal allowed to claim after the beneficiary delay
+
+**Returns:** `(response bool uint)`
+
+---
+
+### `remove-beneficiary`
+Remove the configured beneficiary from a vault.
+
+```clarity
+(remove-beneficiary (id uint))
+```
+
+**Parameters:**
+- `id` - Vault ID to update
+
+**Returns:** `(response bool uint)`
+
+---
+
 ## Read-Only Functions
 
 ### `get-vault`

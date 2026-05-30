@@ -435,3 +435,6 @@ Check if principal is an approved bot.
 | u104 | ERR_LOCK_PERIOD | Invalid lock period |
 | u105 | ERR_ALREADY | Action already performed |
 | u106 | ERR_BOT | Invalid bot contract |
+| u107 | ERR_NO_BENEFICIARY | Beneficiary is not configured |
+| u108 | ERR_SAME_OWNER | Transfer target matches current owner |
+| u109 | ERR_PAUSED | Protocol writes are paused |

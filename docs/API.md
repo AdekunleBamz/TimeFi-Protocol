@@ -360,6 +360,39 @@ Check if principal owns a vault.
 
 ---
 
+### `get-pending-transfer`
+Get the pending owner for a vault transfer.
+
+```clarity
+(get-pending-transfer (id uint))
+```
+
+**Returns:** `(response (optional principal) uint)`
+
+---
+
+### `get-beneficiary`
+Get the configured beneficiary for a vault.
+
+```clarity
+(get-beneficiary (id uint))
+```
+
+**Returns:** `(response (optional principal) uint)`
+
+---
+
+### `is-paused`
+Check whether protocol write flows are paused.
+
+```clarity
+(is-paused)
+```
+
+**Returns:** `bool`
+
+---
+
 ### `is-bot`
 Check if principal is an approved bot.
 

@@ -107,6 +107,36 @@ Update the treasury address. Admin only.
 
 ---
 
+### `top-up-vault`
+Add STX to an active vault.
+
+```clarity
+(top-up-vault (id uint) (amount uint))
+```
+
+**Parameters:**
+- `id` - Vault ID to fund
+- `amount` - Additional deposit amount in microSTX
+
+**Returns:** `(response bool uint)`
+
+---
+
+### `extend-lock`
+Extend the unlock height for an active vault.
+
+```clarity
+(extend-lock (id uint) (additional-blocks uint))
+```
+
+**Parameters:**
+- `id` - Vault ID to extend
+- `additional-blocks` - Number of blocks to add to the current unlock height
+
+**Returns:** `(response bool uint)`
+
+---
+
 ## Read-Only Functions
 
 ### `get-vault`

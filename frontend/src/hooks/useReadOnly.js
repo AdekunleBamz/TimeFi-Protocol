@@ -51,6 +51,10 @@ function clarityJsonToPlain(value) {
     return value;
   }
 
+  if (typeof value.success === 'boolean' && Object.prototype.hasOwnProperty.call(value, 'value')) {
+    return clarityJsonToPlain(value.value);
+  }
+
   if (value.type === 'ok') {
     return clarityJsonToPlain(value.value);
   }
@@ -88,6 +92,37 @@ function clarityJsonToPlain(value) {
     plain[key] = clarityJsonToPlain(nestedValue);
   }
   return plain;
+}
+
+async function fetchPlainReadOnly(callReadOnly, readFunctionName, readFunctionArgs = []) {
+  const resolvedFunctionName = resolveFunctionName(readFunctionName);
+
+  if (resolvedFunctionName === 'get-user-vaults') {
+    const ownerAddress = String(readFunctionArgs[0] || '').trim();
+    if (!ownerAddress) return [];
+
+    const vaultCountResult = await callReadOnly('get-vault-count', []);
+    const vaultCount = clarityJsonToPlain(vaultCountResult);
+    const safeVaultCount = Number.isInteger(vaultCount) && vaultCount > 0 ? vaultCount : 0;
+    const ownedVaultIds = [];
+
+    for (let vaultId = 1; vaultId <= safeVaultCount; vaultId += 1) {
+      const ownershipResult = await callReadOnly('is-vault-owner', [
+        uintCV(vaultId),
+        principalCV(ownerAddress),
+      ]);
+
+      if (clarityJsonToPlain(ownershipResult)) {
+        ownedVaultIds.push(vaultId);
+      }
+    }
+
+    return ownedVaultIds;
+  }
+
+  const encodedArgs = encodeFunctionArgs(resolvedFunctionName, readFunctionArgs);
+  const result = await callReadOnly(resolvedFunctionName, encodedArgs);
+  return clarityJsonToPlain(result);
 }
 
 /**
@@ -229,10 +264,7 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
   const refetch = useCallback(async () => {
     if (!shouldAutoFetch || !enabled) return null;
 
-    const resolvedFunctionName = resolveFunctionName(functionName);
-    const encodedArgs = encodeFunctionArgs(resolvedFunctionName, stableFunctionArgs);
-    const result = await callReadOnly(resolvedFunctionName, encodedArgs);
-    const plainResult = clarityJsonToPlain(result);
+    const plainResult = await fetchPlainReadOnly(callReadOnly, functionName, stableFunctionArgs);
     setData(plainResult);
     return plainResult;
   }, [callReadOnly, enabled, functionName, shouldAutoFetch, stableFunctionArgs]);
@@ -244,11 +276,9 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
 
     async function fetchReadOnlyData() {
       try {
-        const resolvedFunctionName = resolveFunctionName(functionName);
-        const encodedArgs = encodeFunctionArgs(resolvedFunctionName, stableFunctionArgs);
-        const result = await callReadOnly(resolvedFunctionName, encodedArgs);
+        const plainResult = await fetchPlainReadOnly(callReadOnly, functionName, stableFunctionArgs);
         if (!cancelled) {
-          setData(clarityJsonToPlain(result));
+          setData(plainResult);
         }
       } catch (err) {
         if (!cancelled) {

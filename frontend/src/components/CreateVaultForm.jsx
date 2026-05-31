@@ -3,6 +3,7 @@ import { useWallet } from '../context/WalletContext';
 import { useContract } from '../hooks/useContract';
 import { useBlockHeight } from '../hooks/useBlockHeight';
 import { validateVaultCreation } from '../utils/validation';
+import { stxToMicroStx } from '../utils/math';
 import { LOCK_PERIODS } from '../config/contracts';
 import { estimateFee } from '../services/transactions';
 import { useToast } from './Toast';
@@ -56,6 +57,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     [lockPeriod]
   );
   const parsedAmount = Number(amount || 0);
+  const amountMicroStx = stxToMicroStx(amount);
   /** Estimated AGS rewards based on the selected lock period APY and input amount. */
   const expectedRewards = selectedPeriod && parsedAmount > 0
     ? (parsedAmount * selectedPeriod.apy) / 100
@@ -102,9 +104,9 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     e.preventDefault();
 
     const validation = validateVaultCreation({
-      amount,
+      amount: amountMicroStx,
       lockPeriod,
-      balance: hasBalance ? balanceInSTX : undefined,
+      balance: hasBalance ? balance : undefined,
     });
 
     if (!validation.valid) {
@@ -113,7 +115,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     }
 
     try {
-      await createVault(parseFloat(amount), lockPeriod, {
+      await createVault(amountMicroStx, lockPeriod, {
         onFinish: ({ txId }) => {
           toast.success(`Vault creation submitted: ${txId.slice(0, 10)}...`);
           setAmount('');

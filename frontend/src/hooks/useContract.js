@@ -36,14 +36,22 @@ export function useContract() {
    * @returns {Promise<Object>} Contract call options object
    */
   const createVault = useCallback(async (amount, lockDuration) => {
-    if (!Number.isFinite(Number(amount)) || !Number.isFinite(Number(lockDuration))) {
-      throw new Error('createVault: amount and lockDuration must be valid numbers');
+    const normalizedAmount = Number(amount);
+    const normalizedLockDuration = Number(lockDuration);
+
+    if (!Number.isInteger(normalizedAmount) || normalizedAmount <= 0) {
+      throw new Error('createVault: amount must be a positive integer in microSTX');
     }
+
+    if (!Number.isInteger(normalizedLockDuration) || normalizedLockDuration <= 0) {
+      throw new Error('createVault: lockDuration must be a positive integer');
+    }
+
     const txOptions = {
       contractAddress: CONTRACT_ADDRESS,
       contractName: CONTRACT_NAME,
       functionName: 'create-vault',
-      functionArgs: [uintCV(amount), uintCV(lockDuration)],
+      functionArgs: [uintCV(normalizedAmount), uintCV(normalizedLockDuration)],
       network,
       anchorMode: AnchorMode.Any,
       postConditionMode: PostConditionMode.Deny,

@@ -1,11 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useWallet } from '../context/WalletContext';
-import { useContract } from '../hooks/useContract';
 import { useBlockHeight } from '../hooks/useBlockHeight';
 import { validateVaultCreation } from '../utils/validation';
 import { stxToMicroStx } from '../utils/math';
 import { LOCK_PERIODS } from '../config/contracts';
-import { estimateFee } from '../services/transactions';
+import { createVault, estimateFee } from '../services/transactions';
 import { useToast } from './Toast';
 import './CreateVaultForm.css';
 
@@ -31,19 +30,20 @@ import './CreateVaultForm.css';
  */
 export function CreateVaultForm({ onSuccess, onClose }) {
   const {
+    address,
     balance,
     balanceLoading,
     balanceError,
     isConnected,
     refreshBalance,
   } = useWallet();
-  const { createVault, loading } = useContract();
   const { blockHeight } = useBlockHeight();
   const { toast } = useToast();
   
   const [amount, setAmount] = useState('');
   const [lockPeriod, setLockPeriod] = useState(null);
   const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   const hasBalance = typeof balance === 'number' && Number.isFinite(balance);
   /** Wallet balance in STX units (converted from microSTX). */
@@ -114,21 +114,34 @@ export function CreateVaultForm({ onSuccess, onClose }) {
       return;
     }
 
+    if (!address) {
+      setErrors({ submit: 'Connect a wallet before creating a vault' });
+      return;
+    }
+
+    setSubmitting(true);
+
     try {
-      await createVault(amountMicroStx, lockPeriod, {
+      await createVault({
+        amount: amountMicroStx,
+        lockDuration: lockPeriod,
+        senderAddress: address,
         onFinish: ({ txId }) => {
           toast.success(`Vault creation submitted: ${txId.slice(0, 10)}...`);
           setAmount('');
           setLockPeriod(null);
           setErrors({});
+          setSubmitting(false);
           refreshBalance();
           onSuccess?.(txId);
         },
         onCancel: () => {
+          setSubmitting(false);
           toast.info('Transaction cancelled');
         },
       });
     } catch (error) {
+      setSubmitting(false);
       setErrors({ submit: error.message });
       toast.error(error.message || 'Unable to create vault');
     }
@@ -191,13 +204,13 @@ export function CreateVaultForm({ onSuccess, onClose }) {
               setErrors(prev => ({ ...prev, amount: null }));
             }}
             aria-invalid={Boolean(errors.amount)}
-            disabled={loading}
+            disabled={submitting}
           />
           <button
             type="button"
             className="form-max-button"
             onClick={handleMaxClick}
-            disabled={loading || balanceLoading || !hasBalance}
+            disabled={submitting || balanceLoading || !hasBalance}
           >
             MAX
           </button>
@@ -228,7 +241,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
                 setAmount((spendableBalance * ratio).toFixed(6));
                 setErrors(prev => ({ ...prev, amount: null }));
               }}
-              disabled={loading || balanceLoading || !hasBalance || spendableBalance <= 0}
+              disabled={submitting || balanceLoading || !hasBalance || spendableBalance <= 0}
             >
               {Math.round(ratio * 100)}%
             </button>
@@ -253,7 +266,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
                 setLockPeriod(option.blocks);
                 setErrors(prev => ({ ...prev, lockPeriod: null }));
               }}
-              disabled={loading}
+              disabled={submitting}
               aria-pressed={lockPeriod === option.blocks}
             >
               {option.apy === maxApy && (
@@ -317,7 +330,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             type="button"
             className="form-button form-button-secondary"
             onClick={onClose}
-            disabled={loading}
+            disabled={submitting}
           >
             Cancel
           </button>
@@ -326,9 +339,9 @@ export function CreateVaultForm({ onSuccess, onClose }) {
         <button
           type="submit"
           className="form-button form-button-primary"
-          disabled={!isConnected || loading || !amount || !lockPeriod}
+          disabled={!isConnected || submitting || !amount || !lockPeriod}
         >
-          {loading ? 'Awaiting wallet...' : 'Create Vault'}
+          {submitting ? 'Awaiting wallet...' : 'Create Vault'}
         </button>
       </div>
       <p className="form-submit-hint">{submitHint}</p>

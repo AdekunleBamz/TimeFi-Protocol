@@ -29,7 +29,13 @@ import './CreateVaultForm.css';
  * />
  */
 export function CreateVaultForm({ onSuccess, onClose }) {
-  const { balance, isConnected } = useWallet();
+  const {
+    balance,
+    balanceLoading,
+    balanceError,
+    isConnected,
+    refreshBalance,
+  } = useWallet();
   const { createVault, loading } = useContract();
   const { blockHeight } = useBlockHeight();
   const { toast } = useToast();
@@ -38,8 +44,9 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   const [lockPeriod, setLockPeriod] = useState(null);
   const [errors, setErrors] = useState({});
 
+  const hasBalance = typeof balance === 'number' && Number.isFinite(balance);
   /** Wallet balance in STX units (converted from microSTX). */
-  const balanceInSTX = balance ? balance / 1_000_000 : 0;
+  const balanceInSTX = hasBalance ? balance / 1_000_000 : 0;
   /** Fee reserve in STX for vault creation transaction. */
   const feeReserveSTX = estimateFee('create-vault') / 1_000_000;
   /** Maximum STX the user can lock after reserving gas fees. */
@@ -66,11 +73,22 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   /** Contextual hint shown below the submit button to guide the user through form completion. */
   const submitHint = !isConnected
     ? 'Connect a wallet to start'
-    : !amount
-      ? 'Enter an amount to continue'
-      : !lockPeriod
-        ? 'Choose a lock period'
-        : 'Transaction opens in your wallet';
+    : balanceLoading
+      ? 'Fetching your wallet balance'
+      : balanceError
+        ? 'Refresh balance before choosing a max amount'
+        : !amount
+          ? 'Enter an amount to continue'
+          : !lockPeriod
+            ? 'Choose a lock period'
+            : 'Transaction opens in your wallet';
+  const balanceLabel = balanceLoading
+    ? 'Loading balance...'
+    : balanceError
+      ? 'Balance unavailable'
+      : hasBalance
+        ? `${balanceInSTX.toLocaleString(undefined, { maximumFractionDigits: 6 })} STX`
+        : '-- STX';
 
   /**
    * handleSubmit - Validate input and submit the create-vault contract call.
@@ -86,7 +104,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
     const validation = validateVaultCreation({
       amount,
       lockPeriod,
-      balance: balanceInSTX,
+      balance: hasBalance ? balanceInSTX : undefined,
     });
 
     if (!validation.valid) {
@@ -101,6 +119,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
           setAmount('');
           setLockPeriod(null);
           setErrors({});
+          refreshBalance();
           onSuccess?.(txId);
         },
         onCancel: () => {
@@ -114,6 +133,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
   };
 
   const handleMaxClick = () => {
+    if (!hasBalance) return;
     setAmount(spendableBalance.toFixed(6));
     setErrors(prev => ({ ...prev, amount: null }));
   };
@@ -132,7 +152,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
       <div className="form-balance-strip">
         <div className="form-balance-chip">
           <span>Spendable now</span>
-          <strong>{spendableBalance.toFixed(6)} STX</strong>
+          <strong>{balanceLoading ? 'Loading...' : `${spendableBalance.toFixed(6)} STX`}</strong>
         </div>
         <div className="form-balance-chip">
           <span>Fee reserve</span>
@@ -144,9 +164,17 @@ export function CreateVaultForm({ onSuccess, onClose }) {
         <label className="form-label">
           Amount to Lock
           <span className="form-balance">
-            Balance: {balanceInSTX.toLocaleString()} STX (reserving {feeReserveSTX.toFixed(3)} STX fee)
+            Balance: {balanceLabel} (reserving {feeReserveSTX.toFixed(3)} STX fee)
           </span>
         </label>
+        {balanceError && (
+          <div className="form-balance-warning" role="status">
+            <span>{balanceError}</span>
+            <button type="button" onClick={refreshBalance} disabled={balanceLoading}>
+              Retry
+            </button>
+          </div>
+        )}
 
         <div className="form-input-group">
           <input
@@ -167,7 +195,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
             type="button"
             className="form-max-button"
             onClick={handleMaxClick}
-            disabled={loading}
+            disabled={loading || balanceLoading || !hasBalance}
           >
             MAX
           </button>
@@ -198,7 +226,7 @@ export function CreateVaultForm({ onSuccess, onClose }) {
                 setAmount((spendableBalance * ratio).toFixed(6));
                 setErrors(prev => ({ ...prev, amount: null }));
               }}
-              disabled={loading || spendableBalance <= 0}
+              disabled={loading || balanceLoading || !hasBalance || spendableBalance <= 0}
             >
               {Math.round(ratio * 100)}%
             </button>

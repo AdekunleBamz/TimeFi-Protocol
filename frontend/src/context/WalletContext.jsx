@@ -1,6 +1,8 @@
-import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { showConnect, AppConfig, UserSession } from '@stacks/connect';
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
+import { env } from '../config/env';
+import { getAccountBalance } from '../services/api';
 
 const WalletContext = createContext(null);
 
@@ -27,8 +29,49 @@ export const userSession = new UserSession({ appConfig });
 export function WalletProvider({ children }) {
   const [userData, setUserData] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [accountBalance, setAccountBalance] = useState(null);
+  const [balanceLoading, setBalanceLoading] = useState(false);
+  const [balanceError, setBalanceError] = useState(null);
+  const balanceRequestId = useRef(0);
 
-  const network = new StacksMainnet();
+  const network = env.isTestnet || env.isDevnet ? new StacksTestnet() : new StacksMainnet();
+  const stxAddress = env.isTestnet || env.isDevnet
+    ? userData?.profile?.stxAddress?.testnet || null
+    : userData?.profile?.stxAddress?.mainnet || null;
+
+  const refreshBalance = useCallback(async () => {
+    const requestId = balanceRequestId.current + 1;
+    balanceRequestId.current = requestId;
+
+    if (!stxAddress) {
+      setAccountBalance(null);
+      setBalanceError(null);
+      setBalanceLoading(false);
+      return null;
+    }
+
+    setBalanceLoading(true);
+    setBalanceError(null);
+
+    try {
+      const nextBalance = await getAccountBalance(stxAddress);
+      if (balanceRequestId.current === requestId) {
+        setAccountBalance(nextBalance);
+      }
+      return nextBalance;
+    } catch (error) {
+      const message = error?.message || 'Unable to fetch wallet balance';
+      if (balanceRequestId.current === requestId) {
+        setBalanceError(message);
+        setAccountBalance(null);
+      }
+      return null;
+    } finally {
+      if (balanceRequestId.current === requestId) {
+        setBalanceLoading(false);
+      }
+    }
+  }, [stxAddress]);
 
   // Handle redirect-back from Leather / Hiro after auth confirm
   useEffect(() => {
@@ -66,11 +109,17 @@ export function WalletProvider({ children }) {
    * disconnectWallet - Sign the user out and clear wallet state.
    */
   const disconnectWallet = useCallback(() => {
+    balanceRequestId.current += 1;
     userSession.signUserOut();
     setUserData(null);
+    setAccountBalance(null);
+    setBalanceError(null);
+    setBalanceLoading(false);
   }, []);
 
-  const stxAddress = userData?.profile?.stxAddress?.mainnet || null;
+  useEffect(() => {
+    refreshBalance();
+  }, [refreshBalance]);
 
   const value = {
     userData,
@@ -81,7 +130,12 @@ export function WalletProvider({ children }) {
     network,
     stxAddress,
     address: stxAddress,
-    balance: null,
+    accountBalance,
+    balance: accountBalance?.balance ?? null,
+    lockedBalance: accountBalance?.locked ?? null,
+    balanceLoading,
+    balanceError,
+    refreshBalance,
   };
 
   return (
@@ -96,7 +150,7 @@ export function WalletProvider({ children }) {
  *
  * Must be used inside a `<WalletProvider>`. Throws if called outside.
  *
- * @returns {{ userData: Object|null, isConnected: boolean, isConnecting: boolean, connect: Function, disconnect: Function, network: StacksMainnet, stxAddress: string|null, address: string|null, balance: null }}
+ * @returns {{ userData: Object|null, isConnected: boolean, isConnecting: boolean, connect: Function, disconnect: Function, network: StacksMainnet|StacksTestnet, stxAddress: string|null, address: string|null, balance: number|null, lockedBalance: number|null, balanceLoading: boolean, balanceError: string|null, refreshBalance: Function }}
  */
 export function useWallet() {
   const context = useContext(WalletContext);

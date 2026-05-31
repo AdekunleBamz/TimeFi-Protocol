@@ -26,7 +26,7 @@ import './Dashboard.css';
  * <Route path="/" element={<Dashboard />} />
  */
 export function Dashboard() {
-  const { address, balance, isConnected, connect } = useWallet();
+  const { address, balance, balanceLoading, balanceError, isConnected, connect } = useWallet();
   const { blockHeight } = useBlockHeight();
   const location = useLocation();
   const [vaultSearch, setVaultSearch] = useState('');
@@ -92,6 +92,14 @@ export function Dashboard() {
     return sorted;
   }, [vaultIds, vaultSearch, vaultSort]);
 
+  const walletBalanceLabel = balanceLoading
+    ? 'Loading...'
+    : balanceError
+      ? 'Unavailable'
+      : typeof balance === 'number'
+        ? `${(balance / 1_000_000).toLocaleString('en-US', { maximumFractionDigits: 4 })} STX`
+        : '-- STX';
+
   // Scroll to anchored section when navigating via in-page hash links
   useEffect(() => {
     if (!location.hash) return;
@@ -145,7 +153,7 @@ export function Dashboard() {
           </div>
           <div className="dashboard-wallet-stat">
             <span className="dashboard-wallet-label">Available balance</span>
-            <strong>{(balance / 1_000_000).toLocaleString('en-US', { maximumFractionDigits: 4 })} STX</strong>
+            <strong>{walletBalanceLabel}</strong>
           </div>
           <div className="dashboard-wallet-stat">
             <span className="dashboard-wallet-label">Your vaults</span>

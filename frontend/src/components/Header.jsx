@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
+import { env } from '../config/env';
 import { CopyButton } from './CopyButton';
 import './Header.css';
 
@@ -20,7 +21,16 @@ import './Header.css';
  * </div>
  */
 export function Header() {
-  const { isConnected, isConnecting, address, balance, connect, disconnect } = useWallet();
+  const {
+    isConnected,
+    isConnecting,
+    address,
+    balance,
+    balanceLoading,
+    balanceError,
+    connect,
+    disconnect,
+  } = useWallet();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   /** Uppercased network label derived from the VITE_NETWORK environment variable. */
@@ -67,6 +77,8 @@ export function Header() {
    * @returns {string} Formatted STX amount or '--'
    */
   const formatBalance = (bal) => {
+    if (balanceLoading) return 'Loading';
+    if (balanceError) return 'Unavailable';
     if (bal === null || bal === undefined) return '--';
     return (bal / 1_000_000).toLocaleString('en-US', {
       minimumFractionDigits: 2,
@@ -156,12 +168,12 @@ export function Header() {
                   Wallet live
                 </span>
                 <span className="header-balance-value">{formatBalance(balance)}</span>
-                <span className="header-balance-label">STX</span>
+                {!balanceLoading && !balanceError && <span className="header-balance-label">STX</span>}
               </div>
 
               <div className="header-wallet-actions">
                 <a
-                  href={`https://explorer.hiro.so/address/${address}?chain=mainnet`}
+                  href={env.getExplorerAddressUrl(address)}
                   className="header-wallet-link"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -180,7 +192,10 @@ export function Header() {
               </div>
               <div className="header-wallet-compact">
                 <span>{truncateAddress(address)}</span>
-                <strong>{formatBalance(balance)} STX</strong>
+                <strong>
+                  {formatBalance(balance)}
+                  {!balanceLoading && !balanceError ? ' STX' : ''}
+                </strong>
               </div>
             </div>
           ) : (

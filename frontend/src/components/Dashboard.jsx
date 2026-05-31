@@ -204,7 +204,11 @@ export function Dashboard() {
         {isConnected && (
           <StatsCard
             label="Your Vaults"
-            value={userStats.totalVaults.toString()}
+            value={
+              vaultsLoading || userStats.totalVaults === null
+                ? '--'
+                : userStats.totalVaults.toString()
+            }
             icon="🗂️"
             subValue="Vaults linked to this wallet"
             loading={vaultsLoading}

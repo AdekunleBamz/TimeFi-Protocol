@@ -1,12 +1,9 @@
-/**
- * Contract Configuration - Stacks smart contract addresses and names.
- *
- * Provides centralized configuration for all smart contract interactions,
- * including contract addresses, names, and network-specific settings.
- *
- * @module config/contracts
- * @author adekunlebamz
- */
+import { env } from './env';
+import {
+    LOCK_PERIODS,
+    MIN_DEPOSIT,
+    MAX_DEPOSIT
+} from 'timefi-sdk';
 
 /**
  * @typedef {Object} ContractConstants
@@ -17,16 +14,28 @@
  * @property {number} MAX_DEPOSIT - Maximum deposit amount in microSTX
  */
 
+export const CONTRACT_ADDRESS = env.contractAddress;
+
+export const CONTRACT_NAMES = Object.freeze({
+    VAULT: env.contracts.vault,
+    REWARDS: env.contracts.rewards,
+    GOVERNANCE: env.contracts.governance,
+    EMERGENCY: env.contracts.emergency,
+});
+
 export {
-    CONTRACT_ADDRESS,
-    CONTRACT_NAMES,
     LOCK_PERIODS,
     MIN_DEPOSIT,
     MAX_DEPOSIT
-} from 'timefi-sdk';
+};
 
 export const FEE_BPS = 50;
 
 export default {
+    CONTRACT_ADDRESS,
+    CONTRACT_NAMES,
+    LOCK_PERIODS,
+    MIN_DEPOSIT,
+    MAX_DEPOSIT,
     FEE_BPS,
 };

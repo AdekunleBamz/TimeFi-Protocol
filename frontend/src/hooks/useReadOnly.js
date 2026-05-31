@@ -1,13 +1,94 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { callReadOnlyFunction, cvToJSON, uintCV, principalCV } from '@stacks/transactions';
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
+import { STACKS_NETWORK, CONTRACT_ADDRESS, CONTRACT_NAMES } from '../utils/constants';
 
-const CONTRACT_ADDRESS = 'SP000000000000000000002Q6VF78'; // Replace with deployed address
-const CONTRACT_NAME = 'timefi-vault';
+const CONTRACT_NAME = CONTRACT_NAMES.VAULT;
 
-const network = import.meta.env.VITE_NETWORK === 'mainnet' 
-  ? new StacksMainnet() 
-  : new StacksTestnet();
+const FUNCTION_ALIASES = {
+  'get-total-locked': 'get-tvl',
+  'get-vault-details': 'get-vault',
+};
+
+function resolveFunctionName(functionName) {
+  return FUNCTION_ALIASES[functionName] || functionName;
+}
+
+function isClarityValue(value) {
+  return value && typeof value === 'object' && 'type' in value;
+}
+
+function encodeFunctionArg(functionName, arg, index) {
+  if (isClarityValue(arg)) return arg;
+  if (arg === null || arg === undefined) return arg;
+
+  if (
+    functionName === 'get-user-vaults'
+    || (functionName === 'is-vault-owner' && index === 1)
+    || (functionName === 'is-bot' && index === 1)
+  ) {
+    return principalCV(String(arg));
+  }
+
+  if (Number.isInteger(Number(arg))) {
+    return uintCV(Number(arg));
+  }
+
+  return arg;
+}
+
+function encodeFunctionArgs(functionName, args = []) {
+  return args.map((arg, index) => encodeFunctionArg(functionName, arg, index));
+}
+
+function clarityJsonToPlain(value) {
+  if (value === null || value === undefined) return value;
+
+  if (Array.isArray(value)) {
+    return value.map(clarityJsonToPlain);
+  }
+
+  if (typeof value !== 'object') {
+    return value;
+  }
+
+  if (value.type === 'ok') {
+    return clarityJsonToPlain(value.value);
+  }
+
+  if (value.type === 'some') {
+    return clarityJsonToPlain(value.value);
+  }
+
+  if (value.type === 'none') {
+    return null;
+  }
+
+  if (value.type === 'uint' || value.type === 'int') {
+    return Number(value.value);
+  }
+
+  if (value.type === 'bool') {
+    return Boolean(value.value);
+  }
+
+  if (value.type === 'principal' || value.type === 'string-ascii' || value.type === 'string-utf8') {
+    return value.value;
+  }
+
+  if (value.type === 'list') {
+    return clarityJsonToPlain(value.value);
+  }
+
+  if (value.type === 'tuple') {
+    return clarityJsonToPlain(value.value);
+  }
+
+  const plain = {};
+  for (const [key, nestedValue] of Object.entries(value)) {
+    plain[key] = clarityJsonToPlain(nestedValue);
+  }
+  return plain;
+}
 
 /**
  * useReadOnly - Hook for invoking read-only TimeFi contract functions.
@@ -18,9 +99,16 @@ const network = import.meta.env.VITE_NETWORK === 'mainnet'
  *
  * @returns {{ loading: boolean, error: string|null, getVault: Function, getTVL: Function, getTotalFees: Function, getVaultCount: Function, getTimeRemaining: Function, canWithdraw: Function, isVaultOwner: Function, isBot: Function, calculateFee: Function, callReadOnly: Function }}
  */
-export function useReadOnly() {
+export function useReadOnly(functionName, functionArgs = [], options = {}) {
+  const shouldAutoFetch = typeof functionName === 'string';
+  const enabled = options.enabled !== false && (!shouldAutoFetch || Array.isArray(functionArgs));
+  const argsKey = JSON.stringify(functionArgs || []);
+  const stableFunctionArgs = useMemo(() => (
+    Array.isArray(functionArgs) ? functionArgs : []
+  ), [argsKey]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
 
   /**
    * callReadOnly - Execute an arbitrary read-only contract function.
@@ -29,10 +117,13 @@ export function useReadOnly() {
    * @param {string} [senderAddress] - Optional sender principal
    * @returns {Promise<Object>} Parsed Clarity value as JSON
    */
-  const callReadOnly = useCallback(async (functionName, functionArgs = [], senderAddress) => {
-    if (!functionName || typeof functionName !== 'string') {
+  const callReadOnly = useCallback(async (readFunctionName, readFunctionArgs = [], senderAddress) => {
+    if (!readFunctionName || typeof readFunctionName !== 'string') {
       throw new Error('callReadOnly: functionName must be a non-empty string');
     }
+
+    const resolvedFunctionName = resolveFunctionName(readFunctionName);
+
     setLoading(true);
     setError(null);
     
@@ -40,9 +131,9 @@ export function useReadOnly() {
       const result = await callReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName,
-        functionArgs,
-        network,
+        functionName: resolvedFunctionName,
+        functionArgs: readFunctionArgs,
+        network: STACKS_NETWORK,
         senderAddress: senderAddress || CONTRACT_ADDRESS,
       });
       
@@ -135,9 +226,49 @@ export function useReadOnly() {
     return callReadOnly('calculate-fee', [uintCV(amount)]);
   }, [callReadOnly]);
 
+  const refetch = useCallback(async () => {
+    if (!shouldAutoFetch || !enabled) return null;
+
+    const resolvedFunctionName = resolveFunctionName(functionName);
+    const encodedArgs = encodeFunctionArgs(resolvedFunctionName, stableFunctionArgs);
+    const result = await callReadOnly(resolvedFunctionName, encodedArgs);
+    const plainResult = clarityJsonToPlain(result);
+    setData(plainResult);
+    return plainResult;
+  }, [callReadOnly, enabled, functionName, shouldAutoFetch, stableFunctionArgs]);
+
+  useEffect(() => {
+    if (!shouldAutoFetch || !enabled) return undefined;
+
+    let cancelled = false;
+
+    async function fetchReadOnlyData() {
+      try {
+        const resolvedFunctionName = resolveFunctionName(functionName);
+        const encodedArgs = encodeFunctionArgs(resolvedFunctionName, stableFunctionArgs);
+        const result = await callReadOnly(resolvedFunctionName, encodedArgs);
+        if (!cancelled) {
+          setData(clarityJsonToPlain(result));
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setData(null);
+        }
+      }
+    }
+
+    fetchReadOnlyData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [callReadOnly, enabled, functionName, shouldAutoFetch, stableFunctionArgs]);
+
   return {
+    data,
     loading,
     error,
+    refetch,
     getVault,
     getTVL,
     getTotalFees,

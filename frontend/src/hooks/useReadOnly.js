@@ -8,6 +8,7 @@ const FUNCTION_ALIASES = {
   'get-total-locked': 'get-tvl',
   'get-vault-details': 'get-vault',
 };
+const OWNER_SCAN_BATCH_SIZE = 40;
 
 function resolveFunctionName(functionName) {
   return FUNCTION_ALIASES[functionName] || functionName;
@@ -106,14 +107,24 @@ async function fetchPlainReadOnly(callReadOnly, readFunctionName, readFunctionAr
     const safeVaultCount = Number.isInteger(vaultCount) && vaultCount > 0 ? vaultCount : 0;
     const ownedVaultIds = [];
 
-    for (let vaultId = 1; vaultId <= safeVaultCount; vaultId += 1) {
-      const ownershipResult = await callReadOnly('is-vault-owner', [
-        uintCV(vaultId),
-        principalCV(ownerAddress),
-      ]);
+    for (let startId = 1; startId <= safeVaultCount; startId += OWNER_SCAN_BATCH_SIZE) {
+      const endId = Math.min(startId + OWNER_SCAN_BATCH_SIZE - 1, safeVaultCount);
+      const vaultIds = Array.from(
+        { length: endId - startId + 1 },
+        (_, index) => startId + index
+      );
+      const ownershipResults = await Promise.all(
+        vaultIds.map(async (vaultId) => {
+          const ownershipResult = await callReadOnly('is-vault-owner', [
+            uintCV(vaultId),
+            principalCV(ownerAddress),
+          ]);
+          return clarityJsonToPlain(ownershipResult) ? vaultId : null;
+        })
+      );
 
-      if (clarityJsonToPlain(ownershipResult)) {
-        ownedVaultIds.push(vaultId);
+      for (const vaultId of ownershipResults) {
+        if (vaultId !== null) ownedVaultIds.push(vaultId);
       }
     }
 
@@ -142,6 +153,7 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
     Array.isArray(functionArgs) ? functionArgs : []
   ), [argsKey]);
   const [loading, setLoading] = useState(false);
+  const [autoLoading, setAutoLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
@@ -264,9 +276,15 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
   const refetch = useCallback(async () => {
     if (!shouldAutoFetch || !enabled) return null;
 
-    const plainResult = await fetchPlainReadOnly(callReadOnly, functionName, stableFunctionArgs);
-    setData(plainResult);
-    return plainResult;
+    setAutoLoading(true);
+
+    try {
+      const plainResult = await fetchPlainReadOnly(callReadOnly, functionName, stableFunctionArgs);
+      setData(plainResult);
+      return plainResult;
+    } finally {
+      setAutoLoading(false);
+    }
   }, [callReadOnly, enabled, functionName, shouldAutoFetch, stableFunctionArgs]);
 
   useEffect(() => {
@@ -275,6 +293,8 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
     let cancelled = false;
 
     async function fetchReadOnlyData() {
+      setAutoLoading(true);
+
       try {
         const plainResult = await fetchPlainReadOnly(callReadOnly, functionName, stableFunctionArgs);
         if (!cancelled) {
@@ -283,6 +303,10 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
       } catch (err) {
         if (!cancelled) {
           setData(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setAutoLoading(false);
         }
       }
     }
@@ -296,7 +320,7 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
 
   return {
     data,
-    loading,
+    loading: loading || autoLoading,
     error,
     refetch,
     getVault,

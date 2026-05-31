@@ -48,7 +48,7 @@ export function Dashboard() {
    * @type {{ totalVaults: number, activeVaults: number }}
    */
   const userStats = useMemo(() => {
-    if (!vaultIds) return { totalVaults: 0, activeVaults: 0 };
+    if (!Array.isArray(vaultIds)) return { totalVaults: null, activeVaults: null };
 
     return {
       totalVaults: vaultIds.length,
@@ -157,7 +157,11 @@ export function Dashboard() {
           </div>
           <div className="dashboard-wallet-stat">
             <span className="dashboard-wallet-label">Your vaults</span>
-            <strong>{userStats.totalVaults.toLocaleString()}</strong>
+            <strong>
+              {vaultsLoading || userStats.totalVaults === null
+                ? 'Checking...'
+                : userStats.totalVaults.toLocaleString()}
+            </strong>
           </div>
           <div className="dashboard-wallet-stat">
             <span className="dashboard-wallet-label">Current block</span>

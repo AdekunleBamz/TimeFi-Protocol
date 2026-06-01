@@ -1,6 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import { useReadOnly } from '../hooks/useReadOnly';
 
+const BLOCK_TIME_SECONDS = 600;
+
+function unwrapClarityJson(value) {
+  if (value === null || value === undefined) return value;
+
+  if (Array.isArray(value)) {
+    return value.map(unwrapClarityJson);
+  }
+
+  if (typeof value !== 'object') return value;
+
+  if (typeof value.success === 'boolean' && Object.prototype.hasOwnProperty.call(value, 'value')) {
+    return unwrapClarityJson(value.value);
+  }
+
+  if (value.type === 'uint' || value.type === 'int') {
+    return Number(value.value);
+  }
+
+  if (value.type === 'bool') {
+    return Boolean(value.value);
+  }
+
+  if (value.type === 'principal' || value.type === 'string-ascii' || value.type === 'string-utf8') {
+    return value.value;
+  }
+
+  if (value.type === 'none') return null;
+
+  if (value.type === 'some') {
+    return unwrapClarityJson(value.value);
+  }
+
+  if (value.type === 'list') {
+    return unwrapClarityJson(value.value);
+  }
+
+  if (value.type === 'tuple') {
+    return unwrapClarityJson(value.value);
+  }
+
+  const plain = {};
+  for (const [key, nestedValue] of Object.entries(value)) {
+    plain[key] = unwrapClarityJson(nestedValue);
+  }
+  return plain;
+}
+
+function normalizeVault(vaultData) {
+  const vault = unwrapClarityJson(vaultData);
+  if (!vault || typeof vault !== 'object') return null;
+
+  const amount = Number(vault.amount ?? 0);
+  const lockTime = Number(vault['lock-time'] ?? vault.lockTime ?? 0);
+  const unlockTime = Number(vault['unlock-time'] ?? vault.unlockTime ?? vault['unlock-block'] ?? 0);
+
+  return {
+    ...vault,
+    amount: Number.isFinite(amount) ? amount : 0,
+    lockTime: Number.isFinite(lockTime) ? lockTime : 0,
+    unlockTime: Number.isFinite(unlockTime) ? unlockTime : 0,
+    active: Boolean(vault.active),
+    owner: vault.owner || '',
+  };
+}
+
+function toFiniteNumber(value, fallback = 0) {
+  const unwrappedValue = unwrapClarityJson(value);
+  const numericValue = Number(unwrappedValue);
+  return Number.isFinite(numericValue) ? numericValue : fallback;
+}
+
 /**
  * VaultCard component displays vault information.
  *
@@ -25,13 +97,13 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
     const fetchVaultData = async () => {
       try {
         const vaultData = await getVault(vaultId);
-        setVault(vaultData.value);
+        setVault(normalizeVault(vaultData));
 
         const remaining = await getTimeRemaining(vaultId);
-        setTimeRemaining(remaining.value);
+        setTimeRemaining(toFiniteNumber(remaining));
 
         const withdrawable = await canWithdraw(vaultId);
-        setCanWithdrawNow(withdrawable.value);
+        setCanWithdrawNow(Boolean(unwrapClarityJson(withdrawable)));
       } catch (err) {
         console.error('Failed to fetch vault data:', err);
       }
@@ -48,7 +120,9 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
    * @returns {string} Formatted STX amount
    */
   const formatSTX = (microStx) => {
-    return (microStx / 1_000_000).toFixed(6);
+    const numericAmount = Number(microStx);
+    if (!Number.isFinite(numericAmount)) return '0.000000';
+    return (numericAmount / 1_000_000).toFixed(6);
   };
 
   /**
@@ -57,8 +131,12 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
    * @param {number} seconds - Remaining lock time in seconds
    * @returns {string} Human-readable time string
    */
-  const formatTime = (seconds) => {
-    if (seconds <= 0) return 'Ready to withdraw';
+  const formatTime = (blocks) => {
+    const numericBlocks = Number(blocks);
+    if (!Number.isFinite(numericBlocks)) return '--';
+    if (numericBlocks <= 0) return 'Ready to withdraw';
+
+    const seconds = numericBlocks * BLOCK_TIME_SECONDS;
     
     const days = Math.floor(seconds / 86400);
     const hours = Math.floor((seconds % 86400) / 3600);
@@ -107,7 +185,9 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
         
         <div className="detail-row">
           <span className="label">Unlock Block:</span>
-          <span className="value">{vault['unlock-block']}</span>
+          <span className="value">
+            {vault.unlockTime ? vault.unlockTime.toLocaleString() : '--'}
+          </span>
         </div>
         
         {vault.bot && (

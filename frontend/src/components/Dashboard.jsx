@@ -56,6 +56,13 @@ export function Dashboard() {
     };
   }, [vaultIds]);
 
+  const numericVaultCount = vaultCount === null || vaultCount === undefined
+    ? NaN
+    : Number(vaultCount);
+  const vaultCountLabel = Number.isFinite(numericVaultCount)
+    ? numericVaultCount.toLocaleString()
+    : '--';
+
   /** Protocol-level metrics rendered in the stats bar at the top of the dashboard. */
   const protocolSnapshot = useMemo(() => ([
     {
@@ -65,7 +72,7 @@ export function Dashboard() {
     },
     {
       label: 'Vault count',
-      value: vaultCount === null || vaultCount === undefined ? '--' : vaultCount.toLocaleString(),
+      value: vaultCountLabel,
       tone: 'amber',
     },
     {
@@ -73,7 +80,7 @@ export function Dashboard() {
       value: blockHeight === null || blockHeight === undefined ? '--' : `#${blockHeight.toLocaleString()}`,
       tone: 'slate',
     },
-  ]), [totalLocked, vaultCount, blockHeight]);
+  ]), [totalLocked, vaultCountLabel, blockHeight]);
 
   /** Vault IDs filtered by the current search query and sorted by the active sort option. */
   const filteredVaultIds = useMemo(() => {
@@ -189,7 +196,7 @@ export function Dashboard() {
         />
         <StatsCard
           label="Total Vaults"
-          value={vaultCount?.toLocaleString() || '--'}
+          value={vaultCountLabel}
           icon="🧱"
           subValue="All active + matured vaults"
           loading={vaultCount === null || vaultCount === undefined}

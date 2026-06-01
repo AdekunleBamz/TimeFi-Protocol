@@ -513,32 +513,70 @@
 
   .dashboard-hero {
     padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    border-radius: 1.25rem;
   }
 
   .dashboard-hero h1 {
     font-size: 1.75rem;
+    letter-spacing: 0;
   }
 
   .dashboard-hero p {
     font-size: 1rem;
   }
 
+  .dashboard-hero-links,
+  .dashboard-hero-highlights {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dashboard-hero-link,
+  .dashboard-hero-highlights span {
+    width: 100%;
+    text-align: center;
+  }
+
   .dashboard-hero-metrics {
     grid-template-columns: 1fr;
   }
 
+  .dashboard-hero-metric {
+    text-align: center;
+  }
+
   .dashboard-stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
 
   .dashboard-wallet-panel {
     grid-template-columns: 1fr;
     margin-top: -1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 1rem;
   }
 
   .dashboard-wallet-actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-content {
+    gap: 2rem;
+  }
+
+  .dashboard-section {
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+
+  .dashboard-section-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .vaults-grid {
@@ -565,11 +603,45 @@
 
   .vault-browser-state {
     margin-left: 0;
+    flex-wrap: wrap;
   }
 }
 
 @media (max-width: 480px) {
+  .dashboard {
+    padding: 0.75rem;
+  }
+
+  .dashboard-hero {
+    padding: 1.5rem 0.85rem;
+  }
+
+  .dashboard-hero-eyebrow {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
   .dashboard-stats {
     grid-template-columns: 1fr;
+  }
+
+  .dashboard-wallet-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-wallet-stat,
+  .dashboard-wallet-primary {
+    min-width: 0;
+  }
+
+  .dashboard-wallet-panel strong {
+    overflow-wrap: anywhere;
+  }
+
+  .connect-prompt {
+    padding: 2rem 1rem;
   }
 }

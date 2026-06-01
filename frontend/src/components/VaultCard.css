@@ -224,8 +224,37 @@
 }
 
 @media (max-width: 640px) {
+    .vault-card {
+        padding: 1.15rem;
+        border-radius: 16px;
+    }
+
+    .vault-header,
+    .detail-row {
+        align-items: flex-start;
+        gap: 0.55rem;
+    }
+
+    .detail-row {
+        flex-direction: column;
+    }
+
+    .detail-row .value,
+    .vault-time-spotlight strong {
+        overflow-wrap: anywhere;
+    }
+
     .vault-card-footer-meta {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .vault-actions {
+        flex-direction: column;
+    }
+
+    .vault-actions button,
+    .vault-actions .vault-open-link {
+        width: 100%;
     }
 }

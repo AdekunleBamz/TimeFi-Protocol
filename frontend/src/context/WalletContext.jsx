@@ -35,9 +35,14 @@ export function WalletProvider({ children }) {
   const balanceRequestId = useRef(0);
 
   const network = env.isTestnet || env.isDevnet ? new StacksTestnet() : new StacksMainnet();
-  const stxAddress = env.isTestnet || env.isDevnet
-    ? userData?.profile?.stxAddress?.testnet || null
-    : userData?.profile?.stxAddress?.mainnet || null;
+  const walletAddresses = userData?.profile?.stxAddress || {};
+  const configuredAddress = env.isTestnet || env.isDevnet
+    ? walletAddresses.testnet || null
+    : walletAddresses.mainnet || null;
+  const fallbackAddress = env.isTestnet || env.isDevnet
+    ? walletAddresses.mainnet || null
+    : walletAddresses.testnet || null;
+  const stxAddress = configuredAddress || fallbackAddress || null;
 
   const refreshBalance = useCallback(async () => {
     const requestId = balanceRequestId.current + 1;
@@ -54,7 +59,24 @@ export function WalletProvider({ children }) {
     setBalanceError(null);
 
     try {
-      const nextBalance = await getAccountBalance(stxAddress);
+      let nextBalance = await getAccountBalance(stxAddress);
+      const shouldTryFallbackBalance = fallbackAddress
+        && fallbackAddress !== stxAddress
+        && Number(nextBalance?.estimatedBalance ?? nextBalance?.balance ?? 0) === 0
+        && Number(nextBalance?.totalReceived ?? 0) === 0;
+
+      if (shouldTryFallbackBalance) {
+        const fallbackBalance = await getAccountBalance(fallbackAddress);
+        const fallbackEstimatedBalance = Number(fallbackBalance?.estimatedBalance ?? fallbackBalance?.balance ?? 0);
+        if (fallbackEstimatedBalance > 0 || Number(fallbackBalance?.totalReceived ?? 0) > 0) {
+          nextBalance = {
+            ...fallbackBalance,
+            address: fallbackAddress,
+            sourceNetwork: env.isTestnet || env.isDevnet ? 'mainnet' : 'testnet',
+          };
+        }
+      }
+
       if (balanceRequestId.current === requestId) {
         setAccountBalance(nextBalance);
       }
@@ -131,7 +153,7 @@ export function WalletProvider({ children }) {
     stxAddress,
     address: stxAddress,
     accountBalance,
-    balance: accountBalance?.balance ?? null,
+    balance: accountBalance?.estimatedBalance ?? accountBalance?.balance ?? null,
     lockedBalance: accountBalance?.locked ?? null,
     balanceLoading,
     balanceError,

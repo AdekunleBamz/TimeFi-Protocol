@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useReadOnly } from '../hooks/useReadOnly';
 
 const BLOCK_TIME_SECONDS = 600;
@@ -202,17 +203,19 @@ export function VaultCard({ vaultId, onWithdraw, onApproveBot }) {
         {canWithdrawNow ? (
           <button 
             className="btn btn-primary"
-            onClick={() => onWithdraw(vaultId)}
+            onClick={() => onWithdraw?.(vaultId)}
           >
             Withdraw
           </button>
         ) : (
-          <button 
-            className="btn btn-secondary"
-            onClick={() => onApproveBot(vaultId)}
-          >
-            Manage Bot
-          </button>
+          <Link className="btn btn-secondary vault-open-link" to={`/vault/${vaultId}`}>
+            Manage Vault
+          </Link>
+        )}
+        {canWithdrawNow && (
+          <Link className="btn btn-secondary vault-open-link" to={`/vault/${vaultId}`}>
+            Manage Vault
+          </Link>
         )}
       </div>
     </div>

@@ -17,7 +17,10 @@ const FUNCTION_ALIASES = {
 };
 const OWNER_SCAN_BATCH_SIZE = 40;
 const USER_VAULT_EVENT_LIMIT = 50;
-const USER_VAULT_EVENT_MAX_PAGES = 120;
+const USER_VAULT_EVENT_MAX_PAGES = 8;
+const USER_VAULT_TX_LIMIT = 50;
+const USER_VAULT_TX_MAX_PAGES = 6;
+const READ_TIMEOUT_MS = 10000;
 const HIRO_API_URL = env.hiroApiUrl || STACKS_NETWORK?.coreApiUrl || 'https://api.mainnet.hiro.so';
 
 function resolveFunctionName(functionName) {
@@ -105,6 +108,27 @@ function clarityJsonToPlain(value) {
   return plain;
 }
 
+function withTimeout(promise, label, timeoutMs = READ_TIMEOUT_MS) {
+  let timeoutId;
+  const timeout = new Promise((_, reject) => {
+    timeoutId = globalThis.setTimeout(() => {
+      reject(new Error(`${label} timed out`));
+    }, timeoutMs);
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    globalThis.clearTimeout(timeoutId);
+  });
+}
+
+async function fetchJson(url, label) {
+  const response = await withTimeout(fetch(url), label);
+  if (!response.ok) {
+    throw new Error(`${label} failed: ${response.status}`);
+  }
+  return response.json();
+}
+
 function parseCreateVaultEvent(repr) {
   const text = String(repr || '');
   if (!text.includes('(event "create")')) return null;
@@ -122,6 +146,44 @@ function parseCreateVaultEvent(repr) {
   };
 }
 
+function parseVaultIdFromTxResult(txResult) {
+  const repr = String(txResult?.repr || '');
+  const match = repr.match(/^\(ok u(\d+)\)$/);
+  if (!match) return null;
+
+  const vaultId = Number(match[1]);
+  return Number.isInteger(vaultId) && vaultId > 0 ? vaultId : null;
+}
+
+async function fetchUserVaultsFromTransactions(ownerAddress) {
+  const ownedVaultIds = new Set();
+
+  for (let page = 0; page < USER_VAULT_TX_MAX_PAGES; page += 1) {
+    const offset = page * USER_VAULT_TX_LIMIT;
+    const url = new URL(`/extended/v1/address/${ownerAddress}/transactions`, HIRO_API_URL);
+    url.searchParams.set('limit', String(USER_VAULT_TX_LIMIT));
+    url.searchParams.set('offset', String(offset));
+
+    const data = await fetchJson(url, 'Wallet transactions fetch');
+    const transactions = Array.isArray(data.results) ? data.results : [];
+
+    for (const transaction of transactions) {
+      const contractCall = transaction?.contract_call;
+      const isVaultCreate = transaction?.tx_status === 'success'
+        && contractCall?.contract_id === `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`
+        && contractCall?.function_name === 'create-vault';
+      if (!isVaultCreate) continue;
+
+      const vaultId = parseVaultIdFromTxResult(transaction.tx_result);
+      if (vaultId) ownedVaultIds.add(vaultId);
+    }
+
+    if (transactions.length < USER_VAULT_TX_LIMIT) break;
+  }
+
+  return [...ownedVaultIds].sort((a, b) => b - a);
+}
+
 async function fetchUserVaultsFromEvents(ownerAddress) {
   const ownedVaultIds = new Set();
 
@@ -136,13 +198,10 @@ async function fetchUserVaultsFromEvents(ownerAddress) {
       url.searchParams.set('offset', String(offset));
       url.searchParams.set('unanchored', 'true');
 
-      const response = await fetch(url);
-      if (!response.ok) {
-        if (page === 0) break;
-        throw new Error(`Contract events fetch failed: ${response.status}`);
-      }
-
-      const data = await response.json();
+      const data = await fetchJson(url, 'Contract events fetch').catch((error) => {
+        if (page === 0) return { results: [] };
+        throw error;
+      });
       const events = Array.isArray(data.results) ? data.results : [];
 
       for (const event of events) {
@@ -170,6 +229,21 @@ async function fetchPlainReadOnly(callReadOnly, readFunctionName, readFunctionAr
     const ownerAddress = String(readFunctionArgs[0] || '').trim();
     if (!ownerAddress) return [];
 
+    const transactionVaultIds = await fetchUserVaultsFromTransactions(ownerAddress);
+    if (transactionVaultIds.length > 0) {
+      const verifiedTransactionVaultIds = await Promise.all(
+        transactionVaultIds.map(async (vaultId) => {
+          const ownershipResult = await callReadOnly('is-vault-owner', [
+            uintCV(vaultId),
+            principalCV(ownerAddress),
+          ]);
+          return clarityJsonToPlain(ownershipResult) ? vaultId : null;
+        })
+      );
+
+      return verifiedTransactionVaultIds.filter((vaultId) => vaultId !== null);
+    }
+
     const eventVaultIds = await fetchUserVaultsFromEvents(ownerAddress);
     if (eventVaultIds.length > 0) {
       const verifiedEventVaultIds = await Promise.all(
@@ -189,8 +263,9 @@ async function fetchPlainReadOnly(callReadOnly, readFunctionName, readFunctionAr
     const vaultCount = clarityJsonToPlain(vaultCountResult);
     const safeVaultCount = Number.isInteger(vaultCount) && vaultCount > 0 ? vaultCount : 0;
     const ownedVaultIds = [];
+    const fallbackStartId = Math.max(safeVaultCount - (OWNER_SCAN_BATCH_SIZE * 2) + 1, 1);
 
-    for (let startId = 1; startId <= safeVaultCount; startId += OWNER_SCAN_BATCH_SIZE) {
+    for (let startId = fallbackStartId; startId <= safeVaultCount; startId += OWNER_SCAN_BATCH_SIZE) {
       const endId = Math.min(startId + OWNER_SCAN_BATCH_SIZE - 1, safeVaultCount);
       const vaultIds = Array.from(
         { length: endId - startId + 1 },
@@ -211,7 +286,7 @@ async function fetchPlainReadOnly(callReadOnly, readFunctionName, readFunctionAr
       }
     }
 
-    return ownedVaultIds;
+    return ownedVaultIds.sort((a, b) => b - a);
   }
 
   const encodedArgs = encodeFunctionArgs(resolvedFunctionName, readFunctionArgs);
@@ -262,14 +337,17 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
 
       for (const contractName of CONTRACT_NAME_CANDIDATES) {
         try {
-          const result = await callReadOnlyFunction({
-            contractAddress: CONTRACT_ADDRESS,
-            contractName,
-            functionName: resolvedFunctionName,
-            functionArgs: readFunctionArgs,
-            network: STACKS_NETWORK,
-            senderAddress: senderAddress || CONTRACT_ADDRESS,
-          });
+          const result = await withTimeout(
+            callReadOnlyFunction({
+              contractAddress: CONTRACT_ADDRESS,
+              contractName,
+              functionName: resolvedFunctionName,
+              functionArgs: readFunctionArgs,
+              network: STACKS_NETWORK,
+              senderAddress: senderAddress || CONTRACT_ADDRESS,
+            }),
+            `${resolvedFunctionName} read`
+          );
 
           return cvToJSON(result);
         } catch (err) {
@@ -374,7 +452,12 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
     try {
       const plainResult = await fetchPlainReadOnly(callReadOnly, functionName, stableFunctionArgs);
       setData(plainResult);
+      setError(null);
       return plainResult;
+    } catch (err) {
+      setError(err.message || 'Read-only call failed');
+      setData(null);
+      return null;
     } finally {
       setAutoLoading(false);
     }
@@ -395,6 +478,7 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
         }
       } catch (err) {
         if (!cancelled) {
+          setError(err.message || 'Read-only call failed');
           setData(null);
         }
       } finally {

@@ -45,8 +45,18 @@ export function Dashboard() {
   );
 
   // Fetch protocol stats
-  const { data: totalLocked, refetch: refetchTotalLocked } = useReadOnly('get-total-locked', []);
-  const { data: vaultCount, refetch: refetchVaultCount } = useReadOnly('get-vault-count', []);
+  const {
+    data: totalLocked,
+    loading: totalLockedLoading,
+    error: totalLockedError,
+    refetch: refetchTotalLocked,
+  } = useReadOnly('get-total-locked', []);
+  const {
+    data: vaultCount,
+    loading: vaultCountLoading,
+    error: vaultCountError,
+    refetch: refetchVaultCount,
+  } = useReadOnly('get-vault-count', []);
 
   /**
    * userStats - Aggregate counts derived from the user's vault ID list.
@@ -175,7 +185,9 @@ export function Dashboard() {
           <div className="dashboard-wallet-stat">
             <span className="dashboard-wallet-label">Your vaults</span>
             <strong>
-              {vaultsLoading || userStats.totalVaults === null
+              {vaultsError
+                ? 'Unavailable'
+                : vaultsLoading || userStats.totalVaults === null
                 ? 'Checking...'
                 : userStats.totalVaults.toLocaleString()}
             </strong>
@@ -202,14 +214,14 @@ export function Dashboard() {
           }
           icon="🏦"
           subValue="Protocol-wide deposits"
-          loading={totalLocked === null || totalLocked === undefined}
+          loading={totalLockedLoading && !totalLockedError}
         />
         <StatsCard
           label="Total Vaults"
           value={vaultCountLabel}
           icon="🧱"
           subValue="All active + matured vaults"
-          loading={vaultCount === null || vaultCount === undefined}
+          loading={vaultCountLoading && !vaultCountError}
         />
         <StatsCard
           label="Current Block"
@@ -228,7 +240,7 @@ export function Dashboard() {
             }
             icon="🗂️"
             subValue="Vaults linked to this wallet"
-            loading={vaultsLoading}
+            loading={vaultsLoading && !vaultsError}
           />
         )}
       </section>

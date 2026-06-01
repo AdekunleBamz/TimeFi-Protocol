@@ -493,6 +493,57 @@ function getStatusVariant(status) {
   return variants[status] || 'default';
 }
 
+function unwrapClarityJson(value) {
+  if (value === null || value === undefined) return value;
+
+  if (Array.isArray(value)) {
+    return value.map(unwrapClarityJson);
+  }
+
+  if (typeof value !== 'object') return value;
+
+  if (typeof value.success === 'boolean' && Object.prototype.hasOwnProperty.call(value, 'value')) {
+    return unwrapClarityJson(value.value);
+  }
+
+  if (value.type === 'uint' || value.type === 'int') {
+    return Number(value.value);
+  }
+
+  if (value.type === 'bool') {
+    return Boolean(value.value);
+  }
+
+  if (value.type === 'principal' || value.type === 'string-ascii' || value.type === 'string-utf8') {
+    return value.value;
+  }
+
+  if (value.type === 'none') return null;
+
+  if (value.type === 'some') {
+    return unwrapClarityJson(value.value);
+  }
+
+  if (value.type === 'list') {
+    return unwrapClarityJson(value.value);
+  }
+
+  if (value.type === 'tuple') {
+    return unwrapClarityJson(value.value);
+  }
+
+  const plain = {};
+  for (const [key, nestedValue] of Object.entries(value)) {
+    plain[key] = unwrapClarityJson(nestedValue);
+  }
+  return plain;
+}
+
+function toFiniteNumber(value, fallback = 0) {
+  const numericValue = Number(unwrapClarityJson(value));
+  return Number.isFinite(numericValue) ? numericValue : fallback;
+}
+
 /**
  * normalizeVault - Normalize a raw vault response into a consistent shape.
  *
@@ -504,17 +555,19 @@ function getStatusVariant(status) {
  */
 function normalizeVault(vault) {
   if (!vault) return null;
+  const plainVault = unwrapClarityJson(vault);
+  if (!plainVault || typeof plainVault !== 'object') return null;
 
   return {
-    amount: Number(vault.amount ?? vault['amount'] ?? 0),
-    rewards: Number(vault.rewards ?? vault['pending-rewards'] ?? 0),
-    owner: vault.owner ?? vault['owner'] ?? '',
-    unlockHeight: Number(vault.unlockHeight ?? vault['unlock-height'] ?? vault['unlock-block'] ?? 0),
-    lockDuration: Number(vault.lockDuration ?? vault['lock-duration'] ?? 0),
-    createdAt: Number(vault.createdAt ?? vault['created-at'] ?? 0),
-    createdHeight: Number(vault.createdHeight ?? vault['created-height'] ?? vault['deposit-block'] ?? 0),
-    withdrawn: Boolean(vault.withdrawn ?? vault.isWithdrawn ?? vault['withdrawn']),
-    emergencyUnlocked: Boolean(vault.emergencyUnlocked ?? vault['emergency-unlocked']),
+    amount: toFiniteNumber(plainVault.amount ?? plainVault['amount']),
+    rewards: toFiniteNumber(plainVault.rewards ?? plainVault['pending-rewards']),
+    owner: plainVault.owner ?? plainVault['owner'] ?? '',
+    unlockHeight: toFiniteNumber(plainVault.unlockHeight ?? plainVault['unlock-height'] ?? plainVault['unlock-time'] ?? plainVault['unlock-block']),
+    lockDuration: toFiniteNumber(plainVault.lockDuration ?? plainVault['lock-duration']),
+    createdAt: toFiniteNumber(plainVault.createdAt ?? plainVault['created-at']),
+    createdHeight: toFiniteNumber(plainVault.createdHeight ?? plainVault['created-height'] ?? plainVault['lock-time'] ?? plainVault['deposit-block']),
+    withdrawn: Boolean(plainVault.withdrawn ?? plainVault.isWithdrawn ?? plainVault['withdrawn']),
+    emergencyUnlocked: Boolean(plainVault.emergencyUnlocked ?? plainVault['emergency-unlocked']),
   };
 }
 

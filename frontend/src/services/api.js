@@ -24,6 +24,15 @@ import { env } from '../config/env';
  * @type {string}
  */
 const HIRO_API_URL = env.hiroApiUrl || STACKS_NETWORK?.coreApiUrl || 'https://api.mainnet.hiro.so';
+const MAINNET_HIRO_API_URL = 'https://api.mainnet.hiro.so';
+const TESTNET_HIRO_API_URL = 'https://api.testnet.hiro.so';
+
+function getHiroApiUrlForAddress(address) {
+  const normalizedAddress = String(address || '').trim();
+  if (normalizedAddress.startsWith('SP')) return MAINNET_HIRO_API_URL;
+  if (normalizedAddress.startsWith('ST')) return TESTNET_HIRO_API_URL;
+  return HIRO_API_URL;
+}
 
 /**
  * safeParseInt - Safely parse integer values with fallback.
@@ -61,8 +70,8 @@ function safeParseInt(value, fallback = 0) {
 async function fetchAPI(endpoint, options = {}) {
   const trimmedEndpoint = String(endpoint || '').trim();
   const normalizedEndpoint = trimmedEndpoint.startsWith('/') ? trimmedEndpoint : `/${trimmedEndpoint}`;
-  const url = `${HIRO_API_URL}${normalizedEndpoint}`;
-  const { timeout = 15000, ...fetchOptions } = options;
+  const { timeout = 15000, baseUrl = HIRO_API_URL, ...fetchOptions } = options;
+  const url = `${baseUrl}${normalizedEndpoint}`;
 
   // Abort slow Hiro requests so UI callers can recover instead of hanging.
   const controller = new AbortController();
@@ -134,7 +143,10 @@ export async function getAccountBalance(address) {
   if (!address || typeof address !== 'string') {
     throw new Error('A valid address is required');
   }
-  const data = await fetchAPI(`/extended/v1/address/${address.trim()}/stx`);
+  const trimmedAddress = address.trim();
+  const data = await fetchAPI(`/extended/v1/address/${trimmedAddress}/stx`, {
+    baseUrl: getHiroApiUrlForAddress(trimmedAddress),
+  });
   return {
     balance: safeParseInt(data.balance),
     estimatedBalance: safeParseInt(data.estimated_balance),

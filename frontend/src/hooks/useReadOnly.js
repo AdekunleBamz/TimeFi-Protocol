@@ -65,39 +65,41 @@ function clarityJsonToPlain(value) {
     return value;
   }
 
+  const clarityType = typeof value.type === 'string' ? value.type : '';
+
   if (typeof value.success === 'boolean' && Object.prototype.hasOwnProperty.call(value, 'value')) {
     return clarityJsonToPlain(value.value);
   }
 
-  if (value.type === 'ok') {
+  if (clarityType === 'ok' || clarityType.startsWith('(response ')) {
     return clarityJsonToPlain(value.value);
   }
 
-  if (value.type === 'some') {
+  if (clarityType === 'some' || clarityType.startsWith('(optional ')) {
     return clarityJsonToPlain(value.value);
   }
 
-  if (value.type === 'none') {
+  if (clarityType === 'none') {
     return null;
   }
 
-  if (value.type === 'uint' || value.type === 'int') {
+  if (clarityType === 'uint' || clarityType === 'int') {
     return Number(value.value);
   }
 
-  if (value.type === 'bool') {
+  if (clarityType === 'bool') {
     return Boolean(value.value);
   }
 
-  if (value.type === 'principal' || value.type === 'string-ascii' || value.type === 'string-utf8') {
+  if (clarityType === 'principal' || clarityType === 'string-ascii' || clarityType === 'string-utf8') {
     return value.value;
   }
 
-  if (value.type === 'list') {
+  if (clarityType === 'list' || clarityType.startsWith('(list ')) {
     return clarityJsonToPlain(value.value);
   }
 
-  if (value.type === 'tuple') {
+  if (clarityType === 'tuple' || clarityType.startsWith('(tuple ')) {
     return clarityJsonToPlain(value.value);
   }
 

@@ -80,9 +80,10 @@ export function Header() {
     if (balanceLoading) return 'Loading';
     if (balanceError) return 'Unavailable';
     if (bal === null || bal === undefined) return '--';
-    return (bal / 1_000_000).toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+    const stxBalance = bal / 1_000_000;
+    return stxBalance.toLocaleString('en-US', {
+      minimumFractionDigits: stxBalance > 0 && stxBalance < 1 ? 6 : 2,
+      maximumFractionDigits: stxBalance > 0 && stxBalance < 1 ? 6 : 2,
     });
   };
 

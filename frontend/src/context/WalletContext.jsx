@@ -6,6 +6,18 @@ import { getAccountBalance } from '../services/api';
 
 const WalletContext = createContext(null);
 
+function pickDisplayBalance(accountBalance) {
+  if (!accountBalance) return null;
+
+  const estimatedBalance = Number(accountBalance.estimatedBalance);
+  const confirmedBalance = Number(accountBalance.balance);
+
+  if (Number.isFinite(estimatedBalance) && estimatedBalance > 0) return estimatedBalance;
+  if (Number.isFinite(confirmedBalance)) return confirmedBalance;
+  if (Number.isFinite(estimatedBalance)) return estimatedBalance;
+  return null;
+}
+
 /** Stacks Connect app metadata displayed in the wallet connection modal. */
 const appDetails = {
   name: 'TimeFi Protocol',
@@ -62,13 +74,13 @@ export function WalletProvider({ children }) {
       let nextBalance = await getAccountBalance(stxAddress);
       const shouldTryFallbackBalance = fallbackAddress
         && fallbackAddress !== stxAddress
-        && Number(nextBalance?.estimatedBalance ?? nextBalance?.balance ?? 0) === 0
+        && Number(pickDisplayBalance(nextBalance) ?? 0) === 0
         && Number(nextBalance?.totalReceived ?? 0) === 0;
 
       if (shouldTryFallbackBalance) {
         const fallbackBalance = await getAccountBalance(fallbackAddress);
-        const fallbackEstimatedBalance = Number(fallbackBalance?.estimatedBalance ?? fallbackBalance?.balance ?? 0);
-        if (fallbackEstimatedBalance > 0 || Number(fallbackBalance?.totalReceived ?? 0) > 0) {
+        const fallbackDisplayBalance = Number(pickDisplayBalance(fallbackBalance) ?? 0);
+        if (fallbackDisplayBalance > 0 || Number(fallbackBalance?.totalReceived ?? 0) > 0) {
           nextBalance = {
             ...fallbackBalance,
             address: fallbackAddress,
@@ -153,7 +165,7 @@ export function WalletProvider({ children }) {
     stxAddress,
     address: stxAddress,
     accountBalance,
-    balance: accountBalance?.estimatedBalance ?? accountBalance?.balance ?? null,
+    balance: pickDisplayBalance(accountBalance),
     lockedBalance: accountBalance?.locked ?? null,
     balanceLoading,
     balanceError,

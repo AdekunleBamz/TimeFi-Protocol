@@ -119,7 +119,10 @@ export function Dashboard() {
     : balanceError
       ? 'Unavailable'
       : typeof balance === 'number'
-        ? `${(balance / 1_000_000).toLocaleString('en-US', { maximumFractionDigits: 4 })} STX`
+        ? `${(balance / 1_000_000).toLocaleString('en-US', {
+          minimumFractionDigits: balance > 0 && balance < 1_000_000 ? 6 : 0,
+          maximumFractionDigits: balance > 0 && balance < 1_000_000 ? 6 : 6,
+        })} STX`
         : '-- STX';
   const refreshDashboardReads = () => {
     refetchVaults();

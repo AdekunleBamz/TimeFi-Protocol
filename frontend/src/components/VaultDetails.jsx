@@ -24,6 +24,15 @@ const ACTIVE_NETWORK =
     ? 'testnet'
     : 'mainnet';
 
+function formatVaultAmount(microStx) {
+  const numericAmount = Number(microStx);
+  if (!Number.isFinite(numericAmount)) return '0.000000';
+  return (numericAmount / 1_000_000).toLocaleString('en-US', {
+    minimumFractionDigits: 6,
+    maximumFractionDigits: 6,
+  });
+}
+
 /**
  * VaultDetails - Full page view for individual vault details.
  *
@@ -295,7 +304,7 @@ export function VaultDetails() {
         <section className="vault-section vault-stats">
           <h2>Balance</h2>
           <div className="vault-balance">
-            <span className="balance-amount">{formatSTX(normalizedVault.amount)}</span>
+            <span className="balance-amount">{formatVaultAmount(normalizedVault.amount)}</span>
             <span className="balance-currency">STX</span>
           </div>
           

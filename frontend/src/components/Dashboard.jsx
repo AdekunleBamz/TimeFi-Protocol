@@ -33,15 +33,20 @@ export function Dashboard() {
   const [vaultSort, setVaultSort] = useState('newest');
   
   // Fetch user vaults when the wallet is connected
-  const { data: vaultIds, loading: vaultsLoading } = useReadOnly(
+  const {
+    data: vaultIds,
+    loading: vaultsLoading,
+    error: vaultsError,
+    refetch: refetchVaults,
+  } = useReadOnly(
     'get-user-vaults',
     address ? [address] : null,
     { enabled: isConnected }
   );
 
   // Fetch protocol stats
-  const { data: totalLocked } = useReadOnly('get-total-locked', []);
-  const { data: vaultCount } = useReadOnly('get-vault-count', []);
+  const { data: totalLocked, refetch: refetchTotalLocked } = useReadOnly('get-total-locked', []);
+  const { data: vaultCount, refetch: refetchVaultCount } = useReadOnly('get-vault-count', []);
 
   /**
    * userStats - Aggregate counts derived from the user's vault ID list.
@@ -106,6 +111,11 @@ export function Dashboard() {
       : typeof balance === 'number'
         ? `${(balance / 1_000_000).toLocaleString('en-US', { maximumFractionDigits: 4 })} STX`
         : '-- STX';
+  const refreshDashboardReads = () => {
+    refetchVaults();
+    refetchVaultCount();
+    refetchTotalLocked();
+  };
 
   // Scroll to anchored section when navigating via in-page hash links
   useEffect(() => {
@@ -235,7 +245,13 @@ export function Dashboard() {
           </div>
           {isConnected ? (
             <div className="create-vault-layout">
-              <CreateVaultForm />
+              <CreateVaultForm
+                onSuccess={() => {
+                  refreshDashboardReads();
+                  window.setTimeout(refreshDashboardReads, 30000);
+                  window.setTimeout(refreshDashboardReads, 90000);
+                }}
+              />
               <aside className="create-vault-guide">
                 <h3>Before you submit</h3>
                 <ul>
@@ -337,6 +353,21 @@ export function Dashboard() {
                   <Skeleton key={i} height={200} borderRadius={12} />
                 ))}
               </div>
+            ) : vaultsError ? (
+              <EmptyState
+                title="Vaults unavailable"
+                description="We could not load your vaults from the active contract. Please retry in a moment."
+                icon="⚠️"
+                action={
+                  <button
+                    type="button"
+                    className="dashboard-clear-filters"
+                    onClick={refreshDashboardReads}
+                  >
+                    Retry Vault Load
+                  </button>
+                }
+              />
             ) : filteredVaultIds.length > 0 ? (
               <div className="vaults-grid">
                 {filteredVaultIds.map((id) => (

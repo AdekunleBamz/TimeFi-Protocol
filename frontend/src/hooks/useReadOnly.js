@@ -1,14 +1,24 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { callReadOnlyFunction, cvToJSON, uintCV, principalCV } from '@stacks/transactions';
 import { STACKS_NETWORK, CONTRACT_ADDRESS, CONTRACT_NAMES } from '../utils/constants';
+import { env } from '../config/env';
 
 const CONTRACT_NAME = CONTRACT_NAMES.VAULT;
+const CONTRACT_NAME_CANDIDATES = [
+  CONTRACT_NAME,
+  'timefi-vault-v-A2',
+  'timefi-vault-v-A1',
+  'timefi-vault',
+].filter((name, index, names) => name && names.indexOf(name) === index);
 
 const FUNCTION_ALIASES = {
   'get-total-locked': 'get-tvl',
   'get-vault-details': 'get-vault',
 };
 const OWNER_SCAN_BATCH_SIZE = 40;
+const USER_VAULT_EVENT_LIMIT = 50;
+const USER_VAULT_EVENT_MAX_PAGES = 120;
+const HIRO_API_URL = env.hiroApiUrl || STACKS_NETWORK?.coreApiUrl || 'https://api.mainnet.hiro.so';
 
 function resolveFunctionName(functionName) {
   return FUNCTION_ALIASES[functionName] || functionName;
@@ -95,12 +105,85 @@ function clarityJsonToPlain(value) {
   return plain;
 }
 
+function parseCreateVaultEvent(repr) {
+  const text = String(repr || '');
+  if (!text.includes('(event "create")')) return null;
+
+  const idMatch = text.match(/\(id u(\d+)\)/);
+  const ownerMatch = text.match(/\(owner '([^)\s]+)\)/);
+  if (!idMatch || !ownerMatch) return null;
+
+  const vaultId = Number(idMatch[1]);
+  if (!Number.isInteger(vaultId) || vaultId <= 0) return null;
+
+  return {
+    id: vaultId,
+    owner: ownerMatch[1],
+  };
+}
+
+async function fetchUserVaultsFromEvents(ownerAddress) {
+  const ownedVaultIds = new Set();
+
+  for (const contractName of CONTRACT_NAME_CANDIDATES) {
+    for (let page = 0; page < USER_VAULT_EVENT_MAX_PAGES; page += 1) {
+      const offset = page * USER_VAULT_EVENT_LIMIT;
+      const url = new URL(
+        `/extended/v1/contract/${CONTRACT_ADDRESS}.${contractName}/events`,
+        HIRO_API_URL
+      );
+      url.searchParams.set('limit', String(USER_VAULT_EVENT_LIMIT));
+      url.searchParams.set('offset', String(offset));
+      url.searchParams.set('unanchored', 'true');
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        if (page === 0) break;
+        throw new Error(`Contract events fetch failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const events = Array.isArray(data.results) ? data.results : [];
+
+      for (const event of events) {
+        const parsedEvent = parseCreateVaultEvent(event?.contract_log?.value?.repr);
+        if (parsedEvent?.owner === ownerAddress) {
+          ownedVaultIds.add(parsedEvent.id);
+        }
+      }
+
+      if (events.length < USER_VAULT_EVENT_LIMIT) {
+        break;
+      }
+    }
+
+    if (ownedVaultIds.size > 0) break;
+  }
+
+  return [...ownedVaultIds].sort((a, b) => b - a);
+}
+
 async function fetchPlainReadOnly(callReadOnly, readFunctionName, readFunctionArgs = []) {
   const resolvedFunctionName = resolveFunctionName(readFunctionName);
 
   if (resolvedFunctionName === 'get-user-vaults') {
     const ownerAddress = String(readFunctionArgs[0] || '').trim();
     if (!ownerAddress) return [];
+
+    const eventVaultIds = await fetchUserVaultsFromEvents(ownerAddress);
+    if (eventVaultIds.length > 0) {
+      const verifiedEventVaultIds = await Promise.all(
+        eventVaultIds.map(async (vaultId) => {
+          const ownershipResult = await callReadOnly('is-vault-owner', [
+            uintCV(vaultId),
+            principalCV(ownerAddress),
+          ]);
+          return clarityJsonToPlain(ownershipResult) ? vaultId : null;
+        })
+      );
+
+      return verifiedEventVaultIds.filter((vaultId) => vaultId !== null);
+    }
 
     const vaultCountResult = await callReadOnly('get-vault-count', []);
     const vaultCount = clarityJsonToPlain(vaultCountResult);
@@ -175,16 +258,26 @@ export function useReadOnly(functionName, functionArgs = [], options = {}) {
     setError(null);
     
     try {
-      const result = await callReadOnlyFunction({
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAME,
-        functionName: resolvedFunctionName,
-        functionArgs: readFunctionArgs,
-        network: STACKS_NETWORK,
-        senderAddress: senderAddress || CONTRACT_ADDRESS,
-      });
-      
-      return cvToJSON(result);
+      let lastError;
+
+      for (const contractName of CONTRACT_NAME_CANDIDATES) {
+        try {
+          const result = await callReadOnlyFunction({
+            contractAddress: CONTRACT_ADDRESS,
+            contractName,
+            functionName: resolvedFunctionName,
+            functionArgs: readFunctionArgs,
+            network: STACKS_NETWORK,
+            senderAddress: senderAddress || CONTRACT_ADDRESS,
+          });
+
+          return cvToJSON(result);
+        } catch (err) {
+          lastError = err;
+        }
+      }
+
+      throw lastError || new Error(`Unable to read ${resolvedFunctionName}`);
     } catch (err) {
       setError(err.message);
       throw err;

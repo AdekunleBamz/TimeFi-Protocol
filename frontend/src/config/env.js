@@ -35,6 +35,21 @@ export { SUPPORTED_NETWORKS };
 const parseBoolean = (value) => String(value || '').trim().toLowerCase() === 'true';
 const configuredNetwork = normalizeNetwork(import.meta.env.VITE_NETWORK) || 'mainnet';
 const resolvedNetwork = SUPPORTED_NETWORKS.includes(configuredNetwork) ? configuredNetwork : 'mainnet';
+const CONTRACT_NAME_ALIASES = Object.freeze({
+  'vault-v-A2': 'timefi-vault-v-A2',
+  'vault-v-A1': 'timefi-vault-v-A1',
+  'rewards-v-A2': 'timefi-rewards-v-A2',
+  'rewards-v-A1': 'timefi-rewards-v-A1',
+  'governance-v-A2': 'timefi-governance-v-A2',
+  'governance-v-A1': 'timefi-governance-v-A1',
+  'emergency-v-A2': 'timefi-emergency-v-A2',
+  'emergency-v-A1': 'timefi-emergency-v-A1',
+});
+
+const normalizeContractName = (value, fallback) => {
+  const name = String(value || fallback || '').trim();
+  return CONTRACT_NAME_ALIASES[name] || name;
+};
 
 export const env = {
   // Network
@@ -43,10 +58,10 @@ export const env = {
   // Contract Configuration
   contractAddress: (import.meta.env.VITE_CONTRACT_ADDRESS || 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N').trim(),
   contracts: {
-    vault: (import.meta.env.VITE_VAULT_CONTRACT || 'timefi-vault-v-A2').trim(),
-    rewards: (import.meta.env.VITE_REWARDS_CONTRACT || 'timefi-rewards-v-A2').trim(),
-    governance: (import.meta.env.VITE_GOVERNANCE_CONTRACT || 'timefi-governance-v-A2').trim(),
-    emergency: (import.meta.env.VITE_EMERGENCY_CONTRACT || 'timefi-emergency-v-A2').trim(),
+    vault: normalizeContractName(import.meta.env.VITE_VAULT_CONTRACT, 'timefi-vault-v-A2'),
+    rewards: normalizeContractName(import.meta.env.VITE_REWARDS_CONTRACT, 'timefi-rewards-v-A2'),
+    governance: normalizeContractName(import.meta.env.VITE_GOVERNANCE_CONTRACT, 'timefi-governance-v-A2'),
+    emergency: normalizeContractName(import.meta.env.VITE_EMERGENCY_CONTRACT, 'timefi-emergency-v-A2'),
   },
   
   // API Configuration

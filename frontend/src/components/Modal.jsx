@@ -78,7 +78,7 @@ export function Modal({
           <div className="modal-header">
             {title && <h2 className="modal-title" id={titleId}>{title}</h2>}
             {showCloseButton && (
-              <button type="button" className="modal-close" onClick={onClose} aria-label="Close dialog">
+              <button type="button" className="modal-close" onClick={onClose} aria-label="Close dialog" title="Close dialog">
                 ×
               </button>
             )}

@@ -92,6 +92,7 @@
 
 .alert-action button,
 .alert-action a {
+  min-height: 2.25rem;
   font-size: 0.875rem;
   font-weight: 700;
   text-decoration: none;

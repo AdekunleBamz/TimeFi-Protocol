@@ -216,9 +216,12 @@
 }
 
 .header-wallet-link {
+    display: inline-flex;
+    align-items: center;
     background: rgba(255, 255, 255, 0.1);
     color: #f8f9fa;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 44px;
     padding: 0.45rem 0.625rem;
     border-radius: 8px;
     font-size: 0.8rem;

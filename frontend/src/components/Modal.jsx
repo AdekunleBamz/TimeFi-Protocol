@@ -5,7 +5,7 @@
  * @author adekunlebamz
  */
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useId } from 'react';
 import { createPortal } from 'react-dom';
 import { Tooltip } from './Tooltip';
 import './Modal.css';

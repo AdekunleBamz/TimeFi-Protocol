@@ -383,6 +383,11 @@
   background: rgba(99, 102, 241, 0.2);
 }
 
+.dashboard-clear-filters:focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.9);
+  outline-offset: 2px;
+}
+
 .vault-browser-summary {
   display: flex;
   justify-content: space-between;

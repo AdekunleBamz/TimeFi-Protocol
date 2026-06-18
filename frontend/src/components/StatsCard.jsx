@@ -60,6 +60,7 @@ export function StatsCard({
             className="stats-refresh"
             onClick={onRefresh}
             aria-label={`Refresh ${label}`}
+            title={`Refresh ${label}`}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <path d="M23 4v6h-6M1 20v-6h6" />

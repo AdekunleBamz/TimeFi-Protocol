@@ -151,6 +151,7 @@
 
 .form-inline-summary strong {
   color: #f8fafc;
+  font-variant-numeric: tabular-nums;
 }
 
 .form-quick-amounts {

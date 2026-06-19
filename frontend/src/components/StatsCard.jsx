@@ -73,7 +73,7 @@ export function StatsCard({
       <div className="stats-content">
         <span className="stats-label">{label}</span>
 
-        <div className="stats-values">
+        <div className="stats-values" role="status" aria-live="polite" aria-atomic="true">
           <span className="stats-value">{value}</span>
 
           {change !== undefined && (

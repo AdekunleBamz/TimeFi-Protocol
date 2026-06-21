@@ -102,7 +102,7 @@ export function AvatarGroup({ children, max = 4, size = 'md', className = '' }) 
       ))}
 
       {remaining > 0 && (
-        <div className={`avatar avatar-${size} avatar-overflow`}>
+        <div className={`avatar avatar-${size} avatar-overflow`} title={`${remaining} more participant${remaining > 1 ? 's' : ''}`}>
           <div className="avatar-fallback">+{remaining}</div>
         </div>
       )}

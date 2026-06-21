@@ -78,7 +78,15 @@ export function ConfirmModal({
       >
         <div className="modal-header">
           <h2 id="modal-title">{title}</h2>
-          <button type="button" className="modal-close" onClick={onClose} aria-label="Close modal">&times;</button>
+          <button
+            type="button"
+            className="modal-close"
+            onClick={onClose}
+            aria-label="Close modal"
+            title="Close modal"
+          >
+            &times;
+          </button>
         </div>
         <div className="modal-body">
           {description && <p className="modal-description">{description}</p>}

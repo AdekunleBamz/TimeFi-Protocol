@@ -167,6 +167,7 @@ export function blocksToMs(blocks, blockTimeSecs = 600) {
     const normalizedBlocks = Number(blocks);
     const normalizedBlockTimeSecs = Number(blockTimeSecs);
     if (!Number.isFinite(normalizedBlocks) || !Number.isFinite(normalizedBlockTimeSecs)) return 0;
+    if (normalizedBlocks <= 0 || normalizedBlockTimeSecs <= 0) return 0;
     return normalizedBlocks * normalizedBlockTimeSecs * 1000;
 }
 

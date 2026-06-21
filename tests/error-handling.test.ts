@@ -69,7 +69,7 @@ describe("TimeFi Vault - Error Handling", () => {
   });
 
   describe("ERR_UNAUTHORIZED (u100) - Authorization failures", () => {
-    it("should reject non-owner withdrawal", () => {
+    it("should reject non-owner withdrawal requests", () => {
       simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
@@ -81,7 +81,7 @@ describe("TimeFi Vault - Error Handling", () => {
 
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
-        "withdraw",
+        "request-withdraw",
         [Cl.uint(1)],
         wallet2
       );
@@ -113,10 +113,10 @@ describe("TimeFi Vault - Error Handling", () => {
       expect(result.result).toBeErr(Cl.uint(101));
     });
 
-    it("should return error for withdrawing non-existent vault", () => {
+    it("should return error for requesting withdrawal on a non-existent vault", () => {
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
-        "withdraw",
+        "request-withdraw",
         [Cl.uint(999)],
         wallet1
       );
@@ -137,7 +137,7 @@ describe("TimeFi Vault - Error Handling", () => {
   });
 
   describe("ERR_INACTIVE (u102) - Vault inactive", () => {
-    it("should reject double withdrawal", () => {
+    it("should reject processing the same withdrawal twice", () => {
       simnet.callPublicFn(
         CONTRACT_NAME,
         "create-vault",
@@ -149,16 +149,23 @@ describe("TimeFi Vault - Error Handling", () => {
 
       simnet.callPublicFn(
         CONTRACT_NAME,
-        "withdraw",
+        "request-withdraw",
         [Cl.uint(1)],
         wallet1
       );
 
+      simnet.callPublicFn(
+        CONTRACT_NAME,
+        "process-withdraw",
+        [Cl.uint(1)],
+        deployer
+      );
+
       const result = simnet.callPublicFn(
         CONTRACT_NAME,
-        "withdraw",
+        "process-withdraw",
         [Cl.uint(1)],
-        wallet1
+        deployer
       );
 
       expect(result.result).toBeErr(Cl.uint(102));

@@ -50,6 +50,7 @@ export function Select({
   const containerRef = useRef(null);
   const listRef = useRef(null);
   const listboxId = useId();
+  const errorId = useId();
 
   const selectedOption = options.find(opt => opt.value === value);
 
@@ -117,6 +118,8 @@ export function Select({
         aria-haspopup="listbox"
         aria-controls={listboxId}
         aria-label={label || placeholder}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? errorId : undefined}
       >
         <span className={selectedOption ? 'select-value' : 'select-placeholder'}>
           {selectedOption ? selectedOption.label : placeholder}
@@ -146,7 +149,7 @@ export function Select({
         </ul>
       )}
 
-      {error && <span className="select-error-text" role="alert">{error}</span>}
+      {error && <span className="select-error-text" role="alert" id={errorId}>{error}</span>}
     </div>
   );
 }

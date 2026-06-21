@@ -9,7 +9,7 @@
 }
 
 .transaction-list::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 .transaction-list::-webkit-scrollbar-track {

@@ -96,6 +96,11 @@
     background: linear-gradient(135deg, #10e7b8, #1c6479);
 }
 
+.empty-state-button:focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 2px;
+}
+
 @media (max-width: 640px) {
     .empty-state {
         padding: 3rem 1.25rem;

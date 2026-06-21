@@ -100,6 +100,9 @@ export function CopyButton({
           )}
         </>
       )}
+      <span className="copy-button-sr-only" aria-live="polite">
+        {copied ? successMessage : ''}
+      </span>
     </button>
   );
 }

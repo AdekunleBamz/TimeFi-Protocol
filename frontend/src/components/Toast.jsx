@@ -96,6 +96,7 @@ function ToastContainer({ toasts, onRemove }) {
  */
 function ToastItem({ toast, onRemove }) {
   const { id, message, variant, title, action } = toast;
+  const isHighPriority = variant === 'error' || variant === 'warning';
 
   /** Icon character keyed by toast variant for quick visual identification. */
   const icons = {
@@ -107,7 +108,12 @@ function ToastItem({ toast, onRemove }) {
   };
 
   return (
-    <div className={`toast toast-${variant}`} role="alert">
+    <div
+      className={`toast toast-${variant}`}
+      role={isHighPriority ? 'alert' : 'status'}
+      aria-live={isHighPriority ? 'assertive' : 'polite'}
+      aria-atomic="true"
+    >
       {icons[variant] && (
         <span className="toast-icon">{icons[variant]}</span>
       )}
